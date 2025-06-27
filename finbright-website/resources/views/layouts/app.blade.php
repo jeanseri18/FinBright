@@ -28,11 +28,8 @@
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <a href="{{ route('home') }}" class="flex items-center space-x-2">
-                        <div class="w-10 h-10 bg-finbright-purple rounded-lg flex items-center justify-center">
-                            <span class="text-white font-bold text-lg">F</span>
-                        </div>
-                        <span class="text-2xl font-bold text-finbright-purple">Fin'Bright</span>
+                    <a href="{{ route('home') }}" class="flex items-center">
+                        <img src="{{ asset('images/finbright-logo.png') }}" alt="Fin'Bright Logo" class="h-10">
                     </a>
                 </div>
 

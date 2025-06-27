@@ -18,7 +18,7 @@
                     Fin'Bright est une plateforme de prêt participatif innovante qui met en relation des porteurs de projets à la recherche de financement et des investisseurs souhaitant donner du sens à leur épargne.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <button class="bg-finbright-purple text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-dark-purple transition-colors">
+                    <button onclick="openSimulator()" class="bg-finbright-purple text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-dark-purple transition-colors">
                         <i class="fas fa-calculator mr-2"></i>
                         Simuler mon financement
                     </button>

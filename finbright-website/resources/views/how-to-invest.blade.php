@@ -40,10 +40,10 @@
                         <span class="text-gray-700">Données protégées et cryptées</span>
                     </div>
                 </div>
-                <button class="mt-8 bg-finbright-purple text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-dark-purple transition-colors">
-                    <i class="fas fa-user-plus mr-2"></i>
-                    Créer mon compte
-                </button>
+                <a href="{{ route('contact') }}" class="mt-8 bg-finbright-purple text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-dark-purple transition-colors inline-block">
+                    <i class="fas fa-envelope mr-2"></i>
+                    Nous contacter
+                </a>
             </div>
             <div class="flex justify-center">
                 <div class="w-full max-w-md h-80 bg-gray-200 rounded-2xl flex items-center justify-center">
@@ -253,14 +253,14 @@
             Rejoignez des milliers d'investisseurs qui font fructifier leur épargne avec Fin'Bright.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <button class="bg-white text-finbright-cyan px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors">
+            <a href="{{ route('contact') }}" class="bg-white text-finbright-cyan px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors text-center">
                 <i class="fas fa-user-plus mr-2"></i>
-                Créer mon compte investisseur
-            </button>
-            <button class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-finbright-cyan transition-colors">
-                <i class="fas fa-search mr-2"></i>
-                Voir les projets disponibles
-            </button>
+                Devenir investisseur
+            </a>
+            <a href="{{ route('contact') }}" class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-finbright-cyan transition-colors text-center">
+                <i class="fas fa-envelope mr-2"></i>
+                Nous contacter
+            </a>
         </div>
     </div>
 </section>
