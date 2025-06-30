@@ -33,7 +33,50 @@
     </div>
 </section>
 
-<!-- Comment ça marche Section -->
+<!-- Nos Services Section avec image -->
+<section class="bg-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Nos services</h2>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="text-center p-6 bg-gray-50 rounded-xl">
+                <div class="w-16 h-16 bg-finbright-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Prêt étudiant brillant</h3>
+                <p class="text-gray-600">Via le financement participatif</p>
+            </div>
+            
+            <div class="text-center p-6 bg-gray-50 rounded-xl">
+                <div class="w-16 h-16 bg-finbright-cyan rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-bolt text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Mini crédit court instantané</h3>
+                <p class="text-gray-600">Via nos partenaires bancaires</p>
+            </div>
+            
+            <div class="text-center p-6 bg-gray-50 rounded-xl">
+                <div class="w-16 h-16 bg-finbright-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-users text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Mini prêt court</h3>
+                <p class="text-gray-600">Via le financement participatif</p>
+            </div>
+            
+            <div class="text-center p-6 bg-gray-50 rounded-xl">
+                <div class="w-16 h-16 bg-finbright-cyan rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-heart text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Dons</h3>
+                <p class="text-gray-600">Via le financement participatif</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Comment ça marche Section avec illustration -->
 <section class="bg-gray-50 py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
@@ -123,49 +166,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Nos Services Section -->
-<section class="bg-white py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Nos services</h2>
-        </div>
-        
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="text-center p-6 bg-gray-50 rounded-xl">
-                <div class="w-16 h-16 bg-finbright-purple rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-graduation-cap text-white text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-2">Prêt étudiant brillant</h3>
-                <p class="text-gray-600">Via le financement participatif</p>
-            </div>
-            
-            <div class="text-center p-6 bg-gray-50 rounded-xl">
-                <div class="w-16 h-16 bg-finbright-cyan rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-bolt text-white text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-2">Mini crédit court instantané</h3>
-                <p class="text-gray-600">Via nos partenaires bancaires</p>
-            </div>
-            
-            <div class="text-center p-6 bg-gray-50 rounded-xl">
-                <div class="w-16 h-16 bg-finbright-purple rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-users text-white text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-2">Mini prêt court</h3>
-                <p class="text-gray-600">Via le financement participatif</p>
-            </div>
-            
-            <div class="text-center p-6 bg-gray-50 rounded-xl">
-                <div class="w-16 h-16 bg-finbright-cyan rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-heart text-white text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-2">Dons</h3>
-                <p class="text-gray-600">Via le financement participatif</p>
             </div>
         </div>
     </div>
