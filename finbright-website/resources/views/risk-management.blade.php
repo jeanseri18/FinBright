@@ -178,7 +178,7 @@
                 </li>
                 <li class="flex items-start">
                     <i class="fas fa-check-circle text-finbright-purple mr-3 mt-1"></i>
-                    <span>Évaluation du business plan et de la viabilité du projet</span>
+                    <span>Évaluation du business plan et de la viabilité du projet personnel</span>
                 </li>
                 <li class="flex items-start">
                     <i class="fas fa-check-circle text-finbright-purple mr-3 mt-1"></i>
@@ -192,7 +192,7 @@
             <ul class="space-y-4 text-gray-600">
                 <li class="flex items-start">
                     <i class="fas fa-check-circle text-finbright-cyan mr-3 mt-1"></i>
-                    <span>Limitation du montant maximum par projet pour réduire la concentration des risques</span>
+                    <span>Limitation du montant maximum par projet personnel pour réduire la concentration des risques</span>
                 </li>
                 <li class="flex items-start">
                     <i class="fas fa-check-circle text-finbright-cyan mr-3 mt-1"></i>

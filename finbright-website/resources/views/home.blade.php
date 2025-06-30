@@ -23,7 +23,7 @@
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <button class="bg-finbright-purple text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-dark-purple transition-colors">
-                    Financer un projet
+                    Financer un projet personnel
                 </button>
                 <button class="bg-finbright-cyan text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-light-cyan transition-colors">
                     Demander un prêt
@@ -110,7 +110,7 @@
                         </div>
                         <div>
                             <h4 class="font-semibold text-gray-900">Soumission d'une demande de prêt</h4>
-                            <p class="text-gray-600">Présentez votre projet ou besoin de financement</p>
+                            <p class="text-gray-600">Présentez votre projet personnel ou besoin de financement</p>
                         </div>
                     </div>
                     

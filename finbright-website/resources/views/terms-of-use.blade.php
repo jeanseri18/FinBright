@@ -174,7 +174,7 @@
                             Pour les emprunteurs
                         </h3>
                         <ul class="list-disc list-inside text-gray-600 space-y-2">
-                            <li>Évaluation de projet</li>
+                            <li>Évaluation de projet personnel</li>
                             <li>Mise en relation avec investisseurs</li>
                             <li>Gestion des remboursements</li>
                             <li>Accompagnement personnalisé</li>

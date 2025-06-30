@@ -156,7 +156,7 @@
                         Quels rendements puis-je espérer ?
                     </h3>
                     <p class="text-gray-700 leading-relaxed">
-                        Les taux varient selon le profil du projet et le type de prêt (étudiant ou mini-prêt). Vous recevrez vos intérêts mensuellement. Les performances passées sont accessibles sur votre tableau de bord. Un rendement de <strong class="text-finbright-purple">10 à 14 % annuels</strong>, mensualisés, selon le niveau de risque du projet.
+                        Les taux varient selon le profil du projet personnel et le type de prêt (étudiant ou mini-prêt). Vous recevrez vos intérêts mensuellement. Les performances passées sont accessibles sur votre tableau de bord. Un rendement de <strong class="text-finbright-purple">10 à 14 % annuels</strong>, mensualisés, selon le niveau de risque du projet personnel.
                     </p>
                 </div>
                 
@@ -209,7 +209,7 @@
                         <div>
                             <h4 class="font-semibold text-finbright-cyan mb-2">Pour les investisseurs :</h4>
                             <ul class="space-y-2 ml-4">
-                                <li><strong>Prêt étudiant :</strong> pas de frais d'entrée, pas de frais de sortie. Une ponction unique de 10% sur chaque montant prêté par projet.</li>
+                                <li><strong>Prêt étudiant :</strong> pas de frais d'entrée, pas de frais de sortie. Une ponction unique de 10% sur chaque montant prêté par projet personnel.</li>
                                 <li><strong>Mini prêt court :</strong> pas de frais d'entrée, pas de frais de sortie, pas de ponction unique sur les montants mobilisés avec succès.</li>
                             </ul>
                         </div>

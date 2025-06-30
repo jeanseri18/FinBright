@@ -36,7 +36,7 @@
 
 ## 💰 Modèle économique
 
-* **Investissement limité à 2000€** par prêteur et par projet.
+* **Investissement limité à 2000€** par prêteur et par projet personnel.
 * **Taux d’intérêt :** 10 à 14% pour les prêts étudiants, 10% pour les mini prêts.
 * **Revenus de la fintech :**
 

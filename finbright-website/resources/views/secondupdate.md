@@ -3,7 +3,7 @@ Accroche principale :
 « Nous faisons fructifier votre épargne, pour vous, comme vous n’en avez jamais vu ailleurs, et de façon innovante via notre plateforme de financement participatif des étudiants brillants, et de ceux qui sont exclus des prêts courts des sociétés de financement traditionnelles »
 Texte d’explication : "Fin Bright est une fintech et une edtech qui permet aux étudiants talentueux, admis dans les plus prestigieuses grandes écoles et universités, de financer leurs études supérieures. Elle permet également aux particuliers, ayant des difficultés à obtenir un crédit de depannage, d’obtenir des mini-prêts courts pour répondre à leurs besoins urgents. En investissant avec Fin’Bright, vous obtenez un rendement financier conséquent, et un gain social pour avoir contribuer à reduire l’inégalité et l’injustice sociale. Notre impact social est indéniable".  Notre mission est de démocratiser le prêt étudiant non garanti pour les plus talentueux, et de démocratiser les prêts d’urgence.
 CTA :
-Financer un projet
+Financer un projet personnel
 Demander un prêt
 
 Section Comment ça marche ?
@@ -42,19 +42,19 @@ Page Emprunter
 Bloc 1 : 
 Accroche : "Obtenez un prêt pour financer vos études supérieures ou vos projets personnelss." 
 Texte : "Sur Fin’Bright, accédez à un financement simple, rapide et sécurisé. Que vous soyez étudiant admis dans une grande école ou université prestigieuse ou particulier, obtenez un soutien financier adapté à vos besoins." 
-CTA : "Simuler mon prêt" / "Soumettre mon projet"
+CTA : "Simuler mon prêt" / "Soumettre mon projet personnel"
 
 Bloc 2 : Le processus
 Simulez votre besoin pour estimer le montant, la durée et vos capacités de remboursement.
 Créez un compte sécurisé et complétez votre profil avec vos informations personnelles et professionnelles.
 Préparez et soumettez votre demande en téléversant les justificatifs requis (admission, revenus « potentiels pour les étudiants » ou avérés, identité, etc.).
 Notre équipe vérifie et valide votre dossier, puis le met en ligne pour financement.
-Des investisseurs particuliers contribuent à votre projet jusqu’à atteindre l’objectif fixé.
+Des investisseurs particuliers contribuent à votre projet personnel jusqu'à atteindre l'objectif fixé.
 Une fois l’objectif atteint, les fonds sont débloqués rapidement et versés « à l’école pour les étudiants ». Vous commencez à rembourser selon les conditions définies.
 Bloc 3 : Critères d’éligibilité
 Être étudiant admis dans une grande école ou université prestigieuse (liste disponible sur notre site) ou un particulier justifiant de revenus stables.
 Fournir tous les justificatifs nécessaires : lettre d’admission, pièce d’identité, justificatifs de revenus.
-Être majeur, résider en France, ou dans un pays éligible et avoir un projet clair et précis.
+Être majeur, résider en France, ou dans un pays éligible et avoir un projet personnel clair et précis.
 Section CTA finale "Commencez votre demande de prêt dès aujourd’hui " 
 
 
@@ -132,7 +132,7 @@ Approvisionnez votre compte
 Sélectionnez les projets (étudiants ou particuliers)
 Investissez à partir de petits montants
 Q : Quels rendements puis-je espérer ?
- R : Les taux varient selon le profil du projet et le type de prêt (étudiant ou mini-prêt). Vous recevrez vos intérêts mensuellement. Les performances passées sont accessibles sur votre tableau de bord. Un rendement de 10 à 14 % annuels, mensualisés, selon le niveau de risque du projet
+ R : Les taux varient selon le profil du projet personnel et le type de prêt (étudiant ou mini-prêt). Vous recevrez vos intérêts mensuellement. Les performances passées sont accessibles sur votre tableau de bord. Un rendement de 10 à 14 % annuels, mensualisés, selon le niveau de risque du projet personnel
 Q : Quels sont les risques ?
  R : Il existe un risque d’impayé et de perte de capital . Nous limitons ce risque par une sélection rigoureuse des dossiers, un suivi des remboursements, et une transparence totale. Nous encourageons fortement nos emprunteurs étudiants à souscrire à une assurance emprunteur pour réduire le risque de non remboursement.
 Q : Comment récupérer mon argent ?

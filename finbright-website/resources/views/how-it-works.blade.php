@@ -19,7 +19,7 @@
                     Simuler mon prêt
                 </button>
                 <button class="bg-finbright-cyan text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-light-cyan transition-colors">
-                    Soumettre mon projet
+                    Soumettre mon projet personnel
                 </button>
             </div>
         </div>
@@ -96,7 +96,7 @@
                     <h3 class="text-xl font-bold text-gray-900">Financement</h3>
                 </div>
                 <p class="text-gray-600">
-                    Des investisseurs particuliers contribuent à votre projet jusqu'à atteindre l'objectif fixé.
+                    Des investisseurs particuliers contribuent à votre projet personnel jusqu'à atteindre l'objectif fixé.
                 </p>
             </div>
             
@@ -154,7 +154,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 mb-4">Conditions générales</h3>
                 <p class="text-gray-600">
-                    Être majeur, résider en France ou dans un pays éligible et avoir un projet clair et précis.
+                    Être majeur, résider en France ou dans un pays éligible et avoir un projet personnel clair et précis.
                 </p>
             </div>
         </div>

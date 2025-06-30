@@ -45,12 +45,12 @@ class FinancingSimulator {
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Type de projet</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Type de projet personnel</label>
                                     <select id="project-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-finbright-purple focus:border-transparent">
                                         <option value="personal">Personnel</option>
                                         <option value="business" selected>Professionnel</option>
                                         <option value="real-estate">Immobilier</option>
-                                        <option value="green">Projet vert</option>
+                                        <option value="green">Projet personnel vert</option>
                                     </select>
                                 </div>
                                 
@@ -153,7 +153,7 @@ class FinancingSimulator {
         const duration = parseInt(document.getElementById('duration').value);
         const projectType = document.getElementById('project-type').value;
 
-        // Calcul des taux selon le type de projet
+        // Calcul des taux selon le type de projet personnel
         let baseRate;
         switch (projectType) {
             case 'personal':
