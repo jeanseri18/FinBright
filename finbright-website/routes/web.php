@@ -7,7 +7,7 @@ use App\Http\Controllers\PageController;
 Route::get('/', [PageController::class, 'home'])->name('home');
 
 // Comment ça marche (pour les emprunteurs)
-Route::get('/comment-ca-marche', [PageController::class, 'howItWorks'])->name('how-it-works');
+Route::get('/comment-emprunter', [PageController::class, 'howItWorks'])->name('how-it-works');
 
 // Comment investir
 Route::get('/comment-investir', [PageController::class, 'howToInvest'])->name('how-to-invest');

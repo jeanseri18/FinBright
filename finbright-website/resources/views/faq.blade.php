@@ -1,255 +1,276 @@
 @extends('layouts.app')
 
-@section('title', 'FAQ - Questions fréquentes | Fin\'Bright')
+@section('title', 'FAQ - Fin\'Bright')
 
 @section('content')
 <!-- Hero Section -->
-<section class="bg-finbright-purple py-20">
+<section class="bg-gradient-to-br from-finbright-purple to-finbright-cyan text-white py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl lg:text-6xl font-bold text-white mb-6">
-            Questions <span class="text-finbright-cyan">Fréquentes</span>
-        </h1>
-        <p class="text-xl text-white max-w-3xl mx-auto">
-            Trouvez rapidement les réponses à vos questions sur le fonctionnement de Fin'Bright.
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">Questions Fréquentes</h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
+            Trouvez toutes les réponses à vos questions sur Fin'Bright
         </p>
     </div>
 </section>
 
-<!-- Section FAQ -->
-<section class="bg-white py-20">
+<!-- FAQ Content -->
+<section class="py-20 bg-gray-50">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Questions Générales -->
+        
+        <!-- 1. Général -->
         <div class="mb-16">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
-                <span class="text-finbright-purple">Questions</span> Générales
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
+                <i class="fas fa-info-circle text-finbright-purple mr-4"></i>
+                1. Général
             </h2>
             
             <div class="space-y-6">
-                <div class="border border-gray-200 rounded-lg">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleFaq('faq1')">
-                        <span class="text-lg font-semibold text-gray-900">Qu'est-ce que Fin'Bright ?</span>
-                        <i class="fas fa-chevron-down text-finbright-purple transform transition-transform" id="icon-faq1"></i>
-                    </button>
-                    <div class="hidden px-6 pb-4" id="faq1">
-                        <p class="text-gray-600">Fin'Bright est une plateforme de financement participatif qui met en relation des porteurs de projets avec des investisseurs. Nous permettons aux entreprises et particuliers de lever des fonds pour leurs projets tout en offrant aux investisseurs des opportunités de placement attractives.</p>
-                    </div>
+                <!-- Q1 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-finbright-purple mb-3">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Qu'est-ce que Fin'Bright ?
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Fin'Bright est une plateforme de financement participatif entre particuliers, dédiée aux prêts étudiants (étudiants brillants admis dans des grandes écoles les plus prestigieuses) et aux mini-prêts courts (pour particuliers), permettant à chacun d'emprunter ou d'investir de façon responsable.
+                    </p>
                 </div>
-
-                <div class="border border-gray-200 rounded-lg">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleFaq('faq2')">
-                        <span class="text-lg font-semibold text-gray-900">Comment fonctionne la plateforme ?</span>
-                        <i class="fas fa-chevron-down text-finbright-purple transform transition-transform" id="icon-faq2"></i>
-                    </button>
-                    <div class="hidden px-6 pb-4" id="faq2">
-                        <p class="text-gray-600">Les porteurs de projets soumettent leur demande de financement après validation de leur dossier. Les investisseurs peuvent alors consulter les projets disponibles et choisir ceux dans lesquels ils souhaitent investir. Une fois l'objectif de financement atteint, les fonds sont débloqués au porteur de projet.</p>
-                    </div>
-                </div>
-
-                <div class="border border-gray-200 rounded-lg">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleFaq('faq3')">
-                        <span class="text-lg font-semibold text-gray-900">Fin'Bright est-elle réglementée ?</span>
-                        <i class="fas fa-chevron-down text-finbright-purple transform transition-transform" id="icon-faq3"></i>
-                    </button>
-                    <div class="hidden px-6 pb-4" id="faq3">
-                        <p class="text-gray-600">Oui, Fin'Bright est agréée par l'ACPR (Autorité de Contrôle Prudentiel et de Résolution) et respecte toutes les réglementations françaises et européennes en matière de financement participatif, notamment les directives MiFID II et le RGPD.</p>
-                    </div>
+                
+                <!-- Q2 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-finbright-purple mb-3">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Est-ce sécurisé ?
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Oui. Les transactions sont sécurisées, les dossiers vérifiés, et nous respectons les standards RGPD. De plus, notre statut d'intermédiaire en financement participatif (IFP) est conforme à la réglementation.
+                    </p>
                 </div>
             </div>
         </div>
-
-        <!-- Questions Investisseurs -->
+        
+        <!-- 2. Emprunteurs -->
         <div class="mb-16">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
-                Pour les <span class="text-finbright-cyan">Investisseurs</span>
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
+                <i class="fas fa-graduation-cap text-finbright-cyan mr-4"></i>
+                2. Emprunteurs
             </h2>
             
             <div class="space-y-6">
-                <div class="border border-gray-200 rounded-lg">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleFaq('faq4')">
-                        <span class="text-lg font-semibold text-gray-900">Quel est le montant minimum d'investissement ?</span>
-                        <i class="fas fa-chevron-down text-finbright-purple transform transition-transform" id="icon-faq4"></i>
-                    </button>
-                    <div class="hidden px-6 pb-4" id="faq4">
-                        <p class="text-gray-600">Le montant minimum d'investissement est de 20€ par projet. Cela permet à tous les profils d'investisseurs de participer et de diversifier leurs placements.</p>
+                <!-- Q1 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-finbright-purple mb-3">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Qui peut emprunter ?
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Étudiants admis dans une grande école ou université prestigieuse (France/Europe)
+                    </p>
+                </div>
+                
+                <!-- Q2 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-finbright-purple mb-3">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Quels types de prêts sont disponibles ?
+                    </h3>
+                    <ul class="text-gray-700 leading-relaxed space-y-2">
+                        <li><i class="fas fa-check text-finbright-cyan mr-2"></i>Prêt étudiant pour financer frais de scolarité, logement, ou mobilité</li>
+                        <li><i class="fas fa-check text-finbright-cyan mr-2"></i>Mini-prêt court pour des besoins ponctuels (réparation, achat, dépenses imprévues)</li>
+                    </ul>
+                </div>
+                
+                <!-- Q3 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-finbright-purple mb-3">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        De quels documents ai-je besoin ?
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Carte d'identité, justificatif d'admission (pour étudiants), preuve de revenus (pour particuliers), RIB, et justificatif de domicile si nécessaire.
+                    </p>
+                </div>
+                
+                <!-- Q4 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-finbright-purple mb-3">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Combien puis-je emprunter et à quelles conditions ?
+                    </h3>
+                    <div class="text-gray-700 leading-relaxed space-y-2">
+                        <p>Les montants varient selon le type de prêt : le simulateur en ligne vous donnera des détails précis (durée, taux, mensualités).</p>
+                        <p>Le prêt étudiant est assorti d'un différé partiel de 3 mois à 6 mois, pendant lequel l'étudiant ne paie que les intérêts courus.</p>
                     </div>
                 </div>
-
-                <div class="border border-gray-200 rounded-lg">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleFaq('faq5')">
-                        <span class="text-lg font-semibold text-gray-900">Quels sont les rendements attendus ?</span>
-                        <i class="fas fa-chevron-down text-finbright-purple transform transition-transform" id="icon-faq5"></i>
-                    </button>
-                    <div class="hidden px-6 pb-4" id="faq5">
-                        <p class="text-gray-600">Les rendements varient selon les projets et leur profil de risque, généralement entre 4% et 12% par an. Le rendement moyen sur notre plateforme est actuellement de 9,5%. Attention, tout investissement comporte des risques.</p>
-                    </div>
+                
+                <!-- Q5 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-finbright-purple mb-3">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Comment se passe le remboursement ?
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Vous remboursez selon l'échéancier fixé : mensualités régulières (semblables à un crédit classique), avec rappels automatiques et suivi en ligne.
+                    </p>
                 </div>
-
-                <div class="border border-gray-200 rounded-lg">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleFaq('faq6')">
-                        <span class="text-lg font-semibold text-gray-900">Comment sont sélectionnés les projets ?</span>
-                        <i class="fas fa-chevron-down text-finbright-purple transform transition-transform" id="icon-faq6"></i>
-                    </button>
-                    <div class="hidden px-6 pb-4" id="faq6">
-                        <p class="text-gray-600">Chaque projet est analysé par notre équipe d'experts qui évalue la viabilité du business plan, la solidité financière du porteur de projet, et les garanties proposées. Seuls les projets validés sont publiés sur la plateforme.</p>
-                    </div>
-                </div>
-
-                <div class="border border-gray-200 rounded-lg">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleFaq('faq7')">
-                        <span class="text-lg font-semibold text-gray-900">Puis-je récupérer mon investissement avant l'échéance ?</span>
-                        <i class="fas fa-chevron-down text-finbright-purple transform transition-transform" id="icon-faq7"></i>
-                    </button>
-                    <div class="hidden px-6 pb-4" id="faq7">
-                        <p class="text-gray-600">Les investissements sont généralement bloqués jusqu'à l'échéance du projet. Cependant, nous développons un marché secondaire qui permettra aux investisseurs de revendre leurs parts à d'autres investisseurs.</p>
-                    </div>
-                </div>
-
-                <div class="border border-gray-200 rounded-lg">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleFaq('faq8')">
-                        <span class="text-lg font-semibold text-gray-900">Y a-t-il des frais pour les investisseurs ?</span>
-                        <i class="fas fa-chevron-down text-finbright-purple transform transition-transform" id="icon-faq8"></i>
-                    </button>
-                    <div class="hidden px-6 pb-4" id="faq8">
-                        <p class="text-gray-600">L'inscription et la consultation des projets sont gratuites. Nous prélevons une commission de 1% sur les gains générés par vos investissements, uniquement en cas de succès.</p>
-                    </div>
+                
+                <!-- Q6 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-finbright-purple mb-3">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Et en cas de retard de paiement ?
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Un processus d'accompagnement se déclenche (relances, plan d'ajustement), et des frais de retards de 8 % s'appliquent. En cas de défaut persistant, des mesures de recouvrement peuvent être engagées, conformément aux règles du P2P.
+                    </p>
                 </div>
             </div>
         </div>
-
-        <!-- Questions Emprunteurs -->
+        
+        <!-- 3. Investisseurs -->
         <div class="mb-16">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
-                Pour les <span class="text-finbright-purple">Emprunteurs</span>
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
+                <i class="fas fa-chart-line text-finbright-purple mr-4"></i>
+                3. Investisseurs
             </h2>
             
             <div class="space-y-6">
-                <div class="border border-gray-200 rounded-lg">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleFaq('faq9')">
-                        <span class="text-lg font-semibold text-gray-900">Quels types de projets peuvent être financés ?</span>
-                        <i class="fas fa-chevron-down text-finbright-purple transform transition-transform" id="icon-faq9"></i>
-                    </button>
-                    <div class="hidden px-6 pb-4" id="faq9">
-                        <p class="text-gray-600">Nous finançons une large gamme de projets : création ou développement d'entreprise, projets immobiliers, innovations technologiques, projets environnementaux, et bien d'autres. Chaque projet est étudié individuellement.</p>
-                    </div>
+                <!-- Q1 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-finbright-purple mb-3">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Comment investir ?
+                    </h3>
+                    <ol class="text-gray-700 leading-relaxed space-y-2 list-decimal list-inside">
+                        <li>Inscrivez-vous et complétez votre profil</li>
+                        <li>Approvisionnez votre compte</li>
+                        <li>Sélectionnez les projets (étudiants ou particuliers)</li>
+                        <li>Investissez à partir de petits montants</li>
+                    </ol>
                 </div>
-
-                <div class="border border-gray-200 rounded-lg">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleFaq('faq10')">
-                        <span class="text-lg font-semibold text-gray-900">Quels sont les montants de financement possibles ?</span>
-                        <i class="fas fa-chevron-down text-finbright-purple transform transition-transform" id="icon-faq10"></i>
-                    </button>
-                    <div class="hidden px-6 pb-4" id="faq10">
-                        <p class="text-gray-600">Nous finançons des projets de 5 000€ à 500 000€. Le montant dépend de la nature du projet, de sa viabilité et des garanties proposées.</p>
-                    </div>
+                
+                <!-- Q2 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-finbright-purple mb-3">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Quels rendements puis-je espérer ?
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Les taux varient selon le profil du projet et le type de prêt (étudiant ou mini-prêt). Vous recevrez vos intérêts mensuellement. Les performances passées sont accessibles sur votre tableau de bord. Un rendement de <strong class="text-finbright-purple">10 à 14 % annuels</strong>, mensualisés, selon le niveau de risque du projet.
+                    </p>
                 </div>
-
-                <div class="border border-gray-200 rounded-lg">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleFaq('faq11')">
-                        <span class="text-lg font-semibold text-gray-900">Combien de temps prend l'analyse d'un dossier ?</span>
-                        <i class="fas fa-chevron-down text-finbright-purple transform transition-transform" id="icon-faq11"></i>
-                    </button>
-                    <div class="hidden px-6 pb-4" id="faq11">
-                        <p class="text-gray-600">L'analyse complète d'un dossier prend généralement entre 5 et 10 jours ouvrés, selon la complexité du projet et la qualité du dossier fourni.</p>
-                    </div>
+                
+                <!-- Q3 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-finbright-purple mb-3">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Quels sont les risques ?
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Il existe un risque d'impayé et de perte de capital. Nous limitons ce risque par une sélection rigoureuse des dossiers, un suivi des remboursements, et une transparence totale. Nous encourageons fortement nos emprunteurs étudiants à souscrire à une assurance emprunteur pour réduire le risque de non remboursement.
+                    </p>
                 </div>
-
-                <div class="border border-gray-200 rounded-lg">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleFaq('faq12')">
-                        <span class="text-lg font-semibold text-gray-900">Quels sont les frais pour les emprunteurs ?</span>
-                        <i class="fas fa-chevron-down text-finbright-purple transform transition-transform" id="icon-faq12"></i>
-                    </button>
-                    <div class="hidden px-6 pb-4" id="faq12">
-                        <p class="text-gray-600">Nous prélevons une commission de 3% du montant financé, uniquement en cas de succès de la collecte. Aucun frais n'est facturé en cas d'échec du financement.</p>
-                    </div>
-                </div>
-
-                <div class="border border-gray-200 rounded-lg">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleFaq('faq13')">
-                        <span class="text-lg font-semibold text-gray-900">Que se passe-t-il si l'objectif de financement n'est pas atteint ?</span>
-                        <i class="fas fa-chevron-down text-finbright-purple transform transition-transform" id="icon-faq13"></i>
-                    </button>
-                    <div class="hidden px-6 pb-4" id="faq13">
-                        <p class="text-gray-600">Si l'objectif de financement n'est pas atteint dans les délais impartis, tous les fonds sont automatiquement remboursés aux investisseurs. Aucun frais n'est prélevé au porteur de projet.</p>
-                    </div>
+                
+                <!-- Q4 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-finbright-purple mb-3">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Comment récupérer mon argent ?
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Vous recevez capital et intérêts via virements mensuels. Vous pouvez réinvestir ou retirer vos fonds à tout moment selon les conditions indiquées.
+                    </p>
                 </div>
             </div>
         </div>
-
-        <!-- Questions Sécurité -->
+        
+        <!-- 4. Technique & Réglementaire -->
         <div class="mb-16">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
-                <span class="text-finbright-cyan">Sécurité</span> & Confidentialité
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
+                <i class="fas fa-cogs text-finbright-cyan mr-4"></i>
+                4. Technique & Réglementaire
             </h2>
             
             <div class="space-y-6">
-                <div class="border border-gray-200 rounded-lg">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleFaq('faq14')">
-                        <span class="text-lg font-semibold text-gray-900">Comment mes données personnelles sont-elles protégées ?</span>
-                        <i class="fas fa-chevron-down text-finbright-purple transform transition-transform" id="icon-faq14"></i>
-                    </button>
-                    <div class="hidden px-6 pb-4" id="faq14">
-                        <p class="text-gray-600">Toutes vos données sont cryptées et stockées sur des serveurs sécurisés. Nous respectons strictement le RGPD et ne partageons jamais vos informations personnelles avec des tiers sans votre consentement explicite.</p>
+                <!-- Q1 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-finbright-purple mb-3">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Quels sont les coûts et frais ?
+                    </h3>
+                    <div class="text-gray-700 leading-relaxed space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-finbright-purple mb-2">Pour les emprunteurs :</h4>
+                            <ul class="space-y-2 ml-4">
+                                <li><strong>Prêt étudiant :</strong> commission unique de 10 % sur chaque prêt mobilisé avec succès (supporté par l'investisseur), ponction mensuelle de 4 % de frais de fonctionnement et de 4 % de frais de gestion des prêts calculés sur le capital restant</li>
+                                <li><strong>Mini prêt court :</strong> pas de commission sur les prêts mobilisés avec succès, ponction mensuelle de 6 % de frais de fonctionnement et de 6 % de frais de gestion des prêts calculés sur le capital restant dû.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-finbright-cyan mb-2">Pour les investisseurs :</h4>
+                            <ul class="space-y-2 ml-4">
+                                <li><strong>Prêt étudiant :</strong> pas de frais d'entrée, pas de frais de sortie. Une ponction unique de 10% sur chaque montant prêté par projet.</li>
+                                <li><strong>Mini prêt court :</strong> pas de frais d'entrée, pas de frais de sortie, pas de ponction unique sur les montants mobilisés avec succès.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-
-                <div class="border border-gray-200 rounded-lg">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleFaq('faq15')">
-                        <span class="text-lg font-semibold text-gray-900">Comment sont sécurisés les paiements ?</span>
-                        <i class="fas fa-chevron-down text-finbright-purple transform transition-transform" id="icon-faq15"></i>
-                    </button>
-                    <div class="hidden px-6 pb-4" id="faq15">
-                        <p class="text-gray-600">Tous les paiements sont traités par Stripe, leader mondial du paiement en ligne. Vos informations bancaires ne transitent jamais par nos serveurs et sont protégées par les plus hauts standards de sécurité.</p>
-                    </div>
+                
+                <!-- Q2 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-finbright-purple mb-3">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Fin'Bright est-elle régulée ?
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Nous devons être immatriculés auprès de l'ORIAS en tant qu'IFP (Intermédiaire en Financement Participatif) avant d'opérer nos activités en toute légalité. Notre demande d'immatriculation est en cours. Une fois immatriculée, nous serons supervisés par l'ACPR (Banque de France). Nous nous conformons à toutes les exigences réglementaires (KYC, protection des données, gestion des risques, etc.).
+                    </p>
                 </div>
-
-                <div class="border border-gray-200 rounded-lg">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleFaq('faq16')">
-                        <span class="text-lg font-semibold text-gray-900">Que faire en cas de problème avec un investissement ?</span>
-                        <i class="fas fa-chevron-down text-finbright-purple transform transition-transform" id="icon-faq16"></i>
-                    </button>
-                    <div class="hidden px-6 pb-4" id="faq16">
-                        <p class="text-gray-600">Notre équipe de support est disponible pour vous accompagner. En cas de litige, nous disposons de procédures de médiation et travaillons avec des partenaires juridiques spécialisés pour protéger vos intérêts.</p>
-                    </div>
+            </div>
+        </div>
+        
+        <!-- 5. Support & Contact -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
+                <i class="fas fa-headset text-finbright-purple mr-4"></i>
+                5. Support & Contact
+            </h2>
+            
+            <div class="space-y-6">
+                <!-- Q1 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-finbright-purple mb-3">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Comment puis-je obtenir de l'aide ?
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Vous pouvez consulter notre FAQ complète, ou nous contacter via le formulaire en ligne, par e-mail ou par téléphone. Notre équipe est là pour vous accompagner.
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Section Contact -->
-<section class="bg-finbright-purple py-20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-4xl font-bold text-white mb-6">
-            Vous ne trouvez pas votre réponse ?
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-r from-finbright-purple to-finbright-cyan">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+            Vous avez une question ?
         </h2>
-        <p class="text-xl text-white mb-8">
-            Notre équipe support est là pour vous aider. Contactez-nous directement.
+        <p class="text-xl text-white mb-8 opacity-90 max-w-2xl mx-auto">
+            Contactez-nous ou inscrivez-vous dès aujourd'hui !
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <button class="bg-finbright-cyan text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-dark-cyan transition-colors">
+            <a href="{{ route('home') }}#simulator" class="bg-white text-finbright-purple px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                <i class="fas fa-calculator mr-2"></i>
+                Voir les projets / Simuler un prêt
+            </a>
+            <a href="{{ route('contact') }}" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-finbright-purple transition-colors">
                 <i class="fas fa-envelope mr-2"></i>
                 Nous contacter
-            </button>
-            <button class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-finbright-purple transition-colors">
-                <i class="fas fa-phone mr-2"></i>
-                Demander un rappel
-            </button>
+            </a>
         </div>
     </div>
 </section>
-
-<script>
-function toggleFaq(faqId) {
-    const content = document.getElementById(faqId);
-    const icon = document.getElementById('icon-' + faqId);
-    
-    if (content.classList.contains('hidden')) {
-        content.classList.remove('hidden');
-        icon.classList.add('rotate-180');
-    } else {
-        content.classList.add('hidden');
-        icon.classList.remove('rotate-180');
-    }
-}
-</script>
 @endsection
