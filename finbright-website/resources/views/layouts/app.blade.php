@@ -10,10 +10,10 @@
             theme: {
                 extend: {
                     colors: {
-                        'finbright-purple': '#821e8b',
-                        'finbright-cyan': '#06c2e9',
-                        'finbright-dark-purple': '#821e8b',
-                        'finbright-light-cyan': '#06c2e9'
+                        'finbright-purple': '#B803C9FF',
+                        'finbright-cyan': '#00C8F0FF',
+                        'finbright-dark-purple': '#9D03ABFF',
+                        'finbright-light-cyan': '#039EBDFF'
                     }
                 }
             }
@@ -21,7 +21,7 @@
     </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50">
+<body class="" style="background: #fcfaf6;">
     <!-- Navigation -->
     <nav class="bg-white shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,7 +29,7 @@
                 <!-- Logo -->
                 <div class="flex items-center">
                     <a href="{{ route('home') }}" class="flex items-center">
-                        <img src="{{ asset('images/finbright-logo.png') }}" alt="Fin'Bright Logo" class="h-10">
+                        <img src="{{ asset('images/finbright-logo.png') }}" style="height: 60px;" alt="Fin'Bright Logo" class="h-10">
                     </a>
                 </div>
 

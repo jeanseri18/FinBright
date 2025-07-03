@@ -67,6 +67,7 @@ class PageController extends Controller
             'subject' => 'required|string|max:255',
             'message' => 'required|string|max:2000',
             'user_type' => 'required|in:investor,borrower,other',
+            'privacy_policy' => 'required|accepted',
         ]);
 
         // Ici, vous pourriez envoyer un email, sauvegarder en base de données, etc.

@@ -3,40 +3,56 @@
 @section('title', 'Investir - Fin\'Bright')
 
 @section('content')
-<!-- Hero Section -->
-<section class="bg-white py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-            <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-                Investissez dans l'avenir, valorisez votre épargne et gagnez un rendement financier parmi les meilleurs
-            </h1>
-            <p class="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto">
-                Fin'Bright vous offre l'opportunité d'investir directement dans des projets à impact social : financement d'étudiants brillants admis dans les grandes écoles et universités les plus prestigieuses et soutien aux particuliers qui ont besoin d'un mini-prêt court pour leurs besoins urgents. Vous percevez des intérêts compétitifs tout en contribuant à la réussite et au développement de talents prometteurs.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button class="bg-finbright-purple text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-dark-purple transition-colors">
-                    Voir les projets à financer
-                </button>
-                <button class="bg-finbright-cyan text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-light-cyan transition-colors">
-                    Commencer à investir
-                </button>
-            </div>
+<!-- Section Investissement avec image à droite -->
+<section class=" py-20"  >
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      
+      <!-- Texte à gauche -->
+      <div>
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+          Investissez dans l'avenir, valorisez votre épargne <br />
+          et gagnez un rendement financier parmi les meilleurs
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-600 mb-8">
+          Fin'Bright vous offre l'opportunité d'investir directement dans des projets à impact social : 
+          financement d'étudiants brillants admis dans les grandes écoles et soutien aux particuliers 
+          ayant besoin d'un mini-prêt d’urgence.  
+          <br class="hidden md:block" />
+          Vous percevez des intérêts compétitifs tout en contribuant à la réussite de talents prometteurs. 🌱
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <button class="bg-finbright-purple text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-dark-purple transition-colors">
+            Voir les projets à financer
+          </button>
+          <button class="bg-finbright-cyan text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-light-cyan transition-colors">
+            Commencer à investir
+          </button>
         </div>
+      </div>
+
+      <!-- Image à droite -->
+      <div>
+        <img src="/images/jeune-homme-avec-livre-en-regardant-la-camera.jpg" alt="Investissement étudiant" class="rounded-2xl shadow-lg w-full object-cover h-[400px] md:h-[500px]" />
+      </div>
+
     </div>
+  </div>
 </section>
 
+
 <!-- Comment ça marche Section -->
-<section class="bg-gray-50 py-20">
+<section class=" py-20" style="background: linear-gradient( #B803C9FF 20%, #790384 100%);">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Comment ça marche ?</h2>
-            <p class="text-xl text-gray-600">Un processus simple et sécurisé en 6 étapes</p>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Comment ça marche ?</h2>
+            <p class="text-xl text-white">Un processus simple et sécurisé en 6 étapes</p>
         </div>
         
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Étape 1 -->
-            <div class="bg-white p-8 rounded-xl shadow-lg">
+            <div  style="background: #faf6ee;" class=" p-8 rounded-xl shadow-lg">
                 <div class="flex items-center mb-6">
                     <div class="w-12 h-12 bg-finbright-purple rounded-full flex items-center justify-center mr-4">
                         <span class="text-white font-bold text-lg">1</span>
@@ -49,7 +65,7 @@
             </div>
             
             <!-- Étape 2 -->
-            <div class="bg-white p-8 rounded-xl shadow-lg">
+            <div  style="background: #faf6ee;" class=" p-8 rounded-xl shadow-lg">
                 <div class="flex items-center mb-6">
                     <div class="w-12 h-12 bg-finbright-cyan rounded-full flex items-center justify-center mr-4">
                         <span class="text-white font-bold text-lg">2</span>
@@ -62,7 +78,7 @@
             </div>
             
             <!-- Étape 3 -->
-            <div class="bg-white p-8 rounded-xl shadow-lg">
+            <div  style="background: #faf6ee;" class=" p-8 rounded-xl shadow-lg">
                 <div class="flex items-center mb-6">
                     <div class="w-12 h-12 bg-finbright-purple rounded-full flex items-center justify-center mr-4">
                         <span class="text-white font-bold text-lg">3</span>
@@ -75,7 +91,7 @@
             </div>
             
             <!-- Étape 4 -->
-            <div class="bg-white p-8 rounded-xl shadow-lg">
+            <div  style="background: #faf6ee;" class=" p-8 rounded-xl shadow-lg">
                 <div class="flex items-center mb-6">
                     <div class="w-12 h-12 bg-finbright-cyan rounded-full flex items-center justify-center mr-4">
                         <span class="text-white font-bold text-lg">4</span>
@@ -88,7 +104,7 @@
             </div>
             
             <!-- Étape 5 -->
-            <div class="bg-white p-8 rounded-xl shadow-lg">
+            <div  style="background: #faf6ee;" class=" p-8 rounded-xl shadow-lg">
                 <div class="flex items-center mb-6">
                     <div class="w-12 h-12 bg-finbright-purple rounded-full flex items-center justify-center mr-4">
                         <span class="text-white font-bold text-lg">5</span>
@@ -101,7 +117,7 @@
             </div>
             
             <!-- Étape 6 -->
-            <div class="bg-white p-8 rounded-xl shadow-lg">
+            <div  style="background: #faf6ee;" class=" p-8 rounded-xl shadow-lg">
                 <div class="flex items-center mb-6">
                     <div class="w-12 h-12 bg-finbright-cyan rounded-full flex items-center justify-center mr-4">
                         <span class="text-white font-bold text-lg">6</span>
@@ -117,10 +133,10 @@
 </section>
 
 <!-- Pourquoi investir avec Fin'Bright Section -->
-<section class="bg-white py-20">
+<section class=" py-20" >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Pourquoi investir avec Fin'Bright ?</h2>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">Pourquoi investir avec Fin'Bright ?</h2>
             <p class="text-xl text-gray-600">Des avantages uniques pour vos investissements</p>
         </div>
         
@@ -180,30 +196,38 @@
                 </p>
             </div>
         </div>
-        
+    </div>
+</section>
+<section class="py-20 "  style="background: linear-gradient( #B803C9FF 20%, #790384 100%);">
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Statistiques</h2>
+            <p class="text-xl text-white">Des chiffres clés pour vous aider à comprendre comment Fin'Bright peut vous aider</p>
+        </div>
         <!-- Statistiques -->
         <div class="mt-16 grid md:grid-cols-3 gap-8 text-center">
             <div class="p-6">
-                <div class="text-4xl font-bold text-finbright-purple mb-2">8.5%</div>
-                <div class="text-gray-600">Rendement moyen annuel</div>
+                <div class="text-4xl font-bold text-white mb-2">8.5%</div>
+                <div class="text-white">Rendement moyen annuel</div>
             </div>
             <div class="p-6">
-                <div class="text-4xl font-bold text-finbright-cyan mb-2">50€</div>
-                <div class="text-gray-600">Investissement minimum</div>
+                <div class="text-4xl font-bold text-white mb-2">50€</div>
+                <div class="text-white">Investissement minimum</div>
             </div>
             <div class="p-6">
-                <div class="text-4xl font-bold text-finbright-purple mb-2">95%</div>
-                <div class="text-gray-600">Taux de remboursement</div>
+                <div class="text-4xl font-bold text-white mb-2">95%</div>
+                <div class="text-white">Taux de remboursement</div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Types d'investissement Section -->
-<section class="bg-gray-50 py-20">
+<section class=" py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Types d'investissement</h2>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">Types d'investissement</h2>
             <p class="text-xl text-gray-600">Choisissez le type d'investissement qui vous convient</p>
         </div>
         
@@ -254,10 +278,10 @@
 </section>
 
 <!-- CTA Finale Section -->
-<section class="bg-finbright-purple py-20">
+<section class=" py-20" style="background: linear-gradient( #B803C9FF 20%, #790384 100%);">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-8">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-8">
                 Commencez à investir dès aujourd'hui
             </h2>
             <p class="text-xl text-white mb-12 max-w-3xl mx-auto">

@@ -4,7 +4,7 @@
 
 @section('content')
 <!-- Hero Section -->
-<section class="bg-finbright-purple py-20">
+<section style="background: linear-gradient( #B803C9FF 20%, #790384 100%);"class=" py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 class="text-4xl lg:text-6xl font-bold text-white mb-6">
             Politique de <span class="text-finbright-cyan">Confidentialité</span>
@@ -16,12 +16,12 @@
 </section>
 
 <!-- Section Politique de confidentialité -->
-<section class="bg-white py-20">
+<section class=" py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="prose prose-lg max-w-none">
             <!-- Introduction -->
             <div class="mb-12">
-                <div class="bg-finbright-purple text-white rounded-lg p-6 mb-8">
+                <div style="background: linear-gradient( #B803C9FF 20%, #790384 100%);"class=" text-white rounded-lg p-6 mb-8">
                     <h2 class="text-2xl font-bold mb-4 text-white">Dernière mise à jour : 15 décembre 2024</h2>
                     <p class="text-white">
                         Fin'Bright SAS s'engage à protéger la confidentialité de vos données personnelles. Cette politique explique comment nous collectons, utilisons, stockons et protégeons vos informations conformément au Règlement Général sur la Protection des Données (RGPD).
@@ -147,7 +147,7 @@
                 </h2>
                 <div class="space-y-4">
                     <div class="flex items-start">
-                        <div class="w-8 h-8 bg-finbright-purple rounded-full flex items-center justify-center mr-4 mt-1">
+                        <div class="wstyle="background: linear-gradient( #B803C9FF 20%, #790384 100%);"-8 h-8  rounded-full flex items-center justify-center mr-4 mt-1">
                             <i class="fas fa-file-contract text-white text-sm"></i>
                         </div>
                         <div>
@@ -167,7 +167,7 @@
                     </div>
                     
                     <div class="flex items-start">
-                        <div class="w-8 h-8 bg-finbright-purple rounded-full flex items-center justify-center mr-4 mt-1">
+                        <div class="wstyle="background: linear-gradient( #B803C9FF 20%, #790384 100%);"-8 h-8  rounded-full flex items-center justify-center mr-4 mt-1">
                             <i class="fas fa-thumbs-up text-white text-sm"></i>
                         </div>
                         <div>
@@ -243,7 +243,7 @@
                     <div class="bg-gray-50 rounded-lg p-6">
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div class="text-center">
-                                <div class="w-16 h-16 bg-finbright-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                                <div class="w-1style="background: linear-gradient( #B803C9FF 20%, #790384 100%);"6 h-16  rounded-full flex items-center justify-center mx-auto mb-4">
                                     <i class="fas fa-user text-white text-xl"></i>
                                 </div>
                                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Données d'identification</h3>
@@ -259,7 +259,7 @@
                             </div>
                             
                             <div class="text-center">
-                                <div class="w-16 h-16 bg-finbright-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                                <div class="w-1style="background: linear-gradient( #B803C9FF 20%, #790384 100%);"6 h-16  rounded-full flex items-center justify-center mx-auto mb-4">
                                     <i class="fas fa-mouse-pointer text-white text-xl"></i>
                                 </div>
                                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Données de navigation</h3>
@@ -276,7 +276,7 @@
                     Vos <span class="text-finbright-purple">droits</span>
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-finbright-purple text-white rounded-lg p-6">
+                    <div style="background: linear-gradient( #B803C9FF 20%, #790384 100%);"class=" text-white rounded-lg p-6">
                         <h3 class="text-lg font-semibold mb-3">
                             <i class="fas fa-eye mr-2"></i>
                             Droit d'accès
@@ -292,7 +292,7 @@
                         <p>Corriger ou mettre à jour vos informations</p>
                     </div>
                     
-                    <div class="bg-finbright-purple text-white rounded-lg p-6">
+                    <div style="background: linear-gradient( #B803C9FF 20%, #790384 100%);"class=" text-white rounded-lg p-6">
                         <h3 class="text-lg font-semibold mb-3">
                             <i class="fas fa-trash mr-2"></i>
                             Droit à l'effacement
@@ -308,7 +308,7 @@
                         <p>Limiter le traitement de vos données</p>
                     </div>
                     
-                    <div class="bg-finbright-purple text-white rounded-lg p-6">
+                    <div style="background: linear-gradient( #B803C9FF 20%, #790384 100%);"class=" text-white rounded-lg p-6">
                         <h3 class="text-lg font-semibold mb-3">
                             <i class="fas fa-download mr-2"></i>
                             Droit à la portabilité
@@ -350,7 +350,7 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="flex items-start">
-                            <div class="w-8 h-8 bg-finbright-purple rounded-full flex items-center justify-center mr-4 mt-1">
+                            <div class="wstyle="background: linear-gradient( #B803C9FF 20%, #790384 100%);"-8 h-8  rounded-full flex items-center justify-center mr-4 mt-1">
                                 <i class="fas fa-lock text-white text-sm"></i>
                             </div>
                             <div>
@@ -370,7 +370,7 @@
                         </div>
                         
                         <div class="flex items-start">
-                            <div class="w-8 h-8 bg-finbright-purple rounded-full flex items-center justify-center mr-4 mt-1">
+                            <div class="wstyle="background: linear-gradient( #B803C9FF 20%, #790384 100%);"-8 h-8  rounded-full flex items-center justify-center mr-4 mt-1">
                                 <i class="fas fa-user-shield text-white text-sm"></i>
                             </div>
                             <div>
@@ -393,7 +393,7 @@
             </div>
 
             <!-- Contact DPO -->
-            <div class="bg-finbright-purple rounded-lg p-8 text-white">
+            <div style="background: linear-gradient( #B803C9FF 20%, #790384 100%);"class=" rounded-lg p-8 text-white">
                 <h2 class="text-2xl font-bold mb-4">Contact - Délégué à la Protection des Données</h2>
                 <p class="mb-4">
                     Pour toute question relative à la protection de vos données personnelles :

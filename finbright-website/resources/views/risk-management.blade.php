@@ -4,7 +4,7 @@
 
 @section('content')
 <!-- Hero Section -->
-<section class="bg-finbright-purple py-20">
+<section style="background: linear-gradient( #B803C9FF 20%, #790384 100%);" class=" py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 class="text-4xl lg:text-6xl font-bold text-white mb-6">
             Politique de <span class="text-finbright-cyan">gestion des risques</span>
@@ -16,22 +16,22 @@
 </section>
 
 <!-- Section Introduction -->
-<section class="bg-white py-20">
+<section class=" py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="prose prose-lg max-w-none">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6">Introduction</h2>
+            <h2 class="text-3xl font-bold text-white mb-6">Introduction</h2>
             <p class="text-gray-600 mb-8">
                 Fin'Bright s'engage à maintenir les plus hauts standards en matière de gestion des risques. 
                 Cette politique définit notre approche systématique pour identifier, évaluer, surveiller et 
                 gérer les risques inhérents à notre activité de financement participatif.
             </p>
             
-            <div class="bg-finbright-purple bg-opacity-10 p-6 rounded-lg mb-8">
-                <h3 class="text-xl font-bold text-finbright-purple mb-4">
+            <div style="background: linear-gradient( #B803C9FF 20%, #790384 100%);" class=" bg-opacity-10 p-6 rounded-lg mb-8">
+                <h3 class="text-xl font-bold text-white mb-4">
                     <i class="fas fa-shield-alt mr-2"></i>
                     Notre engagement
                 </h3>
-                <p class="text-gray-700">
+                <p class="text-white">
                     Protéger les intérêts de nos investisseurs et emprunteurs en appliquant une politique 
                     de gestion des risques robuste et transparente, conforme aux réglementations en vigueur.
                 </p>
@@ -41,15 +41,15 @@
 </section>
 
 <!-- Section Types de risques -->
-<section class="bg-gray-50 py-20">
+<section class=" py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">
             Types de <span class="text-finbright-purple">risques identifiés</span>
         </h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <div class="w-12 h-12 bg-finbright-purple rounded-full flex items-center justify-center mb-4">
+            <div class=" bg-white p-6 rounded-lg shadow-lg">
+                <div class="w- style="background: linear-gradient( #B803C9FF 20%, #790384 100%);"12 h-12  rounded-full flex items-center justify-center mb-4">
                     <i class="fas fa-exclamation-triangle text-white"></i>
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 mb-4">Risque de crédit</h3>
@@ -59,7 +59,7 @@
                 </p>
             </div>
             
-            <div class="bg-white p-6 rounded-lg shadow-lg">
+            <div class=" bg-white p-6 rounded-lg shadow-lg">
                 <div class="w-12 h-12 bg-finbright-cyan rounded-full flex items-center justify-center mb-4">
                     <i class="fas fa-chart-line text-white"></i>
                 </div>
@@ -70,8 +70,8 @@
                 </p>
             </div>
             
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <div class="w-12 h-12 bg-finbright-purple rounded-full flex items-center justify-center mb-4">
+            <div class=" bg-white p-6 rounded-lg shadow-lg">
+                <div class="w- style="background: linear-gradient( #B803C9FF 20%, #790384 100%);"12 h-12  rounded-full flex items-center justify-center mb-4">
                     <i class="fas fa-lock text-white"></i>
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 mb-4">Risque opérationnel</h3>
@@ -81,7 +81,7 @@
                 </p>
             </div>
             
-            <div class="bg-white p-6 rounded-lg shadow-lg">
+            <div class=" bg-white p-6 rounded-lg shadow-lg">
                 <div class="w-12 h-12 bg-finbright-cyan rounded-full flex items-center justify-center mb-4">
                     <i class="fas fa-gavel text-white"></i>
                 </div>
@@ -96,7 +96,7 @@
 </section>
 
 <!-- Section Processus de gestion -->
-<section class="bg-white py-20">
+<section class=" py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">
             Processus de <span class="text-finbright-cyan">gestion des risques</span>
@@ -104,7 +104,7 @@
         
         <div class="space-y-8">
             <div class="flex items-start">
-                <div class="w-12 h-12 bg-finbright-purple rounded-full flex items-center justify-center mr-6 flex-shrink-0">
+                <div class="w- style="background: linear-gradient( #B803C9FF 20%, #790384 100%);"12 h-12  rounded-full flex items-center justify-center mr-6 flex-shrink-0">
                     <span class="text-white font-bold">1</span>
                 </div>
                 <div>
@@ -130,7 +130,7 @@
             </div>
             
             <div class="flex items-start">
-                <div class="w-12 h-12 bg-finbright-purple rounded-full flex items-center justify-center mr-6 flex-shrink-0">
+                <div class="w- style="background: linear-gradient( #B803C9FF 20%, #790384 100%);"12 h-12  rounded-full flex items-center justify-center mr-6 flex-shrink-0">
                     <span class="text-white font-bold">3</span>
                 </div>
                 <div>
@@ -159,7 +159,7 @@
 </section>
 
 <!-- Section Mesures spécifiques -->
-<section class="bg-gray-50 py-20">
+<section class=" py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">
             Mesures de <span class="text-finbright-purple">protection</span>
@@ -212,7 +212,7 @@
 </section>
 
 <!-- Section Gouvernance -->
-<section class="bg-white py-20">
+<section class=" py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">
             Gouvernance et <span class="text-finbright-cyan">responsabilités</span>
@@ -242,7 +242,7 @@
 </section>
 
 <!-- Section Contact -->
-<section class="bg-finbright-purple py-20">
+<section style="background: linear-gradient( #B803C9FF 20%, #790384 100%);" class=" py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="text-3xl font-bold text-white mb-6">
             Questions sur notre politique de gestion des risques ?

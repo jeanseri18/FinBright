@@ -4,7 +4,7 @@
 
 @section('content')
 <!-- Hero Section -->
-<section class="bg-finbright-purple py-20">
+<section style="background: linear-gradient( #B803C9FF 20%, #790384 100%);" class=" py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 class="text-4xl lg:text-6xl font-bold text-white mb-6">
             Mentions <span class="text-finbright-cyan">Légales</span>
@@ -158,7 +158,7 @@
             </div>
 
             <!-- Contact -->
-            <div class="bg-finbright-purple rounded-lg p-8 text-white">
+            <div style="background: linear-gradient( #B803C9FF 20%, #790384 100%);" class=" rounded-lg p-8 text-white">
                 <h2 class="text-2xl font-bold mb-4">Contact</h2>
                 <p class="mb-4">
                     Pour toute question relative aux présentes mentions légales, vous pouvez nous contacter :

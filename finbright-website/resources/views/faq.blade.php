@@ -4,7 +4,7 @@
 
 @section('content')
 <!-- Hero Section -->
-<section class="bg-gradient-to-br from-finbright-purple to-finbright-cyan text-white py-20">
+<section  style="background: linear-gradient( #B803C9FF 20%, #790384 100%);" class=" text-white py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 class="text-4xl md:text-6xl font-bold mb-6">Questions Fréquentes</h1>
         <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
@@ -253,7 +253,7 @@
 </section>
 
 <!-- CTA Section -->
-<section class="py-20 bg-gradient-to-r from-finbright-purple to-finbright-cyan">
+<section class="py-20 "  style="background: linear-gradient( #B803C9FF 20%, #790384 100%);">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
             Vous avez une question ?
