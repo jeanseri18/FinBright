@@ -50,12 +50,10 @@
                 
                 <div class=" p-6 rounded-xl mb-8 shadow-sm"  style="background: #EDF7FFFF;">
                     <p class="text-gray-700 leading-relaxed">
-                        Fin'Bright est une fintech et edtech qui permet aux étudiants talentueux, admis dans les plus prestigieuses grandes écoles et universités, de financer leurs études supérieures.
-                        Elle aide aussi les particuliers ayant des difficultés à obtenir un crédit à accéder à des mini-prêts d’urgence.
-                        <br><br>
-                        En investissant avec Fin'Bright, vous obtenez un rendement financier conséquent, 
-                        et un gain social pour avoir contribué à réduire l’inégalité. Notre mission est de démocratiser le prêt étudiant non garanti et les crédits d'urgence pour ceux qui en ont vraiment besoin.
-                    </p>
+                     Fin Bright est une fintech et une edtech qui permet aux étudiants talentueux, admis dans les plus prestigieuses grandes écoles et universités, de financer leurs études supérieures.
+                      Elle permet également aux particuliers, ayant des difficultés à obtenir un crédit de depannage, d’obtenir des mini-prêts courts pour répondre à leurs besoins urgents. 
+                   <br> <br>   En investissant avec Fin’Bright, vous obtenez un rendement financier conséquent, et un gain social pour avoir contribuer à reduire l’inégalité et l’injustice sociale.
+                       Notre impact social est indéniable".  Notre mission est de démocratiser le prêt étudiant non garanti pour les plus talentueux, et de démocratiser les prêts d’urgence                </p>
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
