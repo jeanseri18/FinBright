@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\EmprunteurController;
+use App\Http\Controllers\InvestisseurController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProfileController;
 
 // Page d'accueil
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -36,3 +40,33 @@ Route::get('/politique-gestion-risques', [PageController::class, 'riskManagement
 
 // Information sur les risques d'investissement
 Route::get('/risques-investissement', [PageController::class, 'investmentRisks'])->name('investment-risks');
+
+
+/////////// Les Routes du Backend /////////
+
+Route::middleware(['auth', 'role:emprunteur'])->group(function () {
+    Route::get('/emprunteur', [EmprunteurController::class, 'index'])->name('emprunteur.dashboard');
+});
+
+Route::middleware(['auth', 'role:investisseur'])->group(function () {
+    Route::get('/investisseur', [InvestisseurController::class, 'index'])->name('investisseur.dashboard');
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+});
+
+// Dashboard (Breeze)
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+// Profile utilisateur (Breeze)
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Auth routes (login, register, etc.)
+require __DIR__.'/auth.php';
