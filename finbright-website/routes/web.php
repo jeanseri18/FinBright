@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\EmprunteurController;
 use App\Http\Controllers\InvestisseurController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Emprunteur\LoanRequestController;
+use App\Http\Controllers\Emprunteur\EmprunteurController;
 
 // Page d'accueil
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -44,8 +45,10 @@ Route::get('/risques-investissement', [PageController::class, 'investmentRisks']
 
 /////////// Les Routes du Backend /////////
 
-Route::middleware(['auth', 'role:emprunteur'])->group(function () {
-    Route::get('/emprunteur', [EmprunteurController::class, 'index'])->name('emprunteur.dashboard');
+Route::prefix('emprunteur')->middleware(['auth'])->group(function () {
+    Route::get('/', [EmprunteurController::class, 'index'])->name('emprunteur.dashboard');
+    Route::get('/demande-de-pret', [LoanRequestController::class, 'create'])->name('emprunteur.loan-requests.create');
+    Route::post('/simulateur', [LoanRequestController::class, 'simulate'])->name('emprunteur.loan-requests.simulate');
 });
 
 Route::middleware(['auth', 'role:investisseur'])->group(function () {

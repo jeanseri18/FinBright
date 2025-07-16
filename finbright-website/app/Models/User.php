@@ -33,6 +33,11 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    
+    public function loanRequests()
+    {
+        return $this->hasMany(LoanRequest::class);
+    }
 
     /**
      * Get the attributes that should be cast.
