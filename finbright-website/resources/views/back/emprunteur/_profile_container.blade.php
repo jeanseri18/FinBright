@@ -4,10 +4,10 @@
         <div class="kt-container-fixed">
             <div class="flex flex-col items-center gap-2 lg:gap-3.5 py-4 lg:pt-5 lg:pb-10">
                 <img class="rounded-full border-3 border-green-500 size-[100px] shrink-0"
-                    src="/static/metronic/tailwind/dist/assets/media/avatars/300-1.png">
+                    src="{{asset('assets/media/avatars/blank.png')}}">
                 <div class="flex items-center gap-1.5">
                     <div class="text-lg leading-5 font-semibold text-mono">
-                        Jenny Klabber
+                        {{ Auth::user()->name }}
                     </div>
                     <svg class="text-primary" fill="none" height="16" viewbox="0 0 15 16" width="15"
                         xmlns="http://www.w3.org/2000/svg">
@@ -36,7 +36,7 @@
                         <i class="ki-filled ki-sms text-muted-foreground text-sm">
                         </i>
                         <a class="text-secondary-foreground font-medium hover:text-primary" href="mailto: jenny@kteam.com">
-                            jenny@kteam.com
+                            {{ Auth::user()->email }}
                         </a>
                     </div>
                 </div>

@@ -45,10 +45,17 @@ Route::get('/risques-investissement', [PageController::class, 'investmentRisks']
 
 /////////// Les Routes du Backend /////////
 
-Route::prefix('emprunteur')->middleware(['auth'])->group(function () {
-    Route::get('/', [EmprunteurController::class, 'index'])->name('emprunteur.dashboard');
-    Route::get('/demande-de-pret', [LoanRequestController::class, 'create'])->name('emprunteur.loan-requests.create');
-    Route::post('/simulateur', [LoanRequestController::class, 'simulate'])->name('emprunteur.loan-requests.simulate');
+Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth'])->group(function () {
+    Route::get('/', [EmprunteurController::class, 'index'])->name('dashboard');
+    Route::post('/simulateur', [LoanRequestController::class, 'simulate'])->name('simuler');
+    Route::post('/demande-de-pret', [LoanRequestController::class, 'soumettreDemande'])->name('demande');
+    Route::get('/mes-demandes', [LoanRequestController::class, 'demandes'])->name('mes-demandes');
+    // Annuler une demande
+    Route::post('/demande-de-pret/{loan}/annuler', [LoanRequestController::class, 'annuler'])->name('loan-requests.annuler');
+    // Modifier une demande (formulaire)
+    Route::get('/demande-de-pret/{loan}/modifier', [LoanRequestController::class, 'edit'])->name('loan-requests.edit');
+    // Modifier une demande (enregistrement)
+    Route::post('/demande-de-pret/{loan}/modifier', [LoanRequestController::class, 'update'])->name('loan-requests.update');
 });
 
 Route::middleware(['auth', 'role:investisseur'])->group(function () {

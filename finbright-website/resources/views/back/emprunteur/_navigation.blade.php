@@ -1793,29 +1793,29 @@
                 data-kt-dropdown-offset-rtl="-20px, 10px" data-kt-dropdown-placement="bottom-end"
                 data-kt-dropdown-placement-rtl="bottom-start" data-kt-dropdown-trigger="click">
                 <div class="cursor-pointer shrink-0" data-kt-dropdown-toggle="true">
-                    <img alt="" class="size-9 rounded-full border-2 border-input shrink-0"
-                        src="/static/metronic/tailwind/dist/assets/media/avatars/gray/5.png">
+                    <img alt="{{ Auth::user()->name }}" class="size-9 rounded-full border-2 border-input shrink-0"
+                        src="{{asset('assets/media/avatars/blank.png')}}">
                     </img>
                 </div>
                 <div class="kt-dropdown-menu w-[250px]" data-kt-dropdown-menu="true">
                     <div class="flex items-center justify-between px-2.5 py-1.5 gap-1.5">
                         <div class="flex items-center gap-2">
                             <img alt="" class="size-9 shrink-0 rounded-full border-2 border-green-500"
-                                src="/static/metronic/tailwind/dist/assets/media/avatars/300-2.png">
+                                src="{{asset('assets/media/avatars/blank.png')}}">
                             <div class="flex flex-col gap-1.5">
                                 <span class="text-sm text-foreground font-semibold leading-none">
-                                    Cody Fisher
+                                    {{ Auth::user()->name }}
                                 </span>
                                 <a class="text-xs text-secondary-foreground hover:text-primary font-medium leading-none"
                                     href="/metronic/tailwind/demo2/account/home/get-started">
-                                    c.fisher@gmail.com
+                                    {{ Auth::user()->email }}
                                 </a>
                             </div>
                             </img>
                         </div>
-                        <span class="kt-badge kt-badge-sm kt-badge-primary kt-badge-outline">
+                        {{-- <span class="kt-badge kt-badge-sm kt-badge-primary kt-badge-outline">
                             Pro
-                        </span>
+                        </span> --}}
                     </div>
                     <ul class="kt-dropdown-menu-sub">
                         <li>
@@ -1824,18 +1824,10 @@
                         </li>
                         <li>
                             <a class="kt-dropdown-menu-link"
-                                href="/metronic/tailwind/demo2/public-profile/profiles/default">
-                                <i class="ki-filled ki-badge">
-                                </i>
-                                Public Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a class="kt-dropdown-menu-link"
-                                href="/metronic/tailwind/demo2/account/home/user-profile">
+                                href="">
                                 <i class="ki-filled ki-profile-circle">
                                 </i>
-                                My Profile
+                                Mon profil
                             </a>
                         </li>
                         <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start"
@@ -1940,12 +1932,12 @@
                                 <span class="flex items-center gap-2">
                                     <i class="ki-filled ki-icon">
                                     </i>
-                                    Language
+                                    Langue
                                 </span>
                                 <span class="ms-auto kt-badge kt-badge-stroke shrink-0">
-                                    English
+                                    Français
                                     <img alt="" class="inline-block size-3.5 rounded-full"
-                                        src="/static/metronic/tailwind/dist/assets/media/flags/united-states.svg" />
+                                        src="/static/metronic/tailwind/dist/assets/media/flags/france.svg" />
                                 </span>
                             </button>
                             <div class="kt-dropdown-menu w-[180px]" data-kt-dropdown-menu="true">
@@ -1954,9 +1946,9 @@
                                         <a class="kt-dropdown-menu-link" href="?dir=ltr">
                                             <span class="flex items-center gap-2">
                                                 <img alt="" class="inline-block size-4 rounded-full"
-                                                    src="/static/metronic/tailwind/dist/assets/media/flags/united-states.svg" />
+                                                    src="/static/metronic/tailwind/dist/assets/media/flags/france.svg" />
                                                 <span class="kt-menu-title">
-                                                    English
+                                                    Français
                                                 </span>
                                             </span>
                                             <i class="ki-solid ki-check-circle ms-auto text-green-500 text-base">
@@ -1967,42 +1959,9 @@
                                         <a class="kt-dropdown-menu-link" href="?dir=rtl">
                                             <span class="flex items-center gap-2">
                                                 <img alt="" class="inline-block size-4 rounded-full"
-                                                    src="/static/metronic/tailwind/dist/assets/media/flags/saudi-arabia.svg" />
+                                                    src="/static/metronic/tailwind/dist/assets/media/flags/united-states.svg" />
                                                 <span class="kt-menu-title">
-                                                    Arabic(Saudi)
-                                                </span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a class="kt-dropdown-menu-link" href="?dir=ltr">
-                                            <span class="flex items-center gap-2">
-                                                <img alt="" class="inline-block size-4 rounded-full"
-                                                    src="/static/metronic/tailwind/dist/assets/media/flags/spain.svg" />
-                                                <span class="kt-menu-title">
-                                                    Spanish
-                                                </span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a class="kt-dropdown-menu-link" href="?dir=ltr">
-                                            <span class="flex items-center gap-2">
-                                                <img alt="" class="inline-block size-4 rounded-full"
-                                                    src="/static/metronic/tailwind/dist/assets/media/flags/germany.svg" />
-                                                <span class="kt-menu-title">
-                                                    German
-                                                </span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a class="kt-dropdown-menu-link" href="?dir=ltr">
-                                            <span class="flex items-center gap-2">
-                                                <img alt="" class="inline-block size-4 rounded-full"
-                                                    src="/static/metronic/tailwind/dist/assets/media/flags/japan.svg" />
-                                                <span class="kt-menu-title">
-                                                    Japanese
+                                                    Anglais
                                                 </span>
                                             </span>
                                         </a>
@@ -2021,17 +1980,22 @@
                                 <i class="ki-filled ki-moon text-base text-muted-foreground">
                                 </i>
                                 <span class="font-medium text-2sm">
-                                    Dark Mode
+                                    Mode sombre
                                 </span>
                             </span>
                             <input class="kt-switch" data-kt-theme-switch-state="dark"
                                 data-kt-theme-switch-toggle="true" name="check" type="checkbox"
                                 value="1" />
                         </div>
-                        <a class="kt-btn kt-btn-outline justify-center w-full"
-                            href="/metronic/tailwind/demo2/authentication/classic/sign-in">
-                            Log out
-                        </a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <a class="kt-btn kt-btn-outline justify-center w-full"
+                                :href="route('logout')"
+                                onclick="event.preventDefault();
+                                    this.closest('form').submit();">
+                                {{ __('Deconnexion') }}
+                            </a>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -2049,121 +2013,25 @@
         <div class="grid">
             <div class="kt-scrollable-x-auto">
                 <div class="kt-menu gap-5 lg:gap-7.5" data-kt-menu="true">
-                    <div class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono here"
-                        data-kt-menu-item-placement="bottom-start" data-kt-menu-item-placement-rtl="bottom-end"
-                        data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click|lg:hover">
-                        <div class="kt-menu-link gap-1.5 pb-2 lg:pb-4" tabindex="0">
+                    <div
+                        class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono here">
+                        <a class="kt-menu-link gap-2.5 pb-2 lg:pb-4"
+                            href="{{route('emprunteur.dashboard')}}" tabindex="0">
                             <span
                                 class="kt-menu-title text-nowrap text-sm text-foreground kt-menu-item-active:text-mono kt-menu-item-active:font-medium kt-menu-item-here:text-mono kt-menu-item-here:font-medium kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
-                                Profiles
+                                Tableau de bord
                             </span>
-                            <span class="kt-menu-arrow">
-                                <i class="ki-filled ki-down text-xs text-muted-foreground">
-                                </i>
+                        </a>
+                    </div>
+                    <div
+                        class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono">
+                        <a class="kt-menu-link gap-2.5 pb-2 lg:pb-4"
+                            href="{{route('emprunteur.mes-demandes')}}" tabindex="0">
+                            <span
+                                class="kt-menu-title text-nowrap text-sm text-foreground kt-menu-item-active:text-mono kt-menu-item-active:font-medium kt-menu-item-here:text-mono kt-menu-item-here:font-medium kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                Mes demandes
                             </span>
-                        </div>
-                        <div class="kt-menu-dropdown kt-menu-default py-2 min-w-[200px]">
-                            <div class="kt-menu-item active">
-                                <a class="kt-menu-link"
-                                    href="/metronic/tailwind/demo2/public-profile/profiles/default" tabindex="0">
-                                    <span class="kt-menu-title">
-                                        Default
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link"
-                                    href="/metronic/tailwind/demo2/public-profile/profiles/creator" tabindex="0">
-                                    <span class="kt-menu-title">
-                                        Creator
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link"
-                                    href="/metronic/tailwind/demo2/public-profile/profiles/company" tabindex="0">
-                                    <span class="kt-menu-title">
-                                        Company
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="/metronic/tailwind/demo2/public-profile/profiles/nft"
-                                    tabindex="0">
-                                    <span class="kt-menu-title">
-                                        NFT
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link"
-                                    href="/metronic/tailwind/demo2/public-profile/profiles/blogger" tabindex="0">
-                                    <span class="kt-menu-title">
-                                        Blogger
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="/metronic/tailwind/demo2/public-profile/profiles/crm"
-                                    tabindex="0">
-                                    <span class="kt-menu-title">
-                                        CRM
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item" data-kt-menu-item-offset="10px, 0"
-                                data-kt-menu-item-overflow="true" data-kt-menu-item-placement="right-start"
-                                data-kt-menu-item-placement-rtl="lrft-start" data-kt-menu-item-toggle="dropdown"
-                                data-kt-menu-item-trigger="click|lg:hover">
-                                <div class="kt-menu-link" tabindex="0">
-                                    <span class="kt-menu-title">
-                                        More
-                                    </span>
-                                    <span class="kt-menu-arrow">
-                                        <i class="ki-filled ki-down text-xs in-[.menu-dropdown]:-rotate-90">
-                                        </i>
-                                    </span>
-                                </div>
-                                <div class="kt-menu-dropdown kt-menu-default min-w-[200px]">
-                                    <div class="kt-menu-item">
-                                        <a class="kt-menu-link"
-                                            href="/metronic/tailwind/demo2/public-profile/profiles/gamer"
-                                            tabindex="0">
-                                            <span class="kt-menu-title">
-                                                Gamer
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <div class="kt-menu-item">
-                                        <a class="kt-menu-link"
-                                            href="/metronic/tailwind/demo2/public-profile/profiles/feeds"
-                                            tabindex="0">
-                                            <span class="kt-menu-title">
-                                                Feeds
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <div class="kt-menu-item">
-                                        <a class="kt-menu-link"
-                                            href="/metronic/tailwind/demo2/public-profile/profiles/plain"
-                                            tabindex="0">
-                                            <span class="kt-menu-title">
-                                                Plain
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <div class="kt-menu-item">
-                                        <a class="kt-menu-link"
-                                            href="/metronic/tailwind/demo2/public-profile/profiles/modal"
-                                            tabindex="0">
-                                            <span class="kt-menu-title">
-                                                Modal
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono"
                         data-kt-menu-item-placement="bottom-start" data-kt-menu-item-placement-rtl="bottom-end"
@@ -2198,16 +2066,6 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
-                    <div
-                        class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono">
-                        <a class="kt-menu-link gap-2.5 pb-2 lg:pb-4"
-                            href="/metronic/tailwind/demo2/public-profile/works" tabindex="0">
-                            <span
-                                class="kt-menu-title text-nowrap text-sm text-foreground kt-menu-item-active:text-mono kt-menu-item-active:font-medium kt-menu-item-here:text-mono kt-menu-item-here:font-medium kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
-                                Works
-                            </span>
-                        </a>
                     </div>
                     <div
                         class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono">
@@ -2282,17 +2140,19 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="flex items-center text-sm text-foreground gap-5 lg:pb-4">
-            <a class="hover:text-primary" href="https://www.youtube.com/c/KeenThemesTuts/videos">
-                Videos
-            </a>
-            <a class="hover:text-primary" href="https://keenthemes.com/metronic/tailwind/docs/">
+        <div class="flex items-center text-sm text-foreground gap-5 pb-2 lg:pb-2">
+            <button type="button" class="kt-btn kt-btn-primary" data-kt-modal-toggle="#modal_simulate">
+                <i class="ki-filled ki-users">
+                </i>
+                Simuler un prêt
+            </button>
+            {{-- <a class="hover:text-primary" href="https://keenthemes.com/metronic/tailwind/docs/">
                 User Guides
             </a>
             <a class="hover:text-primary" href="https://devs.keenthemes.com">
                 Support
-            </a>
-        </div> --}}
+            </a> --}}
+        </div>
     </div>
     <!-- End of Container -->
 </div>

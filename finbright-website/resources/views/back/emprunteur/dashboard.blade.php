@@ -9,11 +9,11 @@
     <!-- End of Container -->
     <style>
         .hero-bg {
-            background-image: url(`{{asset('assets/media/images/2600x1200/bg-1.png')}}`);
+            background-image: url("{{asset('assets/media/images/2600x1200/bg-1.png')}}");
         }
 
         .dark .hero-bg {
-            background-image: url(`{{asset('assets/media/images/2600x1200/bg-1-dark.png')}}`);
+            background-image: url("{{asset('assets/media/images/2600x1200/bg-1-dark.png')}}");
         }
     </style>
 
@@ -39,14 +39,14 @@
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M16 2.4641C19.7128 0.320509 24.2872 0.320508 28 2.4641L37.6506 8.0359C41.3634 10.1795 43.6506 14.141 43.6506
-       18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
-       39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
+                                            18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
+                                            39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
                                             fill="">
                                         </path>
                                         <path
                                             d="M16.25 2.89711C19.8081 0.842838 24.1919 0.842837 27.75 2.89711L37.4006 8.46891C40.9587 10.5232 43.1506 14.3196 43.1506
-       18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
-       39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
+                                            18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
+                                            39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
                                             stroke="">
                                         </path>
                                     </svg>
@@ -62,14 +62,14 @@
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M16 2.4641C19.7128 0.320509 24.2872 0.320508 28 2.4641L37.6506 8.0359C41.3634 10.1795 43.6506 14.141 43.6506
-       18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
-       39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
+                                            18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
+                                            39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
                                             fill="">
                                         </path>
                                         <path
                                             d="M16.25 2.89711C19.8081 0.842838 24.1919 0.842837 27.75 2.89711L37.4006 8.46891C40.9587 10.5232 43.1506 14.3196 43.1506
-       18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
-       39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
+                                            18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
+                                            39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
                                             stroke="">
                                         </path>
                                     </svg>
@@ -85,14 +85,14 @@
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M16 2.4641C19.7128 0.320509 24.2872 0.320508 28 2.4641L37.6506 8.0359C41.3634 10.1795 43.6506 14.141 43.6506
-       18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
-       39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
+                                            18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
+                                            39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
                                             fill="">
                                         </path>
                                         <path
                                             d="M16.25 2.89711C19.8081 0.842838 24.1919 0.842837 27.75 2.89711L37.4006 8.46891C40.9587 10.5232 43.1506 14.3196 43.1506
-       18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
-       39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
+                                            18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
+                                            39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
                                             stroke="">
                                         </path>
                                     </svg>
@@ -108,14 +108,14 @@
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M16 2.4641C19.7128 0.320509 24.2872 0.320508 28 2.4641L37.6506 8.0359C41.3634 10.1795 43.6506 14.141 43.6506
-       18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
-       39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
+                                            18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
+                                            39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
                                             fill="">
                                         </path>
                                         <path
                                             d="M16.25 2.89711C19.8081 0.842838 24.1919 0.842837 27.75 2.89711L37.4006 8.46891C40.9587 10.5232 43.1506 14.3196 43.1506
-       18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
-       39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
+                                            18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
+                                            39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
                                             stroke="">
                                         </path>
                                     </svg>
@@ -131,7 +131,7 @@
                     <div class="kt-card">
                         <div class="kt-card-header">
                             <h3 class="kt-card-title">
-                                About
+                                Présentation
                             </h3>
                         </div>
                         <div class="kt-card-content pt-4 pb-3">
@@ -139,7 +139,7 @@
                                 <tbody>
                                     <tr>
                                         <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
-                                            Age
+                                            Âge
                                         </td>
                                         <td class="text-sm text-mono pb-3.5">
                                             32
@@ -147,7 +147,7 @@
                                     </tr>
                                     <tr>
                                         <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
-                                            City:
+                                            Ville:
                                         </td>
                                         <td class="text-sm text-mono pb-3.5">
                                             Amsterdam
@@ -155,7 +155,7 @@
                                     </tr>
                                     <tr>
                                         <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
-                                            State:
+                                            État/Région:
                                         </td>
                                         <td class="text-sm text-mono pb-3.5">
                                             North Holland
@@ -163,7 +163,7 @@
                                     </tr>
                                     <tr>
                                         <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
-                                            Country:
+                                            Pays:
                                         </td>
                                         <td class="text-sm text-mono pb-3.5">
                                             Netherlands
@@ -171,7 +171,7 @@
                                     </tr>
                                     <tr>
                                         <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
-                                            Postcode:
+                                            Code postal:
                                         </td>
                                         <td class="text-sm text-mono pb-3.5">
                                             1092 NL
@@ -179,7 +179,7 @@
                                     </tr>
                                     <tr>
                                         <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
-                                            Phone:
+                                            Téléphone:
                                         </td>
                                         <td class="text-sm text-mono pb-3.5">
                                             +31 6 1234 56 78
@@ -191,7 +191,7 @@
                                         </td>
                                         <td class="text-sm text-mono pb-3.5">
                                             <a class="text-foreground hover:text-primary" href="#">
-                                                jenny@ktstudio.com
+                                                {{ Auth::user()->email }}
                                             </a>
                                         </td>
                                     </tr>
@@ -275,7 +275,7 @@
                     <div class="kt-card">
                         <div class="kt-card-header">
                             <h3 class="kt-card-title">
-                                Projects
+                                Projets
                             </h3>
                             <div class="kt-menu" data-kt-menu="true">
                                 <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
@@ -296,19 +296,7 @@
                                                     </i>
                                                 </span>
                                                 <span class="kt-menu-title">
-                                                    Add
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="kt-menu-item">
-                                            <a class="kt-menu-link"
-                                                href="/metronic/tailwind/demo2/account/members/import-members">
-                                                <span class="kt-menu-icon">
-                                                    <i class="ki-filled ki-file-down">
-                                                    </i>
-                                                </span>
-                                                <span class="kt-menu-title">
-                                                    Import
+                                                    Ajouter
                                                 </span>
                                             </a>
                                         </div>
@@ -321,7 +309,7 @@
                                                     </i>
                                                 </span>
                                                 <span class="kt-menu-title">
-                                                    Export
+                                                    Exporter
                                                 </span>
                                                 <span class="kt-menu-arrow">
                                                     <i class="ki-filled ki-right text-xs rtl:transform rtl:rotate-180">
@@ -363,7 +351,7 @@
                                                     </i>
                                                 </span>
                                                 <span class="kt-menu-title">
-                                                    Settings
+                                                    Paramètres
                                                 </span>
                                             </a>
                                         </div>
@@ -376,16 +364,16 @@
                                 <thead>
                                     <tr>
                                         <th class="text-start w-52">
-                                            Project Name
+                                            Objet du projet
                                         </th>
                                         <th class="w-56 text-end">
-                                            Progress
+                                            Collecte
                                         </th>
                                         <th class="w-36 text-end">
-                                            People
+                                            Investisseurs
                                         </th>
                                         <th class="w-36 text-end">
-                                            Due Date
+                                            Date d'échéance
                                         </th>
                                         <th class="w-16">
                                         </th>
@@ -409,15 +397,15 @@
                                                 <div class="flex -space-x-2">
                                                     <div class="flex">
                                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-4.png" />
+                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                                     </div>
                                                     <div class="flex">
                                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-1.png" />
+                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                                     </div>
                                                     <div class="flex">
                                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-2.png" />
+                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                                     </div>
                                                     <div class="flex">
                                                         <span
@@ -525,11 +513,11 @@
                                                 <div class="flex -space-x-2">
                                                     <div class="flex">
                                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-1.png" />
+                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                                     </div>
                                                     <div class="flex">
                                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-2.png" />
+                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                                     </div>
                                                     <div class="flex">
                                                         <span
@@ -638,11 +626,11 @@
                                                 <div class="flex -space-x-2">
                                                     <div class="flex">
                                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-20.png" />
+                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                                     </div>
                                                     <div class="flex">
                                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-7.png" />
+                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -745,15 +733,15 @@
                                                 <div class="flex -space-x-2">
                                                     <div class="flex">
                                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-6.png" />
+                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                                     </div>
                                                     <div class="flex">
                                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-23.png" />
+                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                                     </div>
                                                     <div class="flex">
                                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-12.png" />
+                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                                     </div>
                                                     <div class="flex">
                                                         <span
@@ -862,15 +850,15 @@
                                                 <div class="flex -space-x-2">
                                                     <div class="flex">
                                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-2.png" />
+                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                                     </div>
                                                     <div class="flex">
                                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-15.png" />
+                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                                     </div>
                                                     <div class="flex">
                                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-18.png" />
+                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                                     </div>
                                                     <div class="flex">
                                                         <span
@@ -967,8 +955,8 @@
                         </div>
                         <div class="kt-card-footer justify-center">
                             <a class="kt-link kt-link-underlined kt-link-dashed"
-                                href="/metronic/tailwind/demo2/public-profile/projects/3-columns/">
-                                All Projects
+                                href="">
+                                Tous les Projets
                             </a>
                         </div>
                     </div>
@@ -977,7 +965,7 @@
                         <div class="kt-card">
                             <div class="kt-card-header gap-2">
                                 <h3 class="kt-card-title">
-                                    Contributors
+                                    Contributeurs
                                 </h3>
                                 <div class="kt-menu" data-kt-menu="true">
                                     <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
@@ -991,7 +979,7 @@
                                         <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
                                             data-kt-menu-dismiss="true">
                                             <div class="kt-menu-item">
-                                                <a class="kt-menu-link" href="/metronic/tailwind/demo2/account/activity">
+                                                <a class="kt-menu-link" href="">
                                                     <span class="kt-menu-icon">
                                                         <i class="ki-filled ki-cloud-change">
                                                         </i>
@@ -1104,7 +1092,7 @@
                                     <div class="flex items-center gap-2">
                                         <div class="flex items-center grow gap-2.5">
                                             <img alt="" class="rounded-full size-9 shrink-0"
-                                                src="/static/metronic/tailwind/dist/assets/media/avatars/300-3.png">
+                                                src="{{asset('assets/media/avatars/blank.png')}}">
                                             <div class="flex flex-col">
                                                 <a class="text-sm font-semibold text-mono hover:text-primary mb-px"
                                                     href="#">
@@ -1134,7 +1122,7 @@
                                                                 </i>
                                                             </span>
                                                             <span class="kt-menu-title">
-                                                                Details
+                                                                Détails
                                                             </span>
                                                         </a>
                                                     </div>
@@ -1146,7 +1134,7 @@
                                                                 </i>
                                                             </span>
                                                             <span class="kt-menu-title">
-                                                                Share
+                                                                Partager
                                                             </span>
                                                         </a>
                                                     </div>
@@ -1157,7 +1145,7 @@
                                                                 </i>
                                                             </span>
                                                             <span class="kt-menu-title">
-                                                                Export
+                                                                Exporter
                                                             </span>
                                                         </a>
                                                     </div>
@@ -1168,7 +1156,7 @@
                                     <div class="flex items-center gap-2">
                                         <div class="flex items-center grow gap-2.5">
                                             <img alt="" class="rounded-full size-9 shrink-0"
-                                                src="/static/metronic/tailwind/dist/assets/media/avatars/300-1.png">
+                                                src="{{asset('assets/media/avatars/blank.png')}}">
                                             <div class="flex flex-col">
                                                 <a class="text-sm font-semibold text-mono hover:text-primary mb-px"
                                                     href="#">
@@ -1198,7 +1186,7 @@
                                                                 </i>
                                                             </span>
                                                             <span class="kt-menu-title">
-                                                                Details
+                                                                Détails
                                                             </span>
                                                         </a>
                                                     </div>
@@ -1210,7 +1198,7 @@
                                                                 </i>
                                                             </span>
                                                             <span class="kt-menu-title">
-                                                                Share
+                                                                Partager
                                                             </span>
                                                         </a>
                                                     </div>
@@ -1221,7 +1209,7 @@
                                                                 </i>
                                                             </span>
                                                             <span class="kt-menu-title">
-                                                                Export
+                                                                Exporter
                                                             </span>
                                                         </a>
                                                     </div>
@@ -1232,7 +1220,7 @@
                                     <div class="flex items-center gap-2">
                                         <div class="flex items-center grow gap-2.5">
                                             <img alt="" class="rounded-full size-9 shrink-0"
-                                                src="/static/metronic/tailwind/dist/assets/media/avatars/300-14.png">
+                                                src="{{asset('assets/media/avatars/blank.png')}}">
                                             <div class="flex flex-col">
                                                 <a class="text-sm font-semibold text-mono hover:text-primary mb-px"
                                                     href="#">
@@ -1262,7 +1250,7 @@
                                                                 </i>
                                                             </span>
                                                             <span class="kt-menu-title">
-                                                                Details
+                                                                Détails
                                                             </span>
                                                         </a>
                                                     </div>
@@ -1274,7 +1262,7 @@
                                                                 </i>
                                                             </span>
                                                             <span class="kt-menu-title">
-                                                                Share
+                                                                Partager
                                                             </span>
                                                         </a>
                                                     </div>
@@ -1285,7 +1273,7 @@
                                                                 </i>
                                                             </span>
                                                             <span class="kt-menu-title">
-                                                                Export
+                                                                Exporter
                                                             </span>
                                                         </a>
                                                     </div>
@@ -1296,7 +1284,7 @@
                                     <div class="flex items-center gap-2">
                                         <div class="flex items-center grow gap-2.5">
                                             <img alt="" class="rounded-full size-9 shrink-0"
-                                                src="/static/metronic/tailwind/dist/assets/media/avatars/300-7.png">
+                                                src="{{asset('assets/media/avatars/blank.png')}}">
                                             <div class="flex flex-col">
                                                 <a class="text-sm font-semibold text-mono hover:text-primary mb-px"
                                                     href="#">
@@ -1326,7 +1314,7 @@
                                                                 </i>
                                                             </span>
                                                             <span class="kt-menu-title">
-                                                                Details
+                                                                Détails
                                                             </span>
                                                         </a>
                                                     </div>
@@ -1338,7 +1326,7 @@
                                                                 </i>
                                                             </span>
                                                             <span class="kt-menu-title">
-                                                                Share
+                                                                Partager
                                                             </span>
                                                         </a>
                                                     </div>
@@ -1349,7 +1337,7 @@
                                                                 </i>
                                                             </span>
                                                             <span class="kt-menu-title">
-                                                                Export
+                                                                Exporter
                                                             </span>
                                                         </a>
                                                     </div>
@@ -1362,14 +1350,14 @@
                             <div class="kt-card-footer justify-center">
                                 <a class="kt-link kt-link-underlined kt-link-dashed"
                                     href="/metronic/tailwind/demo2/public-profile/network">
-                                    All Contributors
+                                    Tous les contributeurs
                                 </a>
                             </div>
                         </div>
                         <div class="kt-card">
                             <div class="kt-card-header">
                                 <h3 class="kt-card-title">
-                                    Assistance
+                                    Statistiques
                                 </h3>
                                 <div class="kt-menu" data-kt-menu="true">
                                     <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
@@ -1407,7 +1395,7 @@
                                                 </a>
                                             </div>
                                             <div class="kt-menu-item">
-                                                <a class="kt-menu-link" href="/metronic/tailwind/demo2/account/activity">
+                                                <a class="kt-menu-link" href="">
                                                     <span class="kt-menu-icon">
                                                         <i class="ki-filled ki-cloud-change">
                                                         </i>
@@ -1456,9 +1444,9 @@
                                         </p>
                                     </div>
                                     <img alt="image" class="dark:hidden max-h-[160px]"
-                                        src="/static/metronic/tailwind/dist/assets/media/illustrations/1.svg" />
+                                        src="{{asset('assets/media/illustrations/1.svg')}}" />
                                     <img alt="image" class="light:hidden max-h-[160px]"
-                                        src="/static/metronic/tailwind/dist/assets/media/illustrations/1-dark.svg" />
+                                        src="{{asset('assets/media/illustrations/1-dark.svg')}}" />
                                 </div>
                             </div>
                             <div class="kt-card-footer justify-center">
@@ -1478,8 +1466,5 @@
 @endsection
 
 @section('javascripts')
-    <script src="{{ asset('assets/js/core.bundle.js') }}"></script>
-    <script src="{{ asset('assets/vendors/ktui/ktui.min.js') }}"></script>
-    <script src="{{ asset('assets/vendors/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets/js/widgets/general.js') }}"></script>
 @endsection

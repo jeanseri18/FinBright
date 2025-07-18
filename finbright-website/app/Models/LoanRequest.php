@@ -13,8 +13,9 @@ class LoanRequest extends Model
         'user_id',
         'amount',
         'duration',
-        'interest_rate',
         'status',
+        'deferred',
+        'deferred_months',
         'simulation_result',
     ];
 
