@@ -28,7 +28,7 @@
                     <div class="kt-card">
                         <div class="kt-card-header">
                             <h3 class="kt-card-title">
-                                Community Badges
+                                Mes tags
                             </h3>
                         </div>
                         <div class="kt-card-content pb-7.5">
@@ -1433,14 +1433,14 @@
                                 <div class="flex flex-wrap md:flex-nowrap items-center gap-6 md:gap-10">
                                     <div class="flex flex-col gap-3">
                                         <h2 class="text-xl font-semibold text-mono">
-                                            Unlock Creative
+                                            Lorem ipsum
                                             <br />
-                                            Partnerships on Our Blog
+                                            sit amet consectetur adipisicing elit.
                                         </h2>
                                         <p class="text-sm text-secondary-foreground leading-5.5">
-                                            Explore exciting collaboration opportunities with our blog.
-                                            We're open to partnerships, guest posts, and more.
-                                            Join us to share your insights and grow your audience.
+                                            Recusandae necessitatibus eius, saepe laboriosam iure blanditiis sint unde dignissimos
+                                            reiciendis corporis adipisci dolores dolorum minima delectus sit cumque maiores quas. 
+                                            Saepe.
                                         </p>
                                     </div>
                                     <img alt="image" class="dark:hidden max-h-[160px]"

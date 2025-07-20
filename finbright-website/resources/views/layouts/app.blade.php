@@ -45,9 +45,9 @@
 
                 <!-- CTA Buttons -->
                 <div class="hidden md:flex items-center space-x-4">
-                    <button class="bg-finbright-cyan text-white px-4 py-2 rounded-lg hover:bg-finbright-light-cyan transition-colors">
+                    <a href="{{route('emprunteur.dashboard')}}" class="bg-finbright-cyan text-white px-4 py-2 rounded-lg hover:bg-finbright-light-cyan transition-colors">
                         Connexion
-                    </button>
+                    </a>
                     <button class="bg-finbright-purple text-white px-4 py-2 rounded-lg hover:bg-finbright-dark-purple transition-colors">
                         S'inscrire
                     </button>

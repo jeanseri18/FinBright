@@ -12,9 +12,9 @@ class LoanRequestController extends Controller
     /**
      * Affiche le formulaire de simulation.
      */
-    public function create()
+    public function profil()
     {
-        return view('back.emprunteur.loan_requests.create');
+        return view('back.emprunteur.mon-profil');
     }
 
     /**
@@ -108,7 +108,7 @@ class LoanRequestController extends Controller
             abort(403, 'Modification interdite.');
         }
 
-        return view('back.emprunteur.edit', compact('loan'));
+        return view('back.emprunteur.demandes.edit', compact('loan'));
     }
 
     public function update(Request $request, LoanRequest $loan)

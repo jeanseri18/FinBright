@@ -1,22 +1,38 @@
-<!-- Header -->
 <header class="flex items-center transition-[height] shrink-0 bg-background h-(--header-height)" data-kt-sticky="true"
     data-kt-sticky-class="transition-[height] fixed z-10 top-0 left-0 right-0 backdrop-blur-md bg-white/70 border-b border-border"
     data-kt-sticky-name="header" data-kt-sticky-offset="200px" id="header">
     <!-- Container -->
     <div class="kt-container-fixed flex justify-between items-center lg:gap-4" id="headerContainer">
         <!-- Logo -->
-        <div class="flex items-center gap-2 lg:gap-5 2xl:-ml-[60px]">
+        <div class="flex items-center gap-2 2xl:-ml-[60px]">
             <a href="/metronic/tailwind/demo2/">
-                <img class="dark:hidden min-h-[42px]"
-                    src="{{asset('assets/media/app/mini-logo-circle.svg')}}" />
-                <img class="hidden dark:inline-block min-h-[42px]"
-                    src="{{asset('assets/media/app/mini-logo-circle-dark.svg')}}" />
+                {{-- <img class="dark:hidden max-h-[70px]"
+                    src="{{asset('assets/media/app/finbright-logo.png')}}" /> --}}
+                <img class="dark:hidden max-h-[42px]"
+                    src="{{asset('assets/media/app/mini-logo-circle.png')}}" />
+                <img class="hidden dark:inline-block max-h-[42px]"
+                    src="{{asset('assets/media/app/mini-logo-circle-dark.png')}}" />
             </a>
             <div class="flex items-center">
-                <h3 class="text-secondary-foreground text-base hidden md:block">
-                    MetronicTeam
+                <h3 class="text-mono text-lg font-medium hidden md:block">
+                    Fin'Bright
                 </h3>
             </div>
+            <!-- Navs -->
+            <div class="hidden lg:flex items-center">
+                <div class="border-e border-border h-5 mx-4">
+                </div>
+                <!-- Nav -->
+                <div class="kt-menu kt-menu-default">
+                    <div class="kt-menu-item">
+                        <span class="kt-menu-toggle text-mono text-sm font-medium">
+                            Espace emprunteur
+                        </span>
+                    </div>
+                </div>
+                <!-- End of Nav -->
+            </div>
+            <!-- End of Navs -->
         </div>
         <!-- End of Logo -->
         <!-- Topbar -->
@@ -2033,6 +2049,16 @@
                             </span>
                         </a>
                     </div>
+                    <div
+                        class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono">
+                        <a class="kt-menu-link gap-2.5 pb-2 lg:pb-4"
+                            href="{{route('emprunteur.mon-profil')}}" tabindex="0">
+                            <span
+                                class="kt-menu-title text-nowrap text-sm text-foreground kt-menu-item-active:text-mono kt-menu-item-active:font-medium kt-menu-item-here:text-mono kt-menu-item-here:font-medium kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                Mon profil
+                            </span>
+                        </a>
+                    </div>
                     <div class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono"
                         data-kt-menu-item-placement="bottom-start" data-kt-menu-item-placement-rtl="bottom-end"
                         data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click|lg:hover">
@@ -2062,76 +2088,6 @@
                                     tabindex="0">
                                     <span class="kt-menu-title">
                                         2 Columns
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono">
-                        <a class="kt-menu-link gap-2.5 pb-2 lg:pb-4"
-                            href="/metronic/tailwind/demo2/public-profile/teams" tabindex="0">
-                            <span
-                                class="kt-menu-title text-nowrap text-sm text-foreground kt-menu-item-active:text-mono kt-menu-item-active:font-medium kt-menu-item-here:text-mono kt-menu-item-here:font-medium kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
-                                Teams
-                            </span>
-                        </a>
-                    </div>
-                    <div
-                        class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono">
-                        <a class="kt-menu-link gap-2.5 pb-2 lg:pb-4"
-                            href="/metronic/tailwind/demo2/public-profile/network" tabindex="0">
-                            <span
-                                class="kt-menu-title text-nowrap text-sm text-foreground kt-menu-item-active:text-mono kt-menu-item-active:font-medium kt-menu-item-here:text-mono kt-menu-item-here:font-medium kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
-                                Network
-                            </span>
-                        </a>
-                    </div>
-                    <div
-                        class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono">
-                        <a class="kt-menu-link gap-2.5 pb-2 lg:pb-4"
-                            href="/metronic/tailwind/demo2/public-profile/activity" tabindex="0">
-                            <span
-                                class="kt-menu-title text-nowrap text-sm text-foreground kt-menu-item-active:text-mono kt-menu-item-active:font-medium kt-menu-item-here:text-mono kt-menu-item-here:font-medium kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
-                                Activity
-                            </span>
-                        </a>
-                    </div>
-                    <div class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono"
-                        data-kt-menu-item-placement="bottom-start" data-kt-menu-item-placement-rtl="bottom-end"
-                        data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click|lg:hover">
-                        <div class="kt-menu-link gap-1.5 pb-2 lg:pb-4" tabindex="0">
-                            <span
-                                class="kt-menu-title text-nowrap text-sm text-foreground kt-menu-item-active:text-mono kt-menu-item-active:font-medium kt-menu-item-here:text-mono kt-menu-item-here:font-medium kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
-                                More
-                            </span>
-                            <span class="kt-menu-arrow">
-                                <i class="ki-filled ki-down text-xs text-muted-foreground">
-                                </i>
-                            </span>
-                        </div>
-                        <div class="kt-menu-dropdown kt-menu-default py-2 min-w-[200px]">
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link"
-                                    href="/metronic/tailwind/demo2/public-profile/campaigns/card" tabindex="0">
-                                    <span class="kt-menu-title">
-                                        Campaigns - Card
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link"
-                                    href="/metronic/tailwind/demo2/public-profile/campaigns/list" tabindex="0">
-                                    <span class="kt-menu-title">
-                                        Campaigns - List
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="/metronic/tailwind/demo2/public-profile/empty"
-                                    tabindex="0">
-                                    <span class="kt-menu-title">
-                                        Empty
                                     </span>
                                 </a>
                             </div>

@@ -12,7 +12,7 @@ Contact:
         <meta name="author" content="DIGIT'comm : Moussa Fofana" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta content="Sign in page using Tailwind CSS" name="description"/>
+        <meta content="" name="description"/>
 
         <!-- <title>{{ config('app.name', 'Laravel') }}</title> -->
         <title>@yield('title', ' | Emprunteur Backoffice')</title>
@@ -66,7 +66,7 @@ Contact:
         <!-- Page -->
         <!-- Main -->
         <div class="flex grow flex-col in-data-kt-[sticky-header=on]:pt-(--header-height-default)">
-            
+            <!-- Header -->
             @include('back.emprunteur._navigation')
 
             <!-- Content -->
@@ -125,8 +125,10 @@ Contact:
                                 data-kt-select-placeholder="Sélectionner un type..."
                                 data-kt-select-config='{
                                     "optionsClass": "kt-scrollable overflow-auto max-h-[250px]"
-                                }'>
-                                <option value="student">Prêt étudiant</option>
+                                }'
+                                onchange="document.querySelectorAll('.deferred_div').forEach(el => el.style.display = (this.value === 'student') ? 'flex' : 'none')"
+                                >
+                                <option value="student" checked="">Prêt étudiant</option>
                                 <option value="mini">Mini-prêt</option>
                             </select>
                         </div>
@@ -153,26 +155,29 @@ Contact:
                             </label>
                         </div>
 
-                        <div class="flex flex-col px-5 gap-1">
+                        <div class="flex flex-col px-5 gap-1 deferred_div">
                             <label for="deferred" class="flex items-center gap-5">
                                 <span class="flex items-center gap-1">
                                     Différé partiel (étudiants)
                                     <i class="ki-filled ki-information-2 text-muted-foreground text-sm"></i>
                                 </span>
-                                <input type="checkbox" id="deferred" name="deferred" value="1" class="kt-switch kt-switch-sm ml-2">
+                                <input type="checkbox" id="deferred" name="deferred" value="1" 
+                                    class="kt-switch kt-switch-sm ml-2"
+                                    onchange="document.querySelector('input[name=deferred_months]').disabled = !this.checked; document.querySelector('input[name=deferred_months]').value = ''">
                             </label>
                         </div>
 
-                        <div class="flex flex-col px-5 gap-1">
+                        <div class="flex flex-col px-5 gap-1 deferred_div">
                             <div class="flex flex-center">
                                 <label for="deferred_months" class="text-mono font-semibold text-sm">
                                     Durée différé (mois)
                                 </label>
                             </div>
                             <label class="kt-input">
-                                <input type="number" name="deferred_months" min="0" max="36" class="disabled:opacity-25">
+                                <input type="number" name="deferred_months" min="0" max="36" disabled>
                             </label>
                         </div>
+
                         <div class="flex flex-col px-5 gap-4 pt-4">
                             <button type="submit" class="kt-btn">
                                 Lancer la simulation
@@ -219,7 +224,7 @@ Contact:
         <script src="{{ asset('assets/js/core.bundle.js') }}"></script>
         <script src="{{ asset('assets/vendors/ktui/ktui.min.js') }}"></script>
         <script src="{{ asset('assets/vendors/apexcharts/apexcharts.min.js') }}"></script>
-        
+
         @yield('javascripts')
         <!-- End of Scripts -->
 

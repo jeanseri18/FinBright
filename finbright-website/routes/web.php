@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\InvestisseurController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Emprunteur\LoanRequestController;
+use App\Http\Controllers\InvestisseurController;
 use App\Http\Controllers\Emprunteur\EmprunteurController;
+use App\Http\Controllers\Emprunteur\LoanRequestController;
+use App\Http\Controllers\Investisseur\InvestmentController;
 
 // Page d'accueil
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -50,6 +51,7 @@ Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth'])->group(fu
     Route::post('/simulateur', [LoanRequestController::class, 'simulate'])->name('simuler');
     Route::post('/demande-de-pret', [LoanRequestController::class, 'soumettreDemande'])->name('demande');
     Route::get('/mes-demandes', [LoanRequestController::class, 'demandes'])->name('mes-demandes');
+    Route::get('/mon-profil', [LoanRequestController::class, 'profil'])->name('mon-profil');
     // Annuler une demande
     Route::post('/demande-de-pret/{loan}/annuler', [LoanRequestController::class, 'annuler'])->name('loan-requests.annuler');
     // Modifier une demande (formulaire)
@@ -58,8 +60,10 @@ Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth'])->group(fu
     Route::post('/demande-de-pret/{loan}/modifier', [LoanRequestController::class, 'update'])->name('loan-requests.update');
 });
 
-Route::middleware(['auth', 'role:investisseur'])->group(function () {
-    Route::get('/investisseur', [InvestisseurController::class, 'index'])->name('investisseur.dashboard');
+Route::prefix('investisseur')->name('investisseur.')->middleware(['auth'])->group(function () {
+    Route::get('/', [InvestmentController::class, 'index'])->name('dashboard');
+    Route::get('/decouverte-des-projets', [InvestmentController::class, 'decouvrir'])->name('decouvrir');
+    Route::post('/contribuer/{loanRequest}', [InvestmentController::class, 'investir'])->name('investir');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {

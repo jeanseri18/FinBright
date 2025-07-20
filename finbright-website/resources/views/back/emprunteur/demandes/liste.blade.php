@@ -1,6 +1,6 @@
 @extends('back.emprunteur.layouts')
 
-@section('title', 'Tableau de bord')
+@section('title', 'Liste des demandes')
 
 @section('content')
     <!-- Container -->
@@ -120,11 +120,11 @@
                                 </div>
                             </div>
                             <div class="text-center mb-7">
-                                <a class="text-lg font-medium text-mono hover:text-primary" href="">
+                                <a class="text-lg font-medium text-mono hover:text-primary" href="{{ route('emprunteur.loan-requests.edit', $loan) }}">
                                     Phoenix SaaS
                                 </a>
                                 <div class="text-sm text-secondary-foreground">
-                                    <strong>{{ $loan->amount }} €</strong>
+                                    Montant : <strong>{{ $loan->amount }} €</strong>
                                 </div>
                             </div>
                             <div class="grid justify-center gap-1.5 mb-7.5">
@@ -134,15 +134,15 @@
                                 <div class="flex -space-x-2">
                                     <div class="flex">
                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                            src="{{asset('assets/media/avatars/blank.png')}}" />
+                                            src="{{asset('assets/media/avatars/300-1.png')}}" />
                                     </div>
                                     <div class="flex">
                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                            src="{{asset('assets/media/avatars/blank.png')}}" />
+                                            src="{{asset('assets/media/avatars/300-2.png')}}" />
                                     </div>
                                     <div class="flex">
                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                            src="{{asset('assets/media/avatars/blank.png')}}" />
+                                            src="{{asset('assets/media/avatars/300-4.png')}}" />
                                     </div>
                                     <div class="flex">
                                         <span
@@ -908,11 +908,11 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-col">
-                                    <a class="text-lg font-medium text-mono hover:text-primary" href="">
+                                    <a class="text-lg font-medium text-mono hover:text-primary" href="{{ route('emprunteur.loan-requests.edit', $loan) }}">
                                         Phoenix SaaS
                                     </a>
                                     <div class="text-sm text-secondary-foreground">
-                                        <strong>{{ $loan->amount }} €</strong>
+                                        Montant : <strong>{{ $loan->amount }} €</strong>
                                     </div>
                                 </div>
                             </div>
@@ -958,15 +958,15 @@
                                         <div class="flex -space-x-2">
                                             <div class="flex">
                                                 <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="{{asset('assets/media/avatars/blank.png')}}" />
+                                                    src="{{asset('assets/media/avatars/300-1.png')}}" />
                                             </div>
                                             <div class="flex">
                                                 <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="{{asset('assets/media/avatars/blank.png')}}" />
+                                                    src="{{asset('assets/media/avatars/300-2.png')}}" />
                                             </div>
                                             <div class="flex">
                                                 <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="{{asset('assets/media/avatars/blank.png')}}" />
+                                                    src="{{asset('assets/media/avatars/300-4.png')}}" />
                                             </div>
                                             <div class="flex">
                                                 <span
