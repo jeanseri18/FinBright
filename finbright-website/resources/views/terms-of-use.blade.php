@@ -22,7 +22,7 @@
             <!-- Introduction -->
             <div class="mb-12">
                 <div class="bg-finbright-purple text-white rounded-lg p-6 mb-8">
-                    <h2 class="text-2xl font-bold mb-4 text-white">Dernière mise à jour : 15 décembre 2024</h2>
+                    <h2 class="text-2xl font-bold mb-4 text-white">Dernière mise à jour : 15 décembre 2025</h2>
                     <p class="text-white">
                         Les présentes conditions générales d'utilisation (CGU) régissent l'accès et l'utilisation de la plateforme Fin'Bright. En utilisant nos services, vous acceptez ces conditions dans leur intégralité.
                     </p>

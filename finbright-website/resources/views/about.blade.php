@@ -71,7 +71,7 @@
             
             <div class="bg-gray-50 rounded-2xl p-8 md:p-12">
                 <p class="text-lg md:text-xl text-gray-700 leading-relaxed text-center">
-                    Fin'Bright est un <strong class="text-finbright-purple">Peer-2-Peer Lending entre particuliers</strong> qui réunit des étudiants brillants en quête de financement et des particuliers souhaitant donner du sens à leur épargne. Nous offrons une alternative aux solutions bancaires classiques pour permettre à chacun d'accéder à des opportunités de financement éthiques et transparentes.
+                    Fin'Bright est un <strong class="text-finbright-purple">Peer-2-Peer Lending entre particuliers</strong> qui réunit des étudiants brillants en quête de financement, des particuliers ayant besoin de mini prêt d'urgence ou de mini prêt de dépannage, et des particuliers souhaitant donner du sens à leur épargne. Nous offrons une alternative aux solutions bancaires classiques pour permettre à chacun d'accéder à des opportunités de financement éthiques et transparentes.
                 </p>
             </div>
         </div>
@@ -167,12 +167,13 @@
             Rejoignez la communauté Fin'Bright
         </h2>
         <p class="text-xl text-white mb-8 opacity-90 max-w-2xl mx-auto">
-            Que vous soyez étudiant ou investisseur, découvrez comment nous pouvons vous accompagner
+          Que vous soyez étudiant, particulier ayant besoin d’un mini prêt
+d’urgence, ou investisseur découvrez comment nous pouvons vous accompagnez
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="{{ route('how-it-works') }}" class="bg-white text-finbright-purple px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
                 <i class="fas fa-graduation-cap mr-2"></i>
-                Je suis étudiant
+                Je veux emprunter
             </a>
             <a href="{{ route('how-to-invest') }}" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-finbright-purple transition-colors">
                 <i class="fas fa-chart-line mr-2"></i>

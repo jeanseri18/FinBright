@@ -9,17 +9,14 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
       
       <!-- Texte à gauche -->
-      <div>
+      <div class="text-center md:text-left">
         <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-          Investissez dans l'avenir, valorisez votre épargne <br />
-          et gagnez un rendement financier parmi les meilleurs
+          Valorisez votre épargne, gagnez un rendement financier, un gain social et psychologique
         </h1>
         <p class="text-xl md:text-2xl text-gray-600 mb-8">
           Fin'Bright vous offre l'opportunité d'investir directement dans des projets à impact social : 
-          financement d'étudiants brillants admis dans les grandes écoles et soutien aux particuliers 
-          ayant besoin d'un mini-prêt d’urgence.  
-          <br class="hidden md:block" />
-          Vous percevez des intérêts compétitifs tout en contribuant à la réussite de talents prometteurs. 🌱
+          financement d'étudiants brillants admis dans les plus prestigieuses grandes écoles et universités, 
+          soutien aux particuliers ayant besoin d'un mini prêt d'urgence. Vous percevez des intérêts compétitifs.
         </p>
 
         <div class="flex flex-col sm:flex-row gap-4">
@@ -34,7 +31,7 @@
 
       <!-- Image à droite -->
       <div>
-        <img src="/images/jeune-homme-avec-livre-en-regardant-la-camera.jpg" alt="Investissement étudiant" class="rounded-2xl shadow-lg w-full object-cover h-[400px] md:h-[500px]" />
+        <img src="/images/multiracial-group-of-university-students-in-the-cl-2024-12-13-18-34-41-utc.jpg" alt="Investissement étudiant" class="rounded-2xl shadow-lg w-full object-cover h-[400px] md:h-[500px]" />
       </div>
 
     </div>
@@ -99,8 +96,7 @@
                     <h3 class="text-xl font-bold text-gray-900">Investissement</h3>
                 </div>
                 <p class="text-gray-600">
-                    Investissez à partir de petits montants pour diversifier vos placements.
-                </p>
+Investisser minimum 100 euros et diversifier vos investissements en finançant plusieurs projets .              </p>
             </div>
             
             <!-- Étape 5 -->
@@ -125,7 +121,7 @@
                     <h3 class="text-xl font-bold text-gray-900">Remboursements</h3>
                 </div>
                 <p class="text-gray-600">
-                    Percevez des remboursements mensuels (capital et intérêts) directement sur votre compte.
+                    Percevez vos remboursements mensuels (capital et intérêts) directement sur votre compte.
                 </p>
             </div>
         </div>
@@ -148,7 +144,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 mb-4">Impact social</h3>
                 <p class="text-gray-600">
-                    Soutenir la formation et l'éducation des talents d'aujourd'hui.
+                    Soutenir l'excellence éducative.
                 </p>
             </div>
             
@@ -198,30 +194,7 @@
         </div>
     </div>
 </section>
-<section class="py-20 "  style="background: linear-gradient( #B803C9FF 20%, #790384 100%);">
-    
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Statistiques</h2>
-            <p class="text-xl text-white">Des chiffres clés pour vous aider à comprendre comment Fin'Bright peut vous aider</p>
-        </div>
-        <!-- Statistiques -->
-        <div class="mt-16 grid md:grid-cols-3 gap-8 text-center">
-            <div class="p-6">
-                <div class="text-4xl font-bold text-white mb-2">8.5%</div>
-                <div class="text-white">Rendement moyen annuel</div>
-            </div>
-            <div class="p-6">
-                <div class="text-4xl font-bold text-white mb-2">50€</div>
-                <div class="text-white">Investissement minimum</div>
-            </div>
-            <div class="p-6">
-                <div class="text-4xl font-bold text-white mb-2">95%</div>
-                <div class="text-white">Taux de remboursement</div>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 <!-- Types d'investissement Section -->
 <section class=" py-20">
@@ -240,37 +213,39 @@
                     </div>
                     <div>
                         <h3 class="text-2xl font-bold text-gray-900">Prêts étudiants</h3>
-                        <p class="text-finbright-purple font-semibold">Rendement : 6-10%</p>
+                        <p class="text-finbright-purple font-semibold">Rendement : 5-6 %</p>
                     </div>
                 </div>
                 <p class="text-gray-600 mb-6">
-                    Financez les études d'étudiants brillants admis dans les plus prestigieuses grandes écoles et universités. Durée moyenne : 3-5 ans.
+                    Prêt sans caution ni garant pour financer les études d'étudiants brillants.
                 </p>
                 <ul class="space-y-2 text-gray-600">
-                    <li class="flex items-center"><i class="fas fa-check text-finbright-purple mr-2"></i> Profils vérifiés et sélectionnés</li>
-                    <li class="flex items-center"><i class="fas fa-check text-finbright-purple mr-2"></i> Remboursement après diplôme</li>
-                    <li class="flex items-center"><i class="fas fa-check text-finbright-purple mr-2"></i> Impact social fort</li>
+                    <li class="flex items-center"><i class="fas fa-check text-finbright-purple mr-2"></i> Durée de remboursement : 2 à 7 ans</li>
+                    <li class="flex items-center"><i class="fas fa-check text-finbright-purple mr-2"></i> Différé partiel pendant la durée des études + 3 à 6 mois après diplomation </li>
+                    <li class="flex items-center"><i class="fas fa-check text-finbright-purple mr-2"></i> Rendement pour les prêteurs : 5 à 6 % selon le niveau de risque du profil</li>
+                    <li class="flex items-center"><i class="fas fa-check text-finbright-purple mr-2"></i> Investissement limité à 2000 euros par projet pour chaque prêteur (chaque prêteur peut
+financer plusieurs projets)</li>
                 </ul>
             </div>
             
-            <!-- Mini-prêts courts -->
+            <!-- Mini prêts courts -->
             <div class="bg-white p-8 rounded-xl shadow-lg">
                 <div class="flex items-center mb-6">
                     <div class="w-16 h-16 bg-finbright-cyan rounded-full flex items-center justify-center mr-6">
                         <i class="fas fa-clock text-white text-2xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold text-gray-900">Mini-prêts courts</h3>
-                        <p class="text-finbright-cyan font-semibold">Rendement : 8-12%</p>
+                        <h3 class="text-2xl font-bold text-gray-900">Mini prêts courts</h3>
+                        <p class="text-finbright-cyan font-semibold">Rendement : 10-11 %</p>
                     </div>
                 </div>
                 <p class="text-gray-600 mb-6">
-                    Soutenez des particuliers pour leurs besoins urgents avec des prêts de courte durée. Durée moyenne : 6-24 mois.
+                    Soutenez des particuliers pour leurs besoins urgents avec des prêts de courte durée.
                 </p>
                 <ul class="space-y-2 text-gray-600">
-                    <li class="flex items-center"><i class="fas fa-check text-finbright-cyan mr-2"></i> Remboursement rapide</li>
-                    <li class="flex items-center"><i class="fas fa-check text-finbright-cyan mr-2"></i> Diversification du portefeuille</li>
-                    <li class="flex items-center"><i class="fas fa-check text-finbright-cyan mr-2"></i> Liquidité plus élevée</li>
+                    <li class="flex items-center"><i class="fas fa-check text-finbright-cyan mr-2"></i> Montant du prêt : 100 à 800 euros</li>
+                    <li class="flex items-center"><i class="fas fa-check text-finbright-cyan mr-2"></i> Durée de remboursement : 3 à 6 mois maximum</li>
+                    <li class="flex items-center"><i class="fas fa-check text-finbright-cyan mr-2"></i> Rendement pour les prêteurs : 10 - 11 %</li>
                 </ul>
             </div>
         </div>
@@ -284,9 +259,7 @@
             <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-8">
                 Commencez à investir dès aujourd'hui
             </h2>
-            <p class="text-xl text-white mb-12 max-w-3xl mx-auto">
-                Rejoignez des milliers d'investisseurs qui font déjà confiance à Fin'Bright pour faire fructifier leur épargne tout en ayant un impact social positif. Votre investissement peut changer des vies.
-            </p>
+
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <button class="bg-finbright-cyan text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-light-cyan transition-colors">

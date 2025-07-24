@@ -22,7 +22,7 @@
             <!-- Introduction -->
             <div class="mb-12">
                 <div style="background: linear-gradient( #B803C9FF 20%, #790384 100%);"class=" text-white rounded-lg p-6 mb-8">
-                    <h2 class="text-2xl font-bold mb-4 text-white">Dernière mise à jour : 15 décembre 2024</h2>
+                    <h2 class="text-2xl font-bold mb-4 text-white">Dernière mise à jour : 15 décembre 2025</h2>
                     <p class="text-white">
                         Fin'Bright SAS s'engage à protéger la confidentialité de vos données personnelles. Cette politique explique comment nous collectons, utilisons, stockons et protégeons vos informations conformément au Règlement Général sur la Protection des Données (RGPD).
                     </p>

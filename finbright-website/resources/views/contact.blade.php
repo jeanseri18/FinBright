@@ -45,7 +45,7 @@
                             </div>
                             <div>
                                 <h3 class="text-lg font-semibold text-gray-900">Téléphone</h3>
-                                <p class="text-gray-600">+33 (0)1 23 45 67 89</p>
+                                <p class="text-gray-600">07 66 01 96 69</p>
                             </div>
                         </div>
                         
@@ -55,7 +55,7 @@
                             </div>
                             <div>
                                 <h3 class="text-lg font-semibold text-gray-900">Adresse</h3>
-                                <p class="text-gray-600">123 Avenue des Finances<br>75008 Paris, France</p>
+                                <p class="text-gray-600">542 Rue Daniel Blervaque<br>Carrières-sous-Poissy, 78955</p>
                             </div>
                         </div>
                     </div>
@@ -161,61 +161,7 @@
     </div>
 </section>
 
-<!-- FAQ Section -->
-<section class="py-20 bg-gray-50">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">Questions fréquentes</h2>
-            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                Consultez notre FAQ pour trouver rapidement des réponses à vos questions
-            </p>
-        </div>
-        
-        <div class="space-y-6">
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <button class="flex justify-between items-center w-full text-left" onclick="toggleFaq(this)">
-                    <h3 class="text-lg font-semibold text-gray-900">Comment puis-je investir sur Fin'Bright ?</h3>
-                    <i class="fas fa-chevron-down text-finbright-purple transition-transform"></i>
-                </button>
-                <div class="mt-4 hidden">
-                    <p class="text-gray-600">
-                        Pour investir sur Fin'Bright, vous devez d'abord créer un compte et compléter votre profil investisseur. Ensuite, vous pourrez parcourir les projets disponibles et choisir ceux qui correspondent à vos objectifs d'investissement. Pour plus de détails, consultez notre page <a href="{{ route('how-to-invest') }}" class="text-finbright-purple hover:underline">Comment investir</a>.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <button class="flex justify-between items-center w-full text-left" onclick="toggleFaq(this)">
-                    <h3 class="text-lg font-semibold text-gray-900">Comment puis-je demander un prêt étudiant ?</h3>
-                    <i class="fas fa-chevron-down text-finbright-purple transition-transform"></i>
-                </button>
-                <div class="mt-4 hidden">
-                    <p class="text-gray-600">
-                        Pour demander un prêt étudiant, vous devez créer un compte, compléter votre profil emprunteur et soumettre votre demande avec les documents requis. Notre équipe examinera votre dossier et vous contactera pour la suite du processus. Pour plus d'informations, consultez notre page <a href="{{ route('how-it-works') }}" class="text-finbright-purple hover:underline">Comment emprunter</a>.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <button class="flex justify-between items-center w-full text-left" onclick="toggleFaq(this)">
-                    <h3 class="text-lg font-semibold text-gray-900">Quels sont les frais appliqués ?</h3>
-                    <i class="fas fa-chevron-down text-finbright-purple transition-transform"></i>
-                </button>
-                <div class="mt-4 hidden">
-                    <p class="text-gray-600">
-                        Fin'Bright applique des frais transparents pour tous les utilisateurs. Pour les investisseurs, des frais de gestion annuels de 1% sont appliqués sur les montants investis. Pour les emprunteurs, des frais de dossier de 2% sont prélevés lors du déblocage du prêt. Pour plus de détails, consultez nos <a href="{{ route('terms-of-use') }}" class="text-finbright-purple hover:underline">conditions d'utilisation</a>.
-                    </p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="text-center mt-10">
-            <a href="{{ route('faq') }}" class="inline-block bg-finbright-purple text-white py-3 px-6 rounded-lg font-semibold hover:bg-finbright-dark-purple transition-colors">
-                Voir toutes les questions
-            </a>
-        </div>
-    </div>
-</section>
+
 
 <!-- Call to Action Section -->
 <section class="py-20" style="background: linear-gradient(#B803C9FF 20%, #790384 100%);">
@@ -235,18 +181,5 @@
     </div>
 </section>
 
-<script>
-    function toggleFaq(element) {
-        const content = element.nextElementSibling;
-        const icon = element.querySelector('i');
-        
-        if (content.classList.contains('hidden')) {
-            content.classList.remove('hidden');
-            icon.classList.add('transform', 'rotate-180');
-        } else {
-            content.classList.add('hidden');
-            icon.classList.remove('transform', 'rotate-180');
-        }
-    }
-</script>
+
 @endsection

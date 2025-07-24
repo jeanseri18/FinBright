@@ -16,7 +16,7 @@
             
             <div class="bg-gray-50 p-8 rounded-xl mb-12 max-w-5xl mx-auto">
                 <p class="text-lg text-gray-700 leading-relaxed">
-                    Fin'Bright est une fintech et une edtech qui permet aux étudiants talentueux, admis dans les plus prestigieuses grandes écoles et universités, de financer leurs études supérieures. Elle permet également aux particuliers, ayant des difficultés à obtenir un crédit de dépannage, d'obtenir des mini-prêts courts pour répondre à leurs besoins urgents. En investissant avec Fin'Bright, vous obtenez un rendement financier conséquent, et un gain social pour avoir contribué à réduire l'inégalité et l'injustice sociale. Notre impact social est indéniable. Notre mission est de démocratiser le prêt étudiant non garanti pour les plus talentueux, et de démocratiser les prêts d'urgence.
+                    Fin'Bright est une fintech et une edtech qui permet aux étudiants talentueux, admis dans les plus prestigieuses grandes écoles et universités, de financer leurs études supérieures. Elle permet également aux particuliers, ayant des difficultés à obtenir un crédit de dépannage, d'obtenir des mini prêts courts pour répondre à leurs besoins urgents. En investissant avec Fin'Bright, vous obtenez un rendement financier conséquent, et un gain social pour avoir contribué à réduire l'inégalité et l'injustice sociale. Notre impact social est indéniable. Notre mission est de démocratiser le prêt étudiant non garanti pour les plus talentueux, et de démocratiser les prêts d'urgence.
                 </p>
             </div>
             
@@ -44,17 +44,11 @@
                     Nous faisons fructifier votre épargne comme jamais auparavant.
                 </h1>
                 <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-                    De façon innovante via notre plateforme de financement participatif des étudiants brillants, 
-                    et de ceux qui sont exclus des prêts courts des sociétés de financement traditionnelles.
+                   De façon innovante, via notre plateforme de financement participatif des étudiants brillants et de ceux exclus des prêts courts des sociétés de financement traditionnelles. En investissant avec Fin’Bright, vous obtenez un rendement financier parmi les meilleurs, et un gain social pour avoir contribué à réduire l’inégalité et l’injustice sociales. Notre impact social est indéniable.
                 </p>
                 
-                <div class=" p-6 rounded-xl mb-8 shadow-sm"  style="background: #EDF7FFFF;">
-                    <p class="text-gray-700 leading-relaxed">
-                     Fin Bright est une fintech et une edtech qui permet aux étudiants talentueux, admis dans les plus prestigieuses grandes écoles et universités, de financer leurs études supérieures.
-                      Elle permet également aux particuliers, ayant des difficultés à obtenir un crédit de depannage, d’obtenir des mini-prêts courts pour répondre à leurs besoins urgents. 
-                   <br> <br>   En investissant avec Fin’Bright, vous obtenez un rendement financier conséquent, et un gain social pour avoir contribuer à reduire l’inégalité et l’injustice sociale.
-                       Notre impact social est indéniable".  Notre mission est de démocratiser le prêt étudiant non garanti pour les plus talentueux, et de démocratiser les prêts d’urgence                </p>
-                </div>
+            
+
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                     <button class="bg-finbright-purple text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-dark-purple transition-colors">
@@ -68,56 +62,57 @@
 
             <!-- Image illustrative -->
             <div class="relative">
-                <img src="/images/homefirstsection.jpg" alt="Étudiants brillants & fintech" class="rounded-xl w-full shadow-md object-cover h-[630px] md:h-[630px]" />
-              
+                <img src="/images/happy-multiethnic-business-team-smiling-together-i-2025-04-10-11-25-25-utc.jpg" alt="Étudiants brillants & fintech" class="rounded-xl w-full shadow-md object-cover h-[300px] sm:h-[400px] md:h-[430px] lg:h-[500px] xl:h-[630px]" />
             </div>
         </div>
     </div>
 
     <!-- Background illustration optionnelle -->
-    <div class="absolute top-0 right-0 w-72 opacity-10 hidden md:block">
-        <img src="/images/bg-illustration.svg" alt="Illustration fintech" class="w-full" />
-    </div>
+    <!-- <div class="absolute top-0 right-0 w-72 opacity-10 hidden md:block">
+       <img src="/images/bg-illustration.svg" alt="Illustration fintech" class="w-full" /> -->
+    <!-- </div>  -->
 </section>
 
 <!-- Nos Services Section avec image -->
 <section class=" py-20" style="background: linear-gradient( #B803C9FF 20%, #790384 100%);">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Nos services</h2>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Nos produits</h2>
         </div>
         
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div class="text-center p-6  rounded-xl"  style="background: #faf6ee;">
                 <div class="w-16 h-16 bg-finbright-purple rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                    <span class="text-white text-2xl font-bold">1</span>
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 mb-2">Prêt étudiant brillant</h3>
                 <p class="text-gray-600">Via le financement participatif</p>
             </div>
-            
-            <div class="text-center p-6  rounded-xl"  style="background: #faf6ee;">
-                <div class="w-16 h-16 bg-finbright-cyan rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-bolt text-white text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-2">Mini crédit court instantané</h3>
-                <p class="text-gray-600">Via nos partenaires bancaires</p>
-            </div>
-            
-            <div class="text-center p-6  rounded-xl"  style="background: #faf6ee;">
+                 <div class="text-center p-6  rounded-xl"  style="background: #faf6ee;">
                 <div class="w-16 h-16 bg-finbright-purple rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-users text-white text-2xl"></i>
+                    <span class="text-white text-2xl font-bold">2</span>
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 mb-2">Mini prêt court</h3>
                 <p class="text-gray-600">Via le financement participatif</p>
             </div>
+           
+            
+       
             
             <div class="text-center p-6  rounded-xl"  style="background: #faf6ee;">
                 <div class="w-16 h-16 bg-finbright-cyan rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-heart text-white text-2xl"></i>
+                    <span class="text-white text-2xl font-bold">3</span>
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 mb-2">Dons</h3>
                 <p class="text-gray-600">Via le financement participatif</p>
+            </div>
+
+             <div class="text-center p-6  rounded-xl"  style="background: #faf6ee;">
+                <div class="w-16 h-16 bg-finbright-cyan rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-white text-2xl font-bold">4</span>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Mini crédit court instantané</h3>
+                <p class="text-gray-600">Via nos partenaires bancaires</p>
             </div>
         </div>
     </div>
@@ -156,6 +151,16 @@
                             <span class="text-white font-bold">2</span>
                         </div>
                         <div>
+                            <h4 class="font-semibold text-gray-900">Évaluation de sa capacité de remboursement</h4>
+                            <p class="text-gray-600">L'emprunteur estime sa capacité à rembourser grâce à un simulateur, pour définir un prêt adapté à sa situation</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-8 h-8 bg-finbright-cyan rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-white font-bold">3</span>
+                        </div>
+                        <div>
                             <h4 class="font-semibold text-gray-900">Soumission d'une demande de prêt</h4>
                             <p class="text-gray-600">Présentez votre projet personnel ou besoin de financement</p>
                         </div>
@@ -163,7 +168,7 @@
                     
                     <div class="flex items-start space-x-4">
                         <div class="w-8 h-8 bg-finbright-cyan rounded-full flex items-center justify-center flex-shrink-0">
-                            <span class="text-white font-bold">3</span>
+                            <span class="text-white font-bold">4</span>
                         </div>
                         <div>
                             <h4 class="font-semibold text-gray-900">Réception des fonds</h4>
@@ -198,8 +203,8 @@
                             <span class="text-white font-bold">2</span>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-gray-900">Choix des projets à financer</h4>
-                            <p class="text-gray-600">Sélectionnez les projets qui vous inspirent</p>
+                            <h4 class="font-semibold text-gray-900">Évaluation de sa capacité à prêter</h4>
+                            <p class="text-gray-600">L'investisseur évalue sa capacité à prêter en fonction de ses revenus, etc. et objectifs, afin d'investir de façon responsable et équilibrée</p>
                         </div>
                     </div>
                     
@@ -208,8 +213,18 @@
                             <span class="text-white font-bold">3</span>
                         </div>
                         <div>
+                            <h4 class="font-semibold text-gray-900">Choix des projets à financer</h4>
+                            <p class="text-gray-600">Sélectionnez les projets qui vous inspirent</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-8 h-8 bg-finbright-purple rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-white font-bold">4</span>
+                        </div>
+                        <div>
                             <h4 class="font-semibold text-gray-900">Perception de remboursements</h4>
-                            <p class="text-gray-600">Recevez capital, intérêts et impact social</p>
+                            <p class="text-gray-600">Recevez votre capital et vos intérêts</p>
                         </div>
                     </div>
                 </div>
@@ -239,7 +254,7 @@
                     <i class="fas fa-hands-helping text-white text-2xl"></i>
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900 mb-4">Impact social concret</h3>
-                <p class="text-gray-600">Contribuez à réduire les inégalités en finançant l'éducation et l'inclusion financière</p>
+                <p class="text-gray-600">Contribuez à réduire les inégalités en finançant l'excellence éducative et l'inclusion financière</p>
             </div>
             
             <div class="text-center p-8  rounded-xl shadow-lg" style="background: #faf6ee;">
@@ -247,7 +262,7 @@
                     <i class="fas fa-chart-line text-white text-2xl"></i>
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900 mb-4">Rendements attractifs</h3>
-                <p class="text-gray-600">Des opportunités d'investissement avec des rendements financiers conséquents</p>
+                <p class="text-gray-600">Des opportunités d'investissement avec des rendements financiers parmi les meilleurs</p>
             </div>
         </div>
     </div>
@@ -258,7 +273,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">Écoles et Universités Partenaires</h2>
-            <p class="text-xl text-gray-600">Nous finançons les étudiants des plus prestigieuses institutions</p>
+            <p class="text-xl text-gray-600 mb-4">Nous facilitons le financement des étudiants talentueux admis dans les institutions prestigieuses ci-dessous.</p>
+            <!-- <p class="text-xl text-gray-600">Nous finançons les étudiants des plus prestigieuses institutions</p> -->
         </div>
         
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
@@ -329,12 +345,7 @@
             </div>
             
             <!-- Et bien d'autres -->
-            <div  style="background: white;" class="flex flex-col items-center p-4  rounded-lg">
-                <div class="h-16 w-16 bg-finbright-purple rounded-full flex items-center justify-center mb-2">
-                    <i class="fas fa-plus text-white text-xl"></i>
-                </div>
-                <span class="text-black font-semibold text-sm text-center">Et bien d'autres...</span>
-            </div>
+           
         </div>
     </div>
 </section>
@@ -345,7 +356,7 @@
         <div class="text-center">
             <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-8">Rejoignez Fin'Bright</h2>
             <p class="text-xl text-white mb-12 max-w-4xl mx-auto">
-                Rejoindre Fin'Bright, c'est faire partie d'une communauté d'investisseurs et d'emprunteurs qui croient en l'avenir et en l'entraide. Que vous souhaitiez soutenir des étudiants brillants ou obtenir un financement pour vos projets de mini crédit court personnels (non commercial), notre plateforme est faite pour vous. Rejoignez-nous dès maintenant et agissez pour un futur plus solidaire et responsable.
+                Rejoindre Fin'Bright, c'est faire partie d'une communauté d'investisseurs et d'emprunteurs qui croient en l'avenir et en l'entraide. Que vous souhaitez soutenir des étudiants brillants ou financer des projets de mini prêts courts personnels (non commerciaux), notre plateforme est faite pour vous. Rejoignez-nous dès maintenant et agissez pour un futur plus solidaire et responsable.
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center">

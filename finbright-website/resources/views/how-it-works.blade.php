@@ -11,17 +11,14 @@
             <!-- Bloc gauche : Texte -->
             <div class="text-center md:text-left">
                 <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
-                    Obtenez un prêt pour financer vos études supérieures ou vos projets personnels
+                    Obtenez un prêt pour financer vos études supérieures ou votre projet de mini prêt court
                 </h1>
                 
                 <p class="text-xl md:text-2xl text-gray-600 mb-10 max-w-xl">
-                    Sur Fin'Bright, accédez à un financement simple, rapide et sécurisé. Que vous soyez étudiant admis dans une grande école ou particulier, nous avons une solution pour vous.
+                    Sur Fin'Bright, accédez à un financement simple, rapide et sécurisé. Que vous soyez étudiant admis dans une grande école ou université prestigieuse, ou encore un particulier, nous avons une solution pour vous.
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <button class="bg-finbright-purple text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-dark-purple transition-colors">
-                        Simuler mon prêt
-                    </button>
                     <button class="bg-finbright-cyan text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-light-cyan transition-colors">
                         Soumettre mon projet personnel
                     </button>
@@ -37,9 +34,7 @@
     </div>
 
     <!-- Background shape décoratif -->
-    <div class="absolute top-0 right-0 w-72 opacity-10 hidden md:block">
-        <img src="/images/shape-fintech.svg" alt="Décoration" class="w-full" />
-    </div>
+
 </section>
 
 
@@ -87,7 +82,7 @@
                     <h3 class="text-xl font-bold text-gray-900">Soumission</h3>
                 </div>
                 <p class="text-gray-600">
-                    Préparez et soumettez votre demande en téléversant les justificatifs requis (admission, revenus potentiels pour les étudiants ou avérés, identité, etc.).
+                    Préparez et soumettez votre demande en téléversant les justificatifs requis (admission, revenus potentiels pour les étudiants ou avérés, pièce d'identité, etc.).
                 </p>
             </div>
             
@@ -126,7 +121,7 @@
                     <h3 class="text-xl font-bold text-gray-900">Déblocage</h3>
                 </div>
                 <p class="text-gray-600">
-                    Une fois l'objectif atteint, les fonds sont débloqués rapidement et versés à l'école pour les étudiants. Vous commencez à rembourser selon les conditions définies.
+                    Une fois l'objectif du montant atteint, les fonds sont débloqués rapidement et versés à l'école pour les étudiants et sur le compte du particulier pour les mini prêts courts. Vous commencez à rembourser selon les conditions définies.
                 </p>
             </div>
         </div>
@@ -160,7 +155,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 mb-4">Justificatifs requis</h3>
                 <p class="text-gray-600">
-                    Fournir tous les justificatifs nécessaires : lettre d'admission, pièce d'identité, justificatifs de revenus.
+                    Fournir tous les justificatifs nécessaires : lettre d'admission, pièce d'identité, justificatifs de revenus,etc.
                 </p>
             </div>
             
@@ -246,13 +241,7 @@
                     <span class="text-black font-semibold text-sm text-center">Sciences Po Paris</span>
                 </div>
                 
-                <!-- Et bien d'autres -->
-                <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-sm">
-                    <div class="h-16 w-16 bg-finbright-purple rounded-full flex items-center justify-center mb-2">
-                        <i class="fas fa-plus text-white text-xl"></i>
-                    </div>
-                    <span class="text-black font-semibold text-sm text-center">Et bien d'autres...</span>
-                </div>
+
             </div>
         </div>
     </div>
@@ -266,7 +255,7 @@
                 Commencez votre demande de prêt dès aujourd'hui
             </h2>
             <p class="text-xl text-white mb-12 max-w-3xl mx-auto">
-                Rejoignez des milliers d'étudiants et de particuliers qui ont déjà fait confiance à Fin'Bright pour financer leurs projets. Notre équipe vous accompagne à chaque étape.
+                Notre équipe vous accompagne à chaque étape.
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
