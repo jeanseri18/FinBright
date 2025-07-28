@@ -142,7 +142,7 @@
                                             Âge
                                         </td>
                                         <td class="text-sm text-mono pb-3.5">
-                                            32
+                                            32 ans
                                         </td>
                                     </tr>
                                     <tr>
