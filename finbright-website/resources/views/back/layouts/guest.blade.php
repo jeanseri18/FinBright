@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 Author: DIGIT'comm - Moussa Fofana
-Product Name: IntraWeb BDU-CI
+Product Name: Fin'Bright
 Website: https://digitcommunication.ci/
 Email: 
 Contact: 
@@ -73,9 +73,7 @@ Contact:
         </style>
         
         <div class="flex items-center justify-center grow bg-center bg-no-repeat page-bg">
-            <div class="kt-card max-w-[370px] w-full">
-                {{ $slot }}
-            </div>
+            {{ $slot }}
         </div>
 
         <!-- Scripts -->

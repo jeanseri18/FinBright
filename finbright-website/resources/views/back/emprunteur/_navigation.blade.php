@@ -1809,7 +1809,7 @@
                 data-kt-dropdown-offset-rtl="-20px, 10px" data-kt-dropdown-placement="bottom-end"
                 data-kt-dropdown-placement-rtl="bottom-start" data-kt-dropdown-trigger="click">
                 <div class="cursor-pointer shrink-0" data-kt-dropdown-toggle="true">
-                    <img alt="{{ Auth::user()->name }}" class="size-9 rounded-full border-2 border-input shrink-0"
+                    <img alt="{{ Auth::user()->first_name .' '. Auth::user()->last_name }}" class="size-9 rounded-full border-2 border-input shrink-0"
                         src="{{asset('assets/media/avatars/blank.png')}}">
                     </img>
                 </div>
@@ -1820,7 +1820,7 @@
                                 src="{{asset('assets/media/avatars/blank.png')}}">
                             <div class="flex flex-col gap-1.5">
                                 <span class="text-sm text-foreground font-semibold leading-none">
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->first_name .' '. Auth::user()->last_name }}
                                 </span>
                                 <a class="text-xs text-secondary-foreground hover:text-primary font-medium leading-none"
                                     href="/metronic/tailwind/demo2/account/home/get-started">

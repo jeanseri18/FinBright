@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 Author: DIGIT'comm - Moussa Fofana
-Product Name: IntraWeb BDU-CI
+Product Name: Fin'Bright
 Website: https://digitcommunication.ci/
 Email: 
 Contact: 

@@ -48,9 +48,9 @@
                     <a href="{{route('emprunteur.dashboard')}}" class="bg-finbright-cyan text-white px-4 py-2 rounded-lg hover:bg-finbright-light-cyan transition-colors">
                         Connexion
                     </a>
-                    <button class="bg-finbright-purple text-white px-4 py-2 rounded-lg hover:bg-finbright-dark-purple transition-colors">
+                    <a href="{{ route('register.emprunteur') }}" class="bg-finbright-purple text-white px-4 py-2 rounded-lg hover:bg-finbright-dark-purple transition-colors">
                         S'inscrire
-                    </button>
+                    </a>
                 </div>
 
                 <!-- Mobile menu button -->

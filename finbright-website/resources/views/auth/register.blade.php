@@ -1,5 +1,34 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form class="kt-card-content flex flex-col gap-5 p-10" id="sign_up_form" method="POST" action="{{ route('register') }}">
+        <div class="text-center mb-2.5">
+            <h3 class="text-lg font-medium text-mono leading-none mb-2.5">Connexion</h3>
+            <div class="flex items-center justify-center font-medium">
+                <span class="text-sm text-secondary-foreground me-1.5">
+                    Besoin d'un compte ?
+                </span>
+                <a class="text-sm link" href="">
+                    Inscris toi
+                </a>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+            <a class="kt-btn kt-btn-outline justify-center" href="#">
+                <img alt="" class="size-3.5 shrink-0" src="{{asset('assets/media/brand-logos/google.svg')}}"/>
+                Google
+            </a>
+            <a class="kt-btn kt-btn-outline justify-center" href="#">
+                <img alt="" class="size-3.5 shrink-0 dark:hidden" src="{{asset('assets/media/brand-logos/apple-black.svg')}}"/>
+                <img alt="" class="size-3.5 shrink-0 light:hidden" src="{{asset('assets/media/brand-logos/apple-white.svg')}}"/>
+                Apple
+            </a>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="border-t border-border w-full"></span>
+            <span class="text-xs text-muted-foreground font-medium uppercase">
+                Ou
+            </span>
+            <span class="border-t border-border w-full"></span>
+        </div>
         @csrf
 
         <!-- Name -->

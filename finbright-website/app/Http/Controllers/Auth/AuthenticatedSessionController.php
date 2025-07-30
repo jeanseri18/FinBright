@@ -32,28 +32,23 @@ class AuthenticatedSessionController extends Controller
 
         if (! Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
             return back()->withErrors([
-                'email' => __('auth.failed'),
-            ])->onlyInput('email');
+                'email' => trans('auth.failed'),
+            ]);
         }
 
         $request->session()->regenerate();
 
+        /** @var User $user */
         $user = Auth::user();
 
-        // Redirection selon le rôle
         if ($user->hasRole('admin')) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->intended('/admin');
+        } elseif ($user->hasRole('emprunteur')) {
+            return redirect()->intended('/emprunteur');
+        } elseif ($user->hasRole('investisseur')) {
+            return redirect()->intended('/investisseur');
         }
 
-        if ($user->hasRole('emprunteur')) {
-            return redirect()->route('emprunteur.dashboard');
-        }
-
-        if ($user->hasRole('investisseur')) {
-            return redirect()->route('investisseur.dashboard');
-        }
-
-        // Redirection par défaut
         return redirect()->intended('/');
     }
 

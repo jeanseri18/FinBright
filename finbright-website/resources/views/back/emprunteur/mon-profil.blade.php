@@ -792,16 +792,15 @@
                             <div class="flex items-center justify-between flex-wrap grow gap-5">
                                 <div class="flex flex-col justify-center gap-2">
                                     <h1 class="text-xl font-semibold leading-none text-mono">
-                                        Settings - Modal
+                                        Paramètres de profil
                                     </h1>
                                     <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                                        Dynamic,
-                                        Focused Adjustment Interface
+                                        Espace de modification de votre profil
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-2.5">
                                     <a class="kt-btn kt-btn-outline" data-kt-modal-dismiss="true" href="#">
-                                        Close
+                                        Fermer
                                     </a>
                                 </div>
                             </div>
@@ -823,8 +822,57 @@
                                         <span
                                             class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
                                         </span>
-                                        Basic Settings
+                                        Informations Personnelles
                                     </a>
+                                    <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-1.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
+                                        data-kt-scrollspy-anchor="true" href="#advanced_settings_address">
+                                        <span
+                                            class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
+                                        </span>
+                                        Adresse postale
+                                    </a>
+                                    <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-1.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
+                                        data-kt-scrollspy-anchor="true" href="#advanced_settings_preferences">
+                                        <span
+                                            class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
+                                        </span>
+                                        Cursus Académique
+                                    </a>
+                                    <div class="flex flex-col">
+                                        <div class="pl-6 pr-2.5 py-2.5 text-sm font-semibold text-mono">
+                                            Documents justificatifs
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
+                                                data-kt-scrollspy-anchor="true" href="#external_services_manage_api">
+                                                <span
+                                                    class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
+                                                </span>
+                                                Manage API
+                                            </a>
+                                            <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
+                                                data-kt-scrollspy-anchor="true" href="#external_services_integrations">
+                                                <span
+                                                    class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
+                                                </span>
+                                                Integrations
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <div class="pl-6 pr-2.5 py-2.5 text-sm font-semibold text-mono">
+                                            Paramètres avancés
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
+                                                data-kt-scrollspy-anchor="true" href="#advanced_settings_notifications">
+                                                <span
+                                                    class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
+                                                </span>
+                                                Notifications
+                                            </a>
+                                        </div>
+                                    </div>
                                     <div class="flex flex-col">
                                         <div class="pl-6 pr-2.5 py-2.5 text-sm font-semibold text-mono">
                                             Authentication
@@ -842,84 +890,14 @@
                                                 <span
                                                     class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
                                                 </span>
-                                                Social Sign in
-                                            </a>
-                                            <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
-                                                data-kt-scrollspy-anchor="true" href="#auth_two_factor">
-                                                <span
-                                                    class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
-                                                </span>
-                                                Two-Factor auth(2FA)
-                                            </a>
-                                            <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
-                                                data-kt-scrollspy-anchor="true" href="#auth_social_sign_in_sso">
-                                                <span
-                                                    class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
-                                                </span>
-                                                Single Sign On(SSO)
+                                                Connexion via réseaux sociaux
                                             </a>
                                             <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
                                                 data-kt-scrollspy-anchor="true" href="#auth_password">
                                                 <span
                                                     class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
                                                 </span>
-                                                Password
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <div class="pl-6 pr-2.5 py-2.5 text-sm font-semibold text-mono">
-                                            Advanced Settings
-                                        </div>
-                                        <div class="flex flex-col">
-                                            <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
-                                                data-kt-scrollspy-anchor="true" href="#advanced_settings_preferences">
-                                                <span
-                                                    class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
-                                                </span>
-                                                Preferences
-                                            </a>
-                                            <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
-                                                data-kt-scrollspy-anchor="true" href="#advanced_settings_appearance">
-                                                <span
-                                                    class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
-                                                </span>
-                                                Appearance
-                                            </a>
-                                            <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
-                                                data-kt-scrollspy-anchor="true" href="#advanced_settings_notifications">
-                                                <span
-                                                    class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
-                                                </span>
-                                                Notifications
-                                            </a>
-                                            <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
-                                                data-kt-scrollspy-anchor="true" href="#advanced_settings_address">
-                                                <span
-                                                    class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
-                                                </span>
-                                                Address
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <div class="pl-6 pr-2.5 py-2.5 text-sm font-semibold text-mono">
-                                            External Services
-                                        </div>
-                                        <div class="flex flex-col">
-                                            <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
-                                                data-kt-scrollspy-anchor="true" href="#external_services_manage_api">
-                                                <span
-                                                    class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
-                                                </span>
-                                                Manage API
-                                            </a>
-                                            <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
-                                                data-kt-scrollspy-anchor="true" href="#external_services_integrations">
-                                                <span
-                                                    class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
-                                                </span>
-                                                Integrations
+                                                Mot de passe
                                             </a>
                                         </div>
                                     </div>
@@ -940,7 +918,7 @@
                                     </h3>
                                     <div class="flex items-center gap-2">
                                         <label class="kt-label">
-                                            Public Profile
+                                            Profil public
                                             <input checked="" class="kt-switch kt-switch-sm" name="check"
                                                 type="checkbox" value="1" />
                                         </label>
@@ -964,12 +942,12 @@
                                                     <i class="ki-filled ki-cross">
                                                     </i>
                                                     <span class="kt-tooltip" data-kt-tooltip-content="true">
-                                                        Click to remove or revert
+                                                        Cliquez pour supprimer ou inverser
                                                     </span>
                                                 </button>
-                                                <div class="kt-image-input-placeholder border-2 border-green-500 kt-image-input-empty:border-input"
+                                                <div class="kt-image-input-placeholder border-2 border-green-500 {{ Auth::user()->profile_picture_id ? '' : 'kt-image-input-empty:border-input' }}"
                                                     data-kt-image-input-placeholder="true"
-                                                    style="background-image:url({{asset('assets/media/avatars/blank.png')}})">
+                                                    style="background-image: url('{{ asset(Auth::user()->profile_picture_id ? Auth::user()->profile_picture_id->filename : 'assets/media/avatars/blank.png') }}')">
                                                     <div class="kt-image-input-preview" data-kt-image-input-preview="true"
                                                         style="background-image:url('/media/avatars/300-2.png')">
                                                     </div>
@@ -991,656 +969,223 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                    <div class="flex items-center flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Name
+                                            Civilité
                                         </label>
-                                        <input class="kt-input" type="text" value="Jason Tatum" />
+                                        <div class="flex items-center gap-5">
+                                            <label class="kt-label">
+                                                <input checked="" class="kt-radio" name="civilite" type="radio" value="M">
+                                                Monsieur
+                                                </input>
+                                            </label>
+                                            <label class="kt-label">
+                                                <input class="kt-radio" name="civilite" type="radio" value="Mme">
+                                                Madame
+                                                </input>
+                                            </label>
+                                            <label class="kt-label">
+                                                <input class="kt-radio" name="civilite" type="radio" value="Mlle">
+                                                Mademoiselle
+                                                </input>
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Phone number
+                                            Nom complet
                                         </label>
-                                        <input class="kt-input" placeholder="Phone number" type="text" value="" />
+                                        <div class="grid md:grid-cols-2 w-full gap-5">
+                                            <input class="kt-input" name="firstname" type="text" placeholder="Vos prénoms" value="{{ Auth::user()->first_name ?? null }}" />
+                                            <input class="kt-input" name="lastname" type="text" placeholder="Votre nom" value="{{ Auth::user()->last_name ?? null }}" />
+                                        </div>
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Email
+                                            Date de naissance
                                         </label>
-                                        <input class="kt-input" type="text" value="jason@studio.io" />
+                                        <input class="kt-input" name="birth_date" placeholder="JJ/MM/AAAA" type="date" value="{{ Auth::user()->birth_date ?? null }}" />
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Address
+                                            Lieu de naissance
                                         </label>
-                                        <input class="kt-input" placeholder="" type="text"
-                                            value="Avinguda Imaginària, 789" />
+                                        <input class="kt-input" name="birth_place" placeholder="Ville, Pays" type="text" value="{{ Auth::user()->birth_place ?? null }}" />
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Country
+                                            Nationalité
                                         </label>
-                                        <select class="kt-select {class if class else ''}" data-kt-select="true"
-                                            data-kt-select-config='{
-                                                    "optionsClass": "kt-scrollable overflow-auto max-h-[250px]",
-                                                    "displayTemplate": "&lt;div class=\"flex items-center leading-none gap-2\"&gt;{ flag }&lt;span class=\"text-foreground\"&gt;{ text }&lt;/span&gt;&lt;/div&gt;",
-                                                    "optionTemplate": "&lt;div class=\"flex items-center leading-none gap-2\"&gt;{ flag } &lt;span class=\"text-foreground\"&gt;{ text }&lt;/span&gt;&lt;/div&gt;&lt;svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"size-3.5 ms-auto hidden text-primary kt-select-option-selected:block\"&gt;&lt;path d=\"M20 6 9 17l-5-5\"/&gt;&lt;/svg&gt;&lt;/div&gt;"
-                                                }'
+                                        <input class="kt-input" name="nationality" placeholder="" type="text" value="{{ Auth::user()->nationality ?? null }}" />
+                                    </div>
+                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                        <label class="kt-form-label max-w-56">
+                                            Numéro de téléphone
+                                        </label>
+                                        <input class="kt-input" name="phone_number" placeholder="Numéro de téléphone mobile" type="text" value="{{ Auth::user()->phone_number ?? null }}" />
+                                    </div>
+                                    <div class="flex justify-end">
+                                        <button type="submit" class="kt-btn kt-btn-primary">
+                                            Sauvegarder
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-card">
+                                <div class="kt-card-header" id="advanced_settings_address">
+                                    <h3 class="kt-card-title">
+                                        Adresse postale
+                                    </h3>
+                                </div>
+                                <div class="kt-card-content grid gap-5 lg:py-7.5">
+                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                        <label class="kt-form-label flex items-center gap-1 max-w-56">
+                                            Adresse 
+                                        </label>
+                                        <input class="kt-input" type="text" name="adresse" value="{{ Auth::user()->address['adresse'] ?? null }}">
+                                        </input>
+                                    </div>
+                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                        <label class="kt-form-label max-w-56">
+                                            Rue
+                                        </label>
+                                        <input class="kt-input" placeholder="" name="rue" type="text" value="{{ Auth::user()->address['rue'] ?? null }}">
+                                        </input>
+                                    </div>
+                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                        <label class="kt-form-label max-w-56">
+                                            Code postal
+                                        </label>
+                                        <input class="kt-input" type="text" name="code_postal" value="{{ Auth::user()->address['code_postal'] ?? null }}" />
+                                    </div>
+                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                        <label class="kt-form-label max-w-56">
+                                            Ville
+                                        </label>
+                                        <input class="kt-input" type="text" name="ville" value="{{ Auth::user()->address['ville'] ?? null }}" />
+                                    </div>
+                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                        <label class="kt-form-label max-w-56">
+                                            Pays
+                                        </label>
+                                        <div class="grow">
+                                            <select class="kt-select" name="pays" data-kt-select="true">
+                                                <option>Belgique</option>
+                                                <option>Congo</option>
+                                                <option>Côte d'Ivoire</option>
+                                                <option>Cameroun</option>
+                                                <option>Canada</option>
+                                                <option>Espagne</option>
+                                                <option>France</option>
+                                                <option>Italie</option>
+                                                <option>Guinnée</option>
+                                                <option>Mali</option>
+                                                <option>Senegal</option>
+                                                <option>Mali</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-end pt-2.5">
+                                        <button type="submit" class="kt-btn kt-btn-primary">
+                                            Sauvegarder
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-card">
+                                <div class="kt-card-header" id="advanced_settings_preferences">
+                                    <h3 class="kt-card-title">
+                                        Cursus Académique
+                                    </h3>
+                                </div>
+                                <div class="kt-card-content grid gap-5 lg:py-7.5">
+                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                        <label class="kt-form-label max-w-56">
+                                            Votre établissement
+                                        </label>
+                                        <select class="kt-select"
+                                            name="etablissement"
+                                            data-kt-select="true"
                                             data-kt-select-enable-search="true"
-                                            data-kt-select-placeholder="Select a country..."
-                                            data-kt-select-search-placeholder="Search...">
-                                            <option data-kt-select-option='{"flag": "🇦🇫"}' value="Afghanistan">
-                                                Afghanistan
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇦🇱"}' value="Albania">
-                                                Albania
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇩🇿"}' value="Algeria">
-                                                Algeria
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇦🇩"}' value="Andorra">
-                                                Andorra
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇦🇴"}' value="Angola">
-                                                Angola
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇦🇬"}' value="Antigua and Barbuda">
-                                                Antigua and Barbuda
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇦🇷"}' value="Argentina">
-                                                Argentina
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇦🇲"}' value="Armenia">
-                                                Armenia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇦🇺"}' value="Australia">
-                                                Australia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇦🇹"}' value="Austria">
-                                                Austria
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇦🇿"}' value="Azerbaijan">
-                                                Azerbaijan
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇧🇸"}' value="Bahamas">
-                                                Bahamas
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇧🇭"}' value="Bahrain">
-                                                Bahrain
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇧🇩"}' value="Bangladesh">
-                                                Bangladesh
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇧🇧"}' value="Barbados">
-                                                Barbados
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇧🇾"}' value="Belarus">
-                                                Belarus
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇧🇪"}' value="Belgium">
-                                                Belgium
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇧🇿"}' value="Belize">
-                                                Belize
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇧🇯"}' value="Benin">
-                                                Benin
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇧🇹"}' value="Bhutan">
-                                                Bhutan
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇧🇴"}' value="Bolivia">
-                                                Bolivia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇧🇦"}' value="Bosnia and Herzegovina">
-                                                Bosnia and Herzegovina
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇧🇼"}' value="Botswana">
-                                                Botswana
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇧🇷"}' value="Brazil">
-                                                Brazil
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇧🇳"}' value="Brunei">
-                                                Brunei
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇧🇬"}' value="Bulgaria">
-                                                Bulgaria
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇧🇫"}' value="Burkina Faso">
-                                                Burkina Faso
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇧🇮"}' value="Burundi">
-                                                Burundi
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇨🇻"}' value="Cabo Verde">
-                                                Cabo Verde
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇰🇭"}' value="Cambodia">
-                                                Cambodia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇨🇲"}' value="Cameroon">
-                                                Cameroon
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇨🇦"}' value="Canada">
-                                                Canada
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇨🇫"}'
-                                                value="Central African Republic">
-                                                Central African Republic
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇹🇩"}' value="Chad">
-                                                Chad
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇨🇱"}' value="Chile">
-                                                Chile
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇨🇳"}' value="China">
-                                                China
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇨🇴"}' value="Colombia">
-                                                Colombia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇰🇲"}' value="Comoros">
-                                                Comoros
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇨🇬"}'
-                                                value="Congo (Congo-Brazzaville)">
-                                                Congo (Congo-Brazzaville)
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇨🇷"}' value="Costa Rica">
-                                                Costa Rica
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇭🇷"}' value="Croatia">
-                                                Croatia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇨🇺"}' value="Cuba">
-                                                Cuba
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇨🇾"}' value="Cyprus">
-                                                Cyprus
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇨🇿"}' value="Czechia">
-                                                Czechia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇨🇩"}'
-                                                value="Democratic Republic of the Congo">
-                                                Democratic Republic of the Congo
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇩🇰"}' value="Denmark">
-                                                Denmark
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇩🇯"}' value="Djibouti">
-                                                Djibouti
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇩🇲"}' value="Dominica">
-                                                Dominica
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇩🇴"}' value="Dominican Republic">
-                                                Dominican Republic
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇪🇨"}' value="Ecuador">
-                                                Ecuador
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇪🇬"}' value="Egypt">
-                                                Egypt
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇻"}' value="El Salvador">
-                                                El Salvador
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇬🇶"}' value="Equatorial Guinea">
-                                                Equatorial Guinea
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇪🇷"}' value="Eritrea">
-                                                Eritrea
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇪🇪"}' value="Estonia">
-                                                Estonia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇿"}' value="Eswatini">
-                                                Eswatini
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇪🇹"}' value="Ethiopia">
-                                                Ethiopia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇫🇯"}' value="Fiji">
-                                                Fiji
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇫🇮"}' value="Finland">
-                                                Finland
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇫🇷"}' value="France">
-                                                France
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇬🇦"}' value="Gabon">
-                                                Gabon
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇬🇲"}' value="Gambia">
-                                                Gambia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇬🇪"}' value="Georgia">
-                                                Georgia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇩🇪"}' value="Germany">
-                                                Germany
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇬🇭"}' value="Ghana">
-                                                Ghana
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇬🇷"}' value="Greece">
-                                                Greece
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇬🇩"}' value="Grenada">
-                                                Grenada
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇬🇹"}' value="Guatemala">
-                                                Guatemala
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇬🇳"}' value="Guinea">
-                                                Guinea
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇬🇼"}' value="Guinea-Bissau">
-                                                Guinea-Bissau
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇬🇾"}' value="Guyana">
-                                                Guyana
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇭🇹"}' value="Haiti">
-                                                Haiti
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇭🇳"}' value="Honduras">
-                                                Honduras
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇭🇺"}' value="Hungary">
-                                                Hungary
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇮🇸"}' value="Iceland">
-                                                Iceland
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇮🇳"}' value="India">
-                                                India
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇮🇩"}' value="Indonesia">
-                                                Indonesia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇮🇷"}' value="Iran">
-                                                Iran
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇮🇶"}' value="Iraq">
-                                                Iraq
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇮🇪"}' value="Ireland">
-                                                Ireland
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇮🇱"}' value="Israel">
-                                                Israel
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇮🇹"}' value="Italy">
-                                                Italy
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇯🇲"}' value="Jamaica">
-                                                Jamaica
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇯🇵"}' value="Japan">
-                                                Japan
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇯🇴"}' value="Jordan">
-                                                Jordan
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇰🇿"}' value="Kazakhstan">
-                                                Kazakhstan
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇰🇪"}' value="Kenya">
-                                                Kenya
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇰🇮"}' value="Kiribati">
-                                                Kiribati
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇰🇼"}' value="Kuwait">
-                                                Kuwait
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇰🇬"}' value="Kyrgyzstan">
-                                                Kyrgyzstan
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇱🇦"}' value="Laos">
-                                                Laos
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇱🇻"}' value="Latvia">
-                                                Latvia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇱🇧"}' value="Lebanon">
-                                                Lebanon
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇱🇸"}' value="Lesotho">
-                                                Lesotho
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇱🇷"}' value="Liberia">
-                                                Liberia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇱🇾"}' value="Libya">
-                                                Libya
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇱🇮"}' value="Liechtenstein">
-                                                Liechtenstein
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇱🇹"}' value="Lithuania">
-                                                Lithuania
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇱🇺"}' value="Luxembourg">
-                                                Luxembourg
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇬"}' value="Madagascar">
-                                                Madagascar
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇼"}' value="Malawi">
-                                                Malawi
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇾"}' value="Malaysia">
-                                                Malaysia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇻"}' value="Maldives">
-                                                Maldives
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇱"}' value="Mali">
-                                                Mali
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇹"}' value="Malta">
-                                                Malta
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇭"}' value="Marshall Islands">
-                                                Marshall Islands
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇷"}' value="Mauritania">
-                                                Mauritania
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇺"}' value="Mauritius">
-                                                Mauritius
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇽"}' value="Mexico">
-                                                Mexico
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇫🇲"}' value="Micronesia">
-                                                Micronesia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇩"}' value="Moldova">
-                                                Moldova
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇨"}' value="Monaco">
-                                                Monaco
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇳"}' value="Mongolia">
-                                                Mongolia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇪"}' value="Montenegro">
-                                                Montenegro
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇦"}' value="Morocco">
-                                                Morocco
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇿"}' value="Mozambique">
-                                                Mozambique
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇲"}' value="Myanmar">
-                                                Myanmar
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇳🇦"}' value="Namibia">
-                                                Namibia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇳🇷"}' value="Nauru">
-                                                Nauru
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇳🇵"}' value="Nepal">
-                                                Nepal
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇳🇱"}' value="Netherlands">
-                                                Netherlands
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇳🇿"}' value="New Zealand">
-                                                New Zealand
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇳🇮"}' value="Nicaragua">
-                                                Nicaragua
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇳🇪"}' value="Niger">
-                                                Niger
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇳🇬"}' value="Nigeria">
-                                                Nigeria
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇰🇵"}' value="North Korea">
-                                                North Korea
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇲🇰"}' value="North Macedonia">
-                                                North Macedonia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇳🇴"}' value="Norway">
-                                                Norway
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇴🇲"}' value="Oman">
-                                                Oman
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇵🇰"}' value="Pakistan">
-                                                Pakistan
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇵🇼"}' value="Palau">
-                                                Palau
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇵🇸"}' value="Palestine">
-                                                Palestine
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇵🇦"}' value="Panama">
-                                                Panama
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇵🇬"}' value="Papua New Guinea">
-                                                Papua New Guinea
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇵🇾"}' value="Paraguay">
-                                                Paraguay
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇵🇪"}' value="Peru">
-                                                Peru
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇵🇭"}' value="Philippines">
-                                                Philippines
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇵🇱"}' value="Poland">
-                                                Poland
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇵🇹"}' value="Portugal">
-                                                Portugal
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇶🇦"}' value="Qatar">
-                                                Qatar
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇷🇴"}' value="Romania">
-                                                Romania
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇷🇺"}' value="Russia">
-                                                Russia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇷🇼"}' value="Rwanda">
-                                                Rwanda
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇰🇳"}' value="Saint Kitts and Nevis">
-                                                Saint Kitts and Nevis
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇱🇨"}' value="Saint Lucia">
-                                                Saint Lucia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇻🇨"}'
-                                                value="Saint Vincent and the Grenadines">
-                                                Saint Vincent and the Grenadines
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇼🇸"}' value="Samoa">
-                                                Samoa
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇲"}' value="San Marino">
-                                                San Marino
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇹"}' value="Sao Tome and Principe">
-                                                Sao Tome and Principe
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇦"}' value="Saudi Arabia">
-                                                Saudi Arabia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇳"}' value="Senegal">
-                                                Senegal
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇷🇸"}' value="Serbia">
-                                                Serbia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇨"}' value="Seychelles">
-                                                Seychelles
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇱"}' value="Sierra Leone">
-                                                Sierra Leone
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇬"}' value="Singapore">
-                                                Singapore
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇰"}' value="Slovakia">
-                                                Slovakia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇮"}' value="Slovenia">
-                                                Slovenia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇧"}' value="Solomon Islands">
-                                                Solomon Islands
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇴"}' value="Somalia">
-                                                Somalia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇿🇦"}' value="South Africa">
-                                                South Africa
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇰🇷"}' value="South Korea">
-                                                South Korea
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇸"}' value="South Sudan">
-                                                South Sudan
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇪🇸"}' value="Spain">
-                                                Spain
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇱🇰"}' value="Sri Lanka">
-                                                Sri Lanka
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇩"}' value="Sudan">
-                                                Sudan
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇷"}' value="Suriname">
-                                                Suriname
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇪"}' value="Sweden">
-                                                Sweden
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇨🇭"}' value="Switzerland">
-                                                Switzerland
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇸🇾"}' value="Syria">
-                                                Syria
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇹🇼"}' value="Taiwan">
-                                                Taiwan
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇹🇯"}' value="Tajikistan">
-                                                Tajikistan
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇹🇿"}' value="Tanzania">
-                                                Tanzania
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇹🇭"}' value="Thailand">
-                                                Thailand
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇹🇱"}' value="Timor-Leste">
-                                                Timor-Leste
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇹🇬"}' value="Togo">
-                                                Togo
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇹🇴"}' value="Tonga">
-                                                Tonga
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇹🇹"}' value="Trinidad and Tobago">
-                                                Trinidad and Tobago
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇹🇳"}' value="Tunisia">
-                                                Tunisia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇹🇷"}' value="Turkey">
-                                                Turkey
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇹🇲"}' value="Turkmenistan">
-                                                Turkmenistan
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇹🇻"}' value="Tuvalu">
-                                                Tuvalu
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇺🇬"}' value="Uganda">
-                                                Uganda
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇺🇦"}' value="Ukraine">
-                                                Ukraine
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇦🇪"}' value="United Arab Emirates">
-                                                United Arab Emirates
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇬🇧"}' value="United Kingdom">
-                                                United Kingdom
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇺🇸"}' value="United States">
-                                                United States
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇺🇾"}' value="Uruguay">
-                                                Uruguay
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇺🇿"}' value="Uzbekistan">
-                                                Uzbekistan
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇻🇺"}' value="Vanuatu">
-                                                Vanuatu
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇻🇦"}' value="Vatican City">
-                                                Vatican City
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇻🇪"}' value="Venezuela">
-                                                Venezuela
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇻🇳"}' value="Vietnam">
-                                                Vietnam
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇾🇪"}' value="Yemen">
-                                                Yemen
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇿🇲"}' value="Zambia">
-                                                Zambia
-                                            </option>
-                                            <option data-kt-select-option='{"flag": "🇿🇼"}' value="Zimbabwe">
-                                                Zimbabwe
+                                            data-kt-select-search-placeholder="Search..."
+                                            data-kt-select-placeholder="Select a brand..."
+                                            data-kt-select-config='{
+                                                "optionsClass": "kt-scrollable overflow-auto max-h-[250px]"
+                                            }'>
+                                            <option>
+                                                American English
+                                            </option>
+                                            <option>
+                                                Option 2
+                                            </option>
+                                            <option>
+                                                Option 3
                                             </option>
                                         </select>
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            State
+                                            Diplôme préparé
                                         </label>
-                                        <input class="kt-input" placeholder="State" type="text" value="" />
+                                        <div class="grow">
+                                            <select class="kt-select" name="diplome" data-kt-select="true">
+                                                <option>
+                                                    Master Grande École
+                                                </option>
+                                                <option>
+                                                    Diplôme d'Ingénieur
+                                                </option>
+                                                <option>
+                                                    Master Universitaire
+                                                </option>
+                                                <option>
+                                                    Mastère Spécialisé
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5 mb-2">
+                                        <label class="kt-form-label max-w-56">
+                                            Filière / Spécialisation principale
+                                        </label>
+                                        <div class="grow">
+                                            <select class="kt-select" name="filiere" data-kt-select="true">
+                                                <option>
+                                                    Finance de Marché
+                                                </option>
+                                                <option>
+                                                    Marketing Digital
+                                                </option>
+                                                <option>
+                                                    Intelligence Artificielle
+                                                </option>
+                                                <option>
+                                                    Droit des Affaires
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center flex-wrap lg:flex-nowrap gap-2.5">
+                                        <label class="kt-form-label max-w-56">
+                                            Année d'études actuelle
+                                        </label>
+                                        <input class="kt-input" name="annee_etude" type="text" placeholder="ex: 1ère année de Master / 2ème année du cycle ingénieur" value="{{ Auth::user()->current_study_year ?? null }}">
+                                    </div>
+                                    <div class="flex items-center flex-wrap lg:flex-nowrap gap-2.5">
+                                        <label class="kt-form-label max-w-56">
+                                            Nombre d'années d'études restantes
+                                        </label>
+                                        <input class="kt-input" name="annee_etude" type="text" placeholder="(avant diplomation)" value="{{ Auth::user()->remaining_years ?? null }}">
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            City
+                                            Date de diplomation prévue
                                         </label>
-                                        <input class="kt-input" type="text" value="Barcelona" />
-                                    </div>
-                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5 mb-2.5">
-                                        <label class="kt-form-label max-w-56">
-                                            Postcode
-                                        </label>
-                                        <input class="kt-input" type="text" value="08012" />
+                                        <input class="kt-input" name="date_diplome_prevue" placeholder="Mois / Année" type="date" value="{{ Auth::user()->graduation_date ?? null }}" />
                                     </div>
                                     <div class="flex justify-end">
-                                        <button class="kt-btn kt-btn-primary">
-                                            Save Changes
+                                        <button type="submit" class="kt-btn kt-btn-primary">
+                                            Sauvegarder
                                         </button>
                                     </div>
                                 </div>
@@ -2157,129 +1702,6 @@
                                 </div>
                             </div>
                             <div class="kt-card">
-                                <div class="kt-card-header" id="advanced_settings_preferences">
-                                    <h3 class="kt-card-title">
-                                        Preferences
-                                    </h3>
-                                </div>
-                                <div class="kt-card-content grid gap-5 lg:py-7.5">
-                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                        <label class="kt-form-label max-w-56">
-                                            Language
-                                        </label>
-                                        <select class="kt-select" data-kt-select="true">
-                                            <option>
-                                                American English
-                                            </option>
-                                            <option>
-                                                Option 2
-                                            </option>
-                                            <option>
-                                                Option 3
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                        <label class="kt-form-label max-w-56">
-                                            Time zone
-                                        </label>
-                                        <div class="grow">
-                                            <select class="kt-select" data-kt-select="true">
-                                                <option>
-                                                    GMT -5:00 - Eastern Time(US &amp; Canada)
-                                                </option>
-                                                <option>
-                                                    Option 2
-                                                </option>
-                                                <option>
-                                                    Option 3
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5 mb-2">
-                                        <label class="kt-form-label max-w-56">
-                                            Currency
-                                        </label>
-                                        <div class="grow">
-                                            <select class="kt-select" data-kt-select="true">
-                                                <option>
-                                                    United States Dollar (USD)
-                                                </option>
-                                                <option>
-                                                    Option 2
-                                                </option>
-                                                <option>
-                                                    Option 3
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center flex-wrap lg:flex-nowrap gap-2.5">
-                                        <label class="kt-form-label max-w-56">
-                                            Open tasks as...
-                                        </label>
-                                        <div class="flex items-center gap-5">
-                                            <label class="kt-label">
-                                                <input checked="" class="kt-radio" name="open-tasks" type="radio"
-                                                    value="1">
-                                                Modal
-                                                </input>
-                                            </label>
-                                            <label class="kt-label">
-                                                <input class="kt-radio" name="open-tasks" type="radio" value="2">
-                                                Fullscreen
-                                                </input>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-wrap gap-2.5 mb-1.5">
-                                        <label class="kt-form-label items-baseline max-w-56">
-                                            Attributes
-                                        </label>
-                                        <div class="flex flex-col items-start gap-5">
-                                            <div class="flex flex-col gap-2.5">
-                                                <label class="kt-label">
-                                                    <input class="kt-checkbox" name="attributes" type="checkbox"
-                                                        value="1">
-                                                    Show list names
-                                                    </input>
-                                                </label>
-                                                <div class="kt-form-description text-2sm">
-                                                    See the name next to each icon
-                                                </div>
-                                            </div>
-                                            <div class="flex flex-col gap-2.5">
-                                                <label class="kt-label">
-                                                    <input checked="" class="kt-checkbox" name="attributes"
-                                                        type="checkbox" value="2">
-                                                    Show linked task names
-                                                    </input>
-                                                </label>
-                                                <div class="kt-form-description text-2sm">
-                                                    Show task names next to ids for linked project tasks.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center flex-wrap gap-2.5">
-                                        <label class="kt-form-label max-w-56">
-                                            Email visibility
-                                        </label>
-                                        <label class="kt-label">
-                                            <input checked="" class="kt-switch" type="checkbox" value="1">
-                                            Visible
-                                            </input>
-                                        </label>
-                                    </div>
-                                    <div class="flex justify-end">
-                                        <button class="kt-btn kt-btn-primary">
-                                            Save Changes
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="kt-card">
                                 <div class="kt-card-header" id="advanced_settings_appearance">
                                     <h3 class="kt-card-title">
                                         Appearance
@@ -2521,64 +1943,6 @@
                                         </label>
                                     </div>
                                     <div class="flex justify-end">
-                                        <button class="kt-btn kt-btn-primary">
-                                            Save Changes
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="kt-card">
-                                <div class="kt-card-header" id="advanced_settings_address">
-                                    <h3 class="kt-card-title">
-                                        Address
-                                    </h3>
-                                </div>
-                                <div class="kt-card-content grid gap-5 lg:py-7.5">
-                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                        <label class="kt-form-label flex items-center gap-1 max-w-56">
-                                            Address
-                                        </label>
-                                        <input class="kt-input" type="text" value="Avinguda Imaginària, 789">
-                                        </input>
-                                    </div>
-                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                        <label class="kt-form-label max-w-56">
-                                            Country
-                                        </label>
-                                        <div class="grow">
-                                            <select class="kt-select" data-kt-select="true" name="kt-select">
-                                                <option value="1">
-                                                    Spain
-                                                </option>
-                                                <option value="2">
-                                                    Option 2
-                                                </option>
-                                                <option value="3">
-                                                    Option 3
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                        <label class="kt-form-label max-w-56">
-                                            State
-                                        </label>
-                                        <input class="kt-input" placeholder="State" type="text" value="">
-                                        </input>
-                                    </div>
-                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                        <label class="kt-form-label max-w-56">
-                                            City
-                                        </label>
-                                        <input class="kt-input" type="text" value="Barcelona" />
-                                    </div>
-                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                        <label class="kt-form-label max-w-56">
-                                            Postcode
-                                        </label>
-                                        <input class="kt-input" type="text" value="08012" />
-                                    </div>
-                                    <div class="flex justify-end pt-2.5">
                                         <button class="kt-btn kt-btn-primary">
                                             Save Changes
                                         </button>

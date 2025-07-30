@@ -8,6 +8,7 @@ use App\Http\Controllers\InvestisseurController;
 use App\Http\Controllers\Emprunteur\EmprunteurController;
 use App\Http\Controllers\Emprunteur\LoanRequestController;
 use App\Http\Controllers\Investisseur\InvestmentController;
+use App\Http\Controllers\Auth\EmprunteurRegisterController;
 
 // Page d'accueil
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -46,21 +47,25 @@ Route::get('/risques-investissement', [PageController::class, 'investmentRisks']
 
 /////////// Les Routes du Backend /////////
 
-Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth'])->group(function () {
+Route::get('/inscription/emprunteur', [EmprunteurRegisterController::class, 'showForm'])->name('register.emprunteur');
+Route::post('/inscription/emprunteur', [EmprunteurRegisterController::class, 'register'])->name('register.emprunteur.submit');
+
+Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', 'role:emprunteur|admin'], 'profile.completed')->group(function () {
     Route::get('/', [EmprunteurController::class, 'index'])->name('dashboard');
     Route::post('/simulateur', [LoanRequestController::class, 'simulate'])->name('simuler');
     Route::post('/demande-de-pret', [LoanRequestController::class, 'soumettreDemande'])->name('demande');
     Route::get('/mes-demandes', [LoanRequestController::class, 'demandes'])->name('mes-demandes');
-    Route::get('/mon-profil', [LoanRequestController::class, 'profil'])->name('mon-profil');
+    Route::get('/mon-profil', [EmprunteurController::class, 'profil'])->name('mon-profil');
     // Annuler une demande
     Route::post('/demande-de-pret/{loan}/annuler', [LoanRequestController::class, 'annuler'])->name('loan-requests.annuler');
     // Modifier une demande (formulaire)
     Route::get('/demande-de-pret/{loan}/modifier', [LoanRequestController::class, 'edit'])->name('loan-requests.edit');
     // Modifier une demande (enregistrement)
     Route::post('/demande-de-pret/{loan}/modifier', [LoanRequestController::class, 'update'])->name('loan-requests.update');
+
 });
 
-Route::prefix('investisseur')->name('investisseur.')->middleware(['auth'])->group(function () {
+Route::prefix('investisseur')->name('investisseur.')->middleware(['auth', 'role:emprunteur|admin'])->group(function () {
     Route::get('/', [InvestmentController::class, 'index'])->name('dashboard');
     Route::get('/decouverte-des-projets', [InvestmentController::class, 'decouvrir'])->name('decouvrir');
     Route::post('/contribuer/{loanRequest}', [InvestmentController::class, 'investir'])->name('investir');

@@ -10,14 +10,6 @@ use Illuminate\Support\Facades\Auth;
 class LoanRequestController extends Controller
 {
     /**
-     * Affiche le formulaire de simulation.
-     */
-    public function profil()
-    {
-        return view('back.emprunteur.mon-profil');
-    }
-
-    /**
      * Calcule la simulation d’un prêt (sans créer la demande pour le moment).
      */
     public function simulate(Request $request)

@@ -7,7 +7,7 @@
                     src="{{asset('assets/media/avatars/blank.png')}}">
                 <div class="flex items-center gap-1.5">
                     <div class="text-lg leading-5 font-semibold text-mono">
-                        {{ Auth::user()->name }}
+                        {{ Auth::user()->first_name .' '. Auth::user()->last_name }}
                     </div>
                     <svg class="text-primary" fill="none" height="16" viewbox="0 0 15 16" width="15"
                         xmlns="http://www.w3.org/2000/svg">

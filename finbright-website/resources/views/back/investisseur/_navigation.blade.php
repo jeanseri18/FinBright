@@ -1469,11 +1469,11 @@
                     <div class="kt-dropdown-menu w-[250px]" data-kt-dropdown-menu="true">
                         <div class="flex items-center justify-between px-2.5 py-1.5 gap-1.5">
                             <div class="flex items-center gap-2">
-                                <img alt="{{ Auth::user()->name }}" class="size-9 shrink-0 rounded-full border-2 border-green-500"
+                                <img alt="{{ Auth::user()->first_name .' '. Auth::user()->last_name }}" class="size-9 shrink-0 rounded-full border-2 border-green-500"
                                     src="{{asset('assets/media/avatars/blank.png')}}" />
                                 <div class="flex flex-col gap-1.5">
                                     <span class="text-sm text-foreground font-semibold leading-none">
-                                        {{ Auth::user()->name }}
+                                        {{ Auth::user()->first_name .' '. Auth::user()->last_name }}
                                     </span>
                                     <a class="text-xs text-secondary-foreground hover:text-primary font-medium leading-none"
                                         href="/metronic/tailwind/demo9/account/home/get-started">

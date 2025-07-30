@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('loan_requests', function (Blueprint $table) {
-            $table->dropColumn('interest_rate');
+        Schema::table('users', function (Blueprint $table) {
+            $table->json('address')->nullable()->change();
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('loan_requests', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }
