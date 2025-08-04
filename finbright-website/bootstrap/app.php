@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,
             'profile.completed' => \App\Http\Middleware\EnsureProfileIsCompleted::class,
+            '2fa' => \App\Http\Middleware\EnsureTwoFactorIsVerified::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

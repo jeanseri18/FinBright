@@ -893,6 +893,13 @@
                                                 Connexion via réseaux sociaux
                                             </a>
                                             <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
+                                                data-kt-scrollspy-anchor="true" href="#auth_social_sign_in">
+                                                <span
+                                                    class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
+                                                </span>
+                                                Authentification à deux facteurs (2FA)
+                                            </a>
+                                            <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
                                                 data-kt-scrollspy-anchor="true" href="#auth_password">
                                                 <span
                                                     class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
@@ -912,7 +919,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col items-stretch grow gap-5 lg:gap-7.5">
-                            <div class="kt-card pb-2.5">
+                            <form action="" method="post" enctype="multipart/form-data" class="kt-card pb-2.5">
                                 <div class="kt-card-header" id="basic_settings">
                                     <h3 class="kt-card-title">
                                     </h3>
@@ -986,7 +993,7 @@
                                             </label>
                                             <label class="kt-label">
                                                 <input class="kt-radio" name="civilite" type="radio" value="Mlle">
-                                                Mademoiselle
+                                                Non-binaire
                                                 </input>
                                             </label>
                                         </div>
@@ -1010,7 +1017,22 @@
                                         <label class="kt-form-label max-w-56">
                                             Lieu de naissance
                                         </label>
-                                        <input class="kt-input" name="birth_place" placeholder="Ville, Pays" type="text" value="{{ Auth::user()->birth_place ?? null }}" />
+                                        <div class="grow">
+                                            <select name="birth_place" class="kt-select" name="pays" data-kt-select="true">
+                                                <option {{ Auth::user()->birth_place == 'Belgique' ? 'selected' : '' }}>Belgique</option>
+                                                <option {{ Auth::user()->birth_place == 'Congo' ? 'selected' : '' }}>Congo</option>
+                                                <option {{ Auth::user()->birth_place == 'Côte d\'Ivoire' ? 'selected' : '' }}>Côte d'Ivoire</option>
+                                                <option {{ Auth::user()->birth_place == 'Cameroun' ? 'selected' : '' }}>Cameroun</option>
+                                                <option {{ Auth::user()->birth_place == 'Canada' ? 'selected' : '' }}>Canada</option>
+                                                <option {{ Auth::user()->birth_place == 'Espagne' ? 'selected' : '' }}>Espagne</option>
+                                                <option {{ Auth::user()->birth_place == 'France' ? 'selected' : '' }}>France</option>
+                                                <option {{ Auth::user()->birth_place == 'Italie' ? 'selected' : '' }}>Italie</option>
+                                                <option {{ Auth::user()->birth_place == 'Guinnée' ? 'selected' : '' }}>Guinnée</option>
+                                                <option {{ Auth::user()->birth_place == 'Mali' ? 'selected' : '' }}>Mali</option>
+                                                <option {{ Auth::user()->birth_place == 'Senegal' ? 'selected' : '' }}>Senegal</option>
+                                                <option {{ Auth::user()->birth_place == 'Mali' ? 'selected' : '' }}>Mali</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
@@ -1030,8 +1052,9 @@
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="kt-card">
+                            </form>
+                            {{-- Adresse postale --}}
+                            <form action="" method="post" class="kt-card">
                                 <div class="kt-card-header" id="advanced_settings_address">
                                     <h3 class="kt-card-title">
                                         Adresse postale
@@ -1064,7 +1087,7 @@
                                         </label>
                                         <input class="kt-input" type="text" name="ville" value="{{ Auth::user()->address['ville'] ?? null }}" />
                                     </div>
-                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                    {{-- <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
                                             Pays
                                         </label>
@@ -1084,15 +1107,16 @@
                                                 <option>Mali</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="flex justify-end pt-2.5">
                                         <button type="submit" class="kt-btn kt-btn-primary">
                                             Sauvegarder
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="kt-card">
+                            </form>
+                            {{-- Cursus Académique --}}
+                            <form action="" method="post" class="kt-card">
                                 <div class="kt-card-header" id="advanced_settings_preferences">
                                     <h3 class="kt-card-title">
                                         Cursus Académique
@@ -1189,8 +1213,8 @@
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="kt-card pb-2.5">
+                            </form>
+                            <form action="" method="post" class="kt-card pb-2.5">
                                 <div class="kt-card-header" id="auth_email">
                                     <h3 class="kt-card-title">
                                         Email
@@ -1226,16 +1250,17 @@
                                         </div>
                                     </div>
                                     <div class="flex justify-end">
-                                        <button class="kt-btn kt-btn-primary">
-                                            Save Changes
+                                        <button type="submit" class="kt-btn kt-btn-primary">
+                                            Sauvegarder
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="kt-card">
+                            </form>
+                            {{-- Connexion réseaux sociaux --}}
+                            <form action="" method="post" class="kt-card">
                                 <div class="kt-card-header" id="auth_social_sign_in">
                                     <h3 class="kt-card-title">
-                                        Social Sign in
+                                        Connexion réseaux sociaux
                                     </h3>
                                 </div>
                                 <div class="kt-card-content">
@@ -1323,16 +1348,17 @@
                                         </a>
                                     </div>
                                     <div class="flex justify-end">
-                                        <button class="kt-btn kt-btn-primary">
-                                            Save Changes
+                                        <button type="submit" class="kt-btn kt-btn-primary">
+                                            Sauvegarder
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="kt-card">
+                            </form>
+                            {{-- Authentification à deux facteurs (2FA) --}}
+                            <div action="" method="post" class="kt-card">
                                 <div class="kt-card-header" id="auth_two_factor">
                                     <h3 class="kt-card-title">
-                                        Two-Factor authentication(2FA)
+                                        Authentification à deux facteurs (2FA)
                                     </h3>
                                     <div class="kt-menu" data-kt-menu="true">
                                         <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
@@ -1517,146 +1543,13 @@
                             </div>
                             <style>
                                 .singl-sign-on-bg {
-                                    background-image: url('/static/metronic/tailwind/dist/assets/media/images/2600x1600/bg-2.png');
+                                    background-image: url("{{asset('assets/media/images/2600x1600/bg-2.png')}}");
                                 }
 
                                 .dark .singl-sign-on-bg {
-                                    background-image: url('/static/metronic/tailwind/dist/assets/media/images/2600x1600/bg-2-dark.png');
+                                    background-image: url("{{asset('assets/media/images/2600x1600/bg-2-dark.png')}}");
                                 }
                             </style>
-                            <div class="kt-card">
-                                <div class="kt-card-header" id="auth_social_sign_in_sso">
-                                    <h3 class="kt-card-title">
-                                        Single Sign On(SSO)
-                                    </h3>
-                                </div>
-                                <div class="kt-card-content flex flex-col gap-7.5">
-                                    <div class="grid gap-7">
-                                        <div class="text-base font-semibold text-mono">
-                                            1. Select SSO integration Type
-                                        </div>
-                                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-7.5">
-                                            <label
-                                                class="flex align-stretch cursor-pointer bg-center h-44 bg-no-repeat border border-input rounded-xl border-dashed has-checked:border-primary bg-[length:500px] sso-active singl-sign-on-bg">
-                                                <div
-                                                    class="flex flex-col place-items-center place-content-center rounded-xl grow">
-                                                    <div class="flex items-center h-11">
-                                                        <img alt="" class="w-5"
-                                                            src="/static/metronic/tailwind/dist/assets/media/brand-logos/azure.svg" />
-                                                    </div>
-                                                    <span class="text-base font-medium text-mono">
-                                                        Microsoft Azure
-                                                    </span>
-                                                    <input class="appearance-none" name="sso_option" type="radio"
-                                                        value="1" />
-                                                </div>
-                                            </label>
-                                            <label
-                                                class="flex align-stretch cursor-pointer bg-center h-44 bg-no-repeat border border-input rounded-xl border-dashed has-checked:border-primary bg-[length:500px] sso-active singl-sign-on-bg">
-                                                <div
-                                                    class="flex flex-col place-items-center place-content-center rounded-xl grow">
-                                                    <div class="flex items-center h-11">
-                                                        <img alt="" class="w-8"
-                                                            src="/static/metronic/tailwind/dist/assets/media/brand-logos/google.svg" />
-                                                    </div>
-                                                    <span class="text-base font-medium text-mono">
-                                                        Google
-                                                    </span>
-                                                    <input checked="" class="appearance-none" name="sso_option"
-                                                        type="radio" value="1" />
-                                                </div>
-                                            </label>
-                                            <label
-                                                class="flex align-stretch cursor-pointer bg-center h-44 bg-no-repeat border border-input rounded-xl border-dashed has-checked:border-primary bg-[length:500px] sso-active singl-sign-on-bg">
-                                                <div
-                                                    class="flex flex-col place-items-center place-content-center rounded-xl grow">
-                                                    <div class="flex items-center h-11">
-                                                        <img alt="" class="w-24"
-                                                            src="/static/metronic/tailwind/dist/assets/media/brand-logos/openid.svg" />
-                                                    </div>
-                                                    <span class="text-base font-medium text-mono">
-                                                        OpenID Connect
-                                                    </span>
-                                                    <input class="appearance-none" name="sso_option" type="radio"
-                                                        value="1" />
-                                                </div>
-                                            </label>
-                                        </div>
-                                        <style>
-                                            .sso-active:has(:checked) {
-                                                background-image: url('/static/metronic/tailwind/dist/assets/media/images/2600x1600/bg-1.png');
-                                            }
-
-                                            .dark .sso-active:has(:checked) {
-                                                background-image: url('/static/metronic/tailwind/dist/assets/media/images/2600x1600/bg-1-dark.png');
-                                            }
-                                        </style>
-                                    </div>
-                                    <div class="border-b border-border">
-                                    </div>
-                                    <div class="grid gap-7">
-                                        <div class="text-base font-semibold text-mono">
-                                            2. Configure Google authentication
-                                        </div>
-                                        <div class="w-full">
-                                            <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                                <label class="kt-form-label max-w-56">
-                                                    Client ID
-                                                </label>
-                                                <input class="kt-input" type="text" value="02874374-367145773">
-                                                </input>
-                                            </div>
-                                        </div>
-                                        <div class="w-full">
-                                            <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                                <label class="kt-form-label max-w-56">
-                                                    Client Secret
-                                                </label>
-                                                <input class="kt-input" type="text"
-                                                    value="23djfn784957f8022we2232307822-cey2442">
-                                                </input>
-                                            </div>
-                                        </div>
-                                        <div class="flex justify-end">
-                                            <button class="kt-btn kt-btn-primary">
-                                                Save Changes
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="border-b border-border">
-                                    </div>
-                                    <div class="grid gap-7">
-                                        <div class="text-base font-semibold text-mono">
-                                            3. Note down custom URL for Google SSO authentication
-                                        </div>
-                                        <div class="w-full">
-                                            <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                                <label class="kt-form-label max-w-56">
-                                                    Custom Login UTL
-                                                </label>
-                                                <div class="grow">
-                                                    <div class="kt-input-group">
-                                                        <input class="kt-input" type="text"
-                                                            value="https://devs.keenthemes.com/rl/AirMikeStudios">
-                                                        <span class="kt-btn kt-btn-primary">
-                                                            Copy
-                                                        </span>
-                                                        </input>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="border-b border-border">
-                                    </div>
-                                    <div class="kt-form-description pb-5 text-2sm">
-                                        Single Sign-On (SSO) authentication streamlines access across
-                                        multiple platforms. Users log in once, gaining seamless entry
-                                        <br />
-                                        to various systems without repetitive credentials.
-                                    </div>
-                                </div>
-                            </div>
                             <div class="kt-card">
                                 <div class="kt-card-header" id="auth_password">
                                     <h3 class="kt-card-title">

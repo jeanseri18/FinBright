@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->json('address')->nullable()->change();
-            $table->boolean('is_2fa_enabled')->default(false);
-            $table->string('two_factor_code')->nullable();
-            $table->timestamp('two_factor_expires_at')->nullable();
+            $table->string('two_factor_code', 6)->nullable()->after('profile_picture_id');
+            $table->timestamp('two_factor_expires_at')->nullable()->after('two_factor_code');
+            $table->timestamp('two_factor_confirmed_at')->nullable()->after('two_factor_expires_at');
         });
     }
 
@@ -25,7 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn(['two_factor_code', 'two_factor_expires_at']);
         });
     }
 };

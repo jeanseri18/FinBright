@@ -195,12 +195,12 @@
                                 <img alt="" class="light:hidden max-h-[170px]" src="/static/metronic/tailwind/dist/assets/media/illustrations/11-dark.svg"/>
                             </div>
                             <div class="text-lg font-medium text-mono text-center">
-                                Upload Item to Get Started
+                                Aucun projet pour l'instant
                             </div>
                             <div class="text-sm text-secondary-foreground text-center gap-1">
-                                Begin by crafting your inaugural list in minutes.
-                                <a class="text-sm font-medium link" href="/metronic/tailwind/demo2/account/billing/plans">
-                                Get Started!
+                                Pour commencer un nouveau projet, 
+                                <a class="text-sm font-medium link" href="">
+                                faites une simulation de prêt.
                                 </a>
                             </div>
                         </div>
@@ -294,15 +294,15 @@
                                 <div class="flex -space-x-2">
                                     <div class="flex">
                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-5.png" />
+                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                     </div>
                                     <div class="flex">
                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-17.png" />
+                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                     </div>
                                     <div class="flex">
                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-16.png" />
+                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                     </div>
                                 </div>
                             </div>
@@ -428,11 +428,11 @@
                                 <div class="flex -space-x-2">
                                     <div class="flex">
                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-19.png" />
+                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                     </div>
                                     <div class="flex">
                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-9.png" />
+                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                     </div>
                                 </div>
                             </div>
@@ -558,11 +558,11 @@
                                 <div class="flex -space-x-2">
                                     <div class="flex">
                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-5.png" />
+                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                     </div>
                                     <div class="flex">
                                         <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-11.png" />
+                                            src="{{asset('assets/media/avatars/blank.png')}}" />
                                     </div>
                                     <div class="flex">
                                         <span
@@ -604,286 +604,6 @@
                         </div>
                         <div class="kt-progress kt-progress-success h-1">
                             <div class="kt-progress-indicator" style="width: 100%">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="kt-card overflow-hidden grow justify-between">
-                        <div class="p-5 mb-5">
-                            <div class="flex items-center justify-between mb-5">
-                                <span class="kt-badge kt-badge-success kt-badge-outline">
-                                    Completed
-                                </span>
-                                <div class="kt-menu" data-kt-menu="true">
-                                    <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                        data-kt-menu-item-placement="bottom-end" data-kt-menu-item-toggle="dropdown"
-                                        data-kt-menu-item-trigger="click">
-                                        <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                            <i class="ki-filled ki-dots-vertical text-lg">
-                                            </i>
-                                        </button>
-                                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
-                                            data-kt-menu-dismiss="true">
-                                            <div class="kt-menu-item">
-                                                <a class="kt-menu-link"
-                                                    href="/metronic/tailwind/demo2/account/home/settings-enterprise">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-setting-3">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Settings
-                                                    </span>
-                                                </a>
-                                            </div>
-                                            <div class="kt-menu-item">
-                                                <a class="kt-menu-link"
-                                                    href="/metronic/tailwind/demo2/account/members/import-members">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-some-files">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Import
-                                                    </span>
-                                                </a>
-                                            </div>
-                                            <div class="kt-menu-item">
-                                                <a class="kt-menu-link" href="/metronic/tailwind/demo2/account/activity">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-cloud-change">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Activity
-                                                    </span>
-                                                </a>
-                                            </div>
-                                            <div class="kt-menu-item">
-                                                <a class="kt-menu-link" data-kt-modal-toggle="#report_user_modal"
-                                                    href="#">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-dislike">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Report
-                                                    </span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex justify-center mb-2">
-                                <img alt="" class="min-w-12 shrink-0"
-                                    src="/static/metronic/tailwind/dist/assets/media/brand-logos/slack.svg">
-                                </img>
-                            </div>
-                            <div class="text-center mb-7">
-                                <a class="text-lg font-medium text-mono hover:text-primary" href="">
-                                    Neptune App
-                                </a>
-                                <div class="text-sm text-secondary-foreground">
-                                    Peer-to-peer mobile payment service
-                                </div>
-                            </div>
-                            <div class="grid justify-center gap-1.5 mb-7.5">
-                                <span class="text-xs uppercase text-secondary-foreground text-center">
-                                    team
-                                </span>
-                                <div class="flex -space-x-2">
-                                    <div class="flex">
-                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-17.png" />
-                                    </div>
-                                    <div class="flex">
-                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-1.png" />
-                                    </div>
-                                    <div class="flex">
-                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-19.png" />
-                                    </div>
-                                    <div class="flex">
-                                        <span
-                                            class="hover:z-5 relative inline-flex items-center justify-center shrink-0 rounded-full ring-1 font-semibold leading-none text-2xs size-7 text-white ring-background bg-violet-500">
-                                            P
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-center flex-wrap gap-2 lg:gap-5">
-                                <div
-                                    class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
-                                    <span class="text-mono text-sm leading-none font-medium">
-                                        3-8 months
-                                    </span>
-                                    <span class="text-secondary-foreground text-xs">
-                                        Duration
-                                    </span>
-                                </div>
-                                <div
-                                    class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
-                                    <span class="text-mono text-sm leading-none font-medium">
-                                        Flexible
-                                    </span>
-                                    <span class="text-secondary-foreground text-xs">
-                                        Location
-                                    </span>
-                                </div>
-                                <div
-                                    class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
-                                    <span class="text-mono text-sm leading-none font-medium">
-                                        $34 hour
-                                    </span>
-                                    <span class="text-secondary-foreground text-xs">
-                                        Rate
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kt-progress kt-progress-success h-1">
-                            <div class="kt-progress-indicator" style="width: 100%">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="kt-card overflow-hidden grow justify-between">
-                        <div class="p-5 mb-5">
-                            <div class="flex items-center justify-between mb-5">
-                                <span class="kt-badge kt-badge-primary kt-badge-outline">
-                                    In Progress
-                                </span>
-                                <div class="kt-menu" data-kt-menu="true">
-                                    <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                        data-kt-menu-item-placement="bottom-end" data-kt-menu-item-toggle="dropdown"
-                                        data-kt-menu-item-trigger="click">
-                                        <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                            <i class="ki-filled ki-dots-vertical text-lg">
-                                            </i>
-                                        </button>
-                                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
-                                            data-kt-menu-dismiss="true">
-                                            <div class="kt-menu-item">
-                                                <a class="kt-menu-link"
-                                                    href="/metronic/tailwind/demo2/account/home/settings-enterprise">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-setting-3">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Settings
-                                                    </span>
-                                                </a>
-                                            </div>
-                                            <div class="kt-menu-item">
-                                                <a class="kt-menu-link"
-                                                    href="/metronic/tailwind/demo2/account/members/import-members">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-some-files">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Import
-                                                    </span>
-                                                </a>
-                                            </div>
-                                            <div class="kt-menu-item">
-                                                <a class="kt-menu-link" href="/metronic/tailwind/demo2/account/activity">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-cloud-change">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Activity
-                                                    </span>
-                                                </a>
-                                            </div>
-                                            <div class="kt-menu-item">
-                                                <a class="kt-menu-link" data-kt-modal-toggle="#report_user_modal"
-                                                    href="#">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-dislike">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Report
-                                                    </span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex justify-center mb-2">
-                                <img alt="" class="min-w-12 shrink-0"
-                                    src="/static/metronic/tailwind/dist/assets/media/brand-logos/grab.svg">
-                                </img>
-                            </div>
-                            <div class="text-center mb-7">
-                                <a class="text-lg font-medium text-mono hover:text-primary" href="">
-                                    Radiant Wave
-                                </a>
-                                <div class="text-sm text-secondary-foreground">
-                                    Team communication and collaboration
-                                </div>
-                            </div>
-                            <div class="grid justify-center gap-1.5 mb-7.5">
-                                <span class="text-xs uppercase text-secondary-foreground text-center">
-                                    team
-                                </span>
-                                <div class="flex -space-x-2">
-                                    <div class="flex">
-                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-24.png" />
-                                    </div>
-                                    <div class="flex">
-                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-7.png" />
-                                    </div>
-                                    <div class="flex">
-                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-9.png" />
-                                    </div>
-                                    <div class="flex">
-                                        <span
-                                            class="hover:z-5 relative inline-flex items-center justify-center shrink-0 rounded-full ring-1 font-semibold leading-none text-2xs size-7 text-primary-foreground ring-background bg-primary">
-                                            S
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-center flex-wrap gap-2 lg:gap-5">
-                                <div
-                                    class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
-                                    <span class="text-mono text-sm leading-none font-medium">
-                                        2-5 months
-                                    </span>
-                                    <span class="text-secondary-foreground text-xs">
-                                        Duration
-                                    </span>
-                                </div>
-                                <div
-                                    class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
-                                    <span class="text-mono text-sm leading-none font-medium">
-                                        Remote
-                                    </span>
-                                    <span class="text-secondary-foreground text-xs">
-                                        Location
-                                    </span>
-                                </div>
-                                <div
-                                    class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
-                                    <span class="text-mono text-sm leading-none font-medium">
-                                        $33 hour
-                                    </span>
-                                    <span class="text-secondary-foreground text-xs">
-                                        Rate
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kt-progress kt-progress-primary h-1">
-                            <div class="kt-progress-indicator" style="width: 20%">
                             </div>
                         </div>
                     </div>
@@ -1107,15 +827,15 @@
                                         <div class="flex -space-x-2">
                                             <div class="flex">
                                                 <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="/static/metronic/tailwind/dist/assets/media/avatars/300-5.png" />
+                                                    src="{{asset('assets/media/avatars/blank.png')}}" />
                                             </div>
                                             <div class="flex">
                                                 <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="/static/metronic/tailwind/dist/assets/media/avatars/300-17.png" />
+                                                    src="{{asset('assets/media/avatars/blank.png')}}" />
                                             </div>
                                             <div class="flex">
                                                 <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="/static/metronic/tailwind/dist/assets/media/avatars/300-16.png" />
+                                                    src="{{asset('assets/media/avatars/blank.png')}}" />
                                             </div>
                                         </div>
                                     </div>
@@ -1243,11 +963,11 @@
                                         <div class="flex -space-x-2">
                                             <div class="flex">
                                                 <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="/static/metronic/tailwind/dist/assets/media/avatars/300-19.png" />
+                                                    src="{{asset('assets/media/avatars/blank.png')}}" />
                                             </div>
                                             <div class="flex">
                                                 <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="/static/metronic/tailwind/dist/assets/media/avatars/300-9.png" />
+                                                    src="{{asset('assets/media/avatars/blank.png')}}" />
                                             </div>
                                         </div>
                                     </div>
@@ -1375,300 +1095,16 @@
                                         <div class="flex -space-x-2">
                                             <div class="flex">
                                                 <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="/static/metronic/tailwind/dist/assets/media/avatars/300-5.png" />
+                                                    src="{{asset('assets/media/avatars/blank.png')}}" />
                                             </div>
                                             <div class="flex">
                                                 <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="/static/metronic/tailwind/dist/assets/media/avatars/300-11.png" />
+                                                    src="{{asset('assets/media/avatars/blank.png')}}" />
                                             </div>
                                             <div class="flex">
                                                 <span
                                                     class="hover:z-5 relative inline-flex items-center justify-center shrink-0 rounded-full ring-1 font-semibold leading-none text-2xs size-7 text-white ring-background bg-yellow-500">
                                                     W
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="kt-menu" data-kt-menu="true">
-                                        <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                            data-kt-menu-item-placement="bottom-end" data-kt-menu-item-toggle="dropdown"
-                                            data-kt-menu-item-trigger="click">
-                                            <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                <i class="ki-filled ki-dots-vertical text-lg">
-                                                </i>
-                                            </button>
-                                            <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
-                                                data-kt-menu-dismiss="true">
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link"
-                                                        href="/metronic/tailwind/demo2/account/home/settings-enterprise">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-setting-3">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Settings
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link"
-                                                        href="/metronic/tailwind/demo2/account/members/import-members">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-some-files">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Import
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link"
-                                                        href="/metronic/tailwind/demo2/account/activity">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-cloud-change">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Activity
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link" data-kt-modal-toggle="#report_user_modal"
-                                                        href="#">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-dislike">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Report
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="kt-card p-7.5">
-                        <div class="flex items-center flex-wrap justify-between gap-5">
-                            <div class="flex items-center gap-3.5">
-                                <div class="flex items-center justify-center min-w-12">
-                                    <img alt="" class="min-w-12 shrink-0"
-                                        src="/static/metronic/tailwind/dist/assets/media/brand-logos/slack.svg">
-                                    </img>
-                                </div>
-                                <div class="flex flex-col">
-                                    <a class="text-lg font-medium text-mono hover:text-primary" href="">
-                                        Neptune App
-                                    </a>
-                                    <div class="text-sm text-secondary-foreground">
-                                        Peer-to-peer mobile payment service
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex items-center flex-wrap gap-5 lg:gap-12">
-                                <div class="flex items-center flex-wrap gap-5 lg:gap-14">
-                                    <div class="flex items-center lg:justify-center flex-wrap gap-2 lg:gap-5">
-                                        <div
-                                            class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
-                                            <span class="text-mono text-sm leading-none font-medium">
-                                                3-8 months
-                                            </span>
-                                            <span class="text-secondary-foreground text-xs">
-                                                Duration
-                                            </span>
-                                        </div>
-                                        <div
-                                            class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
-                                            <span class="text-mono text-sm leading-none font-medium">
-                                                Flexible
-                                            </span>
-                                            <span class="text-secondary-foreground text-xs">
-                                                Location
-                                            </span>
-                                        </div>
-                                        <div
-                                            class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
-                                            <span class="text-mono text-sm leading-none font-medium">
-                                                $34 hour
-                                            </span>
-                                            <span class="text-secondary-foreground text-xs">
-                                                Rate
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="w-[125px] shrink-0">
-                                        <span class="kt-badge kt-badge-success kt-badge-outline">
-                                            Completed
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-5 lg:gap-14">
-                                    <div class="grid justify-end min-w-24">
-                                        <div class="flex -space-x-2">
-                                            <div class="flex">
-                                                <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="/static/metronic/tailwind/dist/assets/media/avatars/300-17.png" />
-                                            </div>
-                                            <div class="flex">
-                                                <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="/static/metronic/tailwind/dist/assets/media/avatars/300-1.png" />
-                                            </div>
-                                            <div class="flex">
-                                                <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="/static/metronic/tailwind/dist/assets/media/avatars/300-19.png" />
-                                            </div>
-                                            <div class="flex">
-                                                <span
-                                                    class="hover:z-5 relative inline-flex items-center justify-center shrink-0 rounded-full ring-1 font-semibold leading-none text-2xs size-7 text-white ring-background bg-violet-500">
-                                                    P
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="kt-menu" data-kt-menu="true">
-                                        <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                            data-kt-menu-item-placement="bottom-end" data-kt-menu-item-toggle="dropdown"
-                                            data-kt-menu-item-trigger="click">
-                                            <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                <i class="ki-filled ki-dots-vertical text-lg">
-                                                </i>
-                                            </button>
-                                            <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
-                                                data-kt-menu-dismiss="true">
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link"
-                                                        href="/metronic/tailwind/demo2/account/home/settings-enterprise">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-setting-3">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Settings
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link"
-                                                        href="/metronic/tailwind/demo2/account/members/import-members">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-some-files">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Import
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link"
-                                                        href="/metronic/tailwind/demo2/account/activity">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-cloud-change">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Activity
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link" data-kt-modal-toggle="#report_user_modal"
-                                                        href="#">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-dislike">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Report
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="kt-card p-7.5">
-                        <div class="flex items-center flex-wrap justify-between gap-5">
-                            <div class="flex items-center gap-3.5">
-                                <div class="flex items-center justify-center min-w-12">
-                                    <img alt="" class="min-w-12 shrink-0"
-                                        src="/static/metronic/tailwind/dist/assets/media/brand-logos/grab.svg">
-                                    </img>
-                                </div>
-                                <div class="flex flex-col">
-                                    <a class="text-lg font-medium text-mono hover:text-primary" href="">
-                                        Radiant Wave
-                                    </a>
-                                    <div class="text-sm text-secondary-foreground">
-                                        Team communication and collaboration
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex items-center flex-wrap gap-5 lg:gap-12">
-                                <div class="flex items-center flex-wrap gap-5 lg:gap-14">
-                                    <div class="flex items-center lg:justify-center flex-wrap gap-2 lg:gap-5">
-                                        <div
-                                            class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
-                                            <span class="text-mono text-sm leading-none font-medium">
-                                                2-5 months
-                                            </span>
-                                            <span class="text-secondary-foreground text-xs">
-                                                Duration
-                                            </span>
-                                        </div>
-                                        <div
-                                            class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
-                                            <span class="text-mono text-sm leading-none font-medium">
-                                                Remote
-                                            </span>
-                                            <span class="text-secondary-foreground text-xs">
-                                                Location
-                                            </span>
-                                        </div>
-                                        <div
-                                            class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
-                                            <span class="text-mono text-sm leading-none font-medium">
-                                                $33 hour
-                                            </span>
-                                            <span class="text-secondary-foreground text-xs">
-                                                Rate
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="w-[125px] shrink-0">
-                                        <span class="kt-badge kt-badge-primary kt-badge-outline">
-                                            In Progress
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-5 lg:gap-14">
-                                    <div class="grid justify-end min-w-24">
-                                        <div class="flex -space-x-2">
-                                            <div class="flex">
-                                                <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="/static/metronic/tailwind/dist/assets/media/avatars/300-24.png" />
-                                            </div>
-                                            <div class="flex">
-                                                <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="/static/metronic/tailwind/dist/assets/media/avatars/300-7.png" />
-                                            </div>
-                                            <div class="flex">
-                                                <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="/static/metronic/tailwind/dist/assets/media/avatars/300-9.png" />
-                                            </div>
-                                            <div class="flex">
-                                                <span
-                                                    class="hover:z-5 relative inline-flex items-center justify-center shrink-0 rounded-full ring-1 font-semibold leading-none text-2xs size-7 text-primary-foreground ring-background bg-primary">
-                                                    S
                                                 </span>
                                             </div>
                                         </div>

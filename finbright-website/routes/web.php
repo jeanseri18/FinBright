@@ -5,6 +5,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InvestisseurController;
+use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\Emprunteur\EmprunteurController;
 use App\Http\Controllers\Emprunteur\LoanRequestController;
 use App\Http\Controllers\Investisseur\InvestmentController;
@@ -50,7 +51,7 @@ Route::get('/risques-investissement', [PageController::class, 'investmentRisks']
 Route::get('/inscription/emprunteur', [EmprunteurRegisterController::class, 'showForm'])->name('register.emprunteur');
 Route::post('/inscription/emprunteur', [EmprunteurRegisterController::class, 'register'])->name('register.emprunteur.submit');
 
-Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', 'role:emprunteur|admin'], 'profile.completed')->group(function () {
+Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', '2fa', 'role:emprunteur|admin'], 'profile.completed')->group(function () {
     Route::get('/', [EmprunteurController::class, 'index'])->name('dashboard');
     Route::post('/simulateur', [LoanRequestController::class, 'simulate'])->name('simuler');
     Route::post('/demande-de-pret', [LoanRequestController::class, 'soumettreDemande'])->name('demande');
@@ -71,20 +72,10 @@ Route::prefix('investisseur')->name('investisseur.')->middleware(['auth', 'role:
     Route::post('/contribuer/{loanRequest}', [InvestmentController::class, 'investir'])->name('investir');
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-});
-
-// Dashboard (Breeze)
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-// Profile utilisateur (Breeze)
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/2fa', [TwoFactorController::class, 'show'])->name('2fa.verify.form');
+    Route::post('/2fa', [TwoFactorController::class, 'verify'])->name('2fa.verify');
+    Route::post('/2fa/resend', [TwoFactorController::class, 'resend'])->name('2fa.resend');
 });
 
 // Auth routes (login, register, etc.)

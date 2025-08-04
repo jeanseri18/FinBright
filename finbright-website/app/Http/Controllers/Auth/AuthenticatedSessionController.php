@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+use App\Models\TwoFactorAuthentication;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -65,4 +64,22 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+    public function authenticated(Request $request, $user)
+    {
+        if ($user->twoFactor && $user->twoFactor->is_enabled) {
+            $twoFA = $user->twoFactor;
+
+            if (!$twoFA) {
+                $twoFA = $user->twoFactor()->create();
+            }
+
+            $twoFA->generateCode();
+
+            return redirect()->route('2fa.verify.form');
+        }
+
+        return redirect()->intended('/');
+    }
+
 }

@@ -3,28 +3,23 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Files;
+use App\Models\Etablissement;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\Files;
-use App\Models\Etablissement;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'civility',
         'last_name',
         'first_name',
         'email',
+        'email_verified_at',
         'password',
         'birth_date',
         'birth_place',
@@ -48,7 +43,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    // Relations
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
     public function profilePicture()
     {
         return $this->belongsTo(Files::class, 'profile_picture_id');
@@ -59,16 +58,6 @@ class User extends Authenticatable
         return $this->belongsTo(Etablissement::class);
     }
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-    
     public function loanRequests()
     {
         return $this->hasMany(LoanRequest::class);
@@ -78,7 +67,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Investment::class);
     }
-    
+
+    public function twoFactor()
+    {
+        return $this->hasOne(TwoFactorAuthentication::class);
+    }
+
     public function getAddressAttribute($value)
     {
         $defaults = [
@@ -92,18 +86,5 @@ class User extends Authenticatable
         $decoded = json_decode($value, true) ?? [];
 
         return array_merge($defaults, $decoded);
-    }
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
     }
 }
