@@ -9,10 +9,11 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles, SoftDeletes;
 
     protected $fillable = [
         'civility',
@@ -21,6 +22,7 @@ class User extends Authenticatable
         'email',
         'email_verified_at',
         'password',
+        'status',
         'birth_date',
         'birth_place',
         'nationality',
@@ -33,6 +35,7 @@ class User extends Authenticatable
         'graduation_date',
         'etablissement_id',
         'profile_picture_id',
+        'is_profile_completed'
     ];
 
     protected $casts = [
@@ -71,6 +74,21 @@ class User extends Authenticatable
     public function twoFactor()
     {
         return $this->hasOne(TwoFactorAuthentication::class);
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(UserDocument::class);
+    }
+
+    public function notificationPreference()
+    {
+        return $this->hasOne(NotificationPreference::class);
+    }
+
+    public function getNotificationSettingsAttribute()
+    {
+        return $this->notificationPreference ?? new NotificationPreference();
     }
 
     public function getAddressAttribute($value)

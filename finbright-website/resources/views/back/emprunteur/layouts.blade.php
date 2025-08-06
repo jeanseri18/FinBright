@@ -113,7 +113,7 @@ Contact:
                     <form id="modal_simulate_form" class="space-y-4">
                         @csrf
 
-                        <div class="flex flex-col px-5 gap-1">
+                        {{-- <div class="flex flex-col px-5 gap-1">
                             <div class="flex flex-center">
                                 <label for="type" class="text-mono font-semibold text-sm">
                                     Type de prêt
@@ -131,6 +131,57 @@ Contact:
                                 <option value="student" checked="">Prêt étudiant</option>
                                 <option value="mini">Mini-prêt</option>
                             </select>
+                        </div> --}}
+
+                        <div class="flex flex-col px-5 gap-1">
+                            <div class="flex flex-center">
+                                <label for="type" class="text-mono font-semibold text-sm">
+                                    Date de début
+                                </label>
+                            </div>
+                            <div class="flex justify-between gap-2.5">
+                                <select name="date_mois" id="type"
+                                    class="kt-select"
+                                    data-kt-select="true"
+                                    data-kt-select-placeholder="Sélectionner un mois"
+                                    data-kt-select-config='{
+                                        "optionsClass": "kt-scrollable overflow-auto max-h-[250px]"
+                                    }'
+                                    >
+                                    <option>Janvier</option>
+                                    <option>Février</option>
+                                    <option>Mars</option>
+                                    <option>Avril</option>
+                                    <option>Mai</option>
+                                    <option>Juin</option>
+                                    <option>Juillet</option>
+                                    <option>Aout</option>
+                                    <option>Septembre</option>
+                                    <option>Octobre</option>
+                                    <option>Novembre</option>
+                                    <option>Décembre</option>
+                                </select>
+                                <select name="date_annee" id="type"
+                                    class="kt-select"
+                                    data-kt-select="true"
+                                    data-kt-select-placeholder="Sélectionner un mois"
+                                    data-kt-select-config='{
+                                        "optionsClass": "kt-scrollable overflow-auto max-h-[250px]"
+                                    }'
+                                    >
+                                    <option>2025</option>
+                                    <option>2026</option>
+                                    <option>2027</option>
+                                    <option>2028</option>
+                                    <option>2029</option>
+                                    <option>2030</option>
+                                    <option>2031</option>
+                                    <option>2032</option>
+                                    <option>2033</option>
+                                    <option>2034</option>
+                                    <option>2035</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="flex flex-col px-5 gap-1">
@@ -151,7 +202,29 @@ Contact:
                                 </label>
                             </div>
                             <label class="kt-input">
-                                <input type="number" id="duration" name="duration" required min="6" max="60">
+                                <input type="number" id="duration" name="duration" required min="19" max="60">
+                            </label>
+                        </div>
+
+                        <div class="flex flex-col px-5 gap-1">
+                            <div class="flex flex-center">
+                                <label for="taux_interet" class="text-mono font-semibold text-sm">
+                                    Taux d'intérêt
+                                </label>
+                            </div>
+                            <label class="kt-input">
+                                <input type="number" id="taux_interet" name="taux_interet" required min="3" step=".5" max="40" value="20.00">
+                            </label>
+                        </div>
+
+                        <div class="flex flex-col px-5 gap-1">
+                            <div class="flex flex-center">
+                                <label for="taux_assurance" class="text-mono font-semibold text-sm">
+                                    Taux d'assurance
+                                </label>
+                            </div>
+                            <label class="kt-input">
+                                <input type="number" id="taux_assurance" name="taux_assurance" required min="1" step=".5" max="10" value="1">
                             </label>
                         </div>
 
@@ -197,19 +270,7 @@ Contact:
                     aria-label="Close modal"
                     data-kt-modal-dismiss="#modal_two"
                     >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="lucide lucide-x"
-                        aria-hidden="true"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true">
                         <path d="M18 6 6 18"></path>
                         <path d="m6 6 12 12"></path>
                     </svg>
@@ -254,8 +315,9 @@ Contact:
                                 <input type="hidden" name="type" value="${data.inputs.type}">
                                 <input type="hidden" name="amount" value="${data.inputs.amount}">
                                 <input type="hidden" name="duration" value="${data.inputs.duration}">
-                                <input type="hidden" name="deferred" value="${data.inputs.deferred}">
-                                <input type="hidden" name="" value="${data.inputs.deferred_months}">
+                                <input type="hidden" name="deferred" value="${data.inputs.deferred ?? 0}">
+                                <input type="hidden" name="deferred_months" value="${data.inputs.deferred_months ?? 0}">
+
                                 <div class="rounded-lg bg-muted w-full grow grid md:grid-cols-2 gap-4 p-5">
                                     <div class="md:col-span-1 rounded-lg bg-white flex flex-col justify-center gap-1 p-3">
                                         <span>Montant :</span> <strong class="text-xl">${data.amount} €</strong>
@@ -267,9 +329,16 @@ Contact:
                                         <span>Mensualité estimée :</span> <strong class="text-xl">${data.mensualite} €</strong>
                                     </div>
                                     <div class="md:col-span-1 rounded-lg bg-white flex flex-col justify-center gap-1 p-3">
-                                        <span>Montant total remboursé :</span> <strong class="text-xl">${data.total} €</strong>
+                                        <span>Coût des intérêts :</span> <strong class="text-xl text-warning">${data.interets} €</strong>
+                                    </div>
+                                    <div class="md:col-span-1 rounded-lg bg-white flex flex-col justify-center gap-1 p-3">
+                                        <span>Coût de l'assurance :</span> <strong class="text-xl text-warning">${data.assurances} €</strong>
+                                    </div>
+                                    <div class="md:col-span-1 rounded-lg bg-white flex flex-col justify-center gap-1 p-3">
+                                        <span>Montant total remboursé :</span> <strong class="text-xl text-primary">${data.total + data.amount} €</strong>
                                     </div>
                                 </div>
+
                                 <div class="flex justify-end gap-4 pt-4">
                                     <button type="button" class="kt-btn kt-btn-secondary" data-kt-modal-dismiss="#modal_simulate_result">
                                         Fermer

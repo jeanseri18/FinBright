@@ -11,18 +11,21 @@ class EnsureProfileIsCompleted
     {
         /** @var User $user */
         $user = Auth::user();
+        // dd($user);
 
         if ($user->hasRole('emprunteur')) {
-            $data = $user->extra_data ?? [];
+            $address = $user->address ?? [];
+            // dd($address);
 
             if (
-                !isset($data['categorie_socio_pro']) ||
-                !isset($data['piece_identite']) ||
-                !isset($data['justificatif_domicile']) ||
-                !isset($data['justificatif_revenus'])
+                !isset($user->birth_date) ||
+                !isset($user->birth_place) ||
+                !isset($user->nationality) ||
+                !isset($user->diploma) ||
+                !isset($address['address']) ||
+                !isset($address['ville'])
             ) {
-                // return redirect()->route('emprunteur.mon-profil');
-                return true;
+                return redirect()->route('emprunteur.mon-profil');
             }
         }
 

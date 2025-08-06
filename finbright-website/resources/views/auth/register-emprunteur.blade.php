@@ -154,7 +154,7 @@
                 </div>
 
                 <label class="kt-checkbox-group flex items-center gap-3">
-                    <input class="kt-checkbox kt-checkbox-sm" name="check" type="checkbox" value="1"/>
+                    <input class="kt-checkbox kt-checkbox-sm" name="check" type="checkbox" value="1" required/>
                     <span class="kt-checkbox-label">
                         J'ai lu et j'accepte les 
                         <a class="text-sm link" href="#">

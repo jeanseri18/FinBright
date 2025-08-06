@@ -22,14 +22,14 @@
                         <i class="ki-filled ki-abstract-41 text-muted-foreground text-sm">
                         </i>
                         <span class="text-secondary-foreground font-medium">
-                            KeenThemes
+                            {{ Auth::user()->etablissement ? Auth::user()->etablissement->name : null }}
                         </span>
                     </div>
                     <div class="flex gap-1.25 items-center">
                         <i class="ki-filled ki-geolocation text-muted-foreground text-sm">
                         </i>
                         <span class="text-secondary-foreground font-medium">
-                            SF, Bay Area
+                            {{ Auth::user()->address['adresse'] .' '. Auth::user()->address['rue'] .' '. Auth::user()->address['code_postal'] .' '. Auth::user()->address['ville'] }}
                         </span>
                     </div>
                     <div class="flex gap-1.25 items-center">

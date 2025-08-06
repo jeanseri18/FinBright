@@ -19,7 +19,6 @@ class EnsureTwoFactorIsVerified
         if (Auth::check()) {
             $user = Auth::user();
             $twoFA = $user->twoFactor;
-            // dd($user);
 
             if (
                 $twoFA &&

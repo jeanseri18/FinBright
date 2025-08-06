@@ -57,6 +57,18 @@ Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', '2fa', 'ro
     Route::post('/demande-de-pret', [LoanRequestController::class, 'soumettreDemande'])->name('demande');
     Route::get('/mes-demandes', [LoanRequestController::class, 'demandes'])->name('mes-demandes');
     Route::get('/mon-profil', [EmprunteurController::class, 'profil'])->name('mon-profil');
+    Route::post('/mon-profil/general', [EmprunteurController::class, 'updateProfil'])->name('profil.general.update');
+    Route::post('/mon-profil/adresse', [EmprunteurController::class, 'updateAdresse'])->name('profil.adresse.update');
+    Route::post('/mon-profil/cursus', [EmprunteurController::class, 'updateCursus'])->name('profil.cursus.update');
+    Route::post('/mon-profil/documents', [EmprunteurController::class, 'enregistrerDocuments'])->name('profil.documents.update');
+    Route::post('/mon-profil/notifications', [EmprunteurController::class, 'notificationsPreference'])->name('profil.notifications.preferences');
+    Route::post('/mon-profil/email', [EmprunteurController::class, 'updateEmail'])->name('profil.email.update');
+    Route::post('/mon-profil/2fa', [EmprunteurController::class, 'twoFactorSetup'])->name('profil.2fa.setup');
+    Route::post('/mon-profil/password', [EmprunteurController::class, 'updatePassword'])->name('profil.password.update');
+    Route::delete('/mon-profil/supprimer', [EmprunteurController::class, 'deleteAccount'])->name('profil.delete');
+    Route::get('/mon-profil/desactiver', [EmprunteurController::class, 'deactivateAccount'])->name('profil.deactivate');
+    Route::get('/filieres/{diplome}', [EmprunteurController::class, 'filieresParDiplome']);
+
     // Annuler une demande
     Route::post('/demande-de-pret/{loan}/annuler', [LoanRequestController::class, 'annuler'])->name('loan-requests.annuler');
     // Modifier une demande (formulaire)

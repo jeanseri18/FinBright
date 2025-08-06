@@ -37,9 +37,15 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        /** @var User $user */
         $user = Auth::user();
 
+        // Gestion 2FA email
+        if ($user->twoFactor && $user->twoFactor->is_enabled) {
+            $user->twoFactor->generateCode();
+            return redirect()->route('2fa.verify.form');
+        }
+
+        // Redirection selon rôle
         if ($user->hasRole('admin')) {
             return redirect()->intended('/admin');
         } elseif ($user->hasRole('emprunteur')) {
@@ -63,23 +69,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
-    }
-
-    public function authenticated(Request $request, $user)
-    {
-        if ($user->twoFactor && $user->twoFactor->is_enabled) {
-            $twoFA = $user->twoFactor;
-
-            if (!$twoFA) {
-                $twoFA = $user->twoFactor()->create();
-            }
-
-            $twoFA->generateCode();
-
-            return redirect()->route('2fa.verify.form');
-        }
-
-        return redirect()->intended('/');
     }
 
 }

@@ -1810,14 +1810,14 @@
                 data-kt-dropdown-placement-rtl="bottom-start" data-kt-dropdown-trigger="click">
                 <div class="cursor-pointer shrink-0" data-kt-dropdown-toggle="true">
                     <img alt="{{ Auth::user()->first_name .' '. Auth::user()->last_name }}" class="size-9 rounded-full border-2 border-input shrink-0"
-                        src="{{asset('assets/media/avatars/blank.png')}}">
+                        src="{{asset(Auth::user()->profilePicture ? Auth::user()->profilePicture->filename : 'assets/media/avatars/blank.png')}}">
                     </img>
                 </div>
                 <div class="kt-dropdown-menu w-[250px]" data-kt-dropdown-menu="true">
                     <div class="flex items-center justify-between px-2.5 py-1.5 gap-1.5">
                         <div class="flex items-center gap-2">
                             <img alt="" class="size-9 shrink-0 rounded-full border-2 border-green-500"
-                                src="{{asset('assets/media/avatars/blank.png')}}">
+                                src="{{asset(Auth::user()->profilePicture ? Auth::user()->profilePicture->filename : 'assets/media/avatars/blank.png')}}">
                             <div class="flex flex-col gap-1.5">
                                 <span class="text-sm text-foreground font-semibold leading-none">
                                     {{ Auth::user()->first_name .' '. Auth::user()->last_name }}

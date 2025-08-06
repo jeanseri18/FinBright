@@ -28,13 +28,13 @@
                     <div class="kt-card min-w-full">
                         <div class="kt-card-header">
                             <h3 class="kt-card-title">
-                                General Info
+                                Informations générales
                             </h3>
                             <div class="flex items-center gap-2">
                                 <label class="kt-label">
                                     <input checked="" class="kt-switch kt-switch-sm" name="check" type="checkbox"
                                         value="1" />
-                                    Public Profile
+                                    Profil publique
                                 </label>
                             </div>
                         </div>
@@ -42,13 +42,13 @@
                             <table class="kt-table align-middle text-sm text-muted-foreground" id="general_info_table">
                                 <tr>
                                     <td class="min-w-56 text-secondary-foreground font-normal">
-                                        Company Name
+                                        Nom complet
                                     </td>
                                     <td class="min-w-48 w-full text-foreground font-normal">
-                                        Hexlab
+                                        {{ Auth::user()->first_name .' '. Auth::user()->last_name }}
                                     </td>
                                     <td class="min-w-16 text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
                                             <i class="ki-filled ki-notepad-edit">
                                             </i>
                                         </a>
@@ -56,13 +56,13 @@
                                 </tr>
                                 <tr>
                                     <td class="text-secondary-foreground font-normal">
-                                        Phone number
+                                        Date de naissance
                                     </td>
                                     <td class="text-foreground font-normal">
-                                        +1 555-1234
+                                        {{ Auth::user()->birth_date ?? '' }}
                                     </td>
                                     <td class="text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
                                             <i class="ki-filled ki-notepad-edit">
                                             </i>
                                         </a>
@@ -70,28 +70,16 @@
                                 </tr>
                                 <tr>
                                     <td class="text-secondary-foreground font-normal">
-                                        VAT number
+                                        Lieu de naissance
                                     </td>
                                     <td class="text-foreground font-normal">
-                                        <span class="kt-badge kt-badge-sm kt-badge-outline kt-badge-destructive">
+                                        {{-- <span class="kt-badge kt-badge-sm kt-badge-outline kt-badge-destructive">
                                             Missing Details
-                                        </span>
+                                        </span> --}}
+                                        {{ Auth::user()->birth_place ?? '' }}
                                     </td>
                                     <td class="text-center">
-                                        <a class="kt-link kt-link-underlined kt-link-dashed" href="#">
-                                            Add
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-secondary-foreground font-normal">
-                                        Registration number
-                                    </td>
-                                    <td class="text-foreground font-normal">
-                                        IYS2023A56789
-                                    </td>
-                                    <td class="text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
                                             <i class="ki-filled ki-notepad-edit">
                                             </i>
                                         </a>
@@ -99,19 +87,27 @@
                                 </tr>
                                 <tr>
                                     <td class="text-secondary-foreground font-normal">
-                                        Remote Company ID
+                                        Numéro de téléphone
+                                    </td>
+                                    <td class="text-foreground font-normal">
+                                        {{ Auth::user()->phone_number ?? '' }}
+                                    </td>
+                                    <td class="text-center">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
+                                            <i class="ki-filled ki-notepad-edit">
+                                            </i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-secondary-foreground font-normal">
+                                        Adresse postale
                                     </td>
                                     <td class="text-foreground text-sm font-normal">
-                                        <div class="flex items-center gap-0.5">
-                                            CID78901BXT2023
-                                            <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                <i class="ki-filled ki-copy">
-                                                </i>
-                                            </button>
-                                        </div>
+                                        {{ Auth::user()->address['adresse'] .' '. Auth::user()->address['rue'] .' '. Auth::user()->address['code_postal'] .' '. Auth::user()->address['ville'] }}
                                     </td>
                                     <td class="text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
                                             <i class="ki-filled ki-notepad-edit">
                                             </i>
                                         </a>
@@ -123,7 +119,7 @@
                     <div class="kt-card min-w-full">
                         <div class="kt-card-header">
                             <h3 class="kt-card-title">
-                                Account Settings
+                                Paramètres du compte
                             </h3>
                         </div>
                         <div class="kt-card-table kt-scrollable-x-auto pb-3">
@@ -134,11 +130,11 @@
                                     </td>
                                     <td class="min-w-60 w-full">
                                         <a class="text-foreground text-sm font-normal hover:text-primary" href="#">
-                                            john.doe@hexlad.io
+                                            {{ Auth::user()->email ?? '' }}
                                         </a>
                                     </td>
                                     <td class="min-w-28 text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
                                             <i class="ki-filled ki-notepad-edit">
                                             </i>
                                         </a>
@@ -146,13 +142,13 @@
                                 </tr>
                                 <tr>
                                     <td class="text-secondary-foreground font-normal">
-                                        Password
+                                        Mot de passe
                                     </td>
                                     <td class="text-secondary-foreground font-normal text-sm">
-                                        Password last changed 2 months ago
+                                        {{ Auth::user()->password_changed_at ? 'Dernier changement de mot de passe '. Auth::user()->password_changed_at->diffForHumans() : 'Vous n’avez jamais changé votre mot de passe.' }}
                                     </td>
                                     <td class="text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
                                             <i class="ki-filled ki-notepad-edit">
                                             </i>
                                         </a>
@@ -160,7 +156,7 @@
                                 </tr>
                                 <tr>
                                     <td class="text-secondary-foreground font-normal">
-                                        Sign-in with
+                                        Connexion avec
                                     </td>
                                     <td>
                                         <div class="flex items-center gap-2.5">
@@ -176,66 +172,13 @@
                                             </a>
                                             <a class="flex items-center justify-center size-8 bg-background rounded-full border border-input"
                                                 href="#">
-                                                <img alt="product logo" class="dark:hidden h-4"
-                                                    src="{{ asset('assets/media/brand-logos/apple-black.svg') }}" />
-                                                <img alt="product logo" class="light:hidden h-4"
-                                                    src="{{ asset('assets/media/brand-logos/apple-white.svg') }}" />
-                                            </a>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <a class="kt-link kt-link-underlined kt-link-dashed" href="#">
-                                            Setup
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-secondary-foreground font-normal">
-                                        Team Account
-                                    </td>
-                                    <td class="text-secondary-foreground text-sm font-normal">
-                                        To be set
-                                    </td>
-                                    <td class="text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#">
-                                            <i class="ki-filled ki-notepad-edit">
-                                            </i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-secondary-foreground font-normal">
-                                        Social Profiles
-                                    </td>
-                                    <td>
-                                        <div class="flex items-center gap-2.5">
-                                            <a class="flex items-center justify-center size-8 bg-background rounded-full border border-input"
-                                                href="#">
                                                 <img alt="" class="size-4"
                                                     src="{{ asset('assets/media/brand-logos/linkedin.svg') }}" />
                                             </a>
-                                            <a class="flex items-center justify-center size-8 bg-background rounded-full border border-input"
-                                                href="#">
-                                                <img alt="" class="size-4"
-                                                    src="{{ asset('assets/media/brand-logos/twitch-purple.svg') }}" />
-                                            </a>
-                                            <a class="flex items-center justify-center size-8 bg-background rounded-full border border-input"
-                                                href="#">
-                                                <img alt="" class="dark:hidden size-4"
-                                                    src="{{ asset('assets/media/brand-logos/x.svg') }}" />
-                                                <img alt="" class="light:hidden size-4"
-                                                    src="{{ asset('assets/media/brand-logos/x-dark.svg') }}" />
-                                            </a>
-                                            <a class="flex items-center justify-center size-8 bg-background rounded-full border border-input"
-                                                href="#">
-                                                <img alt="" class="size-4"
-                                                    src="{{ asset('assets/media/brand-logos/dribbble.svg') }}" />
-                                            </a>
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary"
-                                            href="#">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
                                             <i class="ki-filled ki-notepad-edit">
                                             </i>
                                         </a>
@@ -243,23 +186,35 @@
                                 </tr>
                                 <tr>
                                     <td class="text-secondary-foreground font-normal">
-                                        Referral Link
+                                        Authentication 2FA
                                     </td>
-                                    <td class="text-foreground text-sm font-normal">
-                                        <div class="flex items-center gap-0.5">
-                                            <a class="text-secondary-foreground text-sm hover:text-primary"
-                                                href="#">
-                                                https://studio.co/W3gvQOI35dt
-                                            </a>
-                                            <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                <i class="ki-filled ki-copy">
-                                                </i>
-                                            </button>
-                                        </div>
+                                    <td class="text-secondary-foreground text-sm font-normal">
+                                        {!! Auth::user()->twoFactor 
+                                            ? '<span class="kt-badge kt-badge-sm kt-badge-outline kt-badge-primary">Email</span>' 
+                                            : '<span class="kt-badge kt-badge-sm kt-badge-outline kt-badge-destructive">Désactivé</span>' 
+                                        !!}
                                     </td>
                                     <td class="text-center">
-                                        <a class="kt-link kt-link-underlined kt-link-dashed" href="#">
-                                            Re-create
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
+                                            <i class="ki-filled ki-notepad-edit">
+                                            </i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-secondary-foreground font-normal">
+                                        Notifications
+                                    </td>
+                                    <td class="text-foreground text-sm font-normal">
+                                        {!! Auth::user()->notificationPreference && Auth::user()->notificationPreference->email_notifications 
+                                            ? 'Email' 
+                                            : '<span class="kt-badge kt-badge-sm kt-badge-outline kt-badge-destructive">Désactivé</span>' 
+                                        !!}
+                                    </td>
+                                    <td class="text-center">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
+                                            <i class="ki-filled ki-notepad-edit">
+                                            </i>
                                         </a>
                                     </td>
                                 </tr>
@@ -271,127 +226,75 @@
                             <h3 class="kt-card-title">
                                 Documents justificatifs
                             </h3>
-                            <div class="kt-menu" data-kt-menu="true">
-                                <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                    data-kt-menu-item-placement="bottom-end"
-                                    data-kt-menu-item-placement-rtl="bottom-start" data-kt-menu-item-toggle="dropdown"
-                                    data-kt-menu-item-trigger="click">
-                                    <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                        <i class="ki-filled ki-dots-vertical text-lg">
-                                        </i>
-                                    </button>
-                                    <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
-                                        data-kt-menu-dismiss="true">
-                                        <div class="kt-menu-item">
-                                            <a class="kt-menu-link" href="">
-                                                <span class="kt-menu-icon">
-                                                    <i class="ki-filled ki-cloud-change">
-                                                    </i>
-                                                </span>
-                                                <span class="kt-menu-title">
-                                                    Activity
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="kt-menu-item">
-                                            <a class="kt-menu-link" data-kt-modal-toggle="#share_profile_modal"
-                                                href="#">
-                                                <span class="kt-menu-icon">
-                                                    <i class="ki-filled ki-share">
-                                                    </i>
-                                                </span>
-                                                <span class="kt-menu-title">
-                                                    Share
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="kt-menu-item" data-kt-menu-item-offset="-15px, 0"
-                                            data-kt-menu-item-placement="right-start" data-kt-menu-item-toggle="dropdown"
-                                            data-kt-menu-item-trigger="click|lg:hover">
-                                            <div class="kt-menu-link">
-                                                <span class="kt-menu-icon">
-                                                    <i class="ki-filled ki-notification-status">
-                                                    </i>
-                                                </span>
-                                                <span class="kt-menu-title">
-                                                    Notifications
-                                                </span>
-                                                <span class="kt-menu-arrow">
-                                                    <i class="ki-filled ki-right text-xs rtl:transform rtl:rotate-180">
-                                                    </i>
-                                                </span>
-                                            </div>
-                                            <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]">
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link"
-                                                        href="">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-sms">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Email
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link"
-                                                        href="">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-message-notify">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            SMS
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link"
-                                                        href="">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-notification-status">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Push
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="kt-menu-item">
-                                            <a class="kt-menu-link" data-kt-modal-toggle="#report_user_modal"
-                                                href="#">
-                                                <span class="kt-menu-icon">
-                                                    <i class="ki-filled ki-dislike">
-                                                    </i>
-                                                </span>
-                                                <span class="kt-menu-title">
-                                                    Report
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="kt-menu-separator">
-                                        </div>
-                                        <div class="kt-menu-item">
-                                            <a class="kt-menu-link"
-                                                href="/metronic/tailwind/demo2/account/home/settings-enterprise">
-                                                <span class="kt-menu-icon">
-                                                    <i class="ki-filled ki-setting-3">
-                                                    </i>
-                                                </span>
-                                                <span class="kt-menu-title">
-                                                    Settings
-                                                </span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="kt-card-content">
                             <div class="grid gap-2.5 lg:gap-5">
+                                @foreach($documentsGroupByType as $type => $docs)
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex items-center grow gap-2.5">
+                                            @php
+                                                $firstFile = $docs->first()->file;
+                                                $filename = basename($firstFile->filename);
+                                                $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+                                                $icon = match($extension) {
+                                                    'pdf' => 'pdf.svg',
+                                                    'doc', 'docx' => 'doc.svg',
+                                                    'jpg', 'jpeg', 'png' => 'jpg.svg',
+                                                    'ai' => 'ai.svg',
+                                                    'js' => 'js.svg',
+                                                    default => 'file.svg',
+                                                };
+
+                                                $totalSize = $docs->sum(fn($d) => $d->file->filesize ?? 0);
+                                                $totalSizeMb = number_format($totalSize / 1048576, 1); // octets -> Mo
+                                                $latestDate = $docs->max(fn($d) => $d->file->created_at);
+                                            @endphp
+
+                                            <img src="{{ asset('assets/media/file-types/' . $icon) }}" class="w-6 h-6">
+
+                                            <div class="flex flex-col">
+                                                <span class="text-sm font-medium text-mono cursor-pointer hover:text-primary mb-px">
+                                                    {{ $docs->count() > 1 ? $type : $filename }}
+                                                </span>
+                                                <span class="text-xs text-secondary-foreground">
+                                                    {{ str_pad($docs->count(), 2, '0', STR_PAD_LEFT) }} fichiers |
+                                                    {{ $totalSizeMb }} MB |
+                                                    {{ \Carbon\Carbon::parse($latestDate)->format('d M Y H:i') }}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        {{-- Menu (Détails, Partager, Exporter) --}}
+                                        <div class="kt-menu" data-kt-menu="true">
+                                            <div class="kt-menu-item" data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
+                                                <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
+                                                    <i class="ki-filled ki-dots-vertical text-lg"></i>
+                                                </button>
+                                                <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]">
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link" href="#">
+                                                            <span class="kt-menu-icon"><i class="ki-filled ki-document"></i></span>
+                                                            <span class="kt-menu-title">Détails</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link" href="#" data-kt-modal-toggle="#share_profile_modal">
+                                                            <span class="kt-menu-icon"><i class="ki-filled ki-share"></i></span>
+                                                            <span class="kt-menu-title">Partager</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link" href="#">
+                                                            <span class="kt-menu-icon"><i class="ki-filled ki-file-up"></i></span>
+                                                            <span class="kt-menu-title">Exporter</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+
                                 <div class="flex items-center gap-3">
                                     <div class="flex items-center grow gap-2.5">
                                         <img src="{{asset('assets/media/file-types/pdf.svg')}}">
@@ -401,8 +304,9 @@
                                                 Project-pitch.pdf
                                             </span>
                                             <span class="text-xs text-secondary-foreground">
-                                                4.7
-                                                MB 26 Sep 2024 3:20 PM
+                                                02 fichiers | 
+                                                4.7 MB | 
+                                                26 Sep 2025 15:20
                                             </span>
                                         </div>
                                         </img>
@@ -425,7 +329,7 @@
                                                             </i>
                                                         </span>
                                                         <span class="kt-menu-title">
-                                                            Details
+                                                            Détails
                                                         </span>
                                                     </a>
                                                 </div>
@@ -437,7 +341,7 @@
                                                             </i>
                                                         </span>
                                                         <span class="kt-menu-title">
-                                                            Share
+                                                            Partager
                                                         </span>
                                                     </a>
                                                 </div>
@@ -448,7 +352,7 @@
                                                             </i>
                                                         </span>
                                                         <span class="kt-menu-title">
-                                                            Export
+                                                            Exporter
                                                         </span>
                                                     </a>
                                                 </div>
@@ -465,7 +369,9 @@
                                                 Report-v1.docx
                                             </span>
                                             <span class="text-xs text-secondary-foreground">
-                                                2.3 MB 1 Oct 2024 12:00 PM
+                                                01 fichiers | 
+                                                2.3 MB | 
+                                                1 Oct 2025 12:00
                                             </span>
                                         </div>
                                         </img>
@@ -488,7 +394,7 @@
                                                             </i>
                                                         </span>
                                                         <span class="kt-menu-title">
-                                                            Details
+                                                            Détails
                                                         </span>
                                                     </a>
                                                 </div>
@@ -500,7 +406,7 @@
                                                             </i>
                                                         </span>
                                                         <span class="kt-menu-title">
-                                                            Share
+                                                            Partager
                                                         </span>
                                                     </a>
                                                 </div>
@@ -511,7 +417,7 @@
                                                             </i>
                                                         </span>
                                                         <span class="kt-menu-title">
-                                                            Export
+                                                            Exporter
                                                         </span>
                                                     </a>
                                                 </div>
@@ -525,10 +431,12 @@
                                         <div class="flex flex-col">
                                             <span
                                                 class="text-sm font-medium text-mono cursor-pointer hover:text-primary mb-px">
-                                                Framework-App.js
+                                                Framework-App.png
                                             </span>
                                             <span class="text-xs text-secondary-foreground">
-                                                0.8 MB 17 Oct 2024 6:46 PM
+                                                01 fichiers | 
+                                                0.8 MB | 
+                                                17 Oct 2025 18:46
                                             </span>
                                         </div>
                                         </img>
@@ -551,7 +459,7 @@
                                                             </i>
                                                         </span>
                                                         <span class="kt-menu-title">
-                                                            Details
+                                                            Détails
                                                         </span>
                                                     </a>
                                                 </div>
@@ -563,7 +471,7 @@
                                                             </i>
                                                         </span>
                                                         <span class="kt-menu-title">
-                                                            Share
+                                                            Partager
                                                         </span>
                                                     </a>
                                                 </div>
@@ -574,7 +482,7 @@
                                                             </i>
                                                         </span>
                                                         <span class="kt-menu-title">
-                                                            Export
+                                                            Exporter
                                                         </span>
                                                     </a>
                                                 </div>
@@ -588,10 +496,12 @@
                                         <div class="flex flex-col">
                                             <span
                                                 class="text-sm font-medium text-mono cursor-pointer hover:text-primary mb-px">
-                                                Mobile-logo.ai
+                                                Mobile-logo.jpg
                                             </span>
                                             <span class="text-xs text-secondary-foreground">
-                                                0.2 MB 4 Nov 2024 11:30 AM
+                                                02 fichiers | 
+                                                0.2 MB | 
+                                                4 Nov 2024 11:30
                                             </span>
                                         </div>
                                         </img>
@@ -614,7 +524,7 @@
                                                             </i>
                                                         </span>
                                                         <span class="kt-menu-title">
-                                                            Details
+                                                            Détails
                                                         </span>
                                                     </a>
                                                 </div>
@@ -626,7 +536,7 @@
                                                             </i>
                                                         </span>
                                                         <span class="kt-menu-title">
-                                                            Share
+                                                            Partager
                                                         </span>
                                                     </a>
                                                 </div>
@@ -637,7 +547,7 @@
                                                             </i>
                                                         </span>
                                                         <span class="kt-menu-title">
-                                                            Export
+                                                            Exporter
                                                         </span>
                                                     </a>
                                                 </div>
@@ -649,8 +559,8 @@
                         </div>
                         <div class="kt-card-footer justify-center">
                             <a class="kt-link kt-link-underlined kt-link-dashed"
-                                href="/metronic/tailwind/demo2/account/integrations">
-                                All Files
+                                href="javascript:;" data-kt-modal-toggle="#modal_settings">
+                                Tous les fichiers
                             </a>
                         </div>
                     </div>
@@ -844,18 +754,11 @@
                                         </div>
                                         <div class="flex flex-col">
                                             <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
-                                                data-kt-scrollspy-anchor="true" href="#external_services_manage_api">
-                                                <span
-                                                    class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
-                                                </span>
-                                                Manage API
-                                            </a>
-                                            <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
                                                 data-kt-scrollspy-anchor="true" href="#external_services_integrations">
                                                 <span
                                                     class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
                                                 </span>
-                                                Integrations
+                                                Justificatifs Obligatoires
                                             </a>
                                         </div>
                                     </div>
@@ -893,7 +796,7 @@
                                                 Connexion via réseaux sociaux
                                             </a>
                                             <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
-                                                data-kt-scrollspy-anchor="true" href="#auth_social_sign_in">
+                                                data-kt-scrollspy-anchor="true" href="#auth_two_factor">
                                                 <span
                                                     class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
                                                 </span>
@@ -913,19 +816,20 @@
                                         <span
                                             class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
                                         </span>
-                                        Delete Account
+                                        Supprimer le compte
                                     </a>
                                 </div>
                             </div>
                         </div>
                         <div class="flex flex-col items-stretch grow gap-5 lg:gap-7.5">
-                            <form action="" method="post" enctype="multipart/form-data" class="kt-card pb-2.5">
+                            <form action="{{ route('emprunteur.profil.general.update') }}" method="post" enctype="multipart/form-data" class="kt-card pb-2.5">
+                                @csrf
                                 <div class="kt-card-header" id="basic_settings">
                                     <h3 class="kt-card-title">
                                     </h3>
                                     <div class="flex items-center gap-2">
                                         <label class="kt-label">
-                                            Profil public
+                                            Profil publique
                                             <input checked="" class="kt-switch kt-switch-sm" name="check"
                                                 type="checkbox" value="1" />
                                         </label>
@@ -972,7 +876,6 @@
                                                         </svg>
                                                     </div>
                                                 </div>
-                                                </input>
                                             </div>
                                         </div>
                                     </div>
@@ -982,19 +885,16 @@
                                         </label>
                                         <div class="flex items-center gap-5">
                                             <label class="kt-label">
-                                                <input checked="" class="kt-radio" name="civilite" type="radio" value="M">
+                                                <input {{ (Auth::user()->civility == 'M.' or Auth::user()->civility == '') ? 'checked' : null }} class="kt-radio" name="civilite" type="radio" value="M.">
                                                 Monsieur
-                                                </input>
                                             </label>
                                             <label class="kt-label">
-                                                <input class="kt-radio" name="civilite" type="radio" value="Mme">
+                                                <input {{ Auth::user()->civility == 'Mme.' ? 'checked' : null }} class="kt-radio" name="civilite" type="radio" value="Mme.">
                                                 Madame
-                                                </input>
                                             </label>
                                             <label class="kt-label">
-                                                <input class="kt-radio" name="civilite" type="radio" value="Mlle">
-                                                Non-binaire
-                                                </input>
+                                                <input {{ Auth::user()->civility == 'Mx.' ? 'checked' : null }} class="kt-radio" name="civilite" type="radio" value="Mx.">
+                                                Neutre
                                             </label>
                                         </div>
                                     </div>
@@ -1054,7 +954,8 @@
                                 </div>
                             </form>
                             {{-- Adresse postale --}}
-                            <form action="" method="post" class="kt-card">
+                            <form action="{{ route('emprunteur.profil.adresse.update') }}" method="post" class="kt-card">
+                                @csrf
                                 <div class="kt-card-header" id="advanced_settings_address">
                                     <h3 class="kt-card-title">
                                         Adresse postale
@@ -1116,7 +1017,8 @@
                                 </div>
                             </form>
                             {{-- Cursus Académique --}}
-                            <form action="" method="post" class="kt-card">
+                            <form action="{{ route('emprunteur.profil.cursus.update') }}" method="post" class="kt-card">
+                                @csrf
                                 <div class="kt-card-header" id="advanced_settings_preferences">
                                     <h3 class="kt-card-title">
                                         Cursus Académique
@@ -1131,20 +1033,16 @@
                                             name="etablissement"
                                             data-kt-select="true"
                                             data-kt-select-enable-search="true"
-                                            data-kt-select-search-placeholder="Search..."
-                                            data-kt-select-placeholder="Select a brand..."
+                                            data-kt-select-search-placeholder="Recherche..."
+                                            data-kt-select-placeholder="Sélectionner un établissement..."
                                             data-kt-select-config='{
                                                 "optionsClass": "kt-scrollable overflow-auto max-h-[250px]"
                                             }'>
-                                            <option>
-                                                American English
-                                            </option>
-                                            <option>
-                                                Option 2
-                                            </option>
-                                            <option>
-                                                Option 3
-                                            </option>
+                                            @foreach($etablissements as $etablissement)
+                                                <option value="{{ $etablissement->id }}" {{ Auth::user()->etablissement_id == $etablissement->id ? 'selected' : '' }}>
+                                                    {{ $etablissement->nom }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
@@ -1165,6 +1063,9 @@
                                                 <option>
                                                     Mastère Spécialisé
                                                 </option>
+                                                <option>
+                                                    Autre
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -1175,16 +1076,16 @@
                                         <div class="grow">
                                             <select class="kt-select" name="filiere" data-kt-select="true">
                                                 <option>
-                                                    Finance de Marché
+                                                    Finance de Marché (conditionnée par le diplôme sélectionné)
                                                 </option>
                                                 <option>
-                                                    Marketing Digital
+                                                    Marketing Digital (conditionnée par le diplôme sélectionné)
                                                 </option>
                                                 <option>
-                                                    Intelligence Artificielle
+                                                    Intelligence Artificielle (conditionnée par le diplôme sélectionné)
                                                 </option>
                                                 <option>
-                                                    Droit des Affaires
+                                                    Droit des Affaires (conditionnée par le diplôme sélectionné)
                                                 </option>
                                             </select>
                                         </div>
@@ -1214,477 +1115,201 @@
                                     </div>
                                 </div>
                             </form>
-                            <form action="" method="post" class="kt-card pb-2.5">
-                                <div class="kt-card-header" id="auth_email">
+                            {{-- Justificatifs Obligatoires --}}
+                            <form action="{{ route('emprunteur.profil.documents.update') }}" method="post" enctype="multipart/form-data" class="kt-card">
+                                @csrf
+                                <div class="kt-card-header" id="external_services_integrations">
                                     <h3 class="kt-card-title">
-                                        Email
+                                        Justificatifs Obligatoires
                                     </h3>
                                 </div>
-                                <div class="kt-card-content grid gap-5 pt-7.5">
-                                    <div class="w-full">
-                                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                            <label class="kt-form-label max-w-56">
-                                                Email
-                                            </label>
-                                            <div class="flex flex-col tems-start grow gap-7.5 w-full">
-                                                <input class="kt-input" type="text" value="jason@studio.io">
-                                                <div class="flex items-center gap-7.5">
-                                                    <label class="kt-label">
-                                                        Active
-                                                        <input checked="" class="kt-switch" type="checkbox"
-                                                            value="1" />
-                                                    </label>
-                                                    <label class="kt-label">
-                                                        Primary
-                                                        <input class="kt-switch" type="checkbox" value="2" />
-                                                    </label>
-                                                </div>
-                                                <span class="kt-form-description text-2sm">
-                                                    Input your email, designate as primary for priority updates. Toggle to
-                                                    seamlessly customize
-                                                    <br />
-                                                    your communication preferences
-                                                </span>
-                                                </input>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-end">
-                                        <button type="submit" class="kt-btn kt-btn-primary">
-                                            Sauvegarder
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                            {{-- Connexion réseaux sociaux --}}
-                            <form action="" method="post" class="kt-card">
-                                <div class="kt-card-header" id="auth_social_sign_in">
-                                    <h3 class="kt-card-title">
-                                        Connexion réseaux sociaux
-                                    </h3>
-                                </div>
-                                <div class="kt-card-content">
-                                    <div class="grid gap-5 mb-7">
-                                        <div
-                                            class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 px-3.5 py-2.5">
-                                            <div class="flex items-center flex-wrap gap-3.5">
-                                                <img alt="" class="size-6 shrink-0"
-                                                    src="{{asset('assets/media/brand-logos/google.svg')}}" />
-                                                <div class="flex flex-col gap-0.5">
-                                                    <a class="text-sm font-medium text-mono hover:text-primary"
-                                                        href="#">
-                                                        Google
-                                                    </a>
-                                                    <a class="text-sm text-secondary-foreground hover:text-primary"
-                                                        href="#">
-                                                        jasontatum@ktstudio.io
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center gap-5">
-                                                <label class="kt-label">
-                                                    <input checked="" class="kt-switch kt-switch-sm" name="check"
-                                                        type="checkbox" value="1" />
-                                                </label>
-                                                <div class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                    <i class="ki-filled ki-trash">
-                                                    </i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 px-3.5 py-2.5">
-                                            <div class="flex items-center flex-wrap gap-3.5">
-                                                <img alt="" class="size-6 shrink-0"
-                                                    src="{{asset('assets/media/brand-logos/linkedin.svg')}}" />
-                                                <div class="flex flex-col gap-0.5">
-                                                    <a class="text-sm font-medium text-mono hover:text-primary"
-                                                        href="#">
-                                                        Linkedin
-                                                    </a>
-                                                    <a class="text-sm text-secondary-foreground hover:text-primary"
-                                                        href="#">
-                                                        jasontt@keenthemes.co
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center gap-5">
-                                                <label class="kt-label">
-                                                    <input class="kt-switch kt-switch-sm" name="check" type="checkbox"
-                                                        value="1" />
-                                                </label>
-                                                <div class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                    <i class="ki-filled ki-trash">
-                                                    </i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col gap-2.5 mb-5">
-                                        <div class="text-base font-medium text-mono">
-                                            More Social Sign in options
-                                        </div>
-                                        <div class="kt-form-description text-2sm">
-                                            Effortless access awaits! Connect seamlessly with your preferred social account.
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center flex-wrap gap-2.5 mb-7.5">
-                                        <a class="kt-btn kt-btn-outline" href="#">
-                                            <img alt="" class="dark:hidden size-5"
-                                                src="{{asset('assets/media/brand-logos/apple-black.svg')}}" />
-                                            <img alt="" class="light:hidden size-5"
-                                                src="{{asset('assets/media/brand-logos/apple-white.svg')}}" />
-                                            Sign in with Apple
-                                        </a>
-                                        <a class="kt-btn kt-btn-outline" href="#">
-                                            <img alt="" class="size-5"
-                                                src="{{asset('assets/media/brand-logos/microsoft-5.svg')}}" />
-                                            Sign in with Microsoft
-                                        </a>
-                                        <a class="kt-btn kt-btn-outline" href="#">
-                                            <img alt="" class="size-5"
-                                                src="{{asset('assets/media/brand-logos/facebook.svg')}}" />
-                                            Sign in with Facebook
-                                        </a>
-                                    </div>
-                                    <div class="flex justify-end">
-                                        <button type="submit" class="kt-btn kt-btn-primary">
-                                            Sauvegarder
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                            {{-- Authentification à deux facteurs (2FA) --}}
-                            <div action="" method="post" class="kt-card">
-                                <div class="kt-card-header" id="auth_two_factor">
-                                    <h3 class="kt-card-title">
-                                        Authentification à deux facteurs (2FA)
-                                    </h3>
-                                    <div class="kt-menu" data-kt-menu="true">
-                                        <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                            data-kt-menu-item-placement="bottom-end"
-                                            data-kt-menu-item-placement-rtl="bottom-start"
-                                            data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
-                                            <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                <i class="ki-filled ki-dots-vertical text-lg">
-                                                </i>
-                                            </button>
-                                            <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
-                                                data-kt-menu-dismiss="true">
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link"
-                                                        href="/metronic/tailwind/demo2/account/home/settings-enterprise">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-setting-3">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Settings
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link"
-                                                        href="/metronic/tailwind/demo2/account/members/import-members">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-some-files">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Import
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link"
-                                                        href="/metronic/tailwind/demo2/account/activity">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-cloud-change">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Activity
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link" data-kt-modal-toggle="#report_user_modal"
-                                                        href="#">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-dislike">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Report
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="kt-card-content">
-                                    <div class="grid gap-5 mb-7">
-                                        <div
-                                            class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 px-3.5 py-2.5">
-                                            <div class="flex items-center flex-wrap gap-3.5">
-                                                <div class="flex items-center">
-                                                    <div class="relative size-[50px] shrink-0">
-                                                        <svg class="w-full h-full stroke-border fill-muted/30"
-                                                            fill="none" height="48" viewbox="0 0 44 48"
-                                                            width="44" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M16 2.4641C19.7128 0.320509 24.2872 0.320508 28 2.4641L37.6506 8.0359C41.3634 10.1795 43.6506 14.141 43.6506
-                                                                        18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
-                                                                        39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
-                                                                fill="">
-                                                            </path>
-                                                            <path
-                                                                d="M16.25 2.89711C19.8081 0.842838 24.1919 0.842837 27.75 2.89711L37.4006 8.46891C40.9587 10.5232 43.1506 14.3196 43.1506
-                                                                        18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
-                                                                        39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
-                                                                stroke="">
-                                                            </path>
-                                                        </svg>
-                                                        <div
-                                                            class="absolute leading-none start-2/4 top-2/4 -translate-y-2/4 -translate-x-2/4 rtl:translate-x-2/4">
-                                                            <i
-                                                                class="ki-filled ki-message-text-2 text-xl text-muted-foreground">
-                                                            </i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="flex flex-col gap-px">
-                                                    <a class="text-sm font-medium text-mono hover:text-primary"
-                                                        href="#">
-                                                        Text Message (SMS)
-                                                    </a>
-                                                    <span class="text-sm font-medium text-secondary-foreground">
-                                                        Instant codes for secure account verification.
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center gap-2 lg:gap-6">
-                                                <label class="kt-label">
-                                                    Public Profile
-                                                    <input checked="" class="kt-switch kt-switch-sm" name="check"
-                                                        type="checkbox" value="1" />
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 px-3.5 py-2.5">
-                                            <div class="flex items-center flex-wrap gap-3.5">
-                                                <div class="flex items-center">
-                                                    <div class="relative size-[50px] shrink-0">
-                                                        <svg class="w-full h-full stroke-border fill-muted/30"
-                                                            fill="none" height="48" viewbox="0 0 44 48"
-                                                            width="44" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M16 2.4641C19.7128 0.320509 24.2872 0.320508 28 2.4641L37.6506 8.0359C41.3634 10.1795 43.6506 14.141 43.6506
-                                                                        18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
-                                                                        39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
-                                                                fill="">
-                                                            </path>
-                                                            <path
-                                                                d="M16.25 2.89711C19.8081 0.842838 24.1919 0.842837 27.75 2.89711L37.4006 8.46891C40.9587 10.5232 43.1506 14.3196 43.1506
-                                                                        18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
-                                                                        39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
-                                                                stroke="">
-                                                            </path>
-                                                        </svg>
-                                                        <div
-                                                            class="absolute leading-none start-2/4 top-2/4 -translate-y-2/4 -translate-x-2/4 rtl:translate-x-2/4">
-                                                            <i class="ki-filled ki-shield-tick text-xl text-muted-foreground">
-                                                            </i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="flex flex-col gap-px">
-                                                    <a class="text-sm font-medium text-mono hover:text-primary"
-                                                        href="#">
-                                                        Authenticator App (TOTP)
-                                                    </a>
-                                                    <span class="text-sm font-medium text-secondary-foreground">
-                                                        Elevate protection with an authenticator app for two-factor
-                                                        authentication.
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center gap-2 lg:gap-6">
-                                                <label class="kt-label">
-                                                    Public Profile
-                                                    <input class="kt-switch kt-switch-sm" name="check" type="checkbox"
-                                                        value="1" />
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="w-full">
-                                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5 mb-7">
-                                            <label class="kt-form-label max-w-56">
-                                                Password
-                                            </label>
-                                            <div class="flex flex-col tems-start grow gap-3 w-full">
-                                                <input class="kt-input" placeholder="Enter password" type="text">
-                                                <span class="kt-form-description text-2sm">
-                                                    Enter your password to setup Two-Factor authentication
-                                                </span>
-                                                </input>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-end pt-2.5">
-                                        <button class="kt-btn kt-btn-primary">
-                                            Setup
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <style>
-                                .singl-sign-on-bg {
-                                    background-image: url("{{asset('assets/media/images/2600x1600/bg-2.png')}}");
-                                }
+                                <div class="kt-card-content grid gap-5 lg:gap-7.5 lg:py-7.5 py-5">
+                                    <div class="grid gap-5">
+                                        @foreach($documentsAttendus as $type => $label)
+                                        <div class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 p-3.5">
 
-                                .dark .singl-sign-on-bg {
-                                    background-image: url("{{asset('assets/media/images/2600x1600/bg-2-dark.png')}}");
-                                }
-                            </style>
-                            <div class="kt-card">
-                                <div class="kt-card-header" id="auth_password">
-                                    <h3 class="kt-card-title">
-                                        Password
-                                    </h3>
-                                </div>
-                                <div class="kt-card-content grid gap-5">
-                                    <div class="w-full">
-                                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                            <label class="kt-form-label max-w-56">
-                                                Current Password
-                                            </label>
-                                            <input class="kt-input" placeholder="Your current password" type="text"
-                                                value="">
-                                            </input>
+                                            @if($userDocuments->has($type))
+                                                @php
+                                                    $doc = $userDocuments[$type];
+                                                @endphp
+                                                <div class="flex items-center flex-wrap gap-3.5">
+                                                    <img alt="" class="size-8 shrink-0"
+                                                        src="{{ asset('storage/' . $doc->file->filename) }}" />
+                                                    <div class="flex flex-col">
+                                                        <div class="flex items-center gap-1.5">
+                                                            <a class="text-sm font-medium text-mono hover:text-primary"
+                                                                href="#">
+                                                                {{ $label }}
+                                                            </a>
+                                                        </div>
+                                                        <span class="text-sm text-secondary-foreground">
+                                                            {{ $doc->explanation }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center gap-2 lg:gap-5">
+                                                    <span class="text-sm font-semibold px-3 py-1 rounded-full
+                                                        {{ $doc->status === 'valide' ? 'bg-green-100 text-green-800' : ($doc->status === 'refuse' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
+                                                        {{ ucfirst($doc->status) }}
+                                                    </span>
+                                                    <div class="kt-btn kt-btn-icon kt-btn-ghost" data-kt-menu="true">
+                                                        <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
+                                                            data-kt-menu-item-placement="bottom-end"
+                                                            data-kt-menu-item-placement-rtl="bottom-start"
+                                                            data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
+                                                            <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
+                                                                <i class="ki-filled ki-setting-2"></i>
+                                                            </button>
+                                                            <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
+                                                                data-kt-menu-dismiss="true">
+                                                                <div class="kt-menu-item">
+                                                                    <a class="kt-menu-link"
+                                                                        href="">
+                                                                        <span class="kt-menu-icon">
+                                                                            <i class="ki-filled ki-setting-3">
+                                                                            </i>
+                                                                        </span>
+                                                                        <span class="kt-menu-title">
+                                                                            Modifier
+                                                                        </span>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="kt-menu-item">
+                                                                    <a class="kt-menu-link"
+                                                                        href="">
+                                                                        <span class="kt-menu-icon">
+                                                                            <i class="ki-filled ki-some-files">
+                                                                            </i>
+                                                                        </span>
+                                                                        <span class="kt-menu-title">
+                                                                            Exporter
+                                                                        </span>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="kt-menu-item">
+                                                                    <a class="kt-menu-link" data-kt-modal-toggle="#report_user_modal"
+                                                                        href="#">
+                                                                        <span class="kt-menu-icon">
+                                                                            <i class="ki-filled ki-trash"></i>
+                                                                        </span>
+                                                                        <span class="kt-menu-title">
+                                                                            Supprimer
+                                                                        </span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <label class="kt-form-label w-full block font-bold">{{ $label }}</label>
+                                                <input type="file" name="{{ $type }}" class="kt-input w-full" multiple required />
+                                                <input type="text" name="{{ $type }}_explain" class="kt-input w-full" placeholder="Donner une brève explication sur le document attendu..." required />
+                                            @endif
                                         </div>
-                                    </div>
-                                    <div class="w-full">
-                                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                            <label class="kt-form-label max-w-56">
-                                                New Password
-                                            </label>
-                                            <input class="kt-input" placeholder="New password" type="text"
-                                                value="">
-                                            </input>
-                                        </div>
-                                    </div>
-                                    <div class="w-full">
-                                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                            <label class="kt-form-label max-w-56">
-                                                Confirm New Password
-                                            </label>
-                                            <input class="kt-input" placeholder="Confirm new password" type="text"
-                                                value="">
-                                            </input>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-end pt-2.5">
-                                        <button class="kt-btn kt-btn-primary">
-                                            Reset Password
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="kt-card">
-                                <div class="kt-card-header" id="advanced_settings_appearance">
-                                    <h3 class="kt-card-title">
-                                        Appearance
-                                    </h3>
-                                </div>
-                                <div class="kt-card-content lg:py-7.5">
-                                    <div class="mb-5">
-                                        <h3 class="text-base font-medium text-mono">
-                                            Theme mode
-                                        </h3>
-                                        <span class="text-sm text-secondary-foreground">
-                                            Select or customize your ui theme
-                                        </span>
-                                    </div>
-                                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-7.5">
-                                        <div>
-                                            <label
-                                                class="flex items-end border bg-no-repeat bg-cover border-input rounded-xl has-checked:border-green-500 has-checked:border-3 has-checked:[&amp;_.checked]:flex h-[170px] mb-0.5"
-                                                style="background-image: url('/static/metronic/tailwind/dist/assets/media/images/600x400/28.jpg')">
-                                                <input checked="" class="appearance-none" name="appearance_option"
-                                                    type="radio" value="2" />
-                                                <span class="checked hidden">
-                                                    <i
-                                                        class="ki-solid ki-check-circle ml-5 mb-5 text-xl text-green-500 leading-none">
-                                                    </i>
-                                                </span>
-                                            </label>
-                                            <span class="text-sm font-medium text-mono">
-                                                Dark
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <label
-                                                class="flex items-end border bg-no-repeat bg-cover border-input rounded-xl has-checked:border-green-500 has-checked:border-3 has-checked:[&amp;_.checked]:flex h-[170px] mb-0.5"
-                                                style="background-image: url('/static/metronic/tailwind/dist/assets/media/images/600x400/32.jpg')">
-                                                <input class="appearance-none" name="appearance_option" type="radio"
-                                                    value="2" />
-                                                <span class="checked hidden">
-                                                    <i
-                                                        class="ki-solid ki-check-circle ml-5 mb-5 text-xl text-green-500 leading-none">
-                                                    </i>
-                                                </span>
-                                            </label>
-                                            <span class="text-sm font-medium text-mono">
-                                                Light
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <label
-                                                class="flex items-end border bg-no-repeat bg-cover border-input rounded-xl has-checked:border-green-500 has-checked:border-3 has-checked:[&amp;_.checked]:flex h-[170px] mb-0.5"
-                                                style="background-image: url('/static/metronic/tailwind/dist/assets/media/images/600x400/30.jpg')">
-                                                <input class="appearance-none" name="appearance_option" type="radio"
-                                                    value="2" />
-                                                <span class="checked hidden">
-                                                    <i
-                                                        class="ki-solid ki-check-circle ml-5 mb-5 text-xl text-green-500 leading-none">
-                                                    </i>
-                                                </span>
-                                            </label>
-                                            <span class="text-sm font-medium text-mono">
-                                                Sistem
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="border-t border-border mt-7 mb-8">
-                                    </div>
-                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5 mb-8">
-                                        <label class="kt-form-label max-w-48">
-                                            Transparent sidebar
-                                        </label>
-                                        <div class="flex items-center gap-7.5 grow">
-                                            <label class="kt-label">
-                                                Visible
-                                                <input checked="" class="kt-switch" type="checkbox"
+                                        @endforeach
+                                        {{-- <div
+                                            class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 p-3.5">
+                                            <div class="flex items-center flex-wrap gap-3.5">
+                                                <img alt="" class="size-8 shrink-0"
+                                                    src="{{asset('assets/media/brand-logos/equacoin.svg')}}" />
+                                                <div class="flex flex-col">
+                                                    <div class="flex items-center gap-1.5">
+                                                        <a class="text-sm font-medium text-mono hover:text-primary"
+                                                            href="#">
+                                                            Equacoin
+                                                        </a>
+                                                        <a class="text-sm text-secondary-foreground hover:text-primary"
+                                                            href="#">
+                                                            equacoin@cryptoemail.com
+                                                        </a>
+                                                    </div>
+                                                    <span class="text-sm text-secondary-foreground">
+                                                        Streamline cryptocurrency transactions securely and efficiently.
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2 lg:gap-5">
+                                                <input class="kt-switch" name="check" type="checkbox"
                                                     value="1" />
-                                            </label>
-                                            <span class="kt-form-description text-2sm">
-                                                Toggle the transparent sidebar for a sleek interface.Switch it on for
-                                                transparency or off for a solid background.
-                                            </span>
-                                        </div>
+                                                <div class="kt-btn kt-btn-icon kt-btn-ghost" data-kt-menu="true">
+                                                    <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
+                                                        data-kt-menu-item-placement="bottom-end"
+                                                        data-kt-menu-item-placement-rtl="bottom-start"
+                                                        data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
+                                                        <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
+                                                            <i class="ki-filled ki-setting-2"></i>
+                                                        </button>
+                                                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
+                                                            data-kt-menu-dismiss="true">
+                                                            <div class="kt-menu-item">
+                                                                <a class="kt-menu-link"
+                                                                    href="/metronic/tailwind/demo2/account/home/settings-enterprise">
+                                                                    <span class="kt-menu-icon">
+                                                                        <i class="ki-filled ki-setting-3">
+                                                                        </i>
+                                                                    </span>
+                                                                    <span class="kt-menu-title">
+                                                                        Settings
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                            <div class="kt-menu-item">
+                                                                <a class="kt-menu-link"
+                                                                    href="/metronic/tailwind/demo2/account/members/import-members">
+                                                                    <span class="kt-menu-icon">
+                                                                        <i class="ki-filled ki-some-files">
+                                                                        </i>
+                                                                    </span>
+                                                                    <span class="kt-menu-title">
+                                                                        Import
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                            <div class="kt-menu-item">
+                                                                <a class="kt-menu-link"
+                                                                    href="/metronic/tailwind/demo2/account/activity">
+                                                                    <span class="kt-menu-icon">
+                                                                        <i class="ki-filled ki-cloud-change">
+                                                                        </i>
+                                                                    </span>
+                                                                    <span class="kt-menu-title">
+                                                                        Activity
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                            <div class="kt-menu-item">
+                                                                <a class="kt-menu-link" data-kt-modal-toggle="#report_user_modal"
+                                                                    href="#">
+                                                                    <span class="kt-menu-icon">
+                                                                        <i class="ki-filled ki-dislike">
+                                                                        </i>
+                                                                    </span>
+                                                                    <span class="kt-menu-title">
+                                                                        Report
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> --}}
                                     </div>
                                     <div class="flex justify-end">
-                                        <button class="kt-btn kt-btn-primary">
-                                            Save Changes
+                                        <button type="submit" class="kt-btn kt-btn-primary">
+                                            Sauvegarder
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="kt-card">
+                            </form>
+                            {{-- Notifications --}}
+                            <form action="{{ route('emprunteur.profil.notifications.preferences') }}" method="post" class="kt-card">
+                                @csrf
+                                @php
+                                    $notif = Auth::user()->notificationPreference ?? null;
+                                @endphp
+
                                 <div class="kt-card-header" id="advanced_settings_notifications">
                                     <h3 class="kt-card-title">
                                         Notifications
@@ -1724,17 +1349,18 @@
                                                         Email
                                                     </a>
                                                     <span class="text-sm text-secondary-foreground">
-                                                        Tailor Your Email Preferences.
+                                                        Personnalisez vos préférences d'e-mail.
                                                     </span>
                                                 </div>
                                             </div>
                                             <label class="kt-label">
-                                                <input checked="" class="kt-switch kt-switch-sm" name="check"
-                                                    type="checkbox" value="1" />
+                                                <input {{ $notif && $notif->email_notifications ? 'checked' : '' }} class="kt-switch kt-switch-sm" name="notification_types"
+                                                    onchange="this.checked ? document.getElementById('email_preferences').classList.remove('hidden') : document.getElementById('email_preferences').classList.add('hidden');"
+                                                    type="checkbox" value="email_notifications" />
                                             </label>
                                         </div>
                                         <div
-                                            class="flex items-center justify-between flex-wrap grow border border-border rounded-xl gap-2 px-3.5 py-2.5">
+                                            class="bg-muted cursor-not-allowed flex items-center justify-between flex-wrap grow border border-border rounded-xl gap-2 px-3.5 py-2.5">
                                             <div class="flex items-center flex-wrap gap-3.5">
                                                 <div class="relative size-[50px] shrink-0">
                                                     <svg class="w-full h-full stroke-border fill-muted/30" fill="none"
@@ -1755,93 +1381,403 @@
                                                     </svg>
                                                     <div
                                                         class="absolute leading-none start-2/4 top-2/4 -translate-y-2/4 -translate-x-2/4 rtl:translate-x-2/4">
-                                                        <img alt="" class="h-5"
-                                                            src="/static/metronic/tailwind/dist/assets/media/brand-logos/slack.svg" />
+                                                        <i class="ki-filled ki-message-notify text-xl text-muted-foreground"></i>
                                                     </div>
                                                 </div>
                                                 <div class="flex flex-col">
-                                                    <a class="text-sm font-medium text-mono hover:text-primary mb-px"
-                                                        href="#">
-                                                        Slack
+                                                    <a class="text-sm font-medium text-mono hover:text-primary mb-px">
+                                                        SMS
                                                     </a>
                                                     <span class="text-sm text-secondary-foreground">
-                                                        Stay Updated on Slack.
+                                                        Rester informé par SMS.
                                                     </span>
                                                 </div>
                                             </div>
                                             <label class="kt-label">
-                                                <input checked="" class="kt-switch kt-switch-sm" name="check"
-                                                    type="checkbox" value="1" />
+                                                <input disabled class="kt-switch kt-switch-sm" name="notification_types"
+                                                    type="checkbox" value="sms_notifications" />
                                             </label>
                                         </div>
                                     </div>
                                     <div class="flex flex-col gap-3.5 mb-7">
                                         <span class="text-base font-medium text-mono pb-0.5">
-                                            Desktop notifications
+                                            Notifications sur la plateforme
                                         </span>
                                         <div class="flex flex-col items-start gap-4">
                                             <label class="kt-label">
-                                                <input class="kt-radio" name="desktop_notification" type="radio"
-                                                    value="1">
-                                                All new messages (Recommended)
+                                                <input {{ (!$notif || ($notif && $notif->desktop_notification === 'new_messages')) ? 'checked' : '' }} class="kt-radio" name="desktop_notification" type="radio"
+                                                    value="new_messages">
+                                                Tous les nouveaux messages (Recommandé)
                                                 </input>
                                             </label>
                                             <label class="kt-label">
-                                                <input checked="" class="kt-radio" name="desktop_notification"
-                                                    type="radio" value="2">
+                                                <input {{ $notif && $notif->desktop_notification === 'direct' ? 'checked' : '' }} class="kt-radio" name="desktop_notification"
+                                                    type="radio" value="direct">
                                                 Direct @mentions
                                                 </input>
                                             </label>
                                             <label class="kt-label">
-                                                <input checked="" class="kt-radio" name="desktop_notification"
-                                                    type="radio" value="3">
-                                                Disabled
+                                                <input {{ $notif && $notif->desktop_notification === 'disabled' ? 'checked' : '' }} class="kt-radio" name="desktop_notification"
+                                                    type="radio" value="disabled">
+                                                Désactiver
                                                 </input>
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="flex flex-col gap-3.5 mb-7">
+                                    <div id="email_preferences" class="flex flex-col gap-3.5 mb-7">
                                         <span class="text-base font-medium text-mono pb-0.5">
-                                            Email notifications
+                                            Notifications par Email
                                         </span>
                                         <div class="flex flex-col items-start gap-4">
                                             <label class="kt-label">
-                                                <input class="kt-radio" name="email_notification" type="radio"
-                                                    value="1">
-                                                All new messages and statuses
+                                                <input {{ (!$notif || ($notif && $notif->email_notification === 'new_messages_statuses')) ? 'checked' : '' }} class="kt-radio" name="email_notification" type="radio"
+                                                    value="new_messages_statuses">
+                                                Tous les nouveaux messages et statuts
                                                 </input>
                                             </label>
                                             <label class="kt-label">
-                                                <input checked="" class="kt-radio" name="email_notification"
-                                                    type="radio" value="2">
-                                                Unread messages and statuses
+                                                <input {{ $notif && $notif->email_notification === 'messages_statuses' ? 'checked' : '' }} class="kt-radio" name="email_notification"
+                                                    type="radio" value="messages_statuses">
+                                                Messages et statuts non lus
                                                 </input>
                                             </label>
                                             <label class="kt-label">
-                                                <input checked="" class="kt-radio" name="email_notification"
-                                                    type="radio" value="3">
-                                                Disabled
+                                                <input {{ $notif && $notif->email_notification === 'disabled' ? 'checked' : '' }} class="kt-radio" name="email_notification"
+                                                    type="radio" value="disabled">
+                                                Désactiver
                                                 </input>
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="flex flex-col gap-3.5">
-                                        <span class="text-base font-medium text-mono pb-0.5">
-                                            Subscriptions
-                                        </span>
-                                        <label class="kt-label">
-                                            <input class="kt-checkbox" name="check" type="checkbox" value="1">
-                                            Automatically subscribe to tasks you create
-                                            </input>
-                                        </label>
-                                    </div>
                                     <div class="flex justify-end">
-                                        <button class="kt-btn kt-btn-primary">
-                                            Save Changes
+                                        <button type="submit" class="kt-btn kt-btn-primary">
+                                            Sauvegarder
                                         </button>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
+                            {{-- Email --}}
+                            <form action="{{ route('emprunteur.profil.email.update') }}" method="post" class="kt-card pb-2.5">
+                                @csrf
+                                <div class="kt-card-header" id="auth_email">
+                                    <h3 class="kt-card-title">
+                                        Email
+                                    </h3>
+                                </div>
+                                <div class="kt-card-content grid gap-5 pt-7.5">
+                                    <div class="w-full">
+                                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                            <label class="kt-form-label max-w-56">
+                                                Email
+                                            </label>
+                                            <div class="flex flex-col tems-start grow gap-3 w-full">
+                                                <input class="kt-input" name="email" type="text" value="{{ Auth::user()->email ?? null }}">
+                                                
+                                                <div class="kt-alert kt-alert-light kt-alert-warning" id="alert_5">
+                                                    <div class="kt-alert-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info" aria-hidden="true">
+                                                            <circle cx="12" cy="12" r="10"></circle>
+                                                            <path d="M12 16v-4"></path>
+                                                            <path d="M12 8h.01"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="kt-alert-content">
+                                                        <h3 class="kt-alert-title">À votre attention !</h3>
+                                                        <p class="kt-alert-description">
+                                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem velit repellat id dolores.
+                                                            <br />Vero consequuntur.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-end">
+                                        <button type="submit" class="kt-btn kt-btn-primary">
+                                            Sauvegarder
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            {{-- Connexion réseaux sociaux --}}
+                            <form action="" method="post" class="kt-card">
+                                @csrf
+                                <div class="kt-card-header" id="auth_social_sign_in">
+                                    <h3 class="kt-card-title">
+                                        Connexion réseaux sociaux
+                                    </h3>
+                                </div>
+                                <div class="kt-card-content">
+                                    <div class="grid gap-5 mb-7">
+                                        <div
+                                            class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 px-3.5 py-2.5">
+                                            <div class="flex items-center flex-wrap gap-3.5">
+                                                <img alt="" class="size-6 shrink-0"
+                                                    src="{{asset('assets/media/brand-logos/google.svg')}}" />
+                                                <div class="flex flex-col gap-0.5">
+                                                    <a class="text-sm font-medium text-mono hover:text-primary"
+                                                        href="#">
+                                                        Google
+                                                    </a>
+                                                    <a class="text-sm text-secondary-foreground hover:text-primary"
+                                                        href="#">
+                                                        emprunteur@gmail.com
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-5">
+                                                <label class="kt-label">
+                                                    <input checked="" class="kt-switch kt-switch-sm" name="check"
+                                                        type="checkbox" value="1" />
+                                                </label>
+                                                <div class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
+                                                    <i class="ki-filled ki-trash">
+                                                    </i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 px-3.5 py-2.5">
+                                            <div class="flex items-center flex-wrap gap-3.5">
+                                                <img alt="" class="size-6 shrink-0"
+                                                    src="{{asset('assets/media/brand-logos/facebook.svg')}}" />
+                                                <div class="flex flex-col gap-0.5">
+                                                    <a class="text-sm font-medium text-mono hover:text-primary"
+                                                        href="#">
+                                                        Facebook
+                                                    </a>
+                                                    <a class="text-sm text-secondary-foreground hover:text-primary"
+                                                        href="#">
+                                                        jasontt@keenthemes.com
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-5">
+                                                <label class="kt-label">
+                                                    <input class="kt-switch kt-switch-sm" name="check" type="checkbox"
+                                                        value="1" />
+                                                </label>
+                                                <div class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
+                                                    <i class="ki-filled ki-trash">
+                                                    </i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 px-3.5 py-2.5">
+                                            <div class="flex items-center flex-wrap gap-3.5">
+                                                <img alt="" class="size-6 shrink-0"
+                                                    src="{{asset('assets/media/brand-logos/linkedin.svg')}}" />
+                                                <div class="flex flex-col gap-0.5">
+                                                    <a class="text-sm font-medium text-mono hover:text-primary"
+                                                        href="#">
+                                                        Linkedin
+                                                    </a>
+                                                    <a class="text-sm text-secondary-foreground hover:text-primary"
+                                                        href="#">
+                                                        jasontt@keenthemes.com
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-5">
+                                                <label class="kt-label">
+                                                    <input class="kt-switch kt-switch-sm" name="check" type="checkbox"
+                                                        value="1" />
+                                                </label>
+                                                <div class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
+                                                    <i class="ki-filled ki-trash">
+                                                    </i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-end">
+                                        <button type="submit" class="kt-btn kt-btn-primary">
+                                            Sauvegarder
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            {{-- Authentification à deux facteurs (2FA) --}}
+                            <form action="{{ route('emprunteur.profil.2fa.setup') }}" method="post" class="kt-card">
+                                @csrf
+                                <div class="kt-card-header" id="auth_two_factor">
+                                    <h3 class="kt-card-title">
+                                        Authentification à deux facteurs (2FA)
+                                    </h3>
+                                </div>
+                                <div class="kt-card-content">
+                                    <div class="grid gap-5 mb-7">
+                                        <div
+                                            class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 px-3.5 py-2.5">
+                                            <div class="flex items-center flex-wrap gap-3.5">
+                                                <div class="flex items-center">
+                                                    <div class="relative size-[50px] shrink-0">
+                                                        <svg class="w-full h-full stroke-border fill-muted/30"
+                                                            fill="none" height="48" viewbox="0 0 44 48"
+                                                            width="44" xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M16 2.4641C19.7128 0.320509 24.2872 0.320508 28 2.4641L37.6506 8.0359C41.3634 10.1795 43.6506 14.141 43.6506
+                                                                        18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
+                                                                        39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
+                                                                fill="">
+                                                            </path>
+                                                            <path
+                                                                d="M16.25 2.89711C19.8081 0.842838 24.1919 0.842837 27.75 2.89711L37.4006 8.46891C40.9587 10.5232 43.1506 14.3196 43.1506
+                                                                        18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
+                                                                        39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
+                                                                stroke="">
+                                                            </path>
+                                                        </svg>
+                                                        <div
+                                                            class="absolute leading-none start-2/4 top-2/4 -translate-y-2/4 -translate-x-2/4 rtl:translate-x-2/4">
+                                                            <i
+                                                                class="ki-filled ki-sms text-xl text-muted-foreground">
+                                                            </i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex flex-col gap-px">
+                                                    <a class="text-sm font-medium text-mono hover:text-primary"
+                                                        href="#">
+                                                        Message Email
+                                                    </a>
+                                                    <span class="text-sm font-medium text-secondary-foreground">
+                                                        Codes instantanés via Email pour une vérification sécurisée du compte.
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2 lg:gap-6">
+                                                <label class="kt-label">
+                                                    Activer sur le profil
+                                                    <input {{ Auth::user()->twoFactor ? 'checked' : '' }} class="kt-switch kt-switch-sm" name="twoFactor_email"
+                                                        type="checkbox" value="1" />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="bg-muted cursor-not-allowed flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 px-3.5 py-2.5">
+                                            <div class="flex items-center flex-wrap gap-3.5">
+                                                <div class="flex items-center">
+                                                    <div class="relative size-[50px] shrink-0">
+                                                        <svg class="w-full h-full stroke-border fill-muted/30"
+                                                            fill="none" height="48" viewbox="0 0 44 48"
+                                                            width="44" xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M16 2.4641C19.7128 0.320509 24.2872 0.320508 28 2.4641L37.6506 8.0359C41.3634 10.1795 43.6506 14.141 43.6506
+                                                                        18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
+                                                                        39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
+                                                                fill="">
+                                                            </path>
+                                                            <path
+                                                                d="M16.25 2.89711C19.8081 0.842838 24.1919 0.842837 27.75 2.89711L37.4006 8.46891C40.9587 10.5232 43.1506 14.3196 43.1506
+                                                                        18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
+                                                                        39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
+                                                                stroke="">
+                                                            </path>
+                                                        </svg>
+                                                        <div
+                                                            class="absolute leading-none start-2/4 top-2/4 -translate-y-2/4 -translate-x-2/4 rtl:translate-x-2/4">
+                                                            <i
+                                                                class="ki-filled ki-message-text-2 text-xl text-muted-foreground">
+                                                            </i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex flex-col gap-px">
+                                                    <a class="text-sm font-medium text-mono hover:text-primary">
+                                                        Message texte (SMS)
+                                                    </a>
+                                                    <span class="text-sm font-medium text-secondary-foreground">
+                                                        Instant codes for secure account verification.
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2 lg:gap-6">
+                                                <label class="kt-label">
+                                                    Activer sur le profil
+                                                    <input disabled class="kt-switch kt-switch-sm" name="check"
+                                                        type="checkbox" value="1" />
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="w-full">
+                                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5 mb-7">
+                                            <label class="kt-form-label max-w-56">
+                                                Mot de passe
+                                            </label>
+                                            <div class="flex flex-col tems-start grow gap-3 w-full">
+                                                <input name="password" class="kt-input" placeholder="Entrer votre mot de passe" type="password" required>
+                                                <span class="kt-form-description text-2sm">
+                                                    Entrez votre mot de passe pour configurer l'authentification à deux facteurs.
+                                                </span>
+                                                </input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-end pt-2.5">
+                                        <button type="submit" class="kt-btn kt-btn-primary">
+                                            Sauvegarder
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <style>
+                                .singl-sign-on-bg {
+                                    background-image: url("{{asset('assets/media/images/2600x1600/bg-2.png')}}");
+                                }
+
+                                .dark .singl-sign-on-bg {
+                                    background-image: url("{{asset('assets/media/images/2600x1600/bg-2-dark.png')}}");
+                                }
+                            </style>
+                            {{-- Mot de passe --}}
+                            <form action="{{ route('emprunteur.profil.password.update') }}" method="post" class="kt-card">
+                                @csrf
+                                <div class="kt-card-header" id="auth_password">
+                                    <h3 class="kt-card-title">
+                                        Mot de passe
+                                    </h3>
+                                </div>
+                                <div class="kt-card-content grid gap-5">
+                                    <div class="w-full">
+                                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                            <label class="kt-form-label max-w-56">
+                                                Mot de passe actuel
+                                            </label>
+                                            <input name="current_password" class="kt-input" placeholder="Votre mot de passe actuel" type="password"
+                                                value="">
+                                            </input>
+                                        </div>
+                                    </div>
+                                    <div class="w-full">
+                                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                            <label class="kt-form-label max-w-56">
+                                                Nouveau mot de passe
+                                            </label>
+                                            <input name="new_password" class="kt-input" placeholder="Nouveau mot de passe" type="password"
+                                                value="">
+                                            </input>
+                                        </div>
+                                    </div>
+                                    <div class="w-full">
+                                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                            <label class="kt-form-label max-w-56">
+                                                Confirmer le nouveau mot de passe
+                                            </label>
+                                            <input name="new_password_confirmation" class="kt-input" placeholder="Confirmer le nouveau mot de passe" type="password"
+                                                value="">
+                                            </input>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-end pt-2.5">
+                                        <button type="submit" class="kt-btn kt-btn-primary">
+                                            Réinitialiser le mot de passe
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                             <style>
                                 .user-access-bg {
                                     background-image: url('/static/metronic/tailwind/dist/assets/media/images/2600x1200/bg-5.png');
@@ -1851,288 +1787,41 @@
                                     background-image: url('/static/metronic/tailwind/dist/assets/media/images/2600x1200/bg-5-dark.png');
                                 }
                             </style>
-                            <div class="kt-card">
-                                <div class="kt-card-header mb-5" id="external_services_manage_api">
-                                    <h3 class="kt-card-title">
-                                        Manage API
-                                    </h3>
-                                </div>
-                                <div class="kt-card-content lg:py-7.5 grid gap-5 lg:gap-7.5">
-                                    <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                        <label class="kt-form-label max-w-56 text-foreground font-normal">
-                                            API Key
-                                        </label>
-                                        <label class="kt-input">
-                                            <input placeholder="Right icon" type="text"
-                                                value="abc123xyz456sample789key000" />
-                                            <button class="kt-btn kt-btn-icon kt-btn-dim -me-2">
-                                                <i class="ki-filled ki-copy">
-                                                </i>
-                                            </button>
-                                        </label>
-                                    </div>
-                                    <div
-                                        class="flex items-center flex-wrap sm:flex-nowrap justify-between grow border border-border rounded-xl gap-2 p-5 rtl:[background-position:-195px_-85px] [background-position:195px_-85px] bg-no-repeat bg-[length:650px] user-access-bg">
-                                        <div class="flex items-center gap-4">
-                                            <div class="relative size-[50px] shrink-0">
-                                                <svg class="w-full h-full stroke-primary/10 fill-primary-soft"
-                                                    fill="none" height="48" viewbox="0 0 44 48" width="44"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M16 2.4641C19.7128 0.320509 24.2872 0.320508 28 2.4641L37.6506 8.0359C41.3634 10.1795 43.6506 14.141 43.6506
-                                                                18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
-                                                                39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
-                                                        fill="">
-                                                    </path>
-                                                    <path
-                                                        d="M16.25 2.89711C19.8081 0.842838 24.1919 0.842837 27.75 2.89711L37.4006 8.46891C40.9587 10.5232 43.1506 14.3196 43.1506
-                                                                18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
-                                                                39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
-                                                        stroke="">
-                                                    </path>
-                                                </svg>
-                                                <div
-                                                    class="absolute leading-none start-2/4 top-2/4 -translate-y-2/4 -translate-x-2/4 rtl:translate-x-2/4">
-                                                    <i class="ki-filled ki-security-user text-xl text-primary">
-                                                    </i>
-                                                </div>
-                                            </div>
-                                            <div class="flex flex-col gap-1.5">
-                                                <div class="flex items-center flex-wrap gap-2.5">
-                                                    <a class="text-base font-medium text-mono hover:text-primary"
-                                                        href="#">
-                                                        User Access
-                                                    </a>
-                                                    <span class="kt-badge kt-badge-sm kt-badge-outline shrink-0">
-                                                        16 days left
-                                                    </span>
-                                                </div>
-                                                <div class="kt-form-description text-2sm">
-                                                    This API key can only access
-                                                    <a class="kt-link" href="https://keenthemes.com/">
-                                                        @keenthemes
-                                                    </a>
-                                                    <br />
-                                                    Secure access with a unique API key for enhanced functionality.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="flex items-center gap-1.5">
-                                            <button class="kt-btn kt-btn-mono">
-                                                Renew Plan
-                                            </button>
-                                            <a class="kt-btn kt-btn-ghost" href="#">
-                                                Docs
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <p class="text-sm text-foreground">
-                                        Unlock the full potential of your application with our API, a secure gateway
-                                        facilitating seamless integration, empowering developers
-                                        to create innovative and dynamic experiences effortlessly.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="kt-card">
-                                <div class="kt-card-header" id="external_services_integrations">
-                                    <h3 class="kt-card-title">
-                                        Integrations
-                                    </h3>
-                                </div>
-                                <div class="kt-card-content grid gap-5 lg:gap-7.5 lg:py-7.5 py-5">
-                                    <div class="grid gap-5">
-                                        <div
-                                            class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 p-3.5">
-                                            <div class="flex items-center flex-wrap gap-3.5">
-                                                <img alt="" class="size-8 shrink-0"
-                                                    src="/static/metronic/tailwind/dist/assets/media/brand-logos/google-webdev.svg" />
-                                                <div class="flex flex-col">
-                                                    <div class="flex items-center gap-1.5">
-                                                        <a class="text-sm font-medium text-mono hover:text-primary"
-                                                            href="#">
-                                                            Google web.dev
-                                                        </a>
-                                                        <a class="text-sm text-secondary-foreground hover:text-primary"
-                                                            href="#">
-                                                            webdev@webdevmail.com
-                                                        </a>
-                                                    </div>
-                                                    <span class="text-sm text-secondary-foreground">
-                                                        Integrate for enhanced collaboration in web development.
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center gap-2 lg:gap-5">
-                                                <input checked="" class="kt-switch" name="check" type="checkbox"
-                                                    value="1" />
-                                                <div class="kt-btn kt-btn-icon kt-btn-ghost">
-                                                    <i class="ki-filled ki-setting-2">
-                                                    </i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 p-3.5">
-                                            <div class="flex items-center flex-wrap gap-3.5">
-                                                <img alt="" class="size-8 shrink-0"
-                                                    src="/static/metronic/tailwind/dist/assets/media/brand-logos/equacoin.svg" />
-                                                <div class="flex flex-col">
-                                                    <div class="flex items-center gap-1.5">
-                                                        <a class="text-sm font-medium text-mono hover:text-primary"
-                                                            href="#">
-                                                            Equacoin
-                                                        </a>
-                                                        <a class="text-sm text-secondary-foreground hover:text-primary"
-                                                            href="#">
-                                                            equacoin@cryptoemail.com
-                                                        </a>
-                                                    </div>
-                                                    <span class="text-sm text-secondary-foreground">
-                                                        Streamline cryptocurrency transactions securely and efficiently.
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center gap-2 lg:gap-5">
-                                                <input class="kt-switch" name="check" type="checkbox"
-                                                    value="1" />
-                                                <div class="kt-btn kt-btn-icon kt-btn-ghost">
-                                                    <i class="ki-filled ki-setting-2">
-                                                    </i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 p-3.5">
-                                            <div class="flex items-center flex-wrap gap-3.5">
-                                                <img alt="" class="size-8 shrink-0"
-                                                    src="/static/metronic/tailwind/dist/assets/media/brand-logos/evernote.svg" />
-                                                <div class="flex flex-col">
-                                                    <div class="flex items-center gap-1.5">
-                                                        <a class="text-sm font-medium text-mono hover:text-primary"
-                                                            href="#">
-                                                            Evernote
-                                                        </a>
-                                                        <a class="text-sm text-secondary-foreground hover:text-primary"
-                                                            href="#">
-                                                            evernote@noteexample.com
-                                                        </a>
-                                                    </div>
-                                                    <span class="text-sm text-secondary-foreground">
-                                                        Streamline cryptocurrency transactions securely and efficiently.
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center gap-2 lg:gap-5">
-                                                <input checked="" class="kt-switch" name="check" type="checkbox"
-                                                    value="1" />
-                                                <div class="kt-btn kt-btn-icon kt-btn-ghost">
-                                                    <i class="ki-filled ki-setting-2">
-                                                    </i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 p-3.5">
-                                            <div class="flex items-center flex-wrap gap-3.5">
-                                                <img alt="" class="size-8 shrink-0"
-                                                    src="/static/metronic/tailwind/dist/assets/media/brand-logos/inferno.svg" />
-                                                <div class="flex flex-col">
-                                                    <div class="flex items-center gap-1.5">
-                                                        <a class="text-sm font-medium text-mono hover:text-primary"
-                                                            href="#">
-                                                            Inferno
-                                                        </a>
-                                                        <a class="text-sm text-secondary-foreground hover:text-primary"
-                                                            href="#">
-                                                            inferno@dataexample.com
-                                                        </a>
-                                                    </div>
-                                                    <span class="text-sm text-secondary-foreground">
-                                                        Robust email integration for data management.
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center gap-2 lg:gap-5">
-                                                <input checked="" class="kt-switch" name="check" type="checkbox"
-                                                    value="1" />
-                                                <div class="kt-btn kt-btn-icon kt-btn-ghost">
-                                                    <i class="ki-filled ki-setting-2">
-                                                    </i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 p-3.5">
-                                            <div class="flex items-center flex-wrap gap-3.5">
-                                                <img alt="" class="size-8 shrink-0"
-                                                    src="/static/metronic/tailwind/dist/assets/media/brand-logos/jira.svg" />
-                                                <div class="flex flex-col">
-                                                    <div class="flex items-center gap-1.5">
-                                                        <a class="text-sm font-medium text-mono hover:text-primary"
-                                                            href="#">
-                                                            Jira
-                                                        </a>
-                                                        <a class="text-sm text-secondary-foreground hover:text-primary"
-                                                            href="#">
-                                                            jira@projectmail.com
-                                                        </a>
-                                                    </div>
-                                                    <span class="text-sm text-secondary-foreground">
-                                                        Streamline project management, enhance collaboration.
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center gap-2 lg:gap-5">
-                                                <input class="kt-switch" name="check" type="checkbox"
-                                                    value="1" />
-                                                <div class="kt-btn kt-btn-icon kt-btn-ghost">
-                                                    <i class="ki-filled ki-setting-2">
-                                                    </i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-end">
-                                        <button class="kt-btn kt-btn-primary">
-                                            Save Changes
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="kt-card">
+                            {{-- Supprimer le compte --}}
+                            <form action="{{ route('emprunteur.profil.delete') }}" method="POST" class="kt-card" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer définitivement votre compte ?');">
+                                @csrf
+                                @method('DELETE')
                                 <div class="kt-card-header" id="delete_account">
                                     <h3 class="kt-card-title">
-                                        Delete Account
+                                        Supprimer le compte
                                     </h3>
                                 </div>
                                 <div class="kt-card-content flex flex-col lg:py-7.5 lg:gap-7.5 gap-3">
                                     <div class="flex flex-col gap-5">
                                         <div class="text-sm text-foreground">
-                                            We regret to see you leave. Confirm account deletion below. Your data will be
-                                            permanently removed. Thank you for being part of our
-                                            community. Please check our
+                                            Nous regrettons votre départ. Confirmez la suppression de votre compte ci-dessous. 
+                                            Vos données seront définitivement supprimées. Nous vous remercions d'avoir fait partie de notre communauté. 
+                                            Veuillez consulter 
                                             <a class="kt-link" href="#">
-                                                Setup Guidelines
+                                                nos directives d'installation 
                                             </a>
-                                            if you still wish continue.
+                                            si vous souhaitez continuer.
                                         </div>
                                         <label class="kt-label">
-                                            <input class="kt-checkbox kt-checkbox-sm" name="delete" type="checkbox"
-                                                value="1">
-                                            Confirm deleting account
-                                            </input>
+                                            <input class="kt-checkbox kt-checkbox-sm" name="delete" type="checkbox" value="1" required>
+                                            Confirmer la suppression du compte
                                         </label>
                                     </div>
                                     <div class="flex justify-end gap-2.5">
-                                        <button class="kt-btn kt-btn-outline">
-                                            Deactivate Instead
-                                            <button class="kt-btn kt-btn-destructive">
-                                                Delete Account
-                                            </button>
+                                        <a href="{{ route('emprunteur.profil.deactivate') }}" class="kt-btn kt-btn-outline">
+                                            Désactiver plutôt
+                                        </a>
+                                        <button type="submit" class="kt-btn kt-btn-destructive">
+                                            Supprimer le compte
                                         </button>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -2140,6 +1829,40 @@
         </div>
     </div>
     <!-- End of Container -->
+    
+    @php
+        $type = session('success') ? 'success' : (session('error') || $errors->any() ? 'error' : null);
+        $message = session('success') ?? session('error') ?? ($errors->any() ? $errors->first() : null);
+    @endphp
+
+    @if ($type && $message)
+    <div id="floating-alert"
+        class="fixed top-0 left-1/2 transform -translate-x-1/2 mt-6 z-100 px-6 py-4 rounded shadow-lg flex items-center gap-3
+                transition-all duration-500 ease-in-out opacity-0 scale-95
+                {{ $type === 'success' ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700' }}">
+        @if ($type === 'success')
+            <svg xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 text-green-700"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m5 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        @else
+            <svg xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 text-red-700"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        @endif
+
+        <span>{{ $message }}</span>
+    </div>
+    @endif
 @endsection
 
 @section('javascripts')
@@ -2149,7 +1872,46 @@
         window.onload = () => {
             const modalEl = KTDom.getElement('#modal_settings');
             const modal = KTModal.getInstance(modalEl);
+            @if (!Auth::user()->is_profile_completed)
             modal?.show();
+            @endif
+
+            const alert = document.getElementById('floating-alert');
+            if (alert) {
+                // Affiche avec animation (scale + fade)
+                setTimeout(() => {
+                    alert.classList.remove('opacity-0', 'scale-95');
+                    alert.classList.add('opacity-100', 'scale-100');
+                }, 100); // petit délai pour trigger l'animation CSS
+
+                // Masquer après 5 secondes
+                setTimeout(() => {
+                    alert.classList.remove('opacity-100', 'scale-100');
+                    alert.classList.add('opacity-0', 'scale-95');
+
+                    // Supprimer du DOM après disparition
+                    setTimeout(() => {
+                        alert.remove();
+                    }, 500); // correspond à la durée de transition
+                }, 5000);
+            }
         };
+
+        document.querySelector('select[name="diplome"]').addEventListener('change', function () {
+            const selected = this.value;
+            const filiereSelect = document.querySelector('select[name="filiere"]');
+            
+            fetch(`/emprunteur/filieres/${encodeURIComponent(selected)}`)
+                .then(response => response.json())
+                .then(data => {
+                    filiereSelect.innerHTML = '';
+                    data.forEach(filiere => {
+                        const opt = document.createElement('option');
+                        opt.value = filiere;
+                        opt.textContent = filiere;
+                        filiereSelect.appendChild(opt);
+                    });
+                });
+        });
     </script>
 @endsection
