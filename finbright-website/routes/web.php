@@ -36,3 +36,15 @@ Route::get('/politique-gestion-risques', [PageController::class, 'riskManagement
 
 // Information sur les risques d'investissement
 Route::get('/risques-investissement', [PageController::class, 'investmentRisks'])->name('investment-risks');
+
+// Gestion extinctive
+Route::get('/gestion-extinctive', [PageController::class, 'extinctiveManagement'])->name('extinctive-management');
+
+// Niveaux de risque
+Route::get('/niveaux-risque', [PageController::class, 'riskLevels'])->name('risk-levels');
+
+// Glossaire
+Route::get('/glossaire', [PageController::class, 'glossary'])->name('glossary');
+
+// Cadre juridique
+Route::get('/cadre-juridique', [PageController::class, 'legalFramework'])->name('legal-framework');

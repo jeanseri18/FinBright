@@ -11,16 +11,15 @@
             <!-- Bloc gauche : Texte -->
             <div class="text-center md:text-left">
                 <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
-                    Obtenez un prêt pour financer vos études supérieures ou votre projet de mini prêt court
+Obtenez un prêt pour financer vos études supérieures 
                 </h1>
                 
                 <p class="text-xl md:text-2xl text-gray-600 mb-10 max-w-xl">
-                    Sur Fin'Bright, accédez à un financement simple, rapide et sécurisé. Que vous soyez étudiant admis dans une grande école ou université prestigieuse, ou encore un particulier, nous avons une solution pour vous.
-                </p>
+Sur Fin'Bright, accédez à un financement simple, rapide et sécurisé. Que vous soyez étudiant admis dans une grande école ou une université prestigieuse, nous avons une solution pour vous.                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                     <button class="bg-finbright-cyan text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-light-cyan transition-colors">
-                        Soumettre mon projet personnel
+Soumettre ma demande de prêt étudiant
                     </button>
                 </div>
             </div>
@@ -56,8 +55,7 @@
                     <h3 class="text-xl font-bold text-gray-900">Simulation</h3>
                 </div>
                 <p class="text-gray-600">
-                    Simulez votre besoin pour estimer le montant, la durée et vos capacités de remboursement.
-                </p>
+ Simulez votre besoin pour estimer le montant, la durée et vos capacités de remboursement.                </p>
             </div>
             
             <!-- Étape 2 -->
@@ -69,8 +67,7 @@
                     <h3 class="text-xl font-bold text-gray-900">Inscription</h3>
                 </div>
                 <p class="text-gray-600">
-                    Créez un compte sécurisé et complétez votre profil avec vos informations personnelles et professionnelles.
-                </p>
+ Créez un compte sécurisé et complétez votre profil avec vos informations personnelles et académiques.                </p>
             </div>
             
             <!-- Étape 3 -->
@@ -82,8 +79,7 @@
                     <h3 class="text-xl font-bold text-gray-900">Soumission</h3>
                 </div>
                 <p class="text-gray-600">
-                    Préparez et soumettez votre demande en téléversant les justificatifs requis (admission, revenus potentiels pour les étudiants ou avérés, pièce d'identité, etc.).
-                </p>
+ Préparez et soumettez votre demande en téléversant les justificatifs requis (admission, revenus potentiels, pièce d'identité, etc.).                </p>
             </div>
             
             <!-- Étape 4 -->
@@ -95,8 +91,8 @@
                     <h3 class="text-xl font-bold text-gray-900">Validation</h3>
                 </div>
                 <p class="text-gray-600">
-                    Notre équipe vérifie et valide votre dossier, puis le met en ligne pour financement.
-                </p>
+4. Validation 
+ Notre équipe vérifie et valide votre dossier, puis le met en ligne pour financement.                 </p>
             </div>
             
             <!-- Étape 5 -->
@@ -108,8 +104,7 @@
                     <h3 class="text-xl font-bold text-gray-900">Financement</h3>
                 </div>
                 <p class="text-gray-600">
-                    Des investisseurs particuliers contribuent à votre projet personnel jusqu'à atteindre l'objectif fixé.
-                </p>
+ Des prêteurs solidaires — particuliers, associations ou fondations — contribuent à votre projet académique jusqu'à atteindre l’objectif fixé.                </p>
             </div>
             
             <!-- Étape 6 -->
@@ -121,8 +116,7 @@
                     <h3 class="text-xl font-bold text-gray-900">Déblocage</h3>
                 </div>
                 <p class="text-gray-600">
-                    Une fois l'objectif du montant atteint, les fonds sont débloqués rapidement et versés à l'école pour les étudiants et sur le compte du particulier pour les mini prêts courts. Vous commencez à rembourser selon les conditions définies.
-                </p>
+ Une fois l’objectif atteint, les fonds sont débloqués rapidement et versés directement à l’établissement. Vous commencez à rembourser selon les conditions définies.                 </p>
             </div>
         </div>
     </div>
@@ -144,7 +138,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 mb-4">Profil éligible</h3>
                 <p class="text-gray-600">
-                    Être étudiant admis dans une grande école ou université prestigieuse (liste disponible sur notre site) ou un particulier justifiant de revenus stables.
+Être étudiant admis dans une grande école ou une université reconnue (voir la liste disponible sur notre site). 
                 </p>
             </div>
             
@@ -155,7 +149,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 mb-4">Justificatifs requis</h3>
                 <p class="text-gray-600">
-                    Fournir tous les justificatifs nécessaires : lettre d'admission, pièce d'identité, justificatifs de revenus,etc.
+Fournir tous les documents nécessaires : lettre d’admission, pièce d’identité, justificatifs de revenus potentiels, etc.               
                 </p>
             </div>
             
@@ -166,7 +160,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 mb-4">Conditions générales</h3>
                 <p class="text-gray-600">
-                    Être majeur, résider en France ou dans un pays éligible et avoir un projet personnel clair et précis.
+                  Être majeur, résider en France ou dans un pays éligible, et avoir un projet académique clair et sérieux. 
                 </p>
             </div>
         </div>

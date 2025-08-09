@@ -101,8 +101,7 @@
                         <span class="text-2xl font-bold text-white">Fin'Bright</span>
                     </div>
                     <p class="text-gray-300 mb-4">
-                        Une plateforme de technologie financière pour l'impact. 
-                        Connectons les porteurs de projets et les investisseurs pour un avenir meilleur.
+ Nous connectons des étudiants brillants et des investisseurs solidaires pour bâtir un avenir plus équitable par l’accès à l’enseignement supérieur.
                     </p>
                     <div class="flex space-x-4">
                         <a href="#" class="text-gray-300 hover:text-finbright-cyan transition-colors">
@@ -132,11 +131,14 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Légal</h3>
                     <ul class="space-y-2">
-                        <li><span class="text-gray-300">Mentions légales</span></li>
-                        <li><span class="text-gray-300">Politique de confidentialité</span></li>
-                         <li><span class="text-gray-300">CGU</span></li>
-                        <li><span class="text-gray-300">Gestion des risques</span></li>
-                        <li><span class="text-gray-300">Risques d'investissement</span></li>
+                        <li><a href="{{ route('legal-mentions') }}" class="text-gray-300 hover:text-finbright-cyan transition-colors">Mentions légales</a></li>
+                        <li><a href="{{ route('privacy-policy') }}" class="text-gray-300 hover:text-finbright-cyan transition-colors">Politique de confidentialité</a></li>
+                        <li><a href="{{ route('terms-of-use') }}" class="text-gray-300 hover:text-finbright-cyan transition-colors">CGU</a></li>
+                        <li><a href="{{ route('extinctive-management') }}" class="text-gray-300 hover:text-finbright-cyan transition-colors">Gestion Extinctive</a></li>
+                        <li><a href="{{ route('risk-levels') }}" class="text-gray-300 hover:text-finbright-cyan transition-colors">Niveau des risques des projets</a></li>
+                        <li><a href="{{ route('risk-management') }}" class="text-gray-300 hover:text-finbright-cyan transition-colors">Politique de gestion des risques</a></li>
+                        <li><a href="{{ route('glossary') }}" class="text-gray-300 hover:text-finbright-cyan transition-colors">Glossaire</a></li>
+                        <li><a href="{{ route('legal-framework') }}" class="text-gray-300 hover:text-finbright-cyan transition-colors">Cadre juridique de l'activité</a></li>
                         <li><a href="{{ route('contact') }}" class="text-gray-300 hover:text-finbright-cyan transition-colors">Contact</a></li>
                     </ul>
                 </div>

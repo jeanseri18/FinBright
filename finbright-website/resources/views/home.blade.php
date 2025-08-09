@@ -44,7 +44,7 @@
                     Nous faisons fructifier votre épargne comme jamais auparavant.
                 </h1>
                 <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-                   De façon innovante, via notre plateforme de financement participatif des étudiants brillants et de ceux exclus des prêts courts des sociétés de financement traditionnelles. En investissant avec Fin’Bright, vous obtenez un rendement financier parmi les meilleurs, et un gain social pour avoir contribué à réduire l’inégalité et l’injustice sociales. Notre impact social est indéniable.
+De façon innovante, via notre plateforme dédiée au financement des étudiants brillants, notamment ceux exclus des prêts classiques. En investissant avec Fin’Bright, vous obtenez un rendement financier parmi les meilleurs, et un gain social pour avoir contribué à réduire l’inégalité et l’injustice sociales. Notre impact social est indéniable.               
                 </p>
                 
             
@@ -52,7 +52,7 @@
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                     <button class="bg-finbright-purple text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-dark-purple transition-colors">
-                        Financer un projet personnel
+                        Financer un Etudiant
                     </button>
                     <button class="bg-finbright-cyan text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-light-cyan transition-colors">
                         Demander un prêt
@@ -72,9 +72,7 @@
        <img src="/images/bg-illustration.svg" alt="Illustration fintech" class="w-full" /> -->
     <!-- </div>  -->
 </section>
-
-<!-- Nos Services Section avec image -->
-<section class=" py-20" style="background: linear-gradient( #B803C9FF 20%, #790384 100%);">
+<!-- <section class=" py-20" style="background: linear-gradient( #B803C9FF 20%, #790384 100%);">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Nos produits</h2>
@@ -116,6 +114,30 @@
             </div>
         </div>
     </div>
+</section> -->
+<!-- Nos Services Section avec image -->
+<section class="py-20" style="background: linear-gradient( #B803C9FF 20%, #790384 100%);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Notre offre: Le Prêt Étudiant d'Excellence</h2>
+        </div>
+        
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center p-8 rounded-xl" style="background: #faf6ee;">
+                <div class="text-lg text-gray-700 leading-relaxed space-y-4">
+                    <p>Le Prêt Étudiant d'Excellence est une solution simple, inclusive et responsable pour financer les études supérieures des jeunes brillants à fort potentiel.</p>
+                    
+                    <p>Conçu pour offrir à chacun une chance équitable d'accéder à l'enseignement supérieur, ce prêt repose sur des modalités claires, des taux accessibles, et un accompagnement sur mesure.</p>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg mt-6">
+                        <p class="text-sm text-blue-800"><strong>NB:</strong> Les prêteurs peuvent décider de faire un prêt à taux zéro pour les étudiants qu'ils financent ou les soutenir par un don sans contrepartie.</p>
+                    </div>
+                    
+                    <p class="mt-6">Par ailleurs, FinBright sert de plateforme sécurisée permettant aux fondations et partenaires engagés dans l'éducation de financer directement nos étudiants talentueux.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- Comment ça marche Section avec illustration -->
@@ -132,7 +154,7 @@
                     <div class="w-16 h-16 bg-finbright-cyan rounded-full flex items-center justify-center mx-auto mb-4">
                         <i class="fas fa-hand-holding-usd text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900">Pour les emprunteurs</h3>
+                    <h3 class="text-2xl font-bold text-gray-900">Pour les étudiants (emprunteurs) </h3>
                 </div>
                 
                 <div class="space-y-6">
@@ -142,7 +164,7 @@
                         </div>
                         <div>
                             <h4 class="font-semibold text-gray-900">Inscription et création de profil</h4>
-                            <p class="text-gray-600">Créez votre compte et complétez votre profil</p>
+                            <p class="text-gray-600"> Créez votre compte sur la plateforme et complétez votre profil avec vos informations personnelles, académiques et financières.</p>
                         </div>
                     </div>
                     
@@ -151,8 +173,8 @@
                             <span class="text-white font-bold">2</span>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-gray-900">Évaluation de sa capacité de remboursement</h4>
-                            <p class="text-gray-600">L'emprunteur estime sa capacité à rembourser grâce à un simulateur, pour définir un prêt adapté à sa situation</p>
+                            <h4 class="font-semibold text-gray-900">Simulation et estimation de capacité de remboursement</h4>
+                            <p class="text-gray-600"> Utilisez notre simulateur pour estimer le montant du prêt qui correspond à votre situation</p>
                         </div>
                     </div>
                     
@@ -162,7 +184,7 @@
                         </div>
                         <div>
                             <h4 class="font-semibold text-gray-900">Soumission d'une demande de prêt</h4>
-                            <p class="text-gray-600">Présentez votre projet personnel ou besoin de financement</p>
+                            <p class="text-gray-600"> Déposez votre dossier en expliquant vos besoins de financement et vos ambitions académiques. </p>
                         </div>
                     </div>
                     
@@ -171,8 +193,8 @@
                             <span class="text-white font-bold">4</span>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-gray-900">Réception des fonds</h4>
-                            <p class="text-gray-600">Après validation et financement par la communauté</p>
+                            <h4 class="font-semibold text-gray-900">Validation et réception des fonds</h4>
+                            <p class="text-gray-600"> Après analyse et validation par FinBright, votre prêt est financé par un ou plusieurs prêteurs, puis versé selon les modalités prévues. </p>
                         </div>
                     </div>
                 </div>
@@ -184,7 +206,7 @@
                     <div class="w-16 h-16 bg-finbright-purple rounded-full flex items-center justify-center mx-auto mb-4">
                         <i class="fas fa-chart-line text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900">Pour les investisseurs</h3>
+                    <h3 class="text-2xl font-bold text-gray-900">Pour les prêteurs (investisseurs solidaires) </h3>
                 </div>
                 
                 <div class="space-y-6">
@@ -194,7 +216,7 @@
                         </div>
                         <div>
                             <h4 class="font-semibold text-gray-900">Inscription et création de profil</h4>
-                            <p class="text-gray-600">Rejoignez notre communauté d'investisseurs</p>
+                            <p class="text-gray-600"> Rejoignez la plateforme et indiquez vos préférences d’investissement solidaire. </p>
                         </div>
                     </div>
                     
@@ -203,8 +225,8 @@
                             <span class="text-white font-bold">2</span>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-gray-900">Évaluation de sa capacité à prêter</h4>
-                            <p class="text-gray-600">L'investisseur évalue sa capacité à prêter en fonction de ses revenus, etc. et objectifs, afin d'investir de façon responsable et équilibrée</p>
+                            <h4 class="font-semibold text-gray-900">Évaluation de votre capacité à prêter ou donner</h4>
+                            <p class="text-gray-600"> Déterminez le montant que vous souhaitez investir ou donner, en fonction de vos objectifs et de vos moyens.</p>
                         </div>
                     </div>
                     
@@ -213,8 +235,8 @@
                             <span class="text-white font-bold">3</span>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-gray-900">Choix des projets à financer</h4>
-                            <p class="text-gray-600">Sélectionnez les projets qui vous inspirent</p>
+                            <h4 class="font-semibold text-gray-900"> Choix des projets à soutenir</h4>
+                            <p class="text-gray-600"> Sélectionnez les profils d’étudiants que vous souhaitez financer, via un prêt à taux réduit, un prêt à taux zéro ou un don sans contrepartie.</p>
                         </div>
                     </div>
                     
@@ -223,8 +245,8 @@
                             <span class="text-white font-bold">4</span>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-gray-900">Perception de remboursements</h4>
-                            <p class="text-gray-600">Recevez votre capital et vos intérêts</p>
+                            <h4 class="font-semibold text-gray-900"> Suivi et remboursement</h4>
+                            <p class="text-gray-600"> Recevez les remboursements selon les conditions prévues ou suivez simplement l’évolution de l’étudiant si vous avez opté pour un don.</p>
                         </div>
                     </div>
                 </div>
@@ -356,8 +378,8 @@
         <div class="text-center">
             <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-8">Rejoignez Fin'Bright</h2>
             <p class="text-xl text-white mb-12 max-w-4xl mx-auto">
-                Rejoindre Fin'Bright, c'est faire partie d'une communauté d'investisseurs et d'emprunteurs qui croient en l'avenir et en l'entraide. Que vous souhaitez soutenir des étudiants brillants ou financer des projets de mini prêts courts personnels (non commerciaux), notre plateforme est faite pour vous. Rejoignez-nous dès maintenant et agissez pour un futur plus solidaire et responsable.
-            </p>
+Rejoindre Fin'Bright, c’est intégrer une communauté de prêteurs solidaires et d'étudiants ambitieux unis par une même vision.  Que vous souhaitiez financer des talents ou bénéficier d’un prêt pour vos études, notre plateforme vous permet d’agir concrètement pour un avenir plus juste, solidaire et responsable.           
+         Rejoignez-nous dès aujourd’hui.    </p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <button class="bg-finbright-cyan text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-light-cyan transition-colors">

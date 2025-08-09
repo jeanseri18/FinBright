@@ -11,12 +11,11 @@
       <!-- Texte à gauche -->
       <div class="text-center md:text-left">
         <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-          Valorisez votre épargne, gagnez un rendement financier, un gain social et psychologique
+          Valorisez votre épargne, créez un impact durable 
         </h1>
         <p class="text-xl md:text-2xl text-gray-600 mb-8">
-          Fin'Bright vous offre l'opportunité d'investir directement dans des projets à impact social : 
-          financement d'étudiants brillants admis dans les plus prestigieuses grandes écoles et universités, 
-          soutien aux particuliers ayant besoin d'un mini prêt d'urgence. Vous percevez des intérêts compétitifs.
+         Fin'Bright vous offre l’opportunité d’investir directement dans des projets à fort impact social : le financement d’étudiants brillants admis dans les plus prestigieuses grandes écoles et universités. 
+ En tant que particulier, association ou fondation, vous pouvez soutenir ces talents tout en percevant un rendement compétitif et en contribuant à un avenir plus équitable. 
         </p>
 
         <div class="flex flex-col sm:flex-row gap-4">
@@ -57,8 +56,7 @@
                     <h3 class="text-xl font-bold text-gray-900">Inscription</h3>
                 </div>
                 <p class="text-gray-600">
-                    Inscrivez-vous et complétez votre profil investisseur en quelques minutes.
-                </p>
+Inscrivez-vous et complétez votre profil investisseur (particulier, association ou fondation) en quelques minutes.                </p>
             </div>
             
             <!-- Étape 2 -->
@@ -70,7 +68,7 @@
                     <h3 class="text-xl font-bold text-gray-900">Approvisionnement</h3>
                 </div>
                 <p class="text-gray-600">
-                    Approvisionnez votre compte via un transfert sécurisé.
+                  Alimentez votre compte via un transfert sécurisé.
                 </p>
             </div>
             
@@ -83,7 +81,7 @@
                     <h3 class="text-xl font-bold text-gray-900">Sélection</h3>
                 </div>
                 <p class="text-gray-600">
-                    Parcourez les projets et choisissez ceux à financer selon vos préférences (durée, profil, montant, etc.). L'investissement se fait soit manuellement, soit en auto-investissement.
+                    Parcourez les profils d’étudiants brillants et choisissez ceux que vous souhaitez financer selon vos préférences (montant, durée, domaine d’études, etc.). L’investissement peut se faire manuellement ou en auto-investissement. 
                 </p>
             </div>
             
@@ -96,8 +94,7 @@
                     <h3 class="text-xl font-bold text-gray-900">Investissement</h3>
                 </div>
                 <p class="text-gray-600">
-Investisser minimum 100 euros et diversifier vos investissements en finançant plusieurs projets .              </p>
-            </div>
+ Investissez à partir de 100 euros et diversifiez votre impact en soutenant plusieurs parcours académiques.    <br><br>      <br><br> </p> </div>
             
             <!-- Étape 5 -->
             <div  style="background: #faf6ee;" class=" p-8 rounded-xl shadow-lg">
@@ -108,8 +105,8 @@ Investisser minimum 100 euros et diversifier vos investissements en finançant p
                     <h3 class="text-xl font-bold text-gray-900">Suivi</h3>
                 </div>
                 <p class="text-gray-600">
-                    Suivez vos investissements grâce à votre tableau de bord personnel.
-                </p>
+                   Suivez vos engagements et l’évolution des étudiants financés via votre tableau de bord personnel. 
+             <br><br>  <br><br> </p>
             </div>
             
             <!-- Étape 6 -->
@@ -121,8 +118,8 @@ Investisser minimum 100 euros et diversifier vos investissements en finançant p
                     <h3 class="text-xl font-bold text-gray-900">Remboursements</h3>
                 </div>
                 <p class="text-gray-600">
-                    Percevez vos remboursements mensuels (capital et intérêts) directement sur votre compte.
-                </p>
+                    Percevez les remboursements mensuels (capital et intérêts) selon les conditions définies, directement sur votre compte.
+              <br><br> <br><br> </p>
             </div>
         </div>
     </div>
@@ -201,10 +198,10 @@ Investisser minimum 100 euros et diversifier vos investissements en finançant p
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">Types d'investissement</h2>
-            <p class="text-xl text-gray-600">Choisissez le type d'investissement qui vous convient</p>
+            <p class="text-xl text-gray-600">Choisissez un investissement à impact éducatif </p>
         </div>
         
-        <div class="grid md:grid-cols-2 gap-8">
+        <div class="grid md:grid-cols-1 gap-8">
             <!-- Prêts étudiants -->
             <div class="bg-white p-8 rounded-xl shadow-lg">
                 <div class="flex items-center mb-6">
@@ -212,7 +209,7 @@ Investisser minimum 100 euros et diversifier vos investissements en finançant p
                         <i class="fas fa-university text-white text-2xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold text-gray-900">Prêts étudiants</h3>
+                        <h3 class="text-2xl font-bold text-gray-900">Prêts Étudiants d’Excellence</h3>
                         <p class="text-finbright-purple font-semibold">Rendement : 5-6 %</p>
                     </div>
                 </div>
@@ -229,7 +226,7 @@ financer plusieurs projets)</li>
             </div>
             
             <!-- Mini prêts courts -->
-            <div class="bg-white p-8 rounded-xl shadow-lg">
+            <!-- <div class="bg-white p-8 rounded-xl shadow-lg">
                 <div class="flex items-center mb-6">
                     <div class="w-16 h-16 bg-finbright-cyan rounded-full flex items-center justify-center mr-6">
                         <i class="fas fa-clock text-white text-2xl"></i>
@@ -237,7 +234,7 @@ financer plusieurs projets)</li>
                     <div>
                         <h3 class="text-2xl font-bold text-gray-900">Mini prêts courts</h3>
                         <p class="text-finbright-cyan font-semibold">Rendement : 10-11 %</p>
-                    </div>
+                    </div> 
                 </div>
                 <p class="text-gray-600 mb-6">
                     Soutenez des particuliers pour leurs besoins urgents avec des prêts de courte durée.
@@ -248,7 +245,7 @@ financer plusieurs projets)</li>
                     <li class="flex items-center"><i class="fas fa-check text-finbright-cyan mr-2"></i> Rendement pour les prêteurs : 10 - 11 %</li>
                 </ul>
             </div>
-        </div>
+        </div> -->
     </div>
 </section>
 

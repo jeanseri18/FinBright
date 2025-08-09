@@ -116,4 +116,36 @@ class PageController extends Controller
     {
         return view('investment-risks');
     }
+
+    /**
+     * Affiche la page de gestion extinctive
+     */
+    public function extinctiveManagement()
+    {
+        return view('extinctive-management');
+    }
+
+    /**
+     * Affiche la page des niveaux de risque
+     */
+    public function riskLevels()
+    {
+        return view('risk-levels');
+    }
+    
+    /**
+     * Affiche la page du glossaire
+     */
+    public function glossary()
+    {
+        return view('glossaire');
+    }
+    
+    /**
+     * Affiche la page du cadre juridique
+     */
+    public function legalFramework()
+    {
+        return view('cadrejuridique');
+    }
 }

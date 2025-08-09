@@ -71,8 +71,9 @@
             
             <div class="bg-gray-50 rounded-2xl p-8 md:p-12">
                 <p class="text-lg md:text-xl text-gray-700 leading-relaxed text-center">
-                    Fin'Bright est un <strong class="text-finbright-purple">Peer-2-Peer Lending entre particuliers</strong> qui réunit des étudiants brillants en quête de financement, des particuliers ayant besoin de mini prêt d'urgence ou de mini prêt de dépannage, et des particuliers souhaitant donner du sens à leur épargne. Nous offrons une alternative aux solutions bancaires classiques pour permettre à chacun d'accéder à des opportunités de financement éthiques et transparentes.
-                </p>
+                    
+Fin'Bright est une plateforme de  <strong class="text-finbright-purple"> prêt solidaire entre particuliers, associations et fondations</strong>, qui met en relation des  <strong class="text-finbright-purple"> étudiants brillants en quête de financement</strong> et des <strong class="text-finbright-purple"> investisseurs engagés </strong> souhaitant donner du sens à leur épargne. 
+ Nous offrons une alternative aux solutions bancaires classiques, pour permettre à chaque talent d’accéder à des  <strong class="text-finbright-purple">opportunités de financement éthiques, transparentes et durables</strong>.                 </p>
             </div>
         </div>
     </div>
@@ -94,7 +95,7 @@
                     Nous voulons rendre le financement plus <strong class="text-finbright-purple">accessible, humain et solidaire</strong>.
                 </p>
                 <p class="text-lg md:text-xl text-gray-700 leading-relaxed text-center">
-                    Notre objectif est d'encourager l'excellence éducative et d'apporter une réponse rapide aux besoins ponctuels des particuliers, tout en créant un <strong class="text-finbright-cyan">impact social positif et durable</strong>.
+                  Notre objectif est d’encourager l’excellence éducative en facilitant l’accès à l’enseignement supérieur pour les étudiants talentueux, tout en créant un <strong class="text-finbright-cyan">impact social positif et durable</strong>.
                 </p>
             </div>
         </div>
@@ -167,8 +168,7 @@
             Rejoignez la communauté Fin'Bright
         </h2>
         <p class="text-xl text-white mb-8 opacity-90 max-w-2xl mx-auto">
-          Que vous soyez étudiant, particulier ayant besoin d’un mini prêt
-d’urgence, ou investisseur découvrez comment nous pouvons vous accompagnez
+Que vous soyez étudiant en quête de financement ou investisseur solidaire, découvrez comment nous pouvons vous accompagner pour construire ensemble un avenir plus équitable. 
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="{{ route('how-it-works') }}" class="bg-white text-finbright-purple px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
