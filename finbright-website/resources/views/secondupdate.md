@@ -40,7 +40,7 @@ Section CTA finale Rejoindre Fin Bright, c’est faire partie d’une communaut�
 Page Emprunter
 
 Bloc 1 : 
-Accroche : "Obtenez un prêt pour financer vos études supérieures ou vos projets personnelss." 
+Accroche : "Obtenez un prêt pour financer vos études supérieures ou vos projets personnels." 
 Texte : "Sur Fin’Bright, accédez à un financement simple, rapide et sécurisé. Que vous soyez étudiant admis dans une grande école ou université prestigieuse ou particulier, obtenez un soutien financier adapté à vos besoins." 
 CTA : "Simuler mon prêt" / "Soumettre mon projet personnel"
 
