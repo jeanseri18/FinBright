@@ -5,7 +5,7 @@ Bonjour {{ $user->first_name }},
 
 Votre code de vérification à six chiffres pour votre compte Fin'Bright est :
 
-<h1 style="text-align: center; font-size: 24px; letter-spacing: 2px;">{{ $user->two_factor_code }}</h1>
+<h1 style="text-align: center; font-size: 24px; letter-spacing: 2px;">{{ $user->twoFactor->code }}</h1>
 
 Ce code est valide pour les 60 prochaines secondes.
 

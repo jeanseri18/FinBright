@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Emprunteur;
 
 use App\Models\Files;
+use App\Models\LoanRequest;
 use App\Models\UserDocument;
 use Illuminate\Http\Request;
 use App\Models\Etablissement;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -16,7 +18,10 @@ class EmprunteurController extends Controller
 {
     public function index()
     {
-        return view('back.emprunteur.dashboard');
+        Session::put('menu_actif', 'dashboard');
+        // Session::forget('menu_actif');
+        $loanRequests = LoanRequest::where('user_id', Auth::id())->latest()->get();
+        return view('back.emprunteur.dashboard', compact('loanRequests'));
     }
 
     /**
@@ -24,6 +29,7 @@ class EmprunteurController extends Controller
      */
     public function profil()
     {
+        Session::put('menu_actif', 'mon_profil');
         $etablissements = Etablissement::all();
         $documentsAttendus = [
             'piece_identite' => "Pièce d'identité en cours de validité (CNI recto-verso ou Passeport)",
@@ -50,25 +56,31 @@ class EmprunteurController extends Controller
         $validated = $request->validate([
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'civilite' => 'required|in:M.,Mme.,Mx.',
-            'firstname' => 'required|string|max:100',
-            'lastname' => 'required|string|max:100',
+            'firstname' => 'nullable|string|max:100',
+            'lastname' => 'nullable|string|max:100',
             'birth_date' => 'nullable|date',
             'birth_place' => 'nullable|string|max:255',
             'nationality' => 'nullable|string|max:100',
             'phone_number' => 'nullable|string|max:20',
         ]);
-
-        dd($request->files->all());
-        // 1. Upload avatar
+        
+        // 1. Upload avatar si présent
         if ($request->hasFile('avatar')) {
+            // Supprimer l'ancien avatar
+            if ($user->profile_picture_id && $user->profilePicture) {
+                Storage::disk('public')->delete($user->profilePicture->filename);
+                $user->profilePicture->delete();
+            }
+
             $file = $request->file('avatar');
-            $filename = uniqid().'_'.$file->getClientOriginalName();
-            $path = $file->storeAs('uploads/avatars', $filename, 'public');
+            $safeName = uniqid().'_'.preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
+            $path = $file->storeAs('uploads/avatars', $safeName, 'public');
 
             $uploadedFile = Files::create([
                 'filename' => $path,
                 'alt' => 'Avatar utilisateur',
                 'type' => 'image',
+                'filesize' => $file->getSize()
             ]);
 
             $user->profile_picture_id = $uploadedFile->id;
@@ -123,6 +135,7 @@ class EmprunteurController extends Controller
             'diplome' => 'required|string|max:100',
             'filiere' => 'required|string|max:100',
             'annee_etude' => 'nullable|string|max:50',
+            'nombre_annees_restantes' => 'nullable|string|max:50',
             'date_diplome_prevue' => 'nullable|date',
         ]);
 
@@ -133,7 +146,7 @@ class EmprunteurController extends Controller
         $user->diploma = $request->diplome;
         $user->specialization = $request->filiere;
         $user->current_study_year = $request->annee_etude;
-        $user->remaining_years = $request->nombre_annees_restantes;
+        $user->remaining_years = (int) $request->nombre_annees_restantes;
         $user->graduation_date = $request->date_diplome_prevue;
         $user->is_profile_completed = true;
 
@@ -145,6 +158,7 @@ class EmprunteurController extends Controller
     public function enregistrerDocuments(Request $request)
     {
         $user = Auth::user();
+
         $documents = [
             'piece_identite' => 'Pièce d\'identité',
             'justificatif_domicile' => 'Justificatif de domicile',
@@ -157,23 +171,59 @@ class EmprunteurController extends Controller
                 $files = $request->file($field);
                 $explanation = $request->input("{$field}_explain");
 
-                foreach ($files as $file) {
-                    if ($file->isValid()) {
-                        $storedFile = $file->store('justificatifs', 'public');
+                // Vérifier si un document du même type existe déjà
+                $existingDoc = UserDocument::where('user_id', $user->id)
+                    ->where('type', $field)
+                    ->with('file')
+                    ->first();
 
+                if ($existingDoc) {
+                    // Supprimer physiquement l'ancien fichier
+                    if ($existingDoc->file && Storage::disk('public')->exists($existingDoc->file->filename)) {
+                        Storage::disk('public')->delete($existingDoc->file->filename);
+                    }
+
+                    // Supprimer en base
+                    $existingDoc->file()->delete();
+                    $existingDoc->delete();
+                }
+
+                foreach ((array) $files as $file) {
+                    if ($file->isValid()) {
+                        // Mapping du type MIME vers l'ENUM
+                        $typeMime = explode('/', $file->getClientMimeType())[0];
+                        switch ($typeMime) {
+                            case 'image':
+                                $type = 'image';
+                                break;
+                            case 'video':
+                                $type = 'video';
+                                break;
+                            case 'application':
+                            case 'text':
+                            default:
+                                $type = 'document';
+                                break;
+                        }
+
+                        // Sauvegarder le fichier
+                        $storedFile = $file->store('uploads/justificatifs', 'public');
+
+                        // Enregistrer dans Files
                         $fileEntity = Files::create([
                             'filename' => $storedFile,
                             'alt' => $label,
-                            'type' => $file->getClientMimeType(),
+                            'type' => $type,
                             'filesize' => $file->getSize()
                         ]);
 
+                        // Enregistrer dans UserDocument
                         UserDocument::create([
                             'user_id' => $user->id,
                             'file_id' => $fileEntity->id,
                             'type' => $field,
                             'explanation' => $explanation,
-                            'status' => 'en_attente',
+                            'status' => 'En attente',
                         ]);
                     }
                 }
@@ -181,6 +231,41 @@ class EmprunteurController extends Controller
         }
 
         return back()->with('success', 'Documents envoyés avec succès !');
+    }
+    
+    /**
+     * Télécharger un document
+     */
+    public function exportDocument($id)
+    {
+        $document = UserDocument::with('file')->findOrFail($id);
+
+        if (!$document->file || !Storage::disk('public')->exists($document->file->filename)) {
+            return back()->with('error', 'Fichier introuvable.');
+        }
+
+        return Storage::disk('public')->download($document->file->filename, $document->file->alt);
+    }
+
+    /**
+     * Supprimer un document
+     */
+    public function deleteDocument($id)
+    {
+        $document = UserDocument::with('file')->findOrFail($id);
+
+        // Supprimer le fichier physique
+        if ($document->file && Storage::disk('public')->exists($document->file->filename)) {
+            Storage::disk('public')->delete($document->file->filename);
+        }
+
+        // Supprimer en base
+        if ($document->file) {
+            $document->file->delete();
+        }
+        $document->delete();
+
+        return back()->with('success', 'Document supprimé avec succès.');
     }
 
     public function notificationsPreference(Request $request)

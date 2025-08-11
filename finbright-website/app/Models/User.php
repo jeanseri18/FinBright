@@ -51,6 +51,39 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    // Champs nécessaires pour dire que le profil est complété
+    protected $profileRequiredFields = [
+        'civility',
+        'last_name',
+        'first_name',
+        'email',
+        'password',
+        'birth_date',
+        'birth_place',
+        'nationality',
+        'address',
+        'phone_number',
+        'diploma',
+        'specialization',
+        'current_study_year',
+        'remaining_years',
+        'graduation_date',
+        'etablissement_id',
+        'profile_picture_id',
+    ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($user) {
+            $isCompleted = collect($user->profileRequiredFields)
+                ->every(fn($field) => !empty($user->{$field}));
+
+            $user->is_profile_completed = $isCompleted;
+        });
+    }
+
     public function profilePicture()
     {
         return $this->belongsTo(Files::class, 'profile_picture_id');

@@ -1810,14 +1810,14 @@
                 data-kt-dropdown-placement-rtl="bottom-start" data-kt-dropdown-trigger="click">
                 <div class="cursor-pointer shrink-0" data-kt-dropdown-toggle="true">
                     <img alt="{{ Auth::user()->first_name .' '. Auth::user()->last_name }}" class="size-9 rounded-full border-2 border-input shrink-0"
-                        src="{{asset(Auth::user()->profilePicture ? Auth::user()->profilePicture->filename : 'assets/media/avatars/blank.png')}}">
+                        src="{{ Auth::user()->profilePicture ? Storage::url(Auth::user()->profilePicture->filename) : asset('assets/media/avatars/blank.png') }}">
                     </img>
                 </div>
                 <div class="kt-dropdown-menu w-[250px]" data-kt-dropdown-menu="true">
                     <div class="flex items-center justify-between px-2.5 py-1.5 gap-1.5">
                         <div class="flex items-center gap-2">
                             <img alt="" class="size-9 shrink-0 rounded-full border-2 border-green-500"
-                                src="{{asset(Auth::user()->profilePicture ? Auth::user()->profilePicture->filename : 'assets/media/avatars/blank.png')}}">
+                                src="{{ Auth::user()->profilePicture ? Storage::url(Auth::user()->profilePicture->filename) : asset('assets/media/avatars/blank.png') }}">
                             <div class="flex flex-col gap-1.5">
                                 <span class="text-sm text-foreground font-semibold leading-none">
                                     {{ Auth::user()->first_name .' '. Auth::user()->last_name }}
@@ -1846,7 +1846,7 @@
                                 Mon profil
                             </a>
                         </li>
-                        <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start"
+                        {{-- <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start"
                             data-kt-dropdown-trigger="hover">
                             <button class="kt-dropdown-menu-toggle" data-kt-dropdown-toggle="true">
                                 <i class="ki-filled ki-setting-2">
@@ -1934,12 +1934,12 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
+                        </li> --}}
                         <li>
-                            <a class="kt-dropdown-menu-link" href="https://devs.keenthemes.com">
+                            <a class="kt-dropdown-menu-link" href="{{route('emprunteur.mes-demandes')}}">
                                 <i class="ki-filled ki-message-programming">
                                 </i>
-                                Dev Forum
+                                Mes demandes
                             </a>
                         </li>
                         <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start"
@@ -1953,7 +1953,7 @@
                                 <span class="ms-auto kt-badge kt-badge-stroke shrink-0">
                                     Français
                                     <img alt="" class="inline-block size-3.5 rounded-full"
-                                        src="/static/metronic/tailwind/dist/assets/media/flags/france.svg" />
+                                        src="{{asset('assets/media/flags/france.svg')}}" />
                                 </span>
                             </button>
                             <div class="kt-dropdown-menu w-[180px]" data-kt-dropdown-menu="true">
@@ -1962,7 +1962,7 @@
                                         <a class="kt-dropdown-menu-link" href="?dir=ltr">
                                             <span class="flex items-center gap-2">
                                                 <img alt="" class="inline-block size-4 rounded-full"
-                                                    src="/static/metronic/tailwind/dist/assets/media/flags/france.svg" />
+                                                    src="{{asset('assets/media/flags/france.svg')}}" />
                                                 <span class="kt-menu-title">
                                                     Français
                                                 </span>
@@ -1975,7 +1975,7 @@
                                         <a class="kt-dropdown-menu-link" href="?dir=rtl">
                                             <span class="flex items-center gap-2">
                                                 <img alt="" class="inline-block size-4 rounded-full"
-                                                    src="/static/metronic/tailwind/dist/assets/media/flags/united-states.svg" />
+                                                    src="{{asset('assets/media/flags/united-states.svg')}}" />
                                                 <span class="kt-menu-title">
                                                     Anglais
                                                 </span>
@@ -2030,7 +2030,7 @@
             <div class="kt-scrollable-x-auto">
                 <div class="kt-menu gap-5 lg:gap-7.5" data-kt-menu="true">
                     <div
-                        class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono here">
+                        class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono {{ session('menu_actif') === 'dashboard' ? 'here' : '' }}">
                         <a class="kt-menu-link gap-2.5 pb-2 lg:pb-4"
                             href="{{route('emprunteur.dashboard')}}" tabindex="0">
                             <span
@@ -2040,7 +2040,7 @@
                         </a>
                     </div>
                     <div
-                        class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono">
+                        class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono {{ session('menu_actif') === 'mes_demandes' ? 'here' : '' }}">
                         <a class="kt-menu-link gap-2.5 pb-2 lg:pb-4"
                             href="{{route('emprunteur.mes-demandes')}}" tabindex="0">
                             <span
@@ -2050,7 +2050,7 @@
                         </a>
                     </div>
                     <div
-                        class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono">
+                        class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono {{ session('menu_actif') === 'mon_profil' ? 'here' : '' }}">
                         <a class="kt-menu-link gap-2.5 pb-2 lg:pb-4"
                             href="{{route('emprunteur.mon-profil')}}" tabindex="0">
                             <span
@@ -2059,7 +2059,7 @@
                             </span>
                         </a>
                     </div>
-                    <div class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono"
+                    {{-- <div class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono"
                         data-kt-menu-item-placement="bottom-start" data-kt-menu-item-placement-rtl="bottom-end"
                         data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click|lg:hover">
                         <div class="kt-menu-link gap-1.5 pb-2 lg:pb-4" tabindex="0">
@@ -2092,7 +2092,7 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

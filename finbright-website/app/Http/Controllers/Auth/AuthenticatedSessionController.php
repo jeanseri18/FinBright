@@ -44,17 +44,26 @@ class AuthenticatedSessionController extends Controller
             $user->twoFactor->generateCode();
             return redirect()->route('2fa.verify.form');
         }
+        
+        return $this->redirectByRole($user);
+    }
 
-        // Redirection selon rôle
+    public function redirectByRole($user): RedirectResponse
+    {
         if ($user->hasRole('admin')) {
-            return redirect()->intended('/admin');
-        } elseif ($user->hasRole('emprunteur')) {
-            return redirect()->intended('/emprunteur');
-        } elseif ($user->hasRole('investisseur')) {
-            return redirect()->intended('/investisseur');
+            return redirect()->route('admin.dashboard');
         }
 
-        return redirect()->intended('/');
+        if ($user->hasRole('emprunteur')) {
+            return redirect()->route('emprunteur.dashboard');
+        }
+
+        if ($user->hasRole('investisseur')) {
+            return redirect()->route('investisseur.dashboard');
+        }
+
+        // Redirection par défaut
+        return redirect()->route('home');
     }
 
     /**

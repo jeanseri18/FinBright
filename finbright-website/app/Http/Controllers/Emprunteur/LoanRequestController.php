@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\LoanRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoanRequestController extends Controller
 {
@@ -105,33 +106,51 @@ class LoanRequestController extends Controller
         ];
     }
 
-    // public function soumettreDemande(Request $request)
-    // {
-    //     $validated = $request->validate([
-    //         'type' => 'required|in:student,mini',
-    //         'amount' => 'required|numeric|min:500',
-    //         'duration' => 'required|integer|min:6|max:60',
-    //         'deferred' => 'nullable|boolean',
-    //         'deferred_months' => 'nullable|integer|min:0|max:36',
-    //     ]);
-    //     $simulation_result = $this->calculMensuel($validated['duration'], $validated['amount']);
+    public function create()
+    {
+        Session::put('menu_actif', 'mes_demandes');
+        // Session::forget('menu_actif');
+        return view('back.emprunteur.demandes.create');
+    }
 
-    //     LoanRequest::create([
-    //         'user_id' => Auth::id(),
-    //         'type' => $validated['type'],
-    //         'amount' => $validated['amount'],
-    //         'duration' => $validated['duration'],
-    //         'simulation_result' => $simulation_result,
-    //         // 'deferred' => $validated['deferred'],
-    //         // 'deferred_months' => $validated['deferred_months'],
-    //         'status' => 'En attente'
-    //     ]);
+    public function soumettreDemande(Request $request)
+    {
+        $validated = $request->validate([
+            'amount' => 'required|numeric|min:500',
+            'duration' => 'required|integer|min:6|max:60',
+            'interets' => 'required|numeric',
+            'assurances' => 'required|numeric',
+            'deferred' => 'nullable|boolean',
+            'deferred_months' => 'nullable|integer|min:0|max:36',
+            'revenus_actuels' => 'required|numeric',
+            'revenus_futurs' => 'required|numeric',
+            'garant' => 'nullable|numeric',
+            'dettes' => 'required|numeric',
+            'taux_endettement' => 'required|numeric'
+        ]);
 
-    //     return redirect()->route('emprunteur.mes-demandes');
-    // }
+        $loan = LoanRequest::create([
+            'user_id' => Auth::id(),
+            'amount' => $validated['amount'],
+            'duration' => $validated['duration'],
+            'interets' => $validated['interets'],
+            'assurances' => $validated['assurances'],
+            'deferred' => $validated['deferred'] ?? false,
+            'deferred_months' => $validated['deferred_months'] ?? 0,
+            'revenus_actuels' => $validated['revenus_actuels'],
+            'revenus_futurs' => $validated['revenus_futurs'],
+            'garant' => $validated['garant'] ?? 0,
+            'dettes' => $validated['dettes'],
+            'taux_endettement' => $validated['taux_endettement'],
+            'status' => 'En attente',
+        ]);
+
+        return redirect()->route('emprunteur.mes-demandes')->with('success', 'Demande enregistrée avec succès.');
+    }
 
     public function demandes(Request $request)
     {
+        Session::put('menu_actif', 'mes_demandes');
         $loanRequests = LoanRequest::where('user_id', Auth::id())->latest()->get();
         return view('back.emprunteur.demandes.liste', compact('loanRequests'));
     }

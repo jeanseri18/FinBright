@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use App\Models\TwoFactorAuthentication;
+use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 class TwoFactorController extends Controller
 {
-    public function show()
+    public function show(AuthenticatedSessionController $authenticatedSession)
     {
+        if (Session::get('2fa_passed')) return $authenticatedSession->redirectByRole(Auth::user());
         return view('auth.2fa');
     }
 
-    public function verify(Request $request)
+    public function verify(Request $request, AuthenticatedSessionController $authenticatedSession)
     {
         $request->validate(['code' => 'required|numeric']);
         
@@ -25,7 +27,7 @@ class TwoFactorController extends Controller
         if ($twoFA && $twoFA->code == $request->code && now()->lt($twoFA->expires_at)) {
             $twoFA->resetCode();
             Session::put('2fa_passed', true);
-            return redirect()->intended('/mon-profil');
+            return $authenticatedSession->redirectByRole($user);
         }
 
         return back()->withErrors(['code' => 'Code incorrect ou expiré.']);

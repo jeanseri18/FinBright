@@ -142,39 +142,27 @@
                                             Âge
                                         </td>
                                         <td class="text-sm text-mono pb-3.5">
-                                            32 ans
+                                            @if (Auth::user()->birth_date)
+                                                {{ \Carbon\Carbon::parse(Auth::user()->birth_date)->age }} ans
+                                            @else
+                                                Âge non renseigné
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
-                                            Ville:
+                                            Lieu de naissance:
                                         </td>
                                         <td class="text-sm text-mono pb-3.5">
-                                            Amsterdam
+                                            {{Auth::user()->birth_place ?? null}}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
-                                            État/Région:
+                                            Adresse :
                                         </td>
                                         <td class="text-sm text-mono pb-3.5">
-                                            North Holland
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
-                                            Pays:
-                                        </td>
-                                        <td class="text-sm text-mono pb-3.5">
-                                            Netherlands
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
-                                            Code postal:
-                                        </td>
-                                        <td class="text-sm text-mono pb-3.5">
-                                            1092 NL
+                                            {{ Auth::user()->address['adresse'] ?? null .' '. Auth::user()->address['rue'] ?? null .' '. Auth::user()->address['code_postal'] ?? null .' '. Auth::user()->address['ville'] ?? null }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -182,7 +170,7 @@
                                             Téléphone:
                                         </td>
                                         <td class="text-sm text-mono pb-3.5">
-                                            +31 6 1234 56 78
+                                            {{Auth::user()->phone_number ?? null}}
                                         </td>
                                     </tr>
                                     <tr>
@@ -195,6 +183,30 @@
                                             </a>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
+                                            établissement:
+                                        </td>
+                                        <td class="text-sm text-mono pb-3.5">
+                                            {{ Auth::user()->etablissement ? Auth::user()->etablissement->name : null }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
+                                            Diplôme:
+                                        </td>
+                                        <td class="text-sm text-mono pb-3.5">
+                                            {{Auth::user()->diploma ?? null}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
+                                            Filière:
+                                        </td>
+                                        <td class="text-sm text-mono pb-3.5">
+                                            {{Auth::user()->specialization ?? null}}
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -202,7 +214,7 @@
                     <div class="kt-card">
                         <div class="kt-card-header">
                             <h3 class="kt-card-title">
-                                Work Experience
+                                Cursus scolaire
                             </h3>
                         </div>
                         <div class="kt-card-content">
@@ -380,10 +392,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @forelse($loanRequests as $loan)
                                     <tr>
                                         <td class="text-start">
                                             <a class="text-sm font-medium text-mono hover:text-primary" href="#">
-                                                Acme software development
+                                                {{ $loan->objet ?? 'NEANT' }}
                                             </a>
                                         </td>
                                         <td>
@@ -496,460 +509,11 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="text-start">
-                                            <a class="text-sm font-medium text-mono hover:text-primary" href="#">
-                                                Strategic Partnership Deal
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <div class="kt-progress h-[4px]">
-                                                <div class="kt-progress-indicator" style="width: 100%">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="flex justify-end rtl:justify-start shrink-0">
-                                                <div class="flex -space-x-2">
-                                                    <div class="flex">
-                                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
-                                                    </div>
-                                                    <div class="flex">
-                                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
-                                                    </div>
-                                                    <div class="flex">
-                                                        <span
-                                                            class="hover:z-5 relative inline-flex items-center justify-center shrink-0 rounded-full ring-1 font-semibold leading-none text-2xs size-6 text-white ring-background bg-destructive">
-                                                            M
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-sm font-medium text-secondary-foreground text-end">
-                                            10 Sep, 2024
-                                        </td>
-                                        <td class="text-start">
-                                            <div class="kt-menu" data-kt-menu="true">
-                                                <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                                    data-kt-menu-item-placement="bottom-end"
-                                                    data-kt-menu-item-placement-rtl="bottom-start"
-                                                    data-kt-menu-item-toggle="dropdown"
-                                                    data-kt-menu-item-trigger="click">
-                                                    <button
-                                                        class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                        <i class="ki-filled ki-dots-vertical text-lg">
-                                                        </i>
-                                                    </button>
-                                                    <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]"
-                                                        data-kt-menu-dismiss="true">
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-search-list">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    View
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-file-up">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Export
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-separator">
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-pencil">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Edit
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-copy">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Make a copy
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-separator">
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-trash">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Remove
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start">
-                                            <a class="text-sm font-medium text-mono hover:text-primary" href="#">
-                                                Client Onboarding
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <div class="kt-progress kt-progress-primary h-[4px]">
-                                                <div class="kt-progress-indicator" style="width: 20%">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="flex justify-end rtl:justify-start shrink-0">
-                                                <div class="flex -space-x-2">
-                                                    <div class="flex">
-                                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
-                                                    </div>
-                                                    <div class="flex">
-                                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-sm font-medium text-secondary-foreground text-end">
-                                            19 Sep, 2024
-                                        </td>
-                                        <td class="text-start">
-                                            <div class="kt-menu" data-kt-menu="true">
-                                                <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                                    data-kt-menu-item-placement="bottom-end"
-                                                    data-kt-menu-item-placement-rtl="bottom-start"
-                                                    data-kt-menu-item-toggle="dropdown"
-                                                    data-kt-menu-item-trigger="click">
-                                                    <button
-                                                        class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                        <i class="ki-filled ki-dots-vertical text-lg">
-                                                        </i>
-                                                    </button>
-                                                    <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]"
-                                                        data-kt-menu-dismiss="true">
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-search-list">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    View
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-file-up">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Export
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-separator">
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-pencil">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Edit
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-copy">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Make a copy
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-separator">
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-trash">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Remove
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start">
-                                            <a class="text-sm font-medium text-mono hover:text-primary" href="#">
-                                                Widget Supply Agreement
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <div class="kt-progress kt-progress-success h-[4px]">
-                                                <div class="kt-progress-indicator" style="width: 100%">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="flex justify-end rtl:justify-start shrink-0">
-                                                <div class="flex -space-x-2">
-                                                    <div class="flex">
-                                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
-                                                    </div>
-                                                    <div class="flex">
-                                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
-                                                    </div>
-                                                    <div class="flex">
-                                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
-                                                    </div>
-                                                    <div class="flex">
-                                                        <span
-                                                            class="relative inline-flex items-center justify-center shrink-0 rounded-full ring-1 font-semibold leading-none text-2xs size-6 text-primary-foreground ring-background bg-primary">
-                                                            +1
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-sm font-medium text-secondary-foreground text-end">
-                                            5 May, 2024
-                                        </td>
-                                        <td class="text-start">
-                                            <div class="kt-menu" data-kt-menu="true">
-                                                <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                                    data-kt-menu-item-placement="bottom-end"
-                                                    data-kt-menu-item-placement-rtl="bottom-start"
-                                                    data-kt-menu-item-toggle="dropdown"
-                                                    data-kt-menu-item-trigger="click">
-                                                    <button
-                                                        class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                        <i class="ki-filled ki-dots-vertical text-lg">
-                                                        </i>
-                                                    </button>
-                                                    <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]"
-                                                        data-kt-menu-dismiss="true">
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-search-list">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    View
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-file-up">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Export
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-separator">
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-pencil">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Edit
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-copy">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Make a copy
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-separator">
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-trash">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Remove
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start">
-                                            <a class="text-sm font-medium text-mono hover:text-primary" href="#">
-                                                Project X Redesign
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <div class="kt-progress kt-progress-primary h-[4px]">
-                                                <div class="kt-progress-indicator" style="width: 80%">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="flex justify-end rtl:justify-start shrink-0">
-                                                <div class="flex -space-x-2">
-                                                    <div class="flex">
-                                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
-                                                    </div>
-                                                    <div class="flex">
-                                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
-                                                    </div>
-                                                    <div class="flex">
-                                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
-                                                    </div>
-                                                    <div class="flex">
-                                                        <span
-                                                            class="relative inline-flex items-center justify-center shrink-0 rounded-full ring-1 font-semibold leading-none text-2xs size-6 text-white ring-background bg-green-500">
-                                                            +2
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-sm font-medium text-secondary-foreground text-end">
-                                            1 Feb, 2025
-                                        </td>
-                                        <td class="text-start">
-                                            <div class="kt-menu" data-kt-menu="true">
-                                                <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                                    data-kt-menu-item-placement="bottom-end"
-                                                    data-kt-menu-item-placement-rtl="bottom-start"
-                                                    data-kt-menu-item-toggle="dropdown"
-                                                    data-kt-menu-item-trigger="click">
-                                                    <button
-                                                        class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                        <i class="ki-filled ki-dots-vertical text-lg">
-                                                        </i>
-                                                    </button>
-                                                    <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]"
-                                                        data-kt-menu-dismiss="true">
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-search-list">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    View
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-file-up">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Export
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-separator">
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-pencil">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Edit
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-copy">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Make a copy
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-separator">
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-trash">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Remove
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="5">Aucune demande de prêt pour le moment.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

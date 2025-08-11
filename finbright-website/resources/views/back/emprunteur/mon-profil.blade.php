@@ -104,7 +104,7 @@
                                         Adresse postale
                                     </td>
                                     <td class="text-foreground text-sm font-normal">
-                                        {{ Auth::user()->address['adresse'] .' '. Auth::user()->address['rue'] .' '. Auth::user()->address['code_postal'] .' '. Auth::user()->address['ville'] }}
+                                        {{ Auth::user()->address['adresse'] ?? null .' '. Auth::user()->address['rue'] ?? null .' '. Auth::user()->address['code_postal'] ?? null .' '. Auth::user()->address['ville'] ?? null }}
                                     </td>
                                     <td class="text-center">
                                         <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
@@ -239,7 +239,7 @@
                                                 $icon = match($extension) {
                                                     'pdf' => 'pdf.svg',
                                                     'doc', 'docx' => 'doc.svg',
-                                                    'jpg', 'jpeg', 'png' => 'jpg.svg',
+                                                    'jpg', 'jpeg', 'png' => 'js.svg',
                                                     'ai' => 'ai.svg',
                                                     'js' => 'js.svg',
                                                     default => 'file.svg',
@@ -272,289 +272,32 @@
                                                 </button>
                                                 <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]">
                                                     <div class="kt-menu-item">
-                                                        <a class="kt-menu-link" href="#">
+                                                        <a class="kt-menu-link" href="javascript:;" data-kt-modal-toggle="#modal_settings">
                                                             <span class="kt-menu-icon"><i class="ki-filled ki-document"></i></span>
-                                                            <span class="kt-menu-title">Détails</span>
+                                                            <span class="kt-menu-title">Modifier</span>
                                                         </a>
                                                     </div>
                                                     <div class="kt-menu-item">
-                                                        <a class="kt-menu-link" href="#" data-kt-modal-toggle="#share_profile_modal">
-                                                            <span class="kt-menu-icon"><i class="ki-filled ki-share"></i></span>
-                                                            <span class="kt-menu-title">Partager</span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="kt-menu-item">
-                                                        <a class="kt-menu-link" href="#">
+                                                        <a class="kt-menu-link" href="{{ route('emprunteur.profil.documents.export', $docs->first()->id) }}">
                                                             <span class="kt-menu-icon"><i class="ki-filled ki-file-up"></i></span>
                                                             <span class="kt-menu-title">Exporter</span>
                                                         </a>
+                                                    </div>
+                                                    <div class="kt-menu-item">
+                                                        <form action="{{ route('emprunteur.profil.documents.delete', $docs->first()->id) }}" method="POST" onsubmit="return confirm('Supprimer ce document ?');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="kt-menu-link">
+                                                                <span class="kt-menu-icon"><i class="ki-filled ki-trash"></i></span>
+                                                                <span class="kt-menu-title">Supprimer</span>
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
-
-                                <div class="flex items-center gap-3">
-                                    <div class="flex items-center grow gap-2.5">
-                                        <img src="{{asset('assets/media/file-types/pdf.svg')}}">
-                                        <div class="flex flex-col">
-                                            <span
-                                                class="text-sm font-medium text-mono cursor-pointer hover:text-primary mb-px">
-                                                Project-pitch.pdf
-                                            </span>
-                                            <span class="text-xs text-secondary-foreground">
-                                                02 fichiers | 
-                                                4.7 MB | 
-                                                26 Sep 2025 15:20
-                                            </span>
-                                        </div>
-                                        </img>
-                                    </div>
-                                    <div class="kt-menu" data-kt-menu="true">
-                                        <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                            data-kt-menu-item-placement="bottom-end"
-                                            data-kt-menu-item-placement-rtl="bottom-start"
-                                            data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
-                                            <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                <i class="ki-filled ki-dots-vertical text-lg">
-                                                </i>
-                                            </button>
-                                            <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]"
-                                                data-kt-menu-dismiss="true">
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link" href="#">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-document">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Détails
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link" data-kt-modal-toggle="#share_profile_modal"
-                                                        href="#">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-share">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Partager
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link" href="#">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-file-up">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Exporter
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="flex items-center grow gap-2.5">
-                                        <img src="{{asset('assets/media/file-types/doc.svg')}}">
-                                        <div class="flex flex-col">
-                                            <span
-                                                class="text-sm font-medium text-mono cursor-pointer hover:text-primary mb-px">
-                                                Report-v1.docx
-                                            </span>
-                                            <span class="text-xs text-secondary-foreground">
-                                                01 fichiers | 
-                                                2.3 MB | 
-                                                1 Oct 2025 12:00
-                                            </span>
-                                        </div>
-                                        </img>
-                                    </div>
-                                    <div class="kt-menu" data-kt-menu="true">
-                                        <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                            data-kt-menu-item-placement="bottom-end"
-                                            data-kt-menu-item-placement-rtl="bottom-start"
-                                            data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
-                                            <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                <i class="ki-filled ki-dots-vertical text-lg">
-                                                </i>
-                                            </button>
-                                            <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]"
-                                                data-kt-menu-dismiss="true">
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link" href="#">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-document">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Détails
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link" data-kt-modal-toggle="#share_profile_modal"
-                                                        href="#">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-share">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Partager
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link" href="#">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-file-up">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Exporter
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="flex items-center grow gap-2.5">
-                                        <img src="{{asset('assets/media/file-types/ai.svg')}}">
-                                        <div class="flex flex-col">
-                                            <span
-                                                class="text-sm font-medium text-mono cursor-pointer hover:text-primary mb-px">
-                                                Framework-App.png
-                                            </span>
-                                            <span class="text-xs text-secondary-foreground">
-                                                01 fichiers | 
-                                                0.8 MB | 
-                                                17 Oct 2025 18:46
-                                            </span>
-                                        </div>
-                                        </img>
-                                    </div>
-                                    <div class="kt-menu" data-kt-menu="true">
-                                        <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                            data-kt-menu-item-placement="bottom-end"
-                                            data-kt-menu-item-placement-rtl="bottom-start"
-                                            data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
-                                            <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                <i class="ki-filled ki-dots-vertical text-lg">
-                                                </i>
-                                            </button>
-                                            <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]"
-                                                data-kt-menu-dismiss="true">
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link" href="#">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-document">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Détails
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link" data-kt-modal-toggle="#share_profile_modal"
-                                                        href="#">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-share">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Partager
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link" href="#">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-file-up">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Exporter
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="flex items-center grow gap-2.5">
-                                        <img src="{{asset('assets/media/file-types/js.svg')}}">
-                                        <div class="flex flex-col">
-                                            <span
-                                                class="text-sm font-medium text-mono cursor-pointer hover:text-primary mb-px">
-                                                Mobile-logo.jpg
-                                            </span>
-                                            <span class="text-xs text-secondary-foreground">
-                                                02 fichiers | 
-                                                0.2 MB | 
-                                                4 Nov 2024 11:30
-                                            </span>
-                                        </div>
-                                        </img>
-                                    </div>
-                                    <div class="kt-menu" data-kt-menu="true">
-                                        <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                            data-kt-menu-item-placement="bottom-end"
-                                            data-kt-menu-item-placement-rtl="bottom-start"
-                                            data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
-                                            <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                <i class="ki-filled ki-dots-vertical text-lg">
-                                                </i>
-                                            </button>
-                                            <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]"
-                                                data-kt-menu-dismiss="true">
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link" href="#">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-document">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Détails
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link" data-kt-modal-toggle="#share_profile_modal"
-                                                        href="#">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-share">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Partager
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link" href="#">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-file-up">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Exporter
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="kt-card-footer justify-center">
@@ -822,66 +565,69 @@
                             </div>
                         </div>
                         <div class="flex flex-col items-stretch grow gap-5 lg:gap-7.5">
+                            @if (!Auth::user()->is_profile_completed)
+                            <div class="kt-alert kt-alert-light kt-alert-destructive" id="alert_4">
+                                <div class="kt-alert-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <path d="M12 16v-4"></path>
+                                        <path d="M12 8h.01"></path>
+                                    </svg>
+                                </div>
+                                <div class="kt-alert-title">Veuillez renseigner tous les champs obligatoires avant de continuer la navigation</div>
+                                <div class="kt-alert-toolbar">
+                                    <div class="kt-alert-actions">
+                                        <button class="kt-link kt-link-xs kt-link-underlined text-mono" data-kt-dismiss="#alert_4">
+                                        C'est compris</button
+                                        ><button class="kt-alert-close" data-kt-dismiss="#alert_4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true">
+                                            <path d="M18 6 6 18"></path>
+                                            <path d="m6 6 12 12"></path>
+                                        </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
                             <form action="{{ route('emprunteur.profil.general.update') }}" method="post" enctype="multipart/form-data" class="kt-card pb-2.5">
                                 @csrf
                                 <div class="kt-card-header" id="basic_settings">
                                     <h3 class="kt-card-title">
+                                        Informations Personnelles
                                     </h3>
-                                    <div class="flex items-center gap-2">
-                                        <label class="kt-label">
-                                            Profil publique
-                                            <input checked="" class="kt-switch kt-switch-sm" name="check"
-                                                type="checkbox" value="1" />
-                                        </label>
-                                    </div>
                                 </div>
                                 <div class="kt-card-content grid gap-5">
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Photo
+                                            Photo <span class="text-destructive">*</span>
                                         </label>
                                         <div class="flex items-center justify-between flex-wrap grow gap-2.5">
                                             <span class="text-sm">
                                                 150x150px JPEG, PNG Image
                                             </span>
-                                            <div class="kt-image-input size-16" data-kt-image-input="true">
-                                                <input accept=".png, .jpg, .jpeg" name="avatar" type="file">
-                                                <input name="avatar_remove" type="hidden" />
-                                                <button class="kt-image-input-remove" data-kt-image-input-remove="true"
-                                                    data-kt-tooltip="true" data-kt-tooltip-placement="right"
-                                                    data-kt-tooltip-trigger="hover" type="button">
-                                                    <i class="ki-filled ki-cross">
-                                                    </i>
-                                                    <span class="kt-tooltip" data-kt-tooltip-content="true">
-                                                        Cliquez pour supprimer ou inverser
-                                                    </span>
-                                                </button>
-                                                <div class="kt-image-input-placeholder border-2 border-green-500 {{ Auth::user()->profile_picture_id ? '' : 'kt-image-input-empty:border-input' }}"
-                                                    data-kt-image-input-placeholder="true"
-                                                    style="background-image: url('{{ asset(Auth::user()->profile_picture_id ? Auth::user()->profile_picture_id->filename : 'assets/media/avatars/blank.png') }}')">
-                                                    <div class="kt-image-input-preview" data-kt-image-input-preview="true"
-                                                        style="background-image:url('/media/avatars/300-2.png')">
-                                                    </div>
-                                                    <div
-                                                        class="flex items-center justify-center cursor-pointer h-5 left-0 right-0 bottom-0 bg-black/25 absolute">
-                                                        <svg class="fill-border opacity-80" height="12"
-                                                            viewbox="0 0 14 12" width="14"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M11.6665 2.64585H11.2232C11.0873 2.64749 10.9538 2.61053 10.8382 2.53928C10.7225 2.46803 10.6295 2.36541 10.5698 2.24335L10.0448 1.19918C9.91266 0.931853 9.70808 0.707007 9.45438 0.550249C9.20068 0.393491 8.90806 0.311121 8.60984 0.312517H5.38984C5.09162 0.311121 4.799 0.393491 4.5453 0.550249C4.2916 0.707007 4.08701 0.931853 3.95484 1.19918L3.42984 2.24335C3.37021 2.36541 3.27716 2.46803 3.1615 2.53928C3.04584 2.61053 2.91234 2.64749 2.7765 2.64585H2.33317C1.90772 2.64585 1.49969 2.81486 1.19885 3.1157C0.898014 3.41654 0.729004 3.82457 0.729004 4.25002V10.0834C0.729004 10.5088 0.898014 10.9168 1.19885 11.2177C1.49969 11.5185 1.90772 11.6875 2.33317 11.6875H11.6665C12.092 11.6875 12.5 11.5185 12.8008 11.2177C13.1017 10.9168 13.2707 10.5088 13.2707 10.0834V4.25002C13.2707 3.82457 13.1017 3.41654 12.8008 3.1157C12.5 2.81486 12.092 2.64585 11.6665 2.64585ZM6.99984 9.64585C6.39413 9.64585 5.80203 9.46624 5.2984 9.12973C4.79478 8.79321 4.40225 8.31492 4.17046 7.75532C3.93866 7.19572 3.87802 6.57995 3.99618 5.98589C4.11435 5.39182 4.40602 4.84613 4.83432 4.41784C5.26262 3.98954 5.80831 3.69786 6.40237 3.5797C6.99644 3.46153 7.61221 3.52218 8.1718 3.75397C8.7314 3.98576 9.2097 4.37829 9.54621 4.88192C9.88272 5.38554 10.0623 5.97765 10.0623 6.58335C10.0608 7.3951 9.73765 8.17317 9.16365 8.74716C8.58965 9.32116 7.81159 9.64431 7 9.64585Z">
-                                                            </path>
-                                                            <path
-                                                                d="M7 8.77087C8.20812 8.77087 9.1875 7.7915 9.1875 6.58337C9.1875 5.37525 8.20812 4.39587 7 4.39587C5.79188 4.39587 4.8125 5.37525 4.8125 6.58337C4.8125 7.7915 5.79188 8.77087 7 8.77087Z">
-                                                            </path>
-                                                        </svg>
-                                                    </div>
+                                            <div class="group relative size-18 rounded-full border border-gray-300 bg-gray-50 overflow-hidden cursor-pointer" id="avatar-container">
+                                                <input accept=".png, .jpg, .jpeg" name="avatar" type="file" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" id="avatar-input" />
+                                                
+                                                <div id="avatar-preview" class="w-full h-full bg-cover bg-center rounded-full" style="background-image: url('{{ Auth::user()->profilePicture ? Storage::url(Auth::user()->profilePicture->filename) : asset('assets/media/avatars/blank.png') }}');"></div>
+                                                
+                                                <div class="absolute bottom-0 left-0 right-0 h-1/3 flex items-center justify-center bg-gray-300 bg-opacity-70">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.867-1.442A2 2 0 0110.437 3h3.125a2 2 0 011.664.89l.867 1.442A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    </svg>
                                                 </div>
+                                                
+                                                <button type="button" id="avatar-remove-btn" class="absolute -top-2 -right-2 size-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer opacity-0 transition-opacity">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="flex items-center flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Civilité
+                                            Civilité <span class="text-destructive">*</span>
                                         </label>
                                         <div class="flex items-center gap-5">
                                             <label class="kt-label">
@@ -900,7 +646,7 @@
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Nom complet
+                                            Nom & Prénoms <span class="text-destructive">*</span>
                                         </label>
                                         <div class="grid md:grid-cols-2 w-full gap-5">
                                             <input class="kt-input" name="firstname" type="text" placeholder="Vos prénoms" value="{{ Auth::user()->first_name ?? null }}" />
@@ -909,13 +655,13 @@
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Date de naissance
+                                            Date de naissance <span class="text-destructive">*</span>
                                         </label>
-                                        <input class="kt-input" name="birth_date" placeholder="JJ/MM/AAAA" type="date" value="{{ Auth::user()->birth_date ?? null }}" />
+                                        <input class="kt-input" name="birth_date" placeholder="JJ/MM/AAAA" type="date" value="{{ \Carbon\Carbon::parse(Auth::user()->birth_date)->format('Y-m-d') ?? null }}" />
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Lieu de naissance
+                                            Lieu de naissance <span class="text-destructive">*</span>
                                         </label>
                                         <div class="grow">
                                             <select name="birth_place" class="kt-select" name="pays" data-kt-select="true">
@@ -936,13 +682,13 @@
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Nationalité
+                                            Nationalité <span class="text-destructive">*</span>
                                         </label>
                                         <input class="kt-input" name="nationality" placeholder="" type="text" value="{{ Auth::user()->nationality ?? null }}" />
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Numéro de téléphone
+                                            Numéro de téléphone <span class="text-destructive">*</span>
                                         </label>
                                         <input class="kt-input" name="phone_number" placeholder="Numéro de téléphone mobile" type="text" value="{{ Auth::user()->phone_number ?? null }}" />
                                     </div>
@@ -964,27 +710,25 @@
                                 <div class="kt-card-content grid gap-5 lg:py-7.5">
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label flex items-center gap-1 max-w-56">
-                                            Adresse 
+                                            Adresse <span class="text-destructive">*</span>
                                         </label>
                                         <input class="kt-input" type="text" name="adresse" value="{{ Auth::user()->address['adresse'] ?? null }}">
-                                        </input>
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Rue
+                                            Rue <span class="text-destructive">*</span>
                                         </label>
                                         <input class="kt-input" placeholder="" name="rue" type="text" value="{{ Auth::user()->address['rue'] ?? null }}">
-                                        </input>
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Code postal
+                                            Code postal <span class="text-destructive">*</span>
                                         </label>
                                         <input class="kt-input" type="text" name="code_postal" value="{{ Auth::user()->address['code_postal'] ?? null }}" />
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Ville
+                                            Ville <span class="text-destructive">*</span>
                                         </label>
                                         <input class="kt-input" type="text" name="ville" value="{{ Auth::user()->address['ville'] ?? null }}" />
                                     </div>
@@ -1027,7 +771,7 @@
                                 <div class="kt-card-content grid gap-5 lg:py-7.5">
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Votre établissement
+                                            Votre établissement <span class="text-destructive">*</span>
                                         </label>
                                         <select class="kt-select"
                                             name="etablissement"
@@ -1047,31 +791,21 @@
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Diplôme préparé
+                                            Diplôme préparé <span class="text-destructive">*</span>
                                         </label>
                                         <div class="grow">
                                             <select class="kt-select" name="diplome" data-kt-select="true">
-                                                <option>
-                                                    Master Grande École
-                                                </option>
-                                                <option>
-                                                    Diplôme d'Ingénieur
-                                                </option>
-                                                <option>
-                                                    Master Universitaire
-                                                </option>
-                                                <option>
-                                                    Mastère Spécialisé
-                                                </option>
-                                                <option>
-                                                    Autre
-                                                </option>
+                                                <option {{ Auth::user()->diploma == 'Master Grande École' ? 'selected' : '' }}>Master Grande École</option>
+                                                <option {{ Auth::user()->diploma == 'Diplôme d\'Ingénieur' ? 'selected' : '' }}>Diplôme d'Ingénieur</option>
+                                                <option {{ Auth::user()->diploma == 'Master Universitaire' ? 'selected' : '' }}>Master Universitaire</option>
+                                                <option {{ Auth::user()->diploma == 'Mastère Spécialisé' ? 'selected' : '' }}>Mastère Spécialisé</option>
+                                                <option {{ Auth::user()->diploma == 'Autre' ? 'selected' : '' }}>Autre</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5 mb-2">
                                         <label class="kt-form-label max-w-56">
-                                            Filière / Spécialisation principale
+                                            Filière / Spécialisation principale <span class="text-destructive">*</span>
                                         </label>
                                         <div class="grow">
                                             <select class="kt-select" name="filiere" data-kt-select="true">
@@ -1092,21 +826,21 @@
                                     </div>
                                     <div class="flex items-center flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Année d'études actuelle
+                                            Année d'études actuelle <span class="text-destructive">*</span>
                                         </label>
                                         <input class="kt-input" name="annee_etude" type="text" placeholder="ex: 1ère année de Master / 2ème année du cycle ingénieur" value="{{ Auth::user()->current_study_year ?? null }}">
                                     </div>
                                     <div class="flex items-center flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Nombre d'années d'études restantes
+                                            Nombre d'années d'études restantes <span class="text-destructive">*</span>
                                         </label>
-                                        <input class="kt-input" name="annee_etude" type="text" placeholder="(avant diplomation)" value="{{ Auth::user()->remaining_years ?? null }}">
+                                        <input class="kt-input" name="nombre_annees_restantes" type="text" placeholder="(avant diplomation)" value="{{ Auth::user()->remaining_years ?? null }}">
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Date de diplomation prévue
+                                            Date de diplomation prévue <span class="text-destructive">*</span>
                                         </label>
-                                        <input class="kt-input" name="date_diplome_prevue" placeholder="Mois / Année" type="date" value="{{ Auth::user()->graduation_date ?? null }}" />
+                                        <input class="kt-input" name="date_diplome_prevue" placeholder="Mois / Année" type="date" value="{{ \Carbon\Carbon::parse(Auth::user()->graduation_date)->format('Y-m-d') ?? null }}" />
                                     </div>
                                     <div class="flex justify-end">
                                         <button type="submit" class="kt-btn kt-btn-primary">
@@ -1131,10 +865,19 @@
                                             @if($userDocuments->has($type))
                                                 @php
                                                     $doc = $userDocuments[$type];
+                                                    
+                                                    $filename = basename($doc->file->filename);
+                                                    $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+                                                    $icon = match($extension) {
+                                                        'pdf' => 'pdf.svg',
+                                                        'doc', 'docx' => 'doc.svg',
+                                                        'jpg', 'jpeg', 'png' => 'js.svg',
+                                                        default => 'file.svg',
+                                                    };
                                                 @endphp
-                                                <div class="flex items-center flex-wrap gap-3.5">
-                                                    <img alt="" class="size-8 shrink-0"
-                                                        src="{{ asset('storage/' . $doc->file->filename) }}" />
+                                                {{-- Vue du fichier --}}
+                                                <div class="file-view flex items-center flex-wrap gap-3.5">
+                                                    <img alt="" class="size-8 shrink-0 rounded-md" src="{{ asset('assets/media/file-types/' . $icon) }}" />
                                                     <div class="flex flex-col">
                                                         <div class="flex items-center gap-1.5">
                                                             <a class="text-sm font-medium text-mono hover:text-primary"
@@ -1147,7 +890,7 @@
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <div class="flex items-center gap-2 lg:gap-5">
+                                                <div class="file-view flex items-center gap-2 lg:gap-5">
                                                     <span class="text-sm font-semibold px-3 py-1 rounded-full
                                                         {{ $doc->status === 'valide' ? 'bg-green-100 text-green-800' : ($doc->status === 'refuse' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
                                                         {{ ucfirst($doc->status) }}
@@ -1163,138 +906,64 @@
                                                             <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
                                                                 data-kt-menu-dismiss="true">
                                                                 <div class="kt-menu-item">
-                                                                    <a class="kt-menu-link"
-                                                                        href="">
+                                                                    <a class="kt-menu-link edit-btn" href="javascript:;" data-doc-type="{{ $type }}">
                                                                         <span class="kt-menu-icon">
-                                                                            <i class="ki-filled ki-setting-3">
-                                                                            </i>
+                                                                            <i class="ki-filled ki-setting-3"></i>
                                                                         </span>
                                                                         <span class="kt-menu-title">
                                                                             Modifier
                                                                         </span>
                                                                     </a>
                                                                 </div>
+
                                                                 <div class="kt-menu-item">
                                                                     <a class="kt-menu-link"
-                                                                        href="">
+                                                                        href="{{ route('emprunteur.profil.documents.export', $doc->id) }}">
                                                                         <span class="kt-menu-icon">
-                                                                            <i class="ki-filled ki-some-files">
-                                                                            </i>
+                                                                            <i class="ki-filled ki-some-files"></i>
                                                                         </span>
                                                                         <span class="kt-menu-title">
                                                                             Exporter
                                                                         </span>
                                                                     </a>
                                                                 </div>
+
                                                                 <div class="kt-menu-item">
-                                                                    <a class="kt-menu-link" data-kt-modal-toggle="#report_user_modal"
-                                                                        href="#">
-                                                                        <span class="kt-menu-icon">
-                                                                            <i class="ki-filled ki-trash"></i>
-                                                                        </span>
-                                                                        <span class="kt-menu-title">
-                                                                            Supprimer
-                                                                        </span>
-                                                                    </a>
+                                                                    <form action="{{ route('emprunteur.profil.documents.delete', $doc->id) }}" method="POST" onsubmit="return confirm('Supprimer ce document ?');">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit" class="kt-menu-link w-full text-left">
+                                                                            <span class="kt-menu-icon">
+                                                                                <i class="ki-filled ki-trash"></i>
+                                                                            </span>
+                                                                            <span class="kt-menu-title">
+                                                                                Supprimer
+                                                                            </span>
+                                                                        </button>
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                {{-- Formulaire édition --}}
+                                                <div class="file-edit hidden relative w-full">
+                                                    {{-- Formulaire de départ --}}
+                                                    <label class="kt-form-label w-full block font-bold mb-5">{{ $label }} <span class="text-destructive">*</span></label>
+                                                    <input type="file" name="{{ $type }}[]" class="kt-input w-full" multiple required />
+                                                    <input type="text" name="{{ $type }}_explain" class="kt-input w-full mt-2" value="{{ $doc->explanation }}" placeholder="Donner une brève explication sur le document attendu..." required />
+                                                    <div class="absolute top-0 right-0 w-16 h-8">
+                                                        <button type="button" class="kt-btn kt-btn-sm kt-btn-secondary cancel-btn">Annuler</button>
+                                                    </div>
+                                                </div>
                                             @else
-                                                <label class="kt-form-label w-full block font-bold">{{ $label }}</label>
-                                                <input type="file" name="{{ $type }}" class="kt-input w-full" multiple required />
+                                                {{-- Formulaire de départ --}}
+                                                <label class="kt-form-label w-full block font-bold">{{ $label }} <span class="text-destructive">*</span></label>
+                                                <input type="file" name="{{ $type }}[]" class="kt-input w-full" multiple required />
                                                 <input type="text" name="{{ $type }}_explain" class="kt-input w-full" placeholder="Donner une brève explication sur le document attendu..." required />
                                             @endif
                                         </div>
                                         @endforeach
-                                        {{-- <div
-                                            class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 p-3.5">
-                                            <div class="flex items-center flex-wrap gap-3.5">
-                                                <img alt="" class="size-8 shrink-0"
-                                                    src="{{asset('assets/media/brand-logos/equacoin.svg')}}" />
-                                                <div class="flex flex-col">
-                                                    <div class="flex items-center gap-1.5">
-                                                        <a class="text-sm font-medium text-mono hover:text-primary"
-                                                            href="#">
-                                                            Equacoin
-                                                        </a>
-                                                        <a class="text-sm text-secondary-foreground hover:text-primary"
-                                                            href="#">
-                                                            equacoin@cryptoemail.com
-                                                        </a>
-                                                    </div>
-                                                    <span class="text-sm text-secondary-foreground">
-                                                        Streamline cryptocurrency transactions securely and efficiently.
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center gap-2 lg:gap-5">
-                                                <input class="kt-switch" name="check" type="checkbox"
-                                                    value="1" />
-                                                <div class="kt-btn kt-btn-icon kt-btn-ghost" data-kt-menu="true">
-                                                    <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                                        data-kt-menu-item-placement="bottom-end"
-                                                        data-kt-menu-item-placement-rtl="bottom-start"
-                                                        data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
-                                                        <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                            <i class="ki-filled ki-setting-2"></i>
-                                                        </button>
-                                                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
-                                                            data-kt-menu-dismiss="true">
-                                                            <div class="kt-menu-item">
-                                                                <a class="kt-menu-link"
-                                                                    href="/metronic/tailwind/demo2/account/home/settings-enterprise">
-                                                                    <span class="kt-menu-icon">
-                                                                        <i class="ki-filled ki-setting-3">
-                                                                        </i>
-                                                                    </span>
-                                                                    <span class="kt-menu-title">
-                                                                        Settings
-                                                                    </span>
-                                                                </a>
-                                                            </div>
-                                                            <div class="kt-menu-item">
-                                                                <a class="kt-menu-link"
-                                                                    href="/metronic/tailwind/demo2/account/members/import-members">
-                                                                    <span class="kt-menu-icon">
-                                                                        <i class="ki-filled ki-some-files">
-                                                                        </i>
-                                                                    </span>
-                                                                    <span class="kt-menu-title">
-                                                                        Import
-                                                                    </span>
-                                                                </a>
-                                                            </div>
-                                                            <div class="kt-menu-item">
-                                                                <a class="kt-menu-link"
-                                                                    href="/metronic/tailwind/demo2/account/activity">
-                                                                    <span class="kt-menu-icon">
-                                                                        <i class="ki-filled ki-cloud-change">
-                                                                        </i>
-                                                                    </span>
-                                                                    <span class="kt-menu-title">
-                                                                        Activity
-                                                                    </span>
-                                                                </a>
-                                                            </div>
-                                                            <div class="kt-menu-item">
-                                                                <a class="kt-menu-link" data-kt-modal-toggle="#report_user_modal"
-                                                                    href="#">
-                                                                    <span class="kt-menu-icon">
-                                                                        <i class="ki-filled ki-dislike">
-                                                                        </i>
-                                                                    </span>
-                                                                    <span class="kt-menu-title">
-                                                                        Report
-                                                                    </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> --}}
                                     </div>
                                     <div class="flex justify-end">
                                         <button type="submit" class="kt-btn kt-btn-primary">
@@ -1408,19 +1077,16 @@
                                                 <input {{ (!$notif || ($notif && $notif->desktop_notification === 'new_messages')) ? 'checked' : '' }} class="kt-radio" name="desktop_notification" type="radio"
                                                     value="new_messages">
                                                 Tous les nouveaux messages (Recommandé)
-                                                </input>
                                             </label>
                                             <label class="kt-label">
                                                 <input {{ $notif && $notif->desktop_notification === 'direct' ? 'checked' : '' }} class="kt-radio" name="desktop_notification"
                                                     type="radio" value="direct">
                                                 Direct @mentions
-                                                </input>
                                             </label>
                                             <label class="kt-label">
                                                 <input {{ $notif && $notif->desktop_notification === 'disabled' ? 'checked' : '' }} class="kt-radio" name="desktop_notification"
                                                     type="radio" value="disabled">
                                                 Désactiver
-                                                </input>
                                             </label>
                                         </div>
                                     </div>
@@ -1433,19 +1099,16 @@
                                                 <input {{ (!$notif || ($notif && $notif->email_notification === 'new_messages_statuses')) ? 'checked' : '' }} class="kt-radio" name="email_notification" type="radio"
                                                     value="new_messages_statuses">
                                                 Tous les nouveaux messages et statuts
-                                                </input>
                                             </label>
                                             <label class="kt-label">
                                                 <input {{ $notif && $notif->email_notification === 'messages_statuses' ? 'checked' : '' }} class="kt-radio" name="email_notification"
                                                     type="radio" value="messages_statuses">
                                                 Messages et statuts non lus
-                                                </input>
                                             </label>
                                             <label class="kt-label">
                                                 <input {{ $notif && $notif->email_notification === 'disabled' ? 'checked' : '' }} class="kt-radio" name="email_notification"
                                                     type="radio" value="disabled">
                                                 Désactiver
-                                                </input>
                                             </label>
                                         </div>
                                     </div>
@@ -1712,7 +1375,6 @@
                                                 <span class="kt-form-description text-2sm">
                                                     Entrez votre mot de passe pour configurer l'authentification à deux facteurs.
                                                 </span>
-                                                </input>
                                             </div>
                                         </div>
                                     </div>
@@ -1746,9 +1408,7 @@
                                             <label class="kt-form-label max-w-56">
                                                 Mot de passe actuel
                                             </label>
-                                            <input name="current_password" class="kt-input" placeholder="Votre mot de passe actuel" type="password"
-                                                value="">
-                                            </input>
+                                            <input name="current_password" class="kt-input" placeholder="Votre mot de passe actuel" type="password" value="">
                                         </div>
                                     </div>
                                     <div class="w-full">
@@ -1756,9 +1416,7 @@
                                             <label class="kt-form-label max-w-56">
                                                 Nouveau mot de passe
                                             </label>
-                                            <input name="new_password" class="kt-input" placeholder="Nouveau mot de passe" type="password"
-                                                value="">
-                                            </input>
+                                            <input name="new_password" class="kt-input" placeholder="Nouveau mot de passe" type="password" value="">
                                         </div>
                                     </div>
                                     <div class="w-full">
@@ -1766,9 +1424,7 @@
                                             <label class="kt-form-label max-w-56">
                                                 Confirmer le nouveau mot de passe
                                             </label>
-                                            <input name="new_password_confirmation" class="kt-input" placeholder="Confirmer le nouveau mot de passe" type="password"
-                                                value="">
-                                            </input>
+                                            <input name="new_password_confirmation" class="kt-input" placeholder="Confirmer le nouveau mot de passe" type="password" value="">
                                         </div>
                                     </div>
                                     <div class="flex justify-end pt-2.5">
@@ -1896,6 +1552,65 @@
                 }, 5000);
             }
         };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const avatarContainer = document.getElementById('avatar-container');
+            const avatarInput = document.getElementById('avatar-input');
+            const avatarPreview = document.getElementById('avatar-preview');
+            const avatarRemoveBtn = document.getElementById('avatar-remove-btn');
+            const defaultAvatarUrl = '{{ asset('assets/media/avatars/blank.png') }}';
+
+            // Fonction pour mettre à jour l'état visuel
+            function updateAvatarState(imageUrl) {
+                if (imageUrl && imageUrl !== defaultAvatarUrl) {
+                    avatarPreview.style.backgroundImage = `url('${imageUrl}')`;
+                    avatarContainer.classList.add('has-avatar');
+                } else {
+                    avatarPreview.style.backgroundImage = `url('${defaultAvatarUrl}')`;
+                    avatarContainer.classList.remove('has-avatar');
+                }
+            }
+
+            // Appliquer l'état initial
+            updateAvatarState(avatarPreview.style.backgroundImage.slice(5, -2)); // Extrait l'URL de l'attribut style
+
+            // Gérer le changement de fichier
+            avatarInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        updateAvatarState(event.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Gérer la suppression de l'image
+            avatarRemoveBtn.addEventListener('click', function(event) {
+                event.stopPropagation(); // Empêche le clic de se propager à l'input
+                avatarInput.value = ''; // Réinitialise l'input de fichier
+                updateAvatarState('');
+            });
+
+            // JavaScript pour gérer le switch du formulaire des documents
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    let container = this.closest('div.flex.items-center.justify-between');
+                    console.log(container);
+                    container.querySelectorAll('.file-view').forEach((view, i) => { view.classList.add('hidden') });
+                    container.querySelector('.file-edit').classList.remove('hidden');
+                });
+            });
+
+            document.querySelectorAll('.cancel-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    let container = this.closest('div.flex.items-center.justify-between');
+                    container.querySelector('.file-edit').classList.add('hidden');
+                    container.querySelectorAll('.file-view').forEach((view, i) => { view.classList.remove('hidden') });
+                });
+            });
+        });
 
         document.querySelector('select[name="diplome"]').addEventListener('change', function () {
             const selected = this.value;

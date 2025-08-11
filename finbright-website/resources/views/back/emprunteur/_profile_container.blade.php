@@ -4,11 +4,12 @@
         <div class="kt-container-fixed">
             <div class="flex flex-col items-center gap-2 lg:gap-3.5 py-4 lg:pt-5 lg:pb-10">
                 <img class="rounded-full border-3 border-green-500 size-[100px] shrink-0"
-                    src="{{asset('assets/media/avatars/blank.png')}}">
+                    src="{{ Auth::user()->profilePicture ? Storage::url(Auth::user()->profilePicture->filename) : asset('assets/media/avatars/blank.png') }}">
                 <div class="flex items-center gap-1.5">
                     <div class="text-lg leading-5 font-semibold text-mono">
                         {{ Auth::user()->first_name .' '. Auth::user()->last_name }}
                     </div>
+                    @if (Auth::user()->is_profile_completed)
                     <svg class="text-primary" fill="none" height="16" viewbox="0 0 15 16" width="15"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -16,8 +17,10 @@
                             fill="currentColor">
                         </path>
                     </svg>
+                    @endif
                 </div>
                 <div class="flex flex-wrap justify-center gap-1 lg:gap-4.5 text-sm">
+                    @if (Auth::user()->etablissement)
                     <div class="flex gap-1.25 items-center">
                         <i class="ki-filled ki-abstract-41 text-muted-foreground text-sm">
                         </i>
@@ -25,13 +28,16 @@
                             {{ Auth::user()->etablissement ? Auth::user()->etablissement->name : null }}
                         </span>
                     </div>
+                    @endif
+                    @if (!empty(Auth::user()->address?->adresse) || !empty(Auth::user()->address?->rue) || !empty(Auth::user()->address?->code_postal) || !empty(Auth::user()->address?->ville))
                     <div class="flex gap-1.25 items-center">
                         <i class="ki-filled ki-geolocation text-muted-foreground text-sm">
                         </i>
                         <span class="text-secondary-foreground font-medium">
-                            {{ Auth::user()->address['adresse'] .' '. Auth::user()->address['rue'] .' '. Auth::user()->address['code_postal'] .' '. Auth::user()->address['ville'] }}
+                            {{ Auth::user()->address['adresse'] ?? null .' '. Auth::user()->address['rue'] ?? null .' '. Auth::user()->address['code_postal'] ?? null .' '. Auth::user()->address['ville'] ?? null }}
                         </span>
                     </div>
+                    @endif
                     <div class="flex gap-1.25 items-center">
                         <i class="ki-filled ki-sms text-muted-foreground text-sm">
                         </i>
