@@ -11,18 +11,20 @@ class LoanRequest extends Model
 
     protected $fillable = [
         'user_id',
-        'amount',
-        'duration',
         'status',
-        'deferred',
-        'deferred_months',
         'simulation_result',
+        'debt_params',
+        'debt_ratio',
+        'object',
+        'description',
     ];
 
     protected $casts = [
         'simulation_result' => 'array',
+        'debt_params' => 'array',
     ];
 
+    // Relations
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -31,5 +33,17 @@ class LoanRequest extends Model
     public function investments()
     {
         return $this->hasMany(Investment::class);
+    }
+
+    public function justifyRent()
+    {
+        return $this->hasMany(Files::class, 'loan_request_id')
+                    ->where('type', 'justify_rent');
+    }
+
+    public function justifyDebt()
+    {
+        return $this->hasMany(Files::class, 'loan_request_id')
+                    ->where('type', 'justify_debt');
     }
 }

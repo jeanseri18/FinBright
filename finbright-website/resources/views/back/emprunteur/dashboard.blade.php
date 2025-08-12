@@ -28,109 +28,6 @@
                     <div class="kt-card">
                         <div class="kt-card-header">
                             <h3 class="kt-card-title">
-                                Mes tags
-                            </h3>
-                        </div>
-                        <div class="kt-card-content pb-7.5">
-                            <div class="flex items-center flex-wrap gap-3 lg:gap-4">
-                                <div class="relative size-[50px] shrink-0">
-                                    <svg class="w-full h-full stroke-primary/10 fill-primary/5" fill="none"
-                                        height="48" viewbox="0 0 44 48" width="44"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M16 2.4641C19.7128 0.320509 24.2872 0.320508 28 2.4641L37.6506 8.0359C41.3634 10.1795 43.6506 14.141 43.6506
-                                            18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
-                                            39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
-                                            fill="">
-                                        </path>
-                                        <path
-                                            d="M16.25 2.89711C19.8081 0.842838 24.1919 0.842837 27.75 2.89711L37.4006 8.46891C40.9587 10.5232 43.1506 14.3196 43.1506
-                                            18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
-                                            39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
-                                            stroke="">
-                                        </path>
-                                    </svg>
-                                    <div
-                                        class="absolute leading-none start-2/4 top-2/4 -translate-y-2/4 -translate-x-2/4 rtl:translate-x-2/4">
-                                        <i class="ki-filled ki-abstract-39 text-xl ps-px text-primary">
-                                        </i>
-                                    </div>
-                                </div>
-                                <div class="relative size-[50px] shrink-0">
-                                    <svg class="w-full h-full stroke-yellow-200 dark:stroke-yellow-950 fill-yellow-100 dark:fill-yellow-950/30"
-                                        fill="none" height="48" viewbox="0 0 44 48" width="44"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M16 2.4641C19.7128 0.320509 24.2872 0.320508 28 2.4641L37.6506 8.0359C41.3634 10.1795 43.6506 14.141 43.6506
-                                            18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
-                                            39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
-                                            fill="">
-                                        </path>
-                                        <path
-                                            d="M16.25 2.89711C19.8081 0.842838 24.1919 0.842837 27.75 2.89711L37.4006 8.46891C40.9587 10.5232 43.1506 14.3196 43.1506
-                                            18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
-                                            39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
-                                            stroke="">
-                                        </path>
-                                    </svg>
-                                    <div
-                                        class="absolute leading-none start-2/4 top-2/4 -translate-y-2/4 -translate-x-2/4 rtl:translate-x-2/4">
-                                        <i class="ki-filled ki-abstract-44 text-xl ps-px text-yellow-600">
-                                        </i>
-                                    </div>
-                                </div>
-                                <div class="relative size-[50px] shrink-0">
-                                    <svg class="w-full h-full stroke-green-200 dark:stroke-green-950 fill-green-100 dark:fill-green-950/30"
-                                        fill="none" height="48" viewbox="0 0 44 48" width="44"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M16 2.4641C19.7128 0.320509 24.2872 0.320508 28 2.4641L37.6506 8.0359C41.3634 10.1795 43.6506 14.141 43.6506
-                                            18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
-                                            39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
-                                            fill="">
-                                        </path>
-                                        <path
-                                            d="M16.25 2.89711C19.8081 0.842838 24.1919 0.842837 27.75 2.89711L37.4006 8.46891C40.9587 10.5232 43.1506 14.3196 43.1506
-                                            18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
-                                            39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
-                                            stroke="">
-                                        </path>
-                                    </svg>
-                                    <div
-                                        class="absolute leading-none start-2/4 top-2/4 -translate-y-2/4 -translate-x-2/4 rtl:translate-x-2/4">
-                                        <i class="ki-filled ki-abstract-25 text-xl ps-px text-green-600">
-                                        </i>
-                                    </div>
-                                </div>
-                                <div class="relative size-[50px] shrink-0">
-                                    <svg class="w-full h-full stroke-violet-200 dark:stroke-violet-950 fill-violet-100 dark:fill-violet-950/30"
-                                        fill="none" height="48" viewbox="0 0 44 48" width="44"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M16 2.4641C19.7128 0.320509 24.2872 0.320508 28 2.4641L37.6506 8.0359C41.3634 10.1795 43.6506 14.141 43.6506
-                                            18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
-                                            39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
-                                            fill="">
-                                        </path>
-                                        <path
-                                            d="M16.25 2.89711C19.8081 0.842838 24.1919 0.842837 27.75 2.89711L37.4006 8.46891C40.9587 10.5232 43.1506 14.3196 43.1506
-                                            18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
-                                            39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
-                                            stroke="">
-                                        </path>
-                                    </svg>
-                                    <div
-                                        class="absolute leading-none start-2/4 top-2/4 -translate-y-2/4 -translate-x-2/4 rtl:translate-x-2/4">
-                                        <i class="ki-filled ki-delivery-24 text-xl ps-px text-violet-600">
-                                        </i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="kt-card">
-                        <div class="kt-card-header">
-                            <h3 class="kt-card-title">
                                 Présentation
                             </h3>
                         </div>
@@ -159,10 +56,10 @@
                                     </tr>
                                     <tr>
                                         <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
-                                            Adresse :
+                                            Nationalité:
                                         </td>
                                         <td class="text-sm text-mono pb-3.5">
-                                            {{ Auth::user()->address['adresse'] ?? null .' '. Auth::user()->address['rue'] ?? null .' '. Auth::user()->address['code_postal'] ?? null .' '. Auth::user()->address['ville'] ?? null }}
+                                            {{Auth::user()->nationality ?? null}}
                                         </td>
                                     </tr>
                                     <tr>
@@ -185,26 +82,18 @@
                                     </tr>
                                     <tr>
                                         <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
-                                            établissement:
+                                            Adresse :
                                         </td>
                                         <td class="text-sm text-mono pb-3.5">
-                                            {{ Auth::user()->etablissement ? Auth::user()->etablissement->name : null }}
+                                            {{ Auth::user()->address['adresse'] ?? null }}, {{ Auth::user()->address['rue'] ?? null }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
-                                            Diplôme:
+                                            Ville:
                                         </td>
                                         <td class="text-sm text-mono pb-3.5">
-                                            {{Auth::user()->diploma ?? null}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
-                                            Filière:
-                                        </td>
-                                        <td class="text-sm text-mono pb-3.5">
-                                            {{Auth::user()->specialization ?? null}}
+                                            {{ Auth::user()->address['ville'] ?? null }} ( {{ Auth::user()->address['code_postal'] ?? null }} )
                                         </td>
                                     </tr>
                                 </tbody>
@@ -221,52 +110,43 @@
                             <div class="grid gap-y-5">
                                 <div class="flex align-start gap-3.5">
                                     <img alt="" class="h-9"
-                                        src="/static/metronic/tailwind/dist/assets/media/brand-logos/jira.svg" />
+                                        src="{{asset('assets/media/brand-logos/jira.svg')}}" />
                                     <div class="flex flex-col gap-1">
                                         <a class="text-sm font-medium text-primary leading-none hover:text-primary"
                                             href="#">
-                                            Esprito Studios
+                                            Établissement
                                         </a>
                                         <span class="text-sm font-medium text-mono">
-                                            Senior Project Manager
+                                            {{Auth::user()->etablissement->nom ?? null}}
                                         </span>
                                         <span class="text-xs text-secondary-foreground leading-none">
-                                            2019 - Present
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="text-secondary-foreground font-semibold text-sm leading-none">
-                                    Previous Jobs
-                                </div>
-                                <div class="flex align-start gap-3.5">
-                                    <img alt="" class="h-9"
-                                        src="/static/metronic/tailwind/dist/assets/media/brand-logos/weave.svg" />
-                                    <div class="flex flex-col gap-1">
-                                        <a class="text-sm font-medium text-primary leading-none hover:text-primary"
-                                            href="#">
-                                            Pesto Plus
-                                        </a>
-                                        <span class="text-sm font-medium text-mono">
-                                            CRM Product Lead
-                                        </span>
-                                        <span class="text-xs text-secondary-foreground leading-none">
-                                            2012 - 2019
+                                            {{Auth::user()->etablissement ? Auth::user()->etablissement->ville : null}} - {{Auth::user()->etablissement ? Auth::user()->etablissement->pays : null}}
                                         </span>
                                     </div>
                                 </div>
                                 <div class="flex align-start gap-3.5">
                                     <img alt="" class="h-9"
-                                        src="/static/metronic/tailwind/dist/assets/media/brand-logos/perrier.svg" />
+                                        src="{{asset('assets/media/brand-logos/jira.svg')}}" />
                                     <div class="flex flex-col gap-1">
                                         <a class="text-sm font-medium text-primary leading-none hover:text-primary"
                                             href="#">
-                                            Perrier Technologies
+                                            Filière
                                         </a>
                                         <span class="text-sm font-medium text-mono">
-                                            UX Research
+                                            {{Auth::user()->specialization ?? null}}
                                         </span>
-                                        <span class="text-xs text-secondary-foreground leading-none">
-                                            2010 - 2012
+                                    </div>
+                                </div>
+                                <div class="flex align-start gap-3.5">
+                                    <img alt="" class="h-9"
+                                        src="{{asset('assets/media/brand-logos/jira.svg')}}" />
+                                    <div class="flex flex-col gap-1">
+                                        <a class="text-sm font-medium text-primary leading-none hover:text-primary"
+                                            href="#">
+                                            Diplôme
+                                        </a>
+                                        <span class="text-sm font-medium text-mono">
+                                            {{Auth::user()->diploma ?? null}}
                                         </span>
                                     </div>
                                 </div>

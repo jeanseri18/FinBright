@@ -10,7 +10,7 @@ class Etablissement extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'nom',
         'ville',
         'pays',
     ];

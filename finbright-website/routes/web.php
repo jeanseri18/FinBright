@@ -60,17 +60,19 @@ Route::get('/cadre-juridique', [PageController::class, 'legalFramework'])->name(
 
 Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', '2fa', 'profile.completed', 'role:emprunteur|admin'])->group(function () {
     Route::get('/', [EmprunteurController::class, 'index'])->name('dashboard');
-    Route::post('/simulateur', [LoanRequestController::class, 'simulate'])->name('simuler');
-    Route::post('/demande-de-pret', [LoanRequestController::class, 'soumettreDemande'])->name('demande');
-    Route::get('/soumettre-une-demande', [LoanRequestController::class, 'create'])->name('create.demande');
-    Route::get('/mes-demandes', [LoanRequestController::class, 'demandes'])->name('mes-demandes');
-
-    // Annuler une demande
-    Route::post('/demande-de-pret/{loan}/annuler', [LoanRequestController::class, 'annuler'])->name('loan-requests.annuler');
-    // Modifier une demande (formulaire)
-    Route::get('/demande-de-pret/{loan}/modifier', [LoanRequestController::class, 'edit'])->name('loan-requests.edit');
-    // Modifier une demande (enregistrement)
-    Route::post('/demande-de-pret/{loan}/modifier', [LoanRequestController::class, 'update'])->name('loan-requests.update');
+    
+    Route::prefix('/demande-de-pret')->group(function () {
+        Route::post('/simulateur', [LoanRequestController::class, 'simulate'])->name('simuler');
+        Route::post('/creer-une-demande', [LoanRequestController::class, 'createDemande'])->name('create.demande');
+        Route::post('/soumettre-une-demande', [LoanRequestController::class, 'saveDemande'])->name('save.demande');
+        Route::get('/mes-demandes', [LoanRequestController::class, 'demandes'])->name('mes-demandes');
+        // Annuler une demande
+        Route::post('/{loan}/annuler', [LoanRequestController::class, 'annuler'])->name('loan-requests.annuler');
+        // Modifier une demande (formulaire)
+        Route::get('/{loan}/modifier', [LoanRequestController::class, 'edit'])->name('loan-requests.edit');
+        // Modifier une demande (enregistrement)
+        Route::post('/{loan}/modifier', [LoanRequestController::class, 'update'])->name('loan-requests.update');
+    });
 });
 
 Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', '2fa', 'role:emprunteur|admin'])->group(function () {

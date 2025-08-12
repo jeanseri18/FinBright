@@ -22,25 +22,23 @@
                 <div class="flex flex-wrap justify-center gap-1 lg:gap-4.5 text-sm">
                     @if (Auth::user()->etablissement)
                     <div class="flex gap-1.25 items-center">
-                        <i class="ki-filled ki-abstract-41 text-muted-foreground text-sm">
-                        </i>
+                        <i class="ki-filled ki-abstract-41 text-muted-foreground text-sm"></i>
                         <span class="text-secondary-foreground font-medium">
-                            {{ Auth::user()->etablissement ? Auth::user()->etablissement->name : null }}
+                            {{ Auth::user()->etablissement->nom ?? 'null' }}
                         </span>
                     </div>
                     @endif
-                    @if (!empty(Auth::user()->address?->adresse) || !empty(Auth::user()->address?->rue) || !empty(Auth::user()->address?->code_postal) || !empty(Auth::user()->address?->ville))
+                    @if (!empty(Auth::user()->address['adresse']) || !empty(Auth::user()->address['rue']) || !empty(Auth::user()->address['code_postal']) || !empty(Auth::user()->address['ville']))
                     <div class="flex gap-1.25 items-center">
                         <i class="ki-filled ki-geolocation text-muted-foreground text-sm">
                         </i>
                         <span class="text-secondary-foreground font-medium">
-                            {{ Auth::user()->address['adresse'] ?? null .' '. Auth::user()->address['rue'] ?? null .' '. Auth::user()->address['code_postal'] ?? null .' '. Auth::user()->address['ville'] ?? null }}
+                            {{ (Auth::user()->address['adresse'] ?? null) .', '. (Auth::user()->address['rue'] ?? null) .' - '. (Auth::user()->address['ville'] ?? null) .' ('. (Auth::user()->address['code_postal'] ?? null) .')' }}
                         </span>
                     </div>
                     @endif
                     <div class="flex gap-1.25 items-center">
-                        <i class="ki-filled ki-sms text-muted-foreground text-sm">
-                        </i>
+                        <i class="ki-filled ki-sms text-muted-foreground text-sm"></i>
                         <a class="text-secondary-foreground font-medium hover:text-primary" href="mailto: jenny@kteam.com">
                             {{ Auth::user()->email }}
                         </a>

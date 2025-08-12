@@ -2098,8 +2098,7 @@
         </div>
         <div class="flex items-center text-sm text-foreground gap-5 pb-2 lg:pb-2">
             <button type="button" class="kt-btn kt-btn-primary" data-kt-modal-toggle="#modal_simulate">
-                <i class="ki-filled ki-users">
-                </i>
+                <i class="ki-filled ki-euro"></i>
                 Simuler un prêt
             </button>
             {{-- <a class="hover:text-primary" href="https://keenthemes.com/metronic/tailwind/docs/">

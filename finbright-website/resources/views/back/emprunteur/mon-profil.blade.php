@@ -30,13 +30,6 @@
                             <h3 class="kt-card-title">
                                 Informations générales
                             </h3>
-                            <div class="flex items-center gap-2">
-                                <label class="kt-label">
-                                    <input checked="" class="kt-switch kt-switch-sm" name="check" type="checkbox"
-                                        value="1" />
-                                    Profil publique
-                                </label>
-                            </div>
                         </div>
                         <div class="kt-card-table kt-scrollable-x-auto pb-3">
                             <table class="kt-table align-middle text-sm text-muted-foreground" id="general_info_table">
@@ -678,6 +671,601 @@
                                                 <option {{ Auth::user()->birth_place == 'Senegal' ? 'selected' : '' }}>Senegal</option>
                                                 <option {{ Auth::user()->birth_place == 'Mali' ? 'selected' : '' }}>Mali</option>
                                             </select>
+
+                                            {{-- <select class="kt-select {class if class else ''}" data-kt-select="true"
+                                                data-kt-select-config='{
+                                                    "optionsClass": "kt-scrollable overflow-auto max-h-[250px]",
+                                                    "displayTemplate": "&lt;div class=\"flex items-center leading-none gap-2\"&gt;@{{ flag }}&lt;span class=\"text-foreground\"&gt;@{{ text }}&lt;/span&gt;&lt;/div&gt;",
+                                                    "optionTemplate": "&lt;div class=\"flex items-center leading-none gap-2\"&gt;@{{ flag }} &lt;span class=\"text-foreground\"&gt;@{{ text }}&lt;/span&gt;&lt;/div&gt;&lt;svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"size-3.5 ms-auto hidden text-primary kt-select-option-selected:block\"&gt;&lt;path d=\"M20 6 9 17l-5-5\"/&gt;&lt;/svg&gt;&lt;/div&gt;"
+                                                }'
+                                                data-kt-select-enable-search="true" data-kt-select-placeholder="Select a country..."
+                                                data-kt-select-search-placeholder="Search...">
+                                                <option data-kt-select-option='{"flag": "🇦🇫"}' value="Afghanistan">
+                                                    Afghanistan
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇦🇱"}' value="Albania">
+                                                    Albania
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇩🇿"}' value="Algeria">
+                                                    Algeria
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇦🇩"}' value="Andorra">
+                                                    Andorra
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇦🇴"}' value="Angola">
+                                                    Angola
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇦🇬"}' value="Antigua and Barbuda">
+                                                    Antigua and Barbuda
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇦🇷"}' value="Argentina">
+                                                    Argentina
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇦🇲"}' value="Armenia">
+                                                    Armenia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇦🇺"}' value="Australia">
+                                                    Australia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇦🇹"}' value="Austria">
+                                                    Austria
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇦🇿"}' value="Azerbaijan">
+                                                    Azerbaijan
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇧🇸"}' value="Bahamas">
+                                                    Bahamas
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇧🇭"}' value="Bahrain">
+                                                    Bahrain
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇧🇩"}' value="Bangladesh">
+                                                    Bangladesh
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇧🇧"}' value="Barbados">
+                                                    Barbados
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇧🇾"}' value="Belarus">
+                                                    Belarus
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇧🇪"}' value="Belgium">
+                                                    Belgium
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇧🇿"}' value="Belize">
+                                                    Belize
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇧🇯"}' value="Benin">
+                                                    Benin
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇧🇹"}' value="Bhutan">
+                                                    Bhutan
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇧🇴"}' value="Bolivia">
+                                                    Bolivia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇧🇦"}' value="Bosnia and Herzegovina">
+                                                    Bosnia and Herzegovina
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇧🇼"}' value="Botswana">
+                                                    Botswana
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇧🇷"}' value="Brazil">
+                                                    Brazil
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇧🇳"}' value="Brunei">
+                                                    Brunei
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇧🇬"}' value="Bulgaria">
+                                                    Bulgaria
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇧🇫"}' value="Burkina Faso">
+                                                    Burkina Faso
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇧🇮"}' value="Burundi">
+                                                    Burundi
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇨🇻"}' value="Cabo Verde">
+                                                    Cabo Verde
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇰🇭"}' value="Cambodia">
+                                                    Cambodia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇨🇲"}' value="Cameroon">
+                                                    Cameroon
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇨🇦"}' value="Canada">
+                                                    Canada
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇨🇫"}' value="Central African Republic">
+                                                    Central African Republic
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇹🇩"}' value="Chad">
+                                                    Chad
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇨🇱"}' value="Chile">
+                                                    Chile
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇨🇳"}' value="China">
+                                                    China
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇨🇴"}' value="Colombia">
+                                                    Colombia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇰🇲"}' value="Comoros">
+                                                    Comoros
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇨🇬"}' value="Congo (Congo-Brazzaville)">
+                                                    Congo (Congo-Brazzaville)
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇨🇷"}' value="Costa Rica">
+                                                    Costa Rica
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇭🇷"}' value="Croatia">
+                                                    Croatia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇨🇺"}' value="Cuba">
+                                                    Cuba
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇨🇾"}' value="Cyprus">
+                                                    Cyprus
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇨🇿"}' value="Czechia">
+                                                    Czechia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇨🇩"}' value="Democratic Republic of the Congo">
+                                                    Democratic Republic of the Congo
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇩🇰"}' value="Denmark">
+                                                    Denmark
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇩🇯"}' value="Djibouti">
+                                                    Djibouti
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇩🇲"}' value="Dominica">
+                                                    Dominica
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇩🇴"}' value="Dominican Republic">
+                                                    Dominican Republic
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇪🇨"}' value="Ecuador">
+                                                    Ecuador
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇪🇬"}' value="Egypt">
+                                                    Egypt
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇻"}' value="El Salvador">
+                                                    El Salvador
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇬🇶"}' value="Equatorial Guinea">
+                                                    Equatorial Guinea
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇪🇷"}' value="Eritrea">
+                                                    Eritrea
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇪🇪"}' value="Estonia">
+                                                    Estonia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇿"}' value="Eswatini">
+                                                    Eswatini
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇪🇹"}' value="Ethiopia">
+                                                    Ethiopia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇫🇯"}' value="Fiji">
+                                                    Fiji
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇫🇮"}' value="Finland">
+                                                    Finland
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇫🇷"}' value="France">
+                                                    France
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇬🇦"}' value="Gabon">
+                                                    Gabon
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇬🇲"}' value="Gambia">
+                                                    Gambia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇬🇪"}' value="Georgia">
+                                                    Georgia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇩🇪"}' value="Germany">
+                                                    Germany
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇬🇭"}' value="Ghana">
+                                                    Ghana
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇬🇷"}' value="Greece">
+                                                    Greece
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇬🇩"}' value="Grenada">
+                                                    Grenada
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇬🇹"}' value="Guatemala">
+                                                    Guatemala
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇬🇳"}' value="Guinea">
+                                                    Guinea
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇬🇼"}' value="Guinea-Bissau">
+                                                    Guinea-Bissau
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇬🇾"}' value="Guyana">
+                                                    Guyana
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇭🇹"}' value="Haiti">
+                                                    Haiti
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇭🇳"}' value="Honduras">
+                                                    Honduras
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇭🇺"}' value="Hungary">
+                                                    Hungary
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇮🇸"}' value="Iceland">
+                                                    Iceland
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇮🇳"}' value="India">
+                                                    India
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇮🇩"}' value="Indonesia">
+                                                    Indonesia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇮🇷"}' value="Iran">
+                                                    Iran
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇮🇶"}' value="Iraq">
+                                                    Iraq
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇮🇪"}' value="Ireland">
+                                                    Ireland
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇮🇱"}' value="Israel">
+                                                    Israel
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇮🇹"}' value="Italy">
+                                                    Italy
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇯🇲"}' value="Jamaica">
+                                                    Jamaica
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇯🇵"}' value="Japan">
+                                                    Japan
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇯🇴"}' value="Jordan">
+                                                    Jordan
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇰🇿"}' value="Kazakhstan">
+                                                    Kazakhstan
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇰🇪"}' value="Kenya">
+                                                    Kenya
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇰🇮"}' value="Kiribati">
+                                                    Kiribati
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇰🇼"}' value="Kuwait">
+                                                    Kuwait
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇰🇬"}' value="Kyrgyzstan">
+                                                    Kyrgyzstan
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇱🇦"}' value="Laos">
+                                                    Laos
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇱🇻"}' value="Latvia">
+                                                    Latvia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇱🇧"}' value="Lebanon">
+                                                    Lebanon
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇱🇸"}' value="Lesotho">
+                                                    Lesotho
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇱🇷"}' value="Liberia">
+                                                    Liberia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇱🇾"}' value="Libya">
+                                                    Libya
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇱🇮"}' value="Liechtenstein">
+                                                    Liechtenstein
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇱🇹"}' value="Lithuania">
+                                                    Lithuania
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇱🇺"}' value="Luxembourg">
+                                                    Luxembourg
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇬"}' value="Madagascar">
+                                                    Madagascar
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇼"}' value="Malawi">
+                                                    Malawi
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇾"}' value="Malaysia">
+                                                    Malaysia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇻"}' value="Maldives">
+                                                    Maldives
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇱"}' value="Mali">
+                                                    Mali
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇹"}' value="Malta">
+                                                    Malta
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇭"}' value="Marshall Islands">
+                                                    Marshall Islands
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇷"}' value="Mauritania">
+                                                    Mauritania
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇺"}' value="Mauritius">
+                                                    Mauritius
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇽"}' value="Mexico">
+                                                    Mexico
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇫🇲"}' value="Micronesia">
+                                                    Micronesia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇩"}' value="Moldova">
+                                                    Moldova
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇨"}' value="Monaco">
+                                                    Monaco
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇳"}' value="Mongolia">
+                                                    Mongolia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇪"}' value="Montenegro">
+                                                    Montenegro
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇦"}' value="Morocco">
+                                                    Morocco
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇿"}' value="Mozambique">
+                                                    Mozambique
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇲"}' value="Myanmar">
+                                                    Myanmar
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇳🇦"}' value="Namibia">
+                                                    Namibia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇳🇷"}' value="Nauru">
+                                                    Nauru
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇳🇵"}' value="Nepal">
+                                                    Nepal
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇳🇱"}' value="Netherlands">
+                                                    Netherlands
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇳🇿"}' value="New Zealand">
+                                                    New Zealand
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇳🇮"}' value="Nicaragua">
+                                                    Nicaragua
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇳🇪"}' value="Niger">
+                                                    Niger
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇳🇬"}' value="Nigeria">
+                                                    Nigeria
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇰🇵"}' value="North Korea">
+                                                    North Korea
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇲🇰"}' value="North Macedonia">
+                                                    North Macedonia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇳🇴"}' value="Norway">
+                                                    Norway
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇴🇲"}' value="Oman">
+                                                    Oman
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇵🇰"}' value="Pakistan">
+                                                    Pakistan
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇵🇼"}' value="Palau">
+                                                    Palau
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇵🇸"}' value="Palestine">
+                                                    Palestine
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇵🇦"}' value="Panama">
+                                                    Panama
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇵🇬"}' value="Papua New Guinea">
+                                                    Papua New Guinea
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇵🇾"}' value="Paraguay">
+                                                    Paraguay
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇵🇪"}' value="Peru">
+                                                    Peru
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇵🇭"}' value="Philippines">
+                                                    Philippines
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇵🇱"}' value="Poland">
+                                                    Poland
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇵🇹"}' value="Portugal">
+                                                    Portugal
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇶🇦"}' value="Qatar">
+                                                    Qatar
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇷🇴"}' value="Romania">
+                                                    Romania
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇷🇺"}' value="Russia">
+                                                    Russia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇷🇼"}' value="Rwanda">
+                                                    Rwanda
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇰🇳"}' value="Saint Kitts and Nevis">
+                                                    Saint Kitts and Nevis
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇱🇨"}' value="Saint Lucia">
+                                                    Saint Lucia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇻🇨"}' value="Saint Vincent and the Grenadines">
+                                                    Saint Vincent and the Grenadines
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇼🇸"}' value="Samoa">
+                                                    Samoa
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇲"}' value="San Marino">
+                                                    San Marino
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇹"}' value="Sao Tome and Principe">
+                                                    Sao Tome and Principe
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇦"}' value="Saudi Arabia">
+                                                    Saudi Arabia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇳"}' value="Senegal">
+                                                    Senegal
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇷🇸"}' value="Serbia">
+                                                    Serbia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇨"}' value="Seychelles">
+                                                    Seychelles
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇱"}' value="Sierra Leone">
+                                                    Sierra Leone
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇬"}' value="Singapore">
+                                                    Singapore
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇰"}' value="Slovakia">
+                                                    Slovakia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇮"}' value="Slovenia">
+                                                    Slovenia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇧"}' value="Solomon Islands">
+                                                    Solomon Islands
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇴"}' value="Somalia">
+                                                    Somalia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇿🇦"}' value="South Africa">
+                                                    South Africa
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇰🇷"}' value="South Korea">
+                                                    South Korea
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇸"}' value="South Sudan">
+                                                    South Sudan
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇪🇸"}' value="Spain">
+                                                    Spain
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇱🇰"}' value="Sri Lanka">
+                                                    Sri Lanka
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇩"}' value="Sudan">
+                                                    Sudan
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇷"}' value="Suriname">
+                                                    Suriname
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇪"}' value="Sweden">
+                                                    Sweden
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇨🇭"}' value="Switzerland">
+                                                    Switzerland
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇸🇾"}' value="Syria">
+                                                    Syria
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇹🇼"}' value="Taiwan">
+                                                    Taiwan
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇹🇯"}' value="Tajikistan">
+                                                    Tajikistan
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇹🇿"}' value="Tanzania">
+                                                    Tanzania
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇹🇭"}' value="Thailand">
+                                                    Thailand
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇹🇱"}' value="Timor-Leste">
+                                                    Timor-Leste
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇹🇬"}' value="Togo">
+                                                    Togo
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇹🇴"}' value="Tonga">
+                                                    Tonga
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇹🇹"}' value="Trinidad and Tobago">
+                                                    Trinidad and Tobago
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇹🇳"}' value="Tunisia">
+                                                    Tunisia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇹🇷"}' value="Turkey">
+                                                    Turkey
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇹🇲"}' value="Turkmenistan">
+                                                    Turkmenistan
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇹🇻"}' value="Tuvalu">
+                                                    Tuvalu
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇺🇬"}' value="Uganda">
+                                                    Uganda
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇺🇦"}' value="Ukraine">
+                                                    Ukraine
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇦🇪"}' value="United Arab Emirates">
+                                                    United Arab Emirates
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇬🇧"}' value="United Kingdom">
+                                                    United Kingdom
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇺🇸"}' value="United States">
+                                                    United States
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇺🇾"}' value="Uruguay">
+                                                    Uruguay
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇺🇿"}' value="Uzbekistan">
+                                                    Uzbekistan
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇻🇺"}' value="Vanuatu">
+                                                    Vanuatu
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇻🇦"}' value="Vatican City">
+                                                    Vatican City
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇻🇪"}' value="Venezuela">
+                                                    Venezuela
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇻🇳"}' value="Vietnam">
+                                                    Vietnam
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇾🇪"}' value="Yemen">
+                                                    Yemen
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇿🇲"}' value="Zambia">
+                                                    Zambia
+                                                </option>
+                                                <option data-kt-select-option='{"flag": "🇿🇼"}' value="Zimbabwe">
+                                                    Zimbabwe
+                                                </option>
+                                            </select> --}}
                                         </div>
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
@@ -690,7 +1278,7 @@
                                         <label class="kt-form-label max-w-56">
                                             Numéro de téléphone <span class="text-destructive">*</span>
                                         </label>
-                                        <input class="kt-input" name="phone_number" placeholder="Numéro de téléphone mobile" type="text" value="{{ Auth::user()->phone_number ?? null }}" />
+                                        <input class="kt-input" name="phone_number" placeholder="Numéro de téléphone mobile" type="tel" value="{{ Auth::user()->phone_number ?? null }}" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" />
                                     </div>
                                     <div class="flex justify-end">
                                         <button type="submit" class="kt-btn kt-btn-primary">

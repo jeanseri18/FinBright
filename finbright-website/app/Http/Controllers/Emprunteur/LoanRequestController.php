@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Emprunteur;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Files;
 use App\Models\LoanRequest;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -58,6 +59,17 @@ class LoanRequestController extends Controller
 
         $resultat = $this->simulerPret($pret, $dureepret, $tauxinteret, $tauxassurance, $typediffere, $dureediffere);
 
+        Session::put('simulate_result', [
+            'amount' => $pret,
+            'duration' => $dureepret,
+            'mensualite' => $resultat['mensualite'],
+            'interets' => $resultat['interets'],
+            'assurances' => $resultat['assurances'],
+            'total' => $resultat['total'],
+            'date_debut' => $date_debut->format('Y-m-d'),
+            'inputs' => $validated
+        ]);
+
         return response()->json([
             'success' => true,
             'amount' => $pret,
@@ -106,44 +118,81 @@ class LoanRequestController extends Controller
         ];
     }
 
-    public function create()
+    public function createDemande(Request $request)
     {
         Session::put('menu_actif', 'mes_demandes');
-        // Session::forget('menu_actif');
-        return view('back.emprunteur.demandes.create');
-    }
-
-    public function soumettreDemande(Request $request)
-    {
         $validated = $request->validate([
-            'amount' => 'required|numeric|min:500',
-            'duration' => 'required|integer|min:6|max:60',
-            'interets' => 'required|numeric',
-            'assurances' => 'required|numeric',
-            'deferred' => 'nullable|boolean',
-            'deferred_months' => 'nullable|integer|min:0|max:36',
             'revenus_actuels' => 'required|numeric',
             'revenus_futurs' => 'required|numeric',
             'garant' => 'nullable|numeric',
             'dettes' => 'required|numeric',
+            'charges' => 'required|numeric',
             'taux_endettement' => 'required|numeric'
+        ]);
+        Session::put('debt_result', [
+            'revenus_actuels' => $validated['revenus_actuels'],
+            'revenus_futurs' => $validated['revenus_futurs'],
+            'garant' => $validated['garant'],
+            'dettes' => $validated['dettes'],
+            'charges' => $validated['charges'],
+            'taux_endettement' => $validated['taux_endettement']
+        ]);
+
+        return view('back.emprunteur.demandes.create');
+    }
+
+    public function saveDemande(Request $request)
+    {
+        $validated = $request->validate([
+            'object' => 'required|string',
+            'description' => 'required|string',
+            'justify_rent.*' => 'nullable|file|max:4096', // 4 Mo max par fichier
+            'justify_debt.*' => 'nullable|file|max:4096',
         ]);
 
         $loan = LoanRequest::create([
             'user_id' => Auth::id(),
-            'amount' => $validated['amount'],
-            'duration' => $validated['duration'],
-            'interets' => $validated['interets'],
-            'assurances' => $validated['assurances'],
-            'deferred' => $validated['deferred'] ?? false,
-            'deferred_months' => $validated['deferred_months'] ?? 0,
-            'revenus_actuels' => $validated['revenus_actuels'],
-            'revenus_futurs' => $validated['revenus_futurs'],
-            'garant' => $validated['garant'] ?? 0,
-            'dettes' => $validated['dettes'],
-            'taux_endettement' => $validated['taux_endettement'],
+            'object' => $validated['object'],
+            'description' => $validated['description'],
+            'simulation_result' => session('simulate_result'),
+            'debt_params' => session('debt_result.revenus_actuels'),
+            'debt_ratio' => session('debt_result.taux_endettement'),
             'status' => 'En attente',
         ]);
+
+        // Gestion des fichiers justificatifs
+        if ($request->hasFile('justify_rent')) {
+            foreach ($request->file('justify_rent') as $file) {
+                if ($file->isValid()) {
+                    $path = $file->store('uploads/justify_rent', 'public');
+                    Files::create([
+                        'loan_request_id' => $loan->id,
+                        'filename' => $path,
+                        'alt' => 'Justificatif de revenus',
+                        'type' => 'justify_rent',
+                        'filesize' => $file->getSize(),
+                    ]);
+                }
+            }
+        }
+
+        if ($request->hasFile('justify_debt')) {
+            foreach ($request->file('justify_debt') as $file) {
+                if ($file->isValid()) {
+                    $path = $file->store('uploads/justify_debt', 'public');
+                    Files::create([
+                        'loan_request_id' => $loan->id,
+                        'filename' => $path,
+                        'alt' => 'Justificatif de dettes',
+                        'type' => 'justify_debt',
+                        'filesize' => $file->getSize(),
+                    ]);
+                }
+            }
+        }
+
+        // Nettoyage des sessions si besoin
+        session()->forget(['simulate_result', 'debt_result']);
 
         return redirect()->route('emprunteur.mes-demandes')->with('success', 'Demande enregistrée avec succès.');
     }
