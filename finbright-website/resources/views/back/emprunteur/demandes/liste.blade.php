@@ -75,19 +75,7 @@
                                             </div>
                                             @endif
                                             <div class="kt-menu-item">
-                                                <a class="kt-menu-link"
-                                                    href="/metronic/tailwind/demo2/account/members/import-members">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-some-files">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Documents justificatifs
-                                                    </span>
-                                                </a>
-                                            </div>
-                                            <div class="kt-menu-item">
-                                                <a class="kt-menu-link" href="/metronic/tailwind/demo2/account/activity">
+                                                <a class="kt-menu-link" href="{{ route('emprunteur.loan-requests.details', $loan) }}">
                                                     <span class="kt-menu-icon">
                                                         <i class="ki-filled ki-cloud-change">
                                                         </i>
@@ -101,8 +89,7 @@
                                             <form class="kt-menu-item" method="POST" action="{{ route('emprunteur.loan-requests.annuler', $loan) }}" onsubmit="return confirm('Annuler cette demande ?')">
                                                 <button type="submit" class="kt-menu-link" data-kt-modal-toggle="#report_user_modal">
                                                     <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-dislike">
-                                                        </i>
+                                                        <i class="ki-filled ki-trash"></i>
                                                     </span>
                                                     <span class="kt-menu-title">
                                                         Annuler la demande
@@ -120,13 +107,14 @@
                                 </div>
                             </div>
                             <div class="text-center mb-7">
-                                <a class="text-lg font-medium text-mono hover:text-primary" href="{{ route('emprunteur.loan-requests.edit', $loan) }}">
-                                    Phoenix SaaS
+                                <a class="text-lg font-medium text-mono hover:text-primary" href="{{ route('emprunteur.loan-requests.details', $loan) }}">
+                                    {{ $loan->object }}
                                 </a>
                                 <div class="text-sm text-secondary-foreground">
-                                    Montant : <strong>{{ $loan->amount }} €</strong>
+                                    Montant : <strong>{{ $loan->simulation_result['total']. ' €' ?? null }}</strong>
                                 </div>
                             </div>
+                            @if ($loan->contributeurs)
                             <div class="grid justify-center gap-1.5 mb-7.5">
                                 <span class="text-xs uppercase text-secondary-foreground text-center">
                                     Contributeurs
@@ -152,6 +140,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                             <div class="flex items-center justify-center flex-wrap gap-2 lg:gap-5">
                                 <div
                                     class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
@@ -159,38 +148,31 @@
                                         Durée
                                     </span>
                                     <span class="text-mono text-sm leading-none font-medium">
-                                        {{ $loan->duration }} mois
+                                        {{ $loan->simulation_result['duration']. ' mois' ?? 'Non disponible' }}
                                     </span>
                                 </div>
-                                @if(is_array($loan->simulation_result) && isset($loan->simulation_result['mensualite']))
-                                    <div class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
-                                        <span class="text-secondary-foreground text-xs">Mensualité</span>
-                                        <span class="text-mono text-sm leading-none font-medium">
-                                            {{ number_format($loan->simulation_result['mensualite'], 2) }} €
-                                        </span>
-                                    </div>
-                                @else
-                                    <div class="text-muted text-xs italic">
-                                        Simulation non disponible
-                                    </div>
-                                @endif
-                                @if(is_array($loan->simulation_result) && isset($loan->simulation_result['total']))
+                                <div class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
+                                    <span class="text-secondary-foreground text-xs">Mensualité</span>
+                                    <span class="text-mono text-sm leading-none font-medium">
+                                        {{ $loan->simulation_result['mensualite']. ' €' ?? 'Non disponible' }}
+                                    </span>
+                                </div>
                                 <div
                                     class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
                                     <span class="text-secondary-foreground text-xs">
                                         Total
                                     </span>
                                     <span class="text-mono text-sm leading-none font-medium">
-                                        {{ number_format($loan->simulation_result['total'], 2) }} €
+                                        {{ $loan->simulation_result['total']. ' €' ?? 'Non disponible' }}
                                     </span>
                                 </div>
-                                @endif
                             </div>
                         </div>
+                        @if($loan->status === 'Collect en cours')
                         <div class="kt-progress kt-progress-primary h-1">
-                            <div class="kt-progress-indicator" style="width: 60%">
-                            </div>
+                            <div class="kt-progress-indicator" style="width: 60%"></div>
                         </div>
+                        @endif
                     </div>
                     @empty
                     <div class="kt-card p-8 lg:p-12">
@@ -358,155 +340,148 @@
             <div class="hidden" id="projects_list">
                 <div class="flex flex-col gap-5 lg:gap-7.5">
                     @forelse($loanRequests as $loan)
-                    <div class="kt-card p-7.5">
-                        <div class="flex items-center flex-wrap justify-between gap-5">
-                            <div class="flex items-center gap-3.5">
-                                <div class="flex items-center justify-center min-w-12">
-                                    <div class="flex justify-center items-center size-14 rounded-full ring-1 ring-input bg-accent/60">
-                                        <i class="ki-filled ki-ghost text-2xl text-muted-foreground"></i>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col">
-                                    <a class="text-lg font-medium text-mono hover:text-primary" href="{{ route('emprunteur.loan-requests.edit', $loan) }}">
-                                        Phoenix SaaS
-                                    </a>
-                                    <div class="text-sm text-secondary-foreground">
-                                        Montant : <strong>{{ $loan->amount }} €</strong>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex items-center flex-wrap gap-5 lg:gap-12">
-                                <div class="flex items-center flex-wrap gap-5 lg:gap-14">
-                                    <div class="flex items-center lg:justify-center flex-wrap gap-2 lg:gap-5">
-                                        <div
-                                            class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
-                                            <span class="text-secondary-foreground text-xs">
-                                                Durée
-                                            </span>
-                                            <span class="text-mono text-sm leading-none font-medium">
-                                                {{ $loan->duration }} mois
-                                            </span>
-                                        </div>
-                                        <div
-                                            class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
-                                            <span class="text-secondary-foreground text-xs">
-                                                Mensualité
-                                            </span>
-                                            @if(is_array($loan->simulation_result) && isset($loan->simulation_result['mensualite']))
-                                            <span class="text-mono text-sm leading-none font-medium">
-                                                {{ number_format($loan->simulation_result['mensualite'], 2) }} €
-                                            </span>
-                                            @endif
-                                        </div>
-                                        <div
-                                            class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
-                                            <span class="text-secondary-foreground text-xs">
-                                                Total
-                                            </span>
-                                            @if(is_array($loan->simulation_result) && isset($loan->simulation_result['total']))
-                                            <span class="text-mono text-sm leading-none font-medium">
-                                                {{ number_format($loan->simulation_result['total'], 2) }} €
-                                            </span>
-                                            @endif
+                    <div class="kt-card">
+                        <div class="p-7.5">
+                            <div class="flex items-center flex-wrap justify-between gap-5">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="flex items-center justify-center min-w-12">
+                                        <div class="flex justify-center items-center size-14 rounded-full ring-1 ring-input bg-accent/60">
+                                            <i class="ki-filled ki-ghost text-2xl text-muted-foreground"></i>
                                         </div>
                                     </div>
-                                    <div class="w-[125px] shrink-0">
-                                        <span class="kt-badge kt-badge-primary kt-badge-outline">
-                                            {{ ucfirst($loan->status) }}
-                                        </span>
+                                    <div class="flex flex-col">
+                                        <a class="text-lg font-medium text-mono hover:text-primary" href="{{ route('emprunteur.loan-requests.details', $loan) }}">
+                                            {{ $loan->object }}
+                                        </a>
+                                        <div class="text-sm text-secondary-foreground">
+                                            Montant : <strong>{{ $loan->simulation_result['amount']. ' €' ?? null }}</strong>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="flex items-center gap-5 lg:gap-14">
-                                    <div class="grid justify-end min-w-24">
-                                        <div class="flex -space-x-2">
-                                            <div class="flex">
-                                                <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="{{asset('assets/media/avatars/300-1.png')}}" />
+                                <div class="flex items-center flex-wrap gap-5 lg:gap-12">
+                                    <div class="flex items-center flex-wrap gap-5 lg:gap-14">
+                                        <div class="flex items-center lg:justify-center flex-wrap gap-2 lg:gap-5">
+                                            <div
+                                                class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
+                                                <span class="text-secondary-foreground text-xs">
+                                                    Durée
+                                                </span>
+                                                <span class="text-mono text-sm leading-none font-medium">
+                                                    {{ $loan->simulation_result['duration']. ' mois' ?? null }}
+                                                </span>
                                             </div>
-                                            <div class="flex">
-                                                <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="{{asset('assets/media/avatars/300-2.png')}}" />
+                                            <div
+                                                class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
+                                                <span class="text-secondary-foreground text-xs">
+                                                    Mensualité
+                                                </span>
+                                                <span class="text-mono text-sm leading-none font-medium">
+                                                    {{ $loan->simulation_result['mensualite']. ' €' ?? null }}
+                                                </span>
                                             </div>
-                                            <div class="flex">
-                                                <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
-                                                    src="{{asset('assets/media/avatars/300-4.png')}}" />
-                                            </div>
-                                            <div class="flex">
-                                                <span
-                                                    class="hover:z-5 relative inline-flex items-center justify-center shrink-0 rounded-full ring-1 font-semibold leading-none text-2xs size-7 text-primary-foreground ring-background bg-primary">
-                                                    S
+                                            <div
+                                                class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
+                                                <span class="text-secondary-foreground text-xs">
+                                                    Total
+                                                </span>
+                                                <span class="text-mono text-sm leading-none font-medium">
+                                                    {{ $loan->simulation_result['total']. ' €' ?? null }}
                                                 </span>
                                             </div>
                                         </div>
+                                        <div class="w-[125px] shrink-0">
+                                            <span class="kt-badge kt-badge-primary kt-badge-outline">
+                                                {{ ucfirst($loan->status) }}
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="kt-menu" data-kt-menu="true">
-                                        <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                            data-kt-menu-item-placement="bottom-end" data-kt-menu-item-toggle="dropdown"
-                                            data-kt-menu-item-trigger="click">
-                                            <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                <i class="ki-filled ki-dots-vertical text-lg">
-                                                </i>
-                                            </button>
-                                            <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
-                                                data-kt-menu-dismiss="true">
-                                                @if($loan->status === 'En attente')
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link"
-                                                        href="{{ route('emprunteur.loan-requests.edit', $loan) }}">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-setting-3">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Modifier
-                                                        </span>
-                                                    </a>
+                                    <div class="flex items-center gap-5 lg:gap-14">
+                                        @if ($loan->contributeurs)
+                                        <div class="grid justify-end min-w-24">
+                                            <div class="flex -space-x-2">
+                                                <div class="flex">
+                                                    <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
+                                                        src="{{asset('assets/media/avatars/300-1.png')}}" />
                                                 </div>
-                                                @endif
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link"
-                                                        href="">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-some-files">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Documents justificatifs
-                                                        </span>
-                                                    </a>
+                                                <div class="flex">
+                                                    <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
+                                                        src="{{asset('assets/media/avatars/300-2.png')}}" />
                                                 </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link"
-                                                        href="">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-cloud-change">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Suivi d'activités
-                                                        </span>
-                                                    </a>
+                                                <div class="flex">
+                                                    <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-7"
+                                                        src="{{asset('assets/media/avatars/300-4.png')}}" />
                                                 </div>
-                                                @if($loan->status === 'En attente')
-                                                <form class="kt-menu-item" method="POST" action="{{ route('emprunteur.loan-requests.annuler', $loan) }}" onsubmit="return confirm('Annuler cette demande ?')">
-                                                    @csrf
-                                                    <button type="submit" class="kt-menu-link">
-                                                        <span class="kt-menu-icon">
-                                                            <i class="ki-filled ki-dislike">
-                                                            </i>
-                                                        </span>
-                                                        <span class="kt-menu-title">
-                                                            Annuler la demande
-                                                        </span>
-                                                    </button>
-                                                </form>
-                                                @endif
+                                                <div class="flex">
+                                                    <span
+                                                        class="hover:z-5 relative inline-flex items-center justify-center shrink-0 rounded-full ring-1 font-semibold leading-none text-2xs size-7 text-primary-foreground ring-background bg-primary">
+                                                        S
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endif
+                                        <div class="kt-menu" data-kt-menu="true">
+                                            <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
+                                                data-kt-menu-item-placement="bottom-end" data-kt-menu-item-toggle="dropdown"
+                                                data-kt-menu-item-trigger="click">
+                                                <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
+                                                    <i class="ki-filled ki-dots-vertical text-lg">
+                                                    </i>
+                                                </button>
+                                                <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
+                                                    data-kt-menu-dismiss="true">
+                                                    @if($loan->status === 'En attente')
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link"
+                                                            href="{{ route('emprunteur.loan-requests.edit', $loan) }}">
+                                                            <span class="kt-menu-icon">
+                                                                <i class="ki-filled ki-setting-3">
+                                                                </i>
+                                                            </span>
+                                                            <span class="kt-menu-title">
+                                                                Modifier
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    @endif
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link"
+                                                            href="{{ route('emprunteur.loan-requests.details', $loan) }}">
+                                                            <span class="kt-menu-icon">
+                                                                <i class="ki-filled ki-cloud-change">
+                                                                </i>
+                                                            </span>
+                                                            <span class="kt-menu-title">
+                                                                Suivi d'activités
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    @if($loan->status === 'En attente')
+                                                    <form class="kt-menu-item" method="POST" action="{{ route('emprunteur.loan-requests.annuler', $loan) }}" onsubmit="return confirm('Annuler cette demande ?')">
+                                                        @csrf
+                                                        <button type="submit" class="kt-menu-link">
+                                                            <span class="kt-menu-icon">
+                                                                <i class="ki-filled ki-dislike">
+                                                                </i>
+                                                            </span>
+                                                            <span class="kt-menu-title">
+                                                                Annuler la demande
+                                                            </span>
+                                                        </button>
+                                                    </form>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        @if($loan->status === 'Collect en cours')
+                        <div class="kt-progress kt-progress-primary rounded-t-xl h-1">
+                            <div class="kt-progress-indicator" style="width: 60%"></div>
+                        </div>
+                        @endif
                     </div>
                     @empty
                         <p>Aucune demande de prêt pour le moment.</p>

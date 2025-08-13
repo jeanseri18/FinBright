@@ -30,7 +30,7 @@ class LoanRequest extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function investments()
+    public function carts()
     {
         return $this->hasMany(Investment::class);
     }

@@ -1840,7 +1840,7 @@
                         </li>
                         <li>
                             <a class="kt-dropdown-menu-link"
-                                href="">
+                                href="{{route('emprunteur.mon-profil')}}">
                                 <i class="ki-filled ki-profile-circle">
                                 </i>
                                 Mon profil

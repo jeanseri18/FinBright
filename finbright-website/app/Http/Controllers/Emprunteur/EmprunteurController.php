@@ -88,13 +88,13 @@ class EmprunteurController extends Controller
 
         // 2. Mise à jour des champs
         $user->fill([
-            'civility' => $validated['civilite'],
-            'first_name' => $validated['firstname'],
-            'last_name' => $validated['lastname'],
-            'birth_date' => $validated['birth_date'],
-            'birth_place' => $validated['birth_place'],
-            'nationality' => $validated['nationality'],
-            'phone_number' => $validated['phone_number'],
+            'civility' => $validated['civilite'] ?? null,
+            'first_name' => $validated['firstname'] ?? null,
+            'last_name' => $validated['lastname'] ?? null,
+            'birth_date' => $validated['birth_date'] ?? null,
+            'birth_place' => $validated['birth_place'] ?? null,
+            'nationality' => $validated['nationality'] ?? null,
+            'phone_number' => $validated['phone_number'] ?? null,
         ]);
 
         $user->save();

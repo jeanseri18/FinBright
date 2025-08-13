@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,
             'profile.completed' => EnsureProfileIsCompleted::class,
+            'kyc.validated' => \App\Http\Middleware\EnsureKycIsValidated::class,
             '2fa' => \App\Http\Middleware\EnsureTwoFactorIsVerified::class,
         ]);
     })

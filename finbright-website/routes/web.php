@@ -2,13 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\InvestisseurController;
+use App\Http\Controllers\Investisseur\IbanController;
 use App\Http\Controllers\Emprunteur\EmprunteurController;
 use App\Http\Controllers\Emprunteur\LoanRequestController;
+use App\Http\Controllers\Investisseur\InvestisseurController;
 use App\Http\Controllers\Investisseur\InvestmentController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Investisseur\InvestorKycController;
 
 // Page d'accueil
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -66,16 +65,14 @@ Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', '2fa', 'pr
         Route::post('/creer-une-demande', [LoanRequestController::class, 'createDemande'])->name('create.demande');
         Route::post('/soumettre-une-demande', [LoanRequestController::class, 'saveDemande'])->name('save.demande');
         Route::get('/mes-demandes', [LoanRequestController::class, 'demandes'])->name('mes-demandes');
-        // Annuler une demande
+        Route::get('/{loan}/details', [LoanRequestController::class, 'details'])->name('loan-requests.details');
         Route::post('/{loan}/annuler', [LoanRequestController::class, 'annuler'])->name('loan-requests.annuler');
         // Modifier une demande (formulaire)
         Route::get('/{loan}/modifier', [LoanRequestController::class, 'edit'])->name('loan-requests.edit');
-        // Modifier une demande (enregistrement)
-        Route::post('/{loan}/modifier', [LoanRequestController::class, 'update'])->name('loan-requests.update');
     });
 });
 
-Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', '2fa', 'role:emprunteur|admin'])->group(function () {
+Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', '2fa', 'role:emprunteur|investisseur|admin'])->group(function () {
     Route::get('/mon-profil', [EmprunteurController::class, 'profil'])->name('mon-profil');
     Route::post('/mon-profil/general', [EmprunteurController::class, 'updateProfil'])->name('profil.general.update');
     Route::post('/mon-profil/adresse', [EmprunteurController::class, 'updateAdresse'])->name('profil.adresse.update');
@@ -97,9 +94,31 @@ Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', '2fa', 'ro
 });
 
 Route::prefix('investisseur')->name('investisseur.')->middleware(['auth', '2fa', 'role:investisseur|admin'])->group(function () {
-    Route::get('/', [InvestmentController::class, 'index'])->name('dashboard');
-    Route::get('/decouverte-des-projets', [InvestmentController::class, 'decouvrir'])->name('decouvrir');
-    Route::post('/contribuer/{loanRequest}', [InvestmentController::class, 'investir'])->name('investir');
+    // KYC + IBAN
+    Route::get('/kyc', [InvestorKycController::class, 'form'])->name('kyc.form');
+    Route::post('/kyc', [InvestorKycController::class, 'store'])->name('kyc.store');
+
+    Route::get('/iban', [IbanController::class, 'form'])->name('iban.form');
+    Route::post('/iban', [IbanController::class, 'store'])->name('iban.store');
+
+    Route::get('/mon-profil', [InvestisseurController::class, 'profil'])->name('profil');
+
+    // Zone soumise au KYC validé
+    Route::middleware(['kyc.validated'])->group(function () {
+
+        Route::get('/', [InvestmentController::class, 'index'])->name('dashboard');
+        Route::get('/decouverte-des-projets', [InvestmentController::class, 'decouvrir'])->name('decouvrir');
+
+        // Panier
+        Route::get('/panier', [InvestmentController::class, 'index'])->name('panier.index');
+        Route::post('/panier/add/{loanRequest}', [InvestmentController::class, 'add'])->name('panier.add');
+        Route::post('/panier/update/{item}', [InvestmentController::class, 'update'])->name('panier.update');
+        Route::delete('/panier/remove/{item}', [InvestmentController::class, 'remove'])->name('panier.remove');
+        Route::post('/panier/checkout', [InvestmentController::class, 'checkout'])->name('panier.checkout');
+
+        // Investir direct (si tu gardes le bouton "Investir")
+        Route::post('/contribuer/{loanRequest}', [InvestmentController::class, 'investir'])->name('investir');
+    });
 });
 
 // Auth routes (login, register, etc.)

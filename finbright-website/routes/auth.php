@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\EmprunteurRegisterController;
+use App\Http\Controllers\Auth\InvestisseurRegisterController;
 use App\Http\Controllers\TwoFactorController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,8 +36,8 @@ Route::prefix('inscription')->name('register.')->middleware('guest')->group(func
     Route::get('/emprunteur', [EmprunteurRegisterController::class, 'showForm'])->name('emprunteur');
     Route::post('/emprunteur', [EmprunteurRegisterController::class, 'register'])->name('emprunteur.submit');
 
-    Route::get('/investisseur', [EmprunteurRegisterController::class, 'showForm1'])->name('investisseur');
-    Route::post('/investisseur', [EmprunteurRegisterController::class, 'register1'])->name('investisseur.submit');
+    Route::get('/investisseur', [InvestisseurRegisterController::class, 'showForm'])->name('investisseur');
+    Route::post('/investisseur', [InvestisseurRegisterController::class, 'register'])->name('investisseur.submit');
 });
 
 Route::prefix('2fa')->name('2fa.')->middleware(['auth'])->group(function () {

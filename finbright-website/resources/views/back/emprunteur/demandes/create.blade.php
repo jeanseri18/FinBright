@@ -7,12 +7,12 @@
         <!-- Container -->
         <div class="kt-container-fixed flex items-center justify-between flex-wrap gap-2.5">
             <div class="flex items-center flex-wrap gap-3 lg:gap-5">
-                <h1 class="font-medium text-lg text-mono">Soumettre une demande de prêt</h1>
+                <h1 class="font-medium text-lg text-mono">{{ $loan ? 'Modifier la' : 'Soumettre une' }} demande de prêt</h1>
             </div>
             <div class="flex items-center gap-1">
-                <a class="kt-btn kt-btn-outline flex gap-1.5" href="">
+                <a class="kt-btn kt-btn-outline flex gap-1.5" href="{{ route('emprunteur.mes-demandes') }}">
                     <i class="ki-filled ki-exit-left text-destructive"></i>
-                    Annuler la demande
+                    {{ $loan ? 'Annuler la modification' : 'Annuler la demande' }}
                 </a>
             </div>
         </div>
@@ -33,32 +33,62 @@
                             @csrf
                             <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                 <label class="kt-form-label max-w-56">
-                                    Objet de la demande
+                                    Titre de votre projet
                                 </label>
-                                <input class="kt-input" type="text" name="object" placeholder="Entrer un libellé" />
+                                <input class="kt-input" type="text" name="object" placeholder="Expl: Financez mon Master en IA à Polytechnique pour devenir Data Scientist" value="{{$loan->object ?? null}}" />
                             </div>
-                            @if (session('debt_result.revenus_actuels') > 0)
-                            <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                <label class="kt-form-label max-w-56">
-                                    Justificatif de révenus
-                                </label>
-                                <input class="kt-input" type="file" name="justify_rent" multiple />
-                            </div>
+                            @if (session('debt_result.revenus_actuels') > 0 || ($loan->debt_params && $loan->debt_params['revenus_actuels'] > 0))
+                                <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                    <label class="kt-form-label max-w-56">
+                                        Justificatif de révenus
+                                    </label>
+                                    <input class="kt-input" type="file" name="justify_rent" multiple required />
+                                </div>
                             @endif
-                            @if (session('debt_result.dettes') > 0)
+                            @if (session('debt_result.dettes') > 0 || ($loan->debt_params && $loan->debt_params['dettes'] > 0))
                             <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                 <label class="kt-form-label max-w-56">
                                     Justificatif de dettes
                                 </label>
-                                <input class="kt-input" type="file" name="justify_debt" multiple />
+                                <input class="kt-input" type="file" name="justify_debt" multiple required />
                             </div>
                             @endif
-                            <div class="flex items-start flex-wrap lg:flex-nowrap gap-2.5 mb-2.5">
+                            <div class="flex items-start flex-wrap lg:flex-nowrap gap-2.5">
                                 <label class="kt-form-label max-w-56">
-                                    Détails de la demande
+                                    Description du projet
                                 </label>
-                                <textarea class="kt-textarea w-full" rows="10" name="description" placeholder="On vous écoute..."></textarea>
+                                <textarea class="kt-textarea w-full" rows="15" name="description" required placeholder="Décrivez votre parcours et vos ambitions professionnelles. Soyez fier de qui vous êtes et de votre motivation ! (max. 1500 caractères)">{{$loan->description ?? null}}</textarea>
                             </div>
+                            <div class="flex items-start flex-wrap lg:flex-nowrap gap-2.5">
+                                <label class="kt-form-label max-w-56">
+                                    Explication du projet
+                                </label>
+                                <textarea class="kt-textarea w-full" rows="10" name="explication" required placeholder="Expliquez en quoi ce prêt est un levier essentiel pour la réussite de vos études et de votre projet. (max. 1000 caractères)">{{$loan->explication ?? null}}</textarea>
+                            </div>
+                            <div class="flex items-start flex-wrap lg:flex-nowrap gap-2.5">
+                                <label class="kt-form-label max-w-56">
+                                    Mettez-vous en valeur (facultatif)
+                                </label>
+                                <textarea class="kt-textarea w-full" rows="5" name="presentation" placeholder="Parlez-nous de vos passions, de vos engagements associatifs ou de vos expériences passées. (max. 500 caractères)">{{$loan->presentation ?? null}}</textarea>
+                            </div>
+                            @if (!$loan)
+                            <div class="flex items-center gap-2 mt-8">
+                                <input type="checkbox" name="cgu" class="kt-checkbox" id="cgu" value="1" />
+                                <label class="kt-label inline-block" for="cgu">
+                                    Je reconnais avoir lu et accepté les <a class="kt-link kt-link-underlined kt-link-dashed" href="">Conditions Générales d'Utilisation</a>.
+                                </label>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" name="infos_fournis" class="kt-checkbox" id="infos_fournis" value="1" />
+                                <label class="kt-label inline-block" for="infos_fournis">
+                                    Je comprends et accepte que les informations fournies dans ce formulaire seront utilisées par Fin'Bright pour évaluer ma demande de prêt et, en cas d'acceptation, pour créer un profil de projet qui sera visible par la communauté des prêteurs inscrits sur la plateforme.
+                                </label>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" name="declare_honneur" class="kt-checkbox" id="declare_honneur" value="1" />
+                                <label class="kt-label" for="declare_honneur">Je certifie sur l'honneur que toutes les informations et tous les documents fournis dans le cadre de cette demande sont exacts, complets et sincères.</label>
+                            </div>
+                            @endif
                             <div class="flex justify-end">
                                 <button type="submit" class="kt-btn kt-btn-primary">
                                     Soumettre la demande
@@ -83,7 +113,7 @@
                                         Date de début :
                                     </td>
                                     <td class="min-w-48 w-full text-foreground font-normal">
-                                        {{ session('simulate_result.date_debut') ?? null }}
+                                        {{ session('simulate_result.date_debut') ?? $loan->simulation_result['date_debut'] }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -91,7 +121,7 @@
                                         Montant :
                                     </td>
                                     <td class="text-foreground font-normal">
-                                        {{ session('simulate_result.amount') ?? null }} €
+                                        {{ session('simulate_result.amount') ?? $loan->simulation_result['amount'] }} €
                                     </td>
                                 </tr>
                                 <tr>
@@ -99,7 +129,7 @@
                                         Durée :
                                     </td>
                                     <td class="text-foreground font-normal">
-                                        {{ session('simulate_result.duration') ?? null }} mois
+                                        {{ session('simulate_result.duration') ?? $loan->simulation_result['duration'] }} mois
                                     </td>
                                 </tr>
                                 <tr>
@@ -107,7 +137,7 @@
                                         Coût des intérêts :
                                     </td>
                                     <td class="text-foreground font-normal">
-                                        {{ session('simulate_result.interets') ?? null }} €
+                                        {{ session('simulate_result.interets') ?? $loan->simulation_result['interets'] }} €
                                     </td>
                                 </tr>
                                 <tr>
@@ -115,7 +145,7 @@
                                         Coût de l'assurance :
                                     </td>
                                     <td class="text-foreground text-sm font-normal">
-                                        {{ session('simulate_result.assurances') ?? null }} €
+                                        {{ session('simulate_result.assurances') ?? $loan->simulation_result['assurances'] }} €
                                     </td>
                                 </tr>
                                 <tr>
@@ -123,7 +153,7 @@
                                         Coût total du prêt :
                                     </td>
                                     <td class="text-foreground text-sm font-normal">
-                                        {{ session('simulate_result.total') ?? null }} €
+                                        {{ session('simulate_result.total') ?? $loan->simulation_result['total'] }} €
                                     </td>
                                 </tr>
                             </table>
@@ -142,7 +172,7 @@
                                         Revenus actuels :
                                     </td>
                                     <td class="min-w-48 w-full text-foreground font-normal">
-                                        {{ session('debt_result.revenus_actuels') ?? null }} €
+                                        {{ session('debt_result.revenus_actuels') ?? $loan->debt_params['revenus_actuels'] }} €
                                     </td>
                                 </tr>
                                 <tr>
@@ -150,7 +180,7 @@
                                         Revenus potentiel :
                                     </td>
                                     <td class="text-foreground font-normal">
-                                        {{ session('debt_result.revenus_futurs') ?? null }} €
+                                        {{ session('debt_result.revenus_futurs') ?? $loan->debt_params['revenus_futurs'] }} €
                                     </td>
                                 </tr>
                                 <tr>
@@ -158,7 +188,7 @@
                                         Soutien ou garant :
                                     </td>
                                     <td class="text-foreground font-normal">
-                                        {{ session('debt_result.garant') ?? null }} €
+                                        {{ session('debt_result.garant') ?? $loan->debt_params['garant'] }} €
                                     </td>
                                 </tr>
                                 <tr>
@@ -166,7 +196,7 @@
                                         Autres dettes :
                                     </td>
                                     <td class="text-foreground font-normal">
-                                        {{ session('debt_result.dettes') ?? null }} €
+                                        {{ session('debt_result.dettes') ?? $loan->debt_params['dettes'] }} €
                                     </td>
                                 </tr>
                                 <tr>
@@ -174,7 +204,7 @@
                                         Autres charges :
                                     </td>
                                     <td class="text-foreground text-sm font-normal">
-                                        {{ session('debt_result.charges') ?? null }} €
+                                        {{ session('debt_result.charges') ?? $loan->debt_params['charges'] }} €
                                     </td>
                                 </tr>
                                 <tr>
@@ -182,7 +212,7 @@
                                         Taux d’endettement :
                                     </td>
                                     <td class="text-foreground text-sm font-normal">
-                                        {{ session('debt_result.taux_endettement') ?? null }} %
+                                        {{ session('debt_result.taux_endettement') ?? $loan->debt_params['taux_endettement'] }} %
                                     </td>
                                 </tr>
                             </table>

@@ -276,16 +276,25 @@
                                     <tr>
                                         <td class="text-start">
                                             <a class="text-sm font-medium text-mono hover:text-primary" href="#">
-                                                {{ $loan->objet ?? 'NEANT' }}
+                                                {{ $loan->object ?? 'NaN' }}
                                             </a>
                                         </td>
-                                        <td>
+                                        <td class="text-end">
+                                            @if ($loan->status === 'Collect en cours')
                                             <div class="kt-progress kt-progress-primary h-[4px]">
                                                 <div class="kt-progress-indicator" style="width: 60%">
                                                 </div>
                                             </div>
+                                            @else
+                                                @if ($loan->status == "En attente") <span class="kt-badge kt-badge-sm kt-badge-primary kt-badge-outline shrink-0">
+                                                @elseif ($loan->status == "Collecte en attente") <span class="kt-badge kt-badge-sm kt-badge-success kt-badge-outline shrink-0">
+                                                @elseif ($loan->status == "Annulée") <span class="kt-badge kt-badge-sm kt-badge-destructive kt-badge-outline shrink-0">@endif
+                                                    {{ ucfirst($loan->status) }}
+                                                </span>
+                                            @endif
                                         </td>
                                         <td>
+                                            @if ($loan->contributeurs)
                                             <div class="flex justify-end rtl:justify-start shrink-0">
                                                 <div class="flex -space-x-2">
                                                     <div class="flex">
@@ -308,6 +317,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endif
                                         </td>
                                         <td class="text-sm font-medium text-secondary-foreground text-end">
                                             24 Aug, 2024

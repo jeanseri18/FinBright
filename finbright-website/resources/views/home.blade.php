@@ -51,12 +51,12 @@ De façon innovante, via notre plateforme dédiée au financement des étudiants
 
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <button class="bg-finbright-purple text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-dark-purple transition-colors">
+                    <a href="{{ route('login') }}" class="bg-finbright-purple text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-dark-purple transition-colors">
                         Financer un Etudiant
-                    </button>
-                    <button class="bg-finbright-cyan text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-light-cyan transition-colors">
+                    </a>
+                    <a href="{{ route('login') }}" class="bg-finbright-cyan text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-light-cyan transition-colors">
                         Demander un prêt
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -382,12 +382,12 @@ Rejoindre Fin'Bright, c’est intégrer une communauté de prêteurs solidaires 
          Rejoignez-nous dès aujourd’hui.    </p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button class="bg-finbright-cyan text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-light-cyan transition-colors">
+                <a href="{{ route('register.investisseur') }}" class="bg-finbright-cyan text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-finbright-light-cyan transition-colors">
                     Je m'inscris pour financer
-                </button>
-                <button class="bg-white text-finbright-purple px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors">
+                </a>
+                <a href="{{ route('register.emprunteur') }}" class="bg-white text-finbright-purple px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors">
                     Je m'inscris pour emprunter
-                </button>
+                </a>
             </div>
         </div>
     </div>

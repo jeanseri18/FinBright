@@ -42,7 +42,7 @@
         <div class="kt-input w-[36px] lg:w-60">
             <i class="ki-filled ki-magnifier">
             </i>
-            <input class="min-w-0" placeholder="Search" type="text" value="" />
+            <input class="min-w-0" placeholder="Recherche" type="text" value="" />
             <span class="text-xs text-secondary-foreground text-nowrap hidden lg:inline">
                 cmd + /
             </span>
@@ -1470,7 +1470,7 @@
                         <div class="flex items-center justify-between px-2.5 py-1.5 gap-1.5">
                             <div class="flex items-center gap-2">
                                 <img alt="{{ Auth::user()->first_name .' '. Auth::user()->last_name }}" class="size-9 shrink-0 rounded-full border-2 border-green-500"
-                                    src="{{asset('assets/media/avatars/blank.png')}}" />
+                                    src="{{ Auth::user()->profilePicture ? Storage::url(Auth::user()->profilePicture->filename) : asset('assets/media/avatars/blank.png') }}" />
                                 <div class="flex flex-col gap-1.5">
                                     <span class="text-sm text-foreground font-semibold leading-none">
                                         {{ Auth::user()->first_name .' '. Auth::user()->last_name }}
@@ -1489,13 +1489,13 @@
                             </li>
                             <li>
                                 <a class="kt-dropdown-menu-link"
-                                    href="">
+                                    href="{{ route('investisseur.profil') }}">
                                     <i class="ki-filled ki-profile-circle">
                                     </i>
-                                    Mon Profil
+                                    Mon compte
                                 </a>
                             </li>
-                            <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start"
+                            {{-- <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start"
                                 data-kt-dropdown-trigger="hover">
                                 <button class="kt-dropdown-menu-toggle" data-kt-dropdown-toggle="true">
                                     <i class="ki-filled ki-setting-2">
@@ -1584,12 +1584,12 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </li>
+                            </li> --}}
                             <li>
-                                <a class="kt-dropdown-menu-link" href="https://devs.keenthemes.com">
+                                <a class="kt-dropdown-menu-link" href="{{ route('investisseur.decouvrir') }}">
                                     <i class="ki-filled ki-message-programming">
                                     </i>
-                                    Dev Forum
+                                    Demandes de prêt
                                 </a>
                             </li>
                             <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start"
@@ -1625,7 +1625,7 @@
                                             <a class="kt-dropdown-menu-link" href="?dir=rtl">
                                                 <span class="flex items-center gap-2">
                                                     <img alt="" class="inline-block size-4 rounded-full"
-                                                        src="asset('assets/media/flags/united-states.svg')}}" />
+                                                        src="{{asset('assets/media/flags/united-states.svg')}}" />
                                                     <span class="kt-menu-title">
                                                         Anglais
                                                     </span>
@@ -1666,78 +1666,6 @@
                     </div>
                 </div>
                 <!-- End of User -->
-                <div class="border-e border-border h-5">
-                </div>
-                <div class="flex items-center gap-2">
-                    <label class="flex items-center gap-2">
-                        <input checked="" class="kt-switch" name="check" type="checkbox" value="1" />
-                        <span class="text-foreground text-sm font-medium">
-                            Pro
-                        </span>
-                    </label>
-                </div>
-                <div class="border-e border-border h-5">
-                </div>
-                <div class="kt-menu" data-kt-menu="true">
-                    <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                        data-kt-menu-item-placement="bottom-end" data-kt-menu-item-placement-rtl="bottom-start"
-                        data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
-                        <button class="kt-menu-toggle kt-btn kt-btn-mono">
-                            Create
-                            <i class="ki-filled ki-down">
-                            </i>
-                        </button>
-                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
-                            data-kt-menu-dismiss="true">
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link"
-                                    href="/metronic/tailwind/demo9/account/home/settings-enterprise">
-                                    <span class="kt-menu-icon">
-                                        <i class="ki-filled ki-setting-3">
-                                        </i>
-                                    </span>
-                                    <span class="kt-menu-title">
-                                        Settings
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link"
-                                    href="/metronic/tailwind/demo9/account/members/import-members">
-                                    <span class="kt-menu-icon">
-                                        <i class="ki-filled ki-some-files">
-                                        </i>
-                                    </span>
-                                    <span class="kt-menu-title">
-                                        Import
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="/metronic/tailwind/demo9/account/activity">
-                                    <span class="kt-menu-icon">
-                                        <i class="ki-filled ki-cloud-change">
-                                        </i>
-                                    </span>
-                                    <span class="kt-menu-title">
-                                        Activity
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link" data-kt-modal-toggle="#report_user_modal" href="#">
-                                    <span class="kt-menu-icon">
-                                        <i class="ki-filled ki-dislike">
-                                        </i>
-                                    </span>
-                                    <span class="kt-menu-title">
-                                        Report
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <!-- End of Topbar -->
         </div>
@@ -1755,7 +1683,7 @@
         <!-- Mega Menu -->
         <div class="kt-menu items-stretch flex-col lg:flex-row gap-5 lg:gap-7.5 grow lg:grow-0" data-kt-menu="true"
             id="mega_menu">
-            <div class="kt-menu-item">
+            <div class="kt-menu-item {{ session('menu_actif') === 'dashboard' ? 'active' : '' }}">
                 <a class="kt-menu-link lg:py-3.5 border-b border-b-transparent kt-menu-item-active:border-b-mono text-foreground kt-menu-item-hover:text-mono kt-menu-item-active:text-mono kt-menu-item-here:border-b-mono kt-menu-item-here:text-mono"
                     href="{{route('investisseur.dashboard')}}">
                     <span class="kt-menu-title font-medium text-foreground text-sm">
@@ -1763,7 +1691,7 @@
                     </span>
                 </a>
             </div>
-            <div class="kt-menu-item active">
+            <div class="kt-menu-item {{ session('menu_actif') === 'decouvrir' ? 'active' : '' }}">
                 <a class="kt-menu-link lg:py-3.5 border-b border-b-transparent kt-menu-item-active:border-b-mono text-foreground kt-menu-item-hover:text-mono kt-menu-item-active:text-mono kt-menu-item-here:border-b-mono kt-menu-item-here:text-mono"
                     href="{{route('investisseur.decouvrir')}}">
                     <span class="kt-menu-title font-medium text-foreground text-sm">
@@ -1771,7 +1699,15 @@
                     </span>
                 </a>
             </div>
-            <div class="kt-menu-item" data-kt-menu-item-offset="0,0|lg:-20px, 0"
+            <div class="kt-menu-item {{ session('menu_actif') === 'mon_compte' ? 'active' : '' }}">
+                <a class="kt-menu-link lg:py-3.5 border-b border-b-transparent kt-menu-item-active:border-b-mono text-foreground kt-menu-item-hover:text-mono kt-menu-item-active:text-mono kt-menu-item-here:border-b-mono kt-menu-item-here:text-mono"
+                    href="{{route('investisseur.profil')}}">
+                    <span class="kt-menu-title font-medium text-foreground text-sm">
+                        Mon compte
+                    </span>
+                </a>
+            </div>
+            {{-- <div class="kt-menu-item" data-kt-menu-item-offset="0,0|lg:-20px, 0"
                 data-kt-menu-item-offset-rtl="0,0|lg:20px, 0" data-kt-menu-item-overflow="true"
                 data-kt-menu-item-placement="bottom-start" data-kt-menu-item-placement-rtl="bottom-end"
                 data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click|lg:hover">
@@ -1904,7 +1840,7 @@
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <!-- End of Mega Menu -->
     </div>

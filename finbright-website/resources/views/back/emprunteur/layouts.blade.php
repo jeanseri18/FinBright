@@ -208,7 +208,7 @@ Contact:
                                 </label>
                             </div>
                             <label class="kt-input">
-                                <input type="number" id="duration" name="duration" required min="19" max="60" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                                <input type="number" id="duration" name="duration" required min="24" max="84" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
                             </label>
                         </div>
 
@@ -271,7 +271,7 @@ Contact:
                                 </label>
                             </div>
                             <label class="kt-input">
-                                <input type="number" name="deferred_months" min="0" max="36" disabled onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                                <input type="number" name="deferred_months" min="3" max="6" disabled onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
                             </label>
                         </div>
 

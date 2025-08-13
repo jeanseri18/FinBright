@@ -23,14 +23,15 @@
     <div class="kt-container-fixed">
         <!-- begin: grid -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-7.5">
+            @if ($loan->payments)
             <div class="col-span-2">
                 <style>
                     .upgrade-bg {
-                        background-image: url('/static/metronic/tailwind/dist/assets/media/images/2600x1200/bg-14.png');
+                        background-image: url({{asset('assets/media/images/2600x1200/bg-14.png')}});
                     }
 
                     .dark .upgrade-bg {
-                        background-image: url('/static/metronic/tailwind/dist/assets/media/images/2600x1200/bg-14-dark.png');
+                        background-image: url({{asset('assets/media/images/2600x1200/bg-14-dark.png')}});
                     }
                 </style>
                 <div class="kt-card rounded-xl">
@@ -42,14 +43,14 @@
                                     viewbox="0 0 44 48" width="44" xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M16 2.4641C19.7128 0.320509 24.2872 0.320508 28 2.4641L37.6506 8.0359C41.3634 10.1795 43.6506 14.141 43.6506
-       18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
-       39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
+                                        18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
+                                        39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
                                         fill="">
                                     </path>
                                     <path
                                         d="M16.25 2.89711C19.8081 0.842838 24.1919 0.842837 27.75 2.89711L37.4006 8.46891C40.9587 10.5232 43.1506 14.3196 43.1506
-       18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
-       39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
+                                        18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
+                                        39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
                                         stroke="">
                                     </path>
                                 </svg>
@@ -87,6 +88,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <div class="col-span-2">
                 <div class="kt-card">
                     <div class="kt-card-content lg:py-7.5">
@@ -96,70 +98,71 @@
                                 <div class="flex justify-center items-center size-14 rounded-full ring-1 ring-input bg-accent/60">
                                     <i class="ki-filled ki-ghost text-2xl text-muted-foreground"></i>
                                 </div>
-                                <span class="text-sm font-semibold text-mono">
-                                    Cloud One
-                                </span>
-                                </img>
                             </div>
                             <div class="flex flex-col gap-5 lg:gap-7.5 grow">
                                 <div class="flex flex-wrap items-center justify-between gap-2">
                                     <div class="flex flex-col gap-1">
                                         <div class="flex items-center flex-wrap sm:flex-nowrap gap-2.5">
                                             <h2 class="text-2xl font-semibold text-mono">
-                                                Cloud One Enterprise
+                                                {{ substr($loan->object, 0, 70) }}
                                             </h2>
-                                            <span class="kt-badge kt-badge-sm kt-badge-success kt-badge-outline shrink-0">
-                                                Monthly Plan
+                                            @if ($loan->status == "En attente") <span class="kt-badge kt-badge-sm kt-badge-primary kt-badge-outline shrink-0">
+                                            @elseif ($loan->status == "Collecte en attente") <span class="kt-badge kt-badge-sm kt-badge-success kt-badge-outline shrink-0">
+                                            @elseif ($loan->status == "Annulée") <span class="kt-badge kt-badge-sm kt-badge-destructive kt-badge-outline shrink-0">@endif
+                                                {{ ucfirst($loan->status) }}
                                             </span>
                                         </div>
                                         <p class="text-sm text-secondary-foreground">
-                                            Essential Features for Startups and Individuals
+                                            {{ substr($loan->description, 0, 110) }}...
                                         </p>
                                     </div>
                                     <div class="flex items-center gap-2.5">
-                                        <a class="kt-btn kt-btn-outline" href="#">
-                                            Cancel Plan
-                                        </a>
+                                        @if ($loan->status === 'En attente')
+                                        <form class="kt-menu-item" method="POST" action="{{ route('emprunteur.loan-requests.annuler', $loan) }}" onsubmit="return confirm('Annuler cette demande ?')">
+                                            @csrf
+                                            <button type="submit" class="kt-btn kt-btn-outline">Annuler la demande</button>
+                                        </form>
+                                        @endif
                                         <a class="kt-btn kt-btn-primary" href="#">
-                                            Upgrade Plan
+                                            Recolter
                                         </a>
                                     </div>
                                 </div>
                                 <div class="flex items-center flex-wrap gap-3 lg:gap-5">
                                     <div
                                         class="flex flex-col gap-1.5 px-2.75 py-2.25 border border-dashed border-input rounded-md">
-                                        <span class="text-mono text-sm leading-none font-medium">
-                                            Trial
-                                        </span>
                                         <span class="text-secondary-foreground text-xs">
-                                            Status
+                                            Montant
+                                        </span>
+                                        <span class="text-mono text-sm leading-none font-medium">
+                                            {{ $loan->simulation_result['total']. ' €' ?? null }}
                                         </span>
                                     </div>
                                     <div
                                         class="flex flex-col gap-1.5 px-2.75 py-2.25 border border-dashed border-input rounded-md">
-                                        <span class="text-mono text-sm leading-none font-medium">
-                                            10,000
-                                        </span>
                                         <span class="text-secondary-foreground text-xs">
-                                            Query runs
+                                            Durée
+                                        </span>
+                                        <span class="text-mono text-sm leading-none font-medium">
+                                            {{ $loan->simulation_result['duration']. ' mois' ?? 'Non disponible' }}
                                         </span>
                                     </div>
                                     <div
                                         class="flex flex-col gap-1.5 px-2.75 py-2.25 border border-dashed border-input rounded-md">
-                                        <span class="text-mono text-sm leading-none font-medium">
-                                            Unlimited
-                                        </span>
                                         <span class="text-secondary-foreground text-xs">
-                                            API calls
+                                            Mensualité
+                                        </span>
+                                        <span class="text-mono text-sm leading-none font-medium">
+                                            {{ $loan->simulation_result['mensualite']. ' €' ?? 'Non disponible' }}
                                         </span>
                                     </div>
                                     <div
                                         class="flex flex-col gap-1.5 px-2.75 py-2.25 border border-dashed border-input rounded-md">
-                                        <span class="text-mono text-sm leading-none font-medium">
-                                            $99.00
-                                        </span>
                                         <span class="text-secondary-foreground text-xs">
-                                            Price
+                                            Total
+                                        </span>
+                                        <span class="text-mono text-sm leading-none font-medium">
+                                            {{ $loan->simulation_result['total']. ' €' ?? 'Non disponible' }}
                                         </span>
                                     </div>
                                     <div
@@ -172,10 +175,11 @@
                                         </span>
                                     </div>
                                 </div>
+                                @if($loan->status === 'Collect en cours')
                                 <div class="flex flex-wrap gap-6 lg:gap-12">
                                     <div class="flex flex-col gap-3.5 grow">
                                         <div class="text-sm text-secondary-foreground">
-                                            UQuery runs:
+                                            Collecte :
                                             <span class="text-sm font-medium text-mono">
                                                 2239 of 10,000 used
                                             </span>
@@ -187,7 +191,7 @@
                                     </div>
                                     <div class="flex flex-col gap-2.5 lg:min-w-24 shrink-0 -mt-3 max-w-auto">
                                         <div class="text-sm font-medium text-secondary-foreground">
-                                            Seats:
+                                            Contributeurs :
                                             <span class="text-sm font-semibold text-foreground">
                                                 29 of 120 used
                                             </span>
@@ -214,6 +218,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -223,12 +228,12 @@
                 <div class="kt-card grow">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">
-                            Latest Payment
+                            Dernier Payement
                         </h3>
                         <button class="kt-btn kt-btn-outline">
                             <i class="ki-filled ki-exit-down">
                             </i>
-                            Download PDF
+                            Télécharger en PDF
                         </button>
                     </div>
                     <div class="kt-card-content pt-4 pb-3">
@@ -236,15 +241,15 @@
                             <tbody>
                                 <tr>
                                     <td class="text-sm text-secondary-foreground min-w-36 pb-5 pe-6">
-                                        Typ of Plan
+                                        Mensualité
                                     </td>
                                     <td class="flex items-center gap-2.5 text-sm text-foreground">
-                                        Cloud One Enterprise
+                                        Octobre
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="text-sm text-secondary-foreground min-w-36 pb-5 pe-6">
-                                        Payment Date
+                                        Date de Payement
                                     </td>
                                     <td class="flex items-center gap-2.5 text-sm text-foreground">
                                         6 Aug, 2024
@@ -252,20 +257,19 @@
                                 </tr>
                                 <tr>
                                     <td class="text-sm text-secondary-foreground min-w-36 pb-5 pe-6">
-                                        Card used to pay:
+                                        Carte utilisé pour payer :
                                     </td>
                                     <td class="flex items-center gap-2.5 text-sm text-foreground">
-                                        <img alt="" class="w-10 shrink-0"
-                                            src="{{asset('assets/media/brand-logos/visa.svg')}}" />
+                                        <img alt="" class="w-10 shrink-0" src="{{asset('assets/media/brand-logos/visa.svg')}}" />
                                         Ending 3604
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="text-sm text-secondary-foreground min-w-36 pb-5 pe-6">
-                                        Total Payment:
+                                        Total Payement :
                                     </td>
                                     <td class="flex items-center gap-2.5 text-sm text-foreground">
-                                        $24.00
+                                        24.00 €
                                     </td>
                                 </tr>
                             </tbody>
@@ -277,7 +281,7 @@
                 <div class="kt-card grow">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">
-                            Next Payment
+                            Prochain Payement
                         </h3>
                     </div>
                     <div class="kt-card-content lg:7.5">
@@ -291,14 +295,14 @@
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="M16 2.4641C19.7128 0.320509 24.2872 0.320508 28 2.4641L37.6506 8.0359C41.3634 10.1795 43.6506 14.141 43.6506
-       18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
-       39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
+                                                18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
+                                                39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
                                                 fill="">
                                             </path>
                                             <path
                                                 d="M16.25 2.89711C19.8081 0.842838 24.1919 0.842837 27.75 2.89711L37.4006 8.46891C40.9587 10.5232 43.1506 14.3196 43.1506
-       18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
-       39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
+                                                18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
+                                                39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
                                                 stroke="">
                                             </path>
                                         </svg>
@@ -310,10 +314,10 @@
                                     </div>
                                     <div class="flex flex-col">
                                         <a class="text-sm font-medium hover:text-primary text-mono" href="#">
-                                            on 17 Aug, 2024
+                                            le 17 août 2024
                                         </a>
                                         <p class="text-sm text-secondary-foreground">
-                                            Due date
+                                            Date d'échéance
                                         </p>
                                     </div>
                                 </div>
@@ -324,7 +328,7 @@
                             </div>
                             <div class="place-self-end lg:pb-2.5">
                                 <a class="kt-btn kt-btn-primary" href="#">
-                                    Manage Payment
+                                    Procéder au payement
                                 </a>
                             </div>
                         </div>
@@ -335,12 +339,12 @@
                 <div class="kt-card grow">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">
-                            Payment Methods
+                            Modes de paiement
                         </h3>
                         <button class="kt-btn kt-btn-outline">
                             <i class="ki-filled ki-credit-cart">
                             </i>
-                            Add New
+                            Ajouter nouveau
                         </button>
                     </div>
                     <div class="kt-card-content lg:pb-7.5">
@@ -361,7 +365,7 @@
                                 </div>
                                 <div class="flex items-center gap-5">
                                     <span class="kt-badge kt-badge-sm kt-badge-success kt-badge-outline">
-                                        Primary
+                                        Par defaut
                                     </span>
                                     <div class="flex gap-0.5">
                                         <div class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
@@ -437,12 +441,12 @@
                 <div class="kt-card">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">
-                            Billing and Invoicing
+                            Facturation et paiement
                         </h3>
                         <button class="kt-btn kt-btn-outline">
                             <i class="ki-filled ki-exit-down">
                             </i>
-                            Download All
+                            Télécharger tout
                         </button>
                     </div>
                     <div class="kt-card-table kt-scrollable-x-auto">
@@ -450,16 +454,16 @@
                             <thead>
                                 <tr>
                                     <th class="min-w-52">
-                                        Invoice
+                                        Factures
                                     </th>
                                     <th class="min-w-16 text-end">
-                                        Status
+                                        Statut
                                     </th>
                                     <th class="min-w-32 text-end">
                                         Date
                                     </th>
                                     <th class="min-w-16 text-end">
-                                        Amount
+                                        Montant
                                     </th>
                                     <th class="w-8">
                                     </th>
@@ -468,7 +472,7 @@
                             <tbody>
                                 <tr>
                                     <td class="text-sm text-foreground">
-                                        Invoice-2024-xd912c
+                                        Facture-2024-xd912c
                                     </td>
                                     <td class="lg:text-end">
                                         <div class="kt-badge kt-badge-sm kt-badge-warning kt-badge-outline">
@@ -546,7 +550,7 @@
                                 </tr>
                                 <tr>
                                     <td class="text-sm text-foreground">
-                                        Invoice-2024-rq857m
+                                        Facture-2024-rq857m
                                     </td>
                                     <td class="lg:text-end">
                                         <div class="kt-badge kt-badge-sm kt-badge-success kt-badge-outline">
@@ -624,7 +628,7 @@
                                 </tr>
                                 <tr>
                                     <td class="text-sm text-foreground">
-                                        Invoice-2024-hg234x
+                                        Facture-2024-hg234x
                                     </td>
                                     <td class="lg:text-end">
                                         <div class="kt-badge kt-badge-sm kt-badge-danger kt-badge-outline">
@@ -702,7 +706,7 @@
                                 </tr>
                                 <tr>
                                     <td class="text-sm text-foreground">
-                                        Invoice-2024-lp098y
+                                        Facture-2024-lp098y
                                     </td>
                                     <td class="lg:text-end">
                                         <div class="kt-badge kt-badge-sm kt-badge-success kt-badge-outline">
@@ -783,7 +787,7 @@
                     </div>
                     <div class="kt-card-footer justify-center">
                         <a class="kt-link kt-link-underlined kt-link-dashed" href="#">
-                            View all Payments
+                            Afficher tous les paiements
                         </a>
                     </div>
                 </div>
@@ -795,11 +799,10 @@
                             <div class="flex flex-wrap md:flex-nowrap items-center gap-6 md:gap-10">
                                 <div class="flex flex-col items-start gap-3">
                                     <h2 class="text-xl font-medium text-mono">
-                                        Questions ?
+                                        Des questions ?
                                     </h2>
                                     <p class="text-sm text-foreground leading-5.5 mb-2.5">
-                                        Visit our Help Center for detailed assistance on billing, payments, and
-                                        subscriptions.
+                                        Consultez notre Centre d'aide pour obtenir une assistance détaillée sur la facturation, les paiements et les abonnements.
                                     </p>
                                 </div>
                                 <img alt="image" class="dark:hidden max-h-[150px]"
@@ -810,7 +813,7 @@
                         </div>
                         <div class="kt-card-footer justify-center">
                             <a class="kt-link kt-link-underlined kt-link-dashed" href="">
-                                Go to Help Center
+                                Accéder au Centre d'aide
                             </a>
                         </div>
                     </div>
@@ -819,11 +822,10 @@
                             <div class="flex flex-wrap md:flex-nowrap items-center gap-6 md:gap-10">
                                 <div class="flex flex-col items-start gap-3">
                                     <h2 class="text-xl font-medium text-mono">
-                                        Contact Support
+                                        Contacter le service d'assistance
                                     </h2>
                                     <p class="text-sm text-foreground leading-5.5 mb-2.5">
-                                        Need assistance? Contact our support team for prompt, personalized help your queries
-                                        &amp; concerns.
+                                        Besoin d'aide ? Contactez notre équipe d'assistance pour obtenir une aide rapide et personnalisée pour vos questions et préoccupations.
                                     </p>
                                 </div>
                                 <img alt="image" class="dark:hidden max-h-[150px]"
@@ -833,9 +835,8 @@
                             </div>
                         </div>
                         <div class="kt-card-footer justify-center">
-                            <a class="kt-link kt-link-underlined kt-link-dashed"
-                                href="https://devs.keenthemes.com/unresolved">
-                                Contact Support
+                            <a class="kt-link kt-link-underlined kt-link-dashed" href="">
+                                Contacter le support
                             </a>
                         </div>
                     </div>

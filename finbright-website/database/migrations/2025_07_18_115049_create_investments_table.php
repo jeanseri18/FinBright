@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('investments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // L'investisseur
-            $table->foreignId('loan_request_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('loan_request_id')->constrained()->cascadeOnDelete();
             $table->decimal('amount', 12, 2);
             $table->timestamps();
+            $table->unique(['user_id','loan_request_id']); // 1 ligne par projet dans le panier
         });
     }
 

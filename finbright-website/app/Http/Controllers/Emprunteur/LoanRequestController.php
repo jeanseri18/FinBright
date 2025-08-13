@@ -67,7 +67,7 @@ class LoanRequestController extends Controller
             'assurances' => $resultat['assurances'],
             'total' => $resultat['total'],
             'date_debut' => $date_debut->format('Y-m-d'),
-            'inputs' => $validated
+            // 'inputs' => $validated
         ]);
 
         return response()->json([
@@ -155,7 +155,7 @@ class LoanRequestController extends Controller
             'object' => $validated['object'],
             'description' => $validated['description'],
             'simulation_result' => session('simulate_result'),
-            'debt_params' => session('debt_result.revenus_actuels'),
+            'debt_params' => session('debt_result'),
             'debt_ratio' => session('debt_result.taux_endettement'),
             'status' => 'En attente',
         ]);
@@ -204,42 +204,35 @@ class LoanRequestController extends Controller
         return view('back.emprunteur.demandes.liste', compact('loanRequests'));
     }
     
+    public function details(LoanRequest $loan)
+    {
+        Session::put('menu_actif', 'mes_demandes');
+        if ($loan->user_id !== Auth::id() || $loan->status !== 'En attente') {
+            abort(403, 'Modification interdite.');
+        }
+
+        return view('back.emprunteur.demandes.details', compact('loan'));
+    }
+
+    public function edit(LoanRequest $loan)
+    {
+        Session::put('menu_actif', 'mes_demandes');
+        if ($loan->user_id !== Auth::id() || $loan->status !== 'En attente') {
+            abort(403, 'Modification interdite.');
+        }
+
+        return view('back.emprunteur.demandes.create', compact('loan'));
+    }
+
     public function annuler(LoanRequest $loan)
     {
         if ($loan->user_id !== Auth::id() || $loan->status !== 'En attente') {
             abort(403, 'Action non autorisée.');
         }
 
-        $loan->status = 'annulée';
+        $loan->status = 'Annulée';
         $loan->save();
 
         return redirect()->route('emprunteur.mes-demandes')->with('success', 'Demande annulée avec succès.');
-    }
-
-    public function edit(LoanRequest $loan)
-    {
-        if ($loan->user_id !== Auth::id() || $loan->status !== 'En attente') {
-            abort(403, 'Modification interdite.');
-        }
-
-        return view('back.emprunteur.demandes.edit', compact('loan'));
-    }
-
-    public function update(Request $request, LoanRequest $loan)
-    {
-        if ($loan->user_id !== Auth::id() || $loan->status !== 'En attente') {
-            abort(403);
-        }
-
-        $validated = $request->validate([
-            'amount' => 'required|numeric|min:500',
-            'duration' => 'required|integer|min:6|max:60',
-            'deferred' => 'nullable|boolean',
-            'deferred_months' => 'nullable|integer|min:0|max:36',
-        ]);
-
-        $loan->update($validated);
-
-        return redirect()->route('emprunteur.mes-demandes')->with('success', 'Demande modifiée.');
     }
 }

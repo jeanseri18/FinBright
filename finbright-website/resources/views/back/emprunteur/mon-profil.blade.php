@@ -2024,11 +2024,11 @@
                             </form>
                             <style>
                                 .user-access-bg {
-                                    background-image: url('/static/metronic/tailwind/dist/assets/media/images/2600x1200/bg-5.png');
+                                    background-image: url({{asset('assets/media/images/2600x1200/bg-5.png')}});
                                 }
 
                                 .dark .user-access-bg {
-                                    background-image: url('/static/metronic/tailwind/dist/assets/media/images/2600x1200/bg-5-dark.png');
+                                    background-image: url({{asset('assets/media/images/2600x1200/bg-5-dark.png')}});
                                 }
                             </style>
                             {{-- Supprimer le compte --}}
