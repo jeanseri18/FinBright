@@ -184,38 +184,38 @@
                 const strengthNumber = document.getElementById('strength-number');
                 const strengthSymbol = document.getElementById('strength-symbol');
 
-                // Initial state
                 registrationStep.classList.add('hidden');
                 eligibilityMessage.classList.add('hidden');
 
-                // Function to check eligibility
                 function checkEligibility() {
-                    const isStudent = document.querySelector('input[name="is_student"]:checked');
-                    const isAdult = document.querySelector('input[name="is_adult"]:checked');
-                    const isResident = document.querySelector('input[name="is_resident"]:checked');
+                    const answers = Array.from(eligibilityQuestions)
+                        .filter(q => q.checked)
+                        .map(q => q.value);
 
-                    if (isStudent && isAdult && isResident &&
-                        isStudent.value === 'yes' &&
-                        isAdult.value === 'yes' &&
-                        isResident.value === 'yes') {
-                        // All criteria met
+                    const allYes = answers.length === 3 && answers.every(val => val === 'yes');
+                    const anyNo = answers.includes('no');
+
+                    if (allYes) {
                         eligibilityStep.classList.add('hidden');
                         eligibilityMessage.classList.add('hidden');
                         registrationStep.classList.remove('hidden');
-                    } else if (isStudent || isAdult || isResident) {
-                        // At least one answer is "No" or not all "Yes"
-                        eligibilityStep.classList.remove('hidden'); // Ensure eligibility step is visible
-                        eligibilityMessage.classList.remove('hidden');
+                    } else {
                         registrationStep.classList.add('hidden');
+                        eligibilityStep.classList.remove('hidden');
+
+                        // Affiche seulement si au moins un "Non" est coché
+                        if (anyNo) {
+                            eligibilityMessage.classList.remove('hidden');
+                        } else {
+                            eligibilityMessage.classList.add('hidden');
+                        }
                     }
                 }
 
-                // Add event listeners to eligibility questions
                 eligibilityQuestions.forEach(question => {
                     question.addEventListener('change', checkEligibility);
                 });
 
-                // Function to update password strength indicator
                 function updatePasswordStrength() {
                     const password = passwordInput.value;
                     const hasLength = password.length >= 8;
@@ -223,49 +223,23 @@
                     const hasNumber = /[0-9]/.test(password);
                     const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
 
-                    // Update length indicator
-                    if (hasLength) {
-                        strengthLength.classList.remove('bg-gray-200');
-                        strengthLength.classList.add('bg-green-500');
-                    } else {
-                        strengthLength.classList.remove('bg-green-500');
-                        strengthLength.classList.add('bg-gray-200');
-                    }
+                    const indicators = [
+                        { condition: hasLength, element: strengthLength },
+                        { condition: hasUppercase, element: strengthUppercase },
+                        { condition: hasNumber, element: strengthNumber },
+                        { condition: hasSymbol, element: strengthSymbol }
+                    ];
 
-                    // Update uppercase indicator
-                    if (hasUppercase) {
-                        strengthUppercase.classList.remove('bg-gray-200');
-                        strengthUppercase.classList.add('bg-green-500');
-                    } else {
-                        strengthUppercase.classList.remove('bg-green-500');
-                        strengthUppercase.classList.add('bg-gray-200');
-                    }
-
-                    // Update number indicator
-                    if (hasNumber) {
-                        strengthNumber.classList.remove('bg-gray-200');
-                        strengthNumber.classList.add('bg-green-500');
-                    } else {
-                        strengthNumber.classList.remove('bg-green-500');
-                        strengthNumber.classList.add('bg-gray-200');
-                    }
-
-                    // Update symbol indicator
-                    if (hasSymbol) {
-                        strengthSymbol.classList.remove('bg-gray-200');
-                        strengthSymbol.classList.add('bg-green-500');
-                    } else {
-                        strengthSymbol.classList.remove('bg-green-500');
-                        strengthSymbol.classList.add('bg-gray-200');
-                    }
+                    indicators.forEach(({ condition, element }) => {
+                        element.classList.toggle('bg-green-500', condition);
+                        element.classList.toggle('bg-gray-200', !condition);
+                    });
                 }
 
-                // Add event listener to password input
                 if (passwordInput) {
                     passwordInput.addEventListener('input', updatePasswordStrength);
                 }
 
-                // Call checkEligibility on page load to handle initial state if old() values are present (e.g., after validation error)
                 checkEligibility();
             });
         </script>

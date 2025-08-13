@@ -138,7 +138,8 @@ class LoanRequestController extends Controller
             'taux_endettement' => $validated['taux_endettement']
         ]);
 
-        return view('back.emprunteur.demandes.create');
+        $loan = null;
+        return view('back.emprunteur.demandes.create', compact('loan'));
     }
 
     public function saveDemande(Request $request)

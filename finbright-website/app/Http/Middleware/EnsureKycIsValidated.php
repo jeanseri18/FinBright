@@ -10,10 +10,10 @@ class EnsureKycIsValidated
     public function handle(Request $request, Closure $next)
     {
         $user = $request->user();
-        // if (!$user || $user->kyc_status !== 'Validé') {
-        //     return redirect()->route('investisseur.profil')
-        //         ->with('error', 'Veuillez compléter et faire valider votre KYC pour accéder à cette section.');
-        // }
+        if (!$user || $user->kyc_status !== 'Validé') {
+            return redirect()->route('investisseur.profil')
+                ->with('error', 'Veuillez compléter et faire valider votre KYC pour accéder à cette section.');
+        }
         return $next($request);
     }
 }
