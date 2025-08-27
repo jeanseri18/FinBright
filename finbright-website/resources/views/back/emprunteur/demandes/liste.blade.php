@@ -178,8 +178,8 @@
                     <div class="kt-card p-8 lg:p-12">
                         <div class="kt-card-content">
                             <div class="grid justify-center py-5">
-                                <img alt="" class="dark:hidden max-h-[170px]" src="/static/metronic/tailwind/dist/assets/media/illustrations/11.svg"/>
-                                <img alt="" class="light:hidden max-h-[170px]" src="/static/metronic/tailwind/dist/assets/media/illustrations/11-dark.svg"/>
+                                <img alt="" class="dark:hidden max-h-[170px]" src="{{asset('assets/media/illustrations/11.svg')}}"/>
+                                <img alt="" class="light:hidden max-h-[170px]" src="{{asset('assets/media/illustrations/11-dark.svg')}}"/>
                             </div>
                             <div class="text-lg font-medium text-mono text-center">
                                 Aucun projet pour l'instant

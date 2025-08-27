@@ -786,7 +786,7 @@
                                 <div class="kt-avatar size-8">
                                     <div class="kt-avatar-image">
                                         <img alt="avatar"
-                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-15.png" />
+                                            src="{{asset('assets/media/avatars/300-15.png')}}" />
                                     </div>
                                     <div class="kt-avatar-indicator -end-2 -bottom-2">
                                         <div class="kt-avatar-status kt-avatar-status-online size-2.5">
@@ -1133,7 +1133,7 @@
                                 <div class="kt-avatar size-8">
                                     <div class="kt-avatar-image">
                                         <img alt="avatar"
-                                            src="/static/metronic/tailwind/dist/assets/media/avatars/300-1.png">
+                                            src="{{asset('assets/media/avatars/300-1.png')}}">
                                         </img>
                                     </div>
                                     <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -1936,10 +1936,10 @@
                             </div>
                         </li> --}}
                         <li>
-                            <a class="kt-dropdown-menu-link" href="{{route('emprunteur.mes-demandes')}}">
+                            <a class="kt-dropdown-menu-link" href="{{route('emprunteur.loan-requests.details', ['loan' => Auth::user()->loanRequests ? Auth::user()->loanRequests->last() : null])}}">
                                 <i class="ki-filled ki-message-programming">
                                 </i>
-                                Mes demandes
+                                Mon projet
                             </a>
                         </li>
                         <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start"
@@ -2042,10 +2042,10 @@
                     <div
                         class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono {{ session('menu_actif') === 'mes_demandes' ? 'here' : '' }}">
                         <a class="kt-menu-link gap-2.5 pb-2 lg:pb-4"
-                            href="{{route('emprunteur.mes-demandes')}}" tabindex="0">
+                            href="{{route('emprunteur.loan-requests.details', ['loan' => Auth::user()->loanRequests ? Auth::user()->loanRequests->last() : null])}}" tabindex="0">
                             <span
                                 class="kt-menu-title text-nowrap text-sm text-foreground kt-menu-item-active:text-mono kt-menu-item-active:font-medium kt-menu-item-here:text-mono kt-menu-item-here:font-medium kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
-                                Mes demandes
+                                Mon projet
                             </span>
                         </a>
                     </div>

@@ -142,7 +142,7 @@ Contact:
                         <div class="flex flex-col px-5 gap-1">
                             <div class="flex flex-center">
                                 <label for="type" class="text-mono font-semibold text-sm">
-                                    Date de début
+                                    Date de début de remboursement
                                 </label>
                             </div>
                             <div class="flex flex-wrap md:flex-nowrap justify-between gap-2.5">
@@ -153,6 +153,7 @@ Contact:
                                     data-kt-select-config='{
                                         "optionsClass": "kt-scrollable overflow-auto max-h-[250px]"
                                     }'
+                                    required
                                     >
                                     <option>Janvier</option>
                                     <option>Février</option>
@@ -174,6 +175,7 @@ Contact:
                                     data-kt-select-config='{
                                         "optionsClass": "kt-scrollable overflow-auto max-h-[250px]"
                                     }'
+                                    required
                                     >
                                     <option>2025</option>
                                     <option>2026</option>
@@ -193,42 +195,43 @@ Contact:
                         <div class="flex flex-col px-5 gap-1">
                             <div class="flex flex-center">
                                 <label for="amount" class="text-mono font-semibold text-sm">
-                                    Montant du prêt (€) :
+                                    Montant du prêt :
                                 </label>
                             </div>
-                            <label class="kt-input">
-                                <input type="number" id="amount" name="amount" required min="500" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
-                            </label>
+                            <div class="kt-input-group">
+                                <input class="kt-input" type="text" id="amount" name="amount" required min="500" max="100000" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                                <span class="kt-input-addon kt-input-addon-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-euro" aria-hidden="true">
+                                        <path d="M4 10h12"></path>
+                                        <path d="M4 14h9"></path>
+                                        <path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"></path>
+                                    </svg>
+                                </span>
+                            </div>
                         </div>
 
                         <div class="flex flex-col px-5 gap-1">
                             <div class="flex flex-center">
                                 <label for="duration" class="text-mono font-semibold text-sm">
-                                    Durée (mois)
+                                    Durée de remboursement
                                 </label>
                             </div>
-                            <label class="kt-input">
-                                <input type="number" id="duration" name="duration" required min="24" max="84" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
-                            </label>
+                            <div class="kt-input-group">
+                                <input class="kt-input" type="text" id="duration" name="duration" required min="24" max="84" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                                <span class="kt-input-addon">mois</span>
+                            </div>
                         </div>
 
                         <div class="flex flex-col px-5 gap-1">
                             <div class="flex flex-center">
                                 <label for="taux_interet" class="text-mono font-semibold text-sm">
-                                    Taux d'intérêt
+                                    Taux d'intérêt <b>{{ Auth::user()->riskLevel ? Auth::user()->riskLevel->yield .'%' : 'Indefinie' }}</b>
                                 </label>
                             </div>
-                            <select name="taux_interet" id="taux_interet"
-                                class="kt-select"
-                                data-kt-select="true"
-                                data-kt-select-placeholder="Sélectionner un taux"
-                                data-kt-select-config='{
-                                    "optionsClass": "kt-scrollable overflow-auto max-h-[250px]"
-                                }'
-                                >
-                                <option value="3">3%</option>
-                                <option value="4">4%</option>
-                            </select>
+                            <div class="">
+                                <input type="hidden" name="taux_interet" value="{{  Auth::user()->riskLevel ? Auth::user()->riskLevel->yield : 0 }}">
+                                <i>"Ce taux généré est proposé sur la base de vos informations. Il est indicatif et ne vaut pas contrat."</i>
+                            </div>
                         </div>
 
                         <div class="flex flex-col px-5 gap-1">
@@ -244,8 +247,10 @@ Contact:
                                 data-kt-select-config='{
                                     "optionsClass": "kt-scrollable overflow-auto max-h-[250px]"
                                 }'
+                                required
                                 >
-                                <option value="1">1%</option>
+                                <option value="0" selected>0%</option>
+                                <option value="0.5">0,5%</option>
                             </select>
                         </div>
 
@@ -267,12 +272,13 @@ Contact:
                         <div class="flex flex-col px-5 gap-1 deferred_div">
                             <div class="flex flex-center">
                                 <label for="deferred_months" class="text-mono font-semibold text-sm">
-                                    Durée du différé (mois) :
+                                    Durée du différé :
                                 </label>
                             </div>
-                            <label class="kt-input">
-                                <input type="number" name="deferred_months" min="3" max="6" disabled onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
-                            </label>
+                            <div class="kt-input-group">
+                                <input class="kt-input" type="number" name="deferred_months" min="3" max="6" disabled onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                                <span class="kt-input-addon">mois</span>
+                            </div>
                         </div>
 
                         <div class="flex flex-col px-5 gap-4 pt-4">
@@ -288,16 +294,11 @@ Contact:
             <div class="kt-modal-content max-w-xl">
                 <div class="kt-modal-header">
                     <h3 class="kt-modal-title">Résultat de la simulation</h3>
-                    <button
-                    type="button"
-                    class="kt-modal-close"
-                    aria-label="Close modal"
-                    data-kt-modal-dismiss="#modal_two"
-                    >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true">
-                        <path d="M18 6 6 18"></path>
-                        <path d="m6 6 12 12"></path>
-                    </svg>
+                    <button type="button" class="kt-modal-close" aria-label="Close modal" data-kt-modal-dismiss="#modal_two">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true">
+                            <path d="M18 6 6 18"></path>
+                            <path d="m6 6 12 12"></path>
+                        </svg>
                     </button>
                 </div>
                 <div class="kt-modal-body space-y-4">
@@ -309,44 +310,140 @@ Contact:
                 <div class="kt-modal-header">
                     <h3 class="kt-modal-title">Évaluation du taux d’endettement</h3>
                     <button type="button" class="kt-modal-close" aria-label="Close modal" data-kt-modal-dismiss="#modal_debt_check">
-                        <!-- Icône close -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true">
+                            <path d="M18 6 6 18"></path>
+                            <path d="m6 6 12 12"></path>
+                        </svg>
                     </button>
                 </div>
                 <form action="{{ route('emprunteur.create.demande') }}" method="POST" id="form_debt_check" class="kt-modal-body space-y-4">
                     @csrf
                     <div class="flex flex-col gap-3">
                         <label class="kt-label grid md:grid-cols-2">
-                            <span class="">Revenus actuels mensuels (€)</span>
-                            <input type="number" name="revenus_actuels" class="kt-input" value="0" required onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                            <span class="">Revenus actuels mensuels</span>
+                            <div class="kt-input-group">
+                                <input type="text" name="revenus_actuels" class="kt-input" value="0" required onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                                <span class="kt-input-addon kt-input-addon-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-euro" aria-hidden="true">
+                                        <path d="M4 10h12"></path>
+                                        <path d="M4 14h9"></path>
+                                        <path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"></path>
+                                    </svg>
+                                </span>
+                            </div>
                         </label>
 
                         <label class="kt-label grid md:grid-cols-2">
-                            <span class="">Revenus potentiel après diplôme (€)</span>
-                            <input type="number" name="revenus_futurs" class="kt-input" value="0" required onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                            <span class="">Revenus potentiel mensuel après diplômation</span>
+                            <div class="kt-input-group">
+                                <input type="text" name="revenus_futurs" class="kt-input" value="0" required onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                                <span class="kt-input-addon kt-input-addon-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-euro" aria-hidden="true">
+                                        <path d="M4 10h12"></path>
+                                        <path d="M4 14h9"></path>
+                                        <path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"></path>
+                                    </svg>
+                                </span>
+                            </div>
                         </label>
 
                         <label class="kt-label grid md:grid-cols-2">
-                            <span class="">Soutien ou garant ? (Montant mensuel d’aide éventuelle)</span>
-                            <input type="number" name="garant" class="kt-input" value="0" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                            <span class="">Soutien ou garant mensuel</span>
+                            <div class="kt-input-group">
+                                <input type="text" name="garant" class="kt-input" value="0" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                                <span class="kt-input-addon kt-input-addon-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-euro" aria-hidden="true">
+                                        <path d="M4 10h12"></path>
+                                        <path d="M4 14h9"></path>
+                                        <path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"></path>
+                                    </svg>
+                                </span>
+                            </div>
                         </label>
 
                         <label class="kt-label grid md:grid-cols-2">
-                            <span class="">Autres dettes en cours (€ / mois)</span>
-                            <input type="number" name="dettes" class="kt-input" value="0" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                            <span class="">Montant de la scolarité</span>
+                            <div class="kt-input-group">
+                                <input type="text" name="scolarite" class="kt-input" value="0" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                                <span class="kt-input-addon kt-input-addon-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-euro" aria-hidden="true">
+                                        <path d="M4 10h12"></path>
+                                        <path d="M4 14h9"></path>
+                                        <path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"></path>
+                                    </svg>
+                                </span>
+                            </div>
                         </label>
 
                         <label class="kt-label grid md:grid-cols-2">
-                            <span class="">Autres charges (€ / mois)</span>
-                            <input type="number" name="charges" class="kt-input" value="0" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                            <span class="">Frais de subsistance (mensuel)</span>
+                            <div class="kt-input-group">
+                                <input type="text" name="frais_subsistance" class="kt-input" value="0" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                                <span class="kt-input-addon kt-input-addon-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-euro" aria-hidden="true">
+                                        <path d="M4 10h12"></path>
+                                        <path d="M4 14h9"></path>
+                                        <path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                        </label>
+
+                        <label class="kt-label grid md:grid-cols-2">
+                            <span class="">Dettes en cours (mensuel)</span>
+                            <div class="kt-input-group">
+                                <input type="text" name="dettes" class="kt-input" value="0" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                                <span class="kt-input-addon kt-input-addon-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-euro" aria-hidden="true">
+                                        <path d="M4 10h12"></path>
+                                        <path d="M4 14h9"></path>
+                                        <path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                        </label>
+
+                        <label class="kt-label grid md:grid-cols-2">
+                            <span class="">Autres charges (loyer, transport, etc...)</span>
+                            <div class="kt-input-group">
+                                <input type="text" name="charges" class="kt-input" value="0" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                                <span class="kt-input-addon kt-input-addon-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-euro" aria-hidden="true">
+                                        <path d="M4 10h12"></path>
+                                        <path d="M4 14h9"></path>
+                                        <path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"></path>
+                                    </svg>
+                                </span>
+                            </div>
                         </label>
                     </div>
 
                     <div class="flex justify-end gap-4 pt-4">
-                        <button type="button" class="kt-btn kt-btn-secondary" data-kt-modal-dismiss="#modal_debt_check">
-                            Annuler
+                        @php
+                            if (Auth::user()->loanRequests && $loan = Auth::user()->loanRequests->last()) {
+                                $disabled = $loan->status != "Terminé";
+                            }
+                            else $disabled = false;
+                        @endphp
+                        <button type="button" class="kt-btn kt-btn-secondary" data-kt-modal-toggle="#modal_simulate_result">
+                            Retour
                         </button>
                         <button id="check_debt" class="kt-btn" type="button">Vérifier</button>
-                        <button id="submit_demand" class="kt-btn hidden" type="submit">Soumettre la demande</button>
+                        <button id="submit_demand" class="kt-btn hidden" 
+                            type="submit" 
+                            @if($disabled) 
+                                disabled 
+                                data-kt-tooltip="true" data-kt-tooltip-placement="top-end"
+                            @endif
+                        >
+                            Soumettre une demande
+                            @if($disabled)
+                            <i class="ki-filled ki-information-2 text-muted-foreground text-sm ms-2"></i>
+                            <span data-kt-tooltip-content="true" class="kt-tooltip">
+                                <span class="flex items-center gap-1.5"><i class="ki-filled ki-information-2 text-muted-foreground text-sm"></i>Vous avez déjà une demande en cours</span>
+                            </span>
+                            @endif
+                        </button>
                     </div>
                 </form>
             </div>
@@ -395,13 +492,13 @@ Contact:
                                     <span>Coût de l'assurance :</span> <strong class="text-xl text-warning">${data.assurances} €</strong>
                                 </div>
                                 <div class="md:col-span-2 rounded-lg bg-white flex flex-col justify-center items-center gap-1 p-3">
-                                    <span>Coût total du prêt :</span> <strong class="text-2xl text-primary">${(data.total + data.amount).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</strong>
+                                    <span>Coût total du prêt :</span> <strong class="text-2xl text-primary">${data.total} €</strong>
                                 </div>
                             </div>
 
                             <div class="flex justify-end gap-4 pt-4">
-                                <button type="button" class="kt-btn kt-btn-secondary" data-kt-modal-dismiss="#modal_simulate_result">
-                                    Fermer
+                                <button type="button" class="kt-btn kt-btn-secondary" data-kt-modal-toggle="#modal_simulate">
+                                    Retour
                                 </button>
                                 <button class="kt-btn" id="btn_show_debt_check" type="button">Évaluer votre taux d'endettement</button>
                             </div>
@@ -446,12 +543,14 @@ Contact:
                 const revenusActuels = parseFloat(form.revenus_actuels.value || 0);
                 const revenusFuturs = parseFloat(form.revenus_futurs.value || 0);
                 const garant = parseFloat(form.garant.value || 0);
+                const scolarite = parseFloat(form.scolarite.value || 0);
+                const frais_subsistance = parseFloat(form.frais_subsistance.value || 0);
                 const dettes = parseFloat(form.dettes.value || 0);
                 const charges = parseFloat(form.charges.value || 0);
                 const submitBtn = document.getElementById('submit_demand');
 
                 const revenusTotaux = revenusActuels + revenusFuturs + garant;
-                const depensesTotaux = dettes + charges;
+                const depensesTotaux = dettes + charges + scolarite + frais_subsistance;
                 const tauxEndettement = revenusTotaux > 0 ? (depensesTotaux / revenusTotaux) * 100 : 100;
 
                 // Supprimer une ancienne alerte

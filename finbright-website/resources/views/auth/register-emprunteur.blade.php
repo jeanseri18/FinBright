@@ -157,7 +157,7 @@
                     <input class="kt-checkbox kt-checkbox-sm" name="check" type="checkbox" value="1" required/>
                     <span class="kt-checkbox-label">
                         J'ai lu et j'accepte les 
-                        <a class="text-sm link" href="#">
+                        <a class="kt-link kt-link-underlined kt-link-dashed" href="{{route('terms-of-use')}}" target="_blank">
                             Termes &amp; Conditions générales
                         </a>
                     </span>

@@ -35,7 +35,9 @@ class User extends Authenticatable
         'graduation_date',
         'etablissement_id',
         'profile_picture_id',
-        'is_profile_completed'
+        'is_profile_completed',
+        'profession',
+        'type_of_lender',
     ];
 
     protected $casts = [
@@ -44,6 +46,9 @@ class User extends Authenticatable
         'address' => 'array',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'password_changed_at' => 'datetime',
+        'profession',
+        'type_of_lender'
     ];
 
     protected $hidden = [
@@ -51,36 +56,30 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // Champs nécessaires pour dire que le profil est complété
-    protected $profileRequiredFields = [
-        'civility',
-        'last_name',
-        'first_name',
-        'email',
-        'password',
-        'birth_date',
-        'birth_place',
-        'nationality',
-        'address',
-        'phone_number',
-        'diploma',
-        'specialization',
-        'current_study_year',
-        'remaining_years',
-        'graduation_date',
-        'etablissement_id',
-        'profile_picture_id',
+    protected static $requiredFields = [
+        // Champs nécessaires pour dire que le profil emprunteur est complété
+        'emprunteur' => [
+            'civility', 'last_name', 'first_name', 'email', 'password', 'birth_date',
+            'birth_place', 'nationality', 'address', 'phone_number', 'diploma',
+            'specialization', 'current_study_year', 'remaining_years',
+            'graduation_date', 'etablissement_id', 'profile_picture_id',
+        ],
+        // Champs nécessaires pour dire que le profil investisseur est complété
+        'investisseur' => [
+            'civility', 'last_name', 'first_name', 'email', 'password', 'birth_date',
+            'birth_place', 'nationality', 'address', 'phone_number', 'profession',
+            'type_of_lender', 'profile_picture_id',
+        ],
     ];
 
     protected static function boot()
     {
         parent::boot();
-
+        
         static::saving(function ($user) {
-            $isCompleted = collect($user->profileRequiredFields)
+            $fields = static::$requiredFields[$user->getRoleNames()->first()] ?? [];
+            $user->is_profile_completed = collect($fields)
                 ->every(fn($field) => !empty($user->{$field}));
-
-            $user->is_profile_completed = $isCompleted;
         });
     }
 
@@ -88,7 +87,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Files::class, 'profile_picture_id');
     }
-
+    
+    public function legalEntity()
+    {
+        return $this->hasOne(LegalEntity::class);
+    }
+    
     public function etablissement()
     {
         return $this->belongsTo(Etablissement::class);
@@ -112,6 +116,11 @@ class User extends Authenticatable
     public function documents()
     {
         return $this->hasMany(UserDocument::class);
+    }
+
+    public function riskLevel()
+    {
+        return $this->belongsTo(RiskLevel::class);
     }
 
     public function notificationPreference()

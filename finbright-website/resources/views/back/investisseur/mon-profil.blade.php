@@ -40,22 +40,36 @@
                             <span
                                 class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
                             </span>
-                            Informations Personnelles
+                            {{ Auth::user()->type_of_lender == "Personne physique" ? 'Informations Personnelles' : 'Identification de la Personne Morale' }}
                         </a>
                         <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-1.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
                             data-kt-scrollspy-anchor="true" href="#advanced_settings_address">
                             <span
                                 class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
                             </span>
-                            KYC
+                            Adresse postale
                         </a>
-                        <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-1.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
-                            data-kt-scrollspy-anchor="true" href="#advanced_settings_preferences">
-                            <span
-                                class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
-                            </span>
-                            Déclarer IBAN
-                        </a>
+                        <div class="flex flex-col">
+                            <div class="pl-6 pr-2.5 py-2.5 text-sm font-semibold text-mono">
+                                Documents justificatifs
+                            </div>
+                            <div class="flex flex-col">
+                                <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
+                                    data-kt-scrollspy-anchor="true" href="#external_services_integrations">
+                                    <span
+                                        class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
+                                    </span>
+                                    Justificatifs Obligatoires
+                                </a>
+                                <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
+                                    data-kt-scrollspy-anchor="true" href="#advanced_settings_preferences">
+                                    <span
+                                        class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
+                                    </span>
+                                    Déclaration IBAN
+                                </a>
+                            </div>
+                        </div>
                         <div class="flex flex-col">
                             <div class="pl-6 pr-2.5 py-2.5 text-sm font-semibold text-mono">
                                 Paramètres avancés
@@ -123,7 +137,10 @@
                 </div>
             </div>
             <div class="flex flex-col items-stretch grow gap-5 lg:gap-7.5">
-                @if (!Auth::user()->kyc_status !== 'Validé')
+                @if (
+                    // !Auth::user()->kyc_status !== 'Validé' or
+                    !Auth::user()->is_profile_completed
+                )
                 <div class="kt-alert kt-alert-light kt-alert-destructive" id="alert_4">
                     <div class="kt-alert-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info" aria-hidden="true">
@@ -132,7 +149,7 @@
                             <path d="M12 8h.01"></path>
                         </svg>
                     </div>
-                    <div class="kt-alert-title">Veuillez compléter et faire valider votre KYC avant de continuer la navigation</div>
+                    <div class="kt-alert-title">Veuillez compléter vos informations avant de continuer la navigation</div>
                     <div class="kt-alert-toolbar">
                         <div class="kt-alert-actions">
                             <button class="kt-link kt-link-xs kt-link-underlined text-mono" data-kt-dismiss="#alert_4">
@@ -147,13 +164,15 @@
                     </div>
                 </div>
                 @endif
+                @if (Auth::user()->type_of_lender == "Personne physique")
+                {{-- Informations Personnelles --}}
                 <div class="kt-card pb-2.5">
                     <div class="kt-card-header" id="basic_settings">
                         <h3 class="kt-card-title">
                             Informations Personnelles
                         </h3>
                     </div>
-                    <form action="{{ route('emprunteur.profil.general.update') }}" method="post" enctype="multipart/form-data" class="kt-card-content grid gap-5">
+                    <form action="{{ route('profil.general.update') }}" method="post" enctype="multipart/form-data" class="kt-card-content grid gap-5">
                         @csrf
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
@@ -213,7 +232,13 @@
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
-                                Pays de résidence <span class="text-destructive">*</span>
+                                Date de naissance <span class="text-destructive">*</span>
+                            </label>
+                            <input class="kt-input" name="birth_date" placeholder="JJ/MM/AAAA" type="date" value="{{ \Carbon\Carbon::parse(Auth::user()->birth_date)->format('Y-m-d') ?? null }}" />
+                        </div>
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label max-w-56">
+                                Lieu de naissance <span class="text-destructive">*</span>
                             </label>
                             <div class="grow">
                                 <select name="birth_place" class="kt-select" name="pays" data-kt-select="true">
@@ -230,601 +255,6 @@
                                     <option {{ Auth::user()->birth_place == 'Senegal' ? 'selected' : '' }}>Senegal</option>
                                     <option {{ Auth::user()->birth_place == 'Mali' ? 'selected' : '' }}>Mali</option>
                                 </select>
-
-                                {{-- <select class="kt-select {class if class else ''}" data-kt-select="true"
-                                    data-kt-select-config='{
-                                        "optionsClass": "kt-scrollable overflow-auto max-h-[250px]",
-                                        "displayTemplate": "&lt;div class=\"flex items-center leading-none gap-2\"&gt;@{{ flag }}&lt;span class=\"text-foreground\"&gt;@{{ text }}&lt;/span&gt;&lt;/div&gt;",
-                                        "optionTemplate": "&lt;div class=\"flex items-center leading-none gap-2\"&gt;@{{ flag }} &lt;span class=\"text-foreground\"&gt;@{{ text }}&lt;/span&gt;&lt;/div&gt;&lt;svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"size-3.5 ms-auto hidden text-primary kt-select-option-selected:block\"&gt;&lt;path d=\"M20 6 9 17l-5-5\"/&gt;&lt;/svg&gt;&lt;/div&gt;"
-                                    }'
-                                    data-kt-select-enable-search="true" data-kt-select-placeholder="Select a country..."
-                                    data-kt-select-search-placeholder="Search...">
-                                    <option data-kt-select-option='{"flag": "🇦🇫"}' value="Afghanistan">
-                                        Afghanistan
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇦🇱"}' value="Albania">
-                                        Albania
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇩🇿"}' value="Algeria">
-                                        Algeria
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇦🇩"}' value="Andorra">
-                                        Andorra
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇦🇴"}' value="Angola">
-                                        Angola
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇦🇬"}' value="Antigua and Barbuda">
-                                        Antigua and Barbuda
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇦🇷"}' value="Argentina">
-                                        Argentina
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇦🇲"}' value="Armenia">
-                                        Armenia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇦🇺"}' value="Australia">
-                                        Australia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇦🇹"}' value="Austria">
-                                        Austria
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇦🇿"}' value="Azerbaijan">
-                                        Azerbaijan
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇧🇸"}' value="Bahamas">
-                                        Bahamas
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇧🇭"}' value="Bahrain">
-                                        Bahrain
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇧🇩"}' value="Bangladesh">
-                                        Bangladesh
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇧🇧"}' value="Barbados">
-                                        Barbados
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇧🇾"}' value="Belarus">
-                                        Belarus
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇧🇪"}' value="Belgium">
-                                        Belgium
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇧🇿"}' value="Belize">
-                                        Belize
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇧🇯"}' value="Benin">
-                                        Benin
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇧🇹"}' value="Bhutan">
-                                        Bhutan
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇧🇴"}' value="Bolivia">
-                                        Bolivia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇧🇦"}' value="Bosnia and Herzegovina">
-                                        Bosnia and Herzegovina
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇧🇼"}' value="Botswana">
-                                        Botswana
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇧🇷"}' value="Brazil">
-                                        Brazil
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇧🇳"}' value="Brunei">
-                                        Brunei
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇧🇬"}' value="Bulgaria">
-                                        Bulgaria
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇧🇫"}' value="Burkina Faso">
-                                        Burkina Faso
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇧🇮"}' value="Burundi">
-                                        Burundi
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇨🇻"}' value="Cabo Verde">
-                                        Cabo Verde
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇰🇭"}' value="Cambodia">
-                                        Cambodia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇨🇲"}' value="Cameroon">
-                                        Cameroon
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇨🇦"}' value="Canada">
-                                        Canada
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇨🇫"}' value="Central African Republic">
-                                        Central African Republic
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇹🇩"}' value="Chad">
-                                        Chad
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇨🇱"}' value="Chile">
-                                        Chile
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇨🇳"}' value="China">
-                                        China
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇨🇴"}' value="Colombia">
-                                        Colombia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇰🇲"}' value="Comoros">
-                                        Comoros
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇨🇬"}' value="Congo (Congo-Brazzaville)">
-                                        Congo (Congo-Brazzaville)
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇨🇷"}' value="Costa Rica">
-                                        Costa Rica
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇭🇷"}' value="Croatia">
-                                        Croatia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇨🇺"}' value="Cuba">
-                                        Cuba
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇨🇾"}' value="Cyprus">
-                                        Cyprus
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇨🇿"}' value="Czechia">
-                                        Czechia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇨🇩"}' value="Democratic Republic of the Congo">
-                                        Democratic Republic of the Congo
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇩🇰"}' value="Denmark">
-                                        Denmark
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇩🇯"}' value="Djibouti">
-                                        Djibouti
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇩🇲"}' value="Dominica">
-                                        Dominica
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇩🇴"}' value="Dominican Republic">
-                                        Dominican Republic
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇪🇨"}' value="Ecuador">
-                                        Ecuador
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇪🇬"}' value="Egypt">
-                                        Egypt
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇻"}' value="El Salvador">
-                                        El Salvador
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇬🇶"}' value="Equatorial Guinea">
-                                        Equatorial Guinea
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇪🇷"}' value="Eritrea">
-                                        Eritrea
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇪🇪"}' value="Estonia">
-                                        Estonia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇿"}' value="Eswatini">
-                                        Eswatini
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇪🇹"}' value="Ethiopia">
-                                        Ethiopia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇫🇯"}' value="Fiji">
-                                        Fiji
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇫🇮"}' value="Finland">
-                                        Finland
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇫🇷"}' value="France">
-                                        France
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇬🇦"}' value="Gabon">
-                                        Gabon
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇬🇲"}' value="Gambia">
-                                        Gambia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇬🇪"}' value="Georgia">
-                                        Georgia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇩🇪"}' value="Germany">
-                                        Germany
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇬🇭"}' value="Ghana">
-                                        Ghana
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇬🇷"}' value="Greece">
-                                        Greece
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇬🇩"}' value="Grenada">
-                                        Grenada
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇬🇹"}' value="Guatemala">
-                                        Guatemala
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇬🇳"}' value="Guinea">
-                                        Guinea
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇬🇼"}' value="Guinea-Bissau">
-                                        Guinea-Bissau
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇬🇾"}' value="Guyana">
-                                        Guyana
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇭🇹"}' value="Haiti">
-                                        Haiti
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇭🇳"}' value="Honduras">
-                                        Honduras
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇭🇺"}' value="Hungary">
-                                        Hungary
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇮🇸"}' value="Iceland">
-                                        Iceland
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇮🇳"}' value="India">
-                                        India
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇮🇩"}' value="Indonesia">
-                                        Indonesia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇮🇷"}' value="Iran">
-                                        Iran
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇮🇶"}' value="Iraq">
-                                        Iraq
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇮🇪"}' value="Ireland">
-                                        Ireland
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇮🇱"}' value="Israel">
-                                        Israel
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇮🇹"}' value="Italy">
-                                        Italy
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇯🇲"}' value="Jamaica">
-                                        Jamaica
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇯🇵"}' value="Japan">
-                                        Japan
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇯🇴"}' value="Jordan">
-                                        Jordan
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇰🇿"}' value="Kazakhstan">
-                                        Kazakhstan
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇰🇪"}' value="Kenya">
-                                        Kenya
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇰🇮"}' value="Kiribati">
-                                        Kiribati
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇰🇼"}' value="Kuwait">
-                                        Kuwait
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇰🇬"}' value="Kyrgyzstan">
-                                        Kyrgyzstan
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇱🇦"}' value="Laos">
-                                        Laos
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇱🇻"}' value="Latvia">
-                                        Latvia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇱🇧"}' value="Lebanon">
-                                        Lebanon
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇱🇸"}' value="Lesotho">
-                                        Lesotho
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇱🇷"}' value="Liberia">
-                                        Liberia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇱🇾"}' value="Libya">
-                                        Libya
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇱🇮"}' value="Liechtenstein">
-                                        Liechtenstein
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇱🇹"}' value="Lithuania">
-                                        Lithuania
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇱🇺"}' value="Luxembourg">
-                                        Luxembourg
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇬"}' value="Madagascar">
-                                        Madagascar
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇼"}' value="Malawi">
-                                        Malawi
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇾"}' value="Malaysia">
-                                        Malaysia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇻"}' value="Maldives">
-                                        Maldives
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇱"}' value="Mali">
-                                        Mali
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇹"}' value="Malta">
-                                        Malta
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇭"}' value="Marshall Islands">
-                                        Marshall Islands
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇷"}' value="Mauritania">
-                                        Mauritania
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇺"}' value="Mauritius">
-                                        Mauritius
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇽"}' value="Mexico">
-                                        Mexico
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇫🇲"}' value="Micronesia">
-                                        Micronesia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇩"}' value="Moldova">
-                                        Moldova
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇨"}' value="Monaco">
-                                        Monaco
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇳"}' value="Mongolia">
-                                        Mongolia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇪"}' value="Montenegro">
-                                        Montenegro
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇦"}' value="Morocco">
-                                        Morocco
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇿"}' value="Mozambique">
-                                        Mozambique
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇲"}' value="Myanmar">
-                                        Myanmar
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇳🇦"}' value="Namibia">
-                                        Namibia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇳🇷"}' value="Nauru">
-                                        Nauru
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇳🇵"}' value="Nepal">
-                                        Nepal
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇳🇱"}' value="Netherlands">
-                                        Netherlands
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇳🇿"}' value="New Zealand">
-                                        New Zealand
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇳🇮"}' value="Nicaragua">
-                                        Nicaragua
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇳🇪"}' value="Niger">
-                                        Niger
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇳🇬"}' value="Nigeria">
-                                        Nigeria
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇰🇵"}' value="North Korea">
-                                        North Korea
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇲🇰"}' value="North Macedonia">
-                                        North Macedonia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇳🇴"}' value="Norway">
-                                        Norway
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇴🇲"}' value="Oman">
-                                        Oman
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇵🇰"}' value="Pakistan">
-                                        Pakistan
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇵🇼"}' value="Palau">
-                                        Palau
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇵🇸"}' value="Palestine">
-                                        Palestine
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇵🇦"}' value="Panama">
-                                        Panama
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇵🇬"}' value="Papua New Guinea">
-                                        Papua New Guinea
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇵🇾"}' value="Paraguay">
-                                        Paraguay
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇵🇪"}' value="Peru">
-                                        Peru
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇵🇭"}' value="Philippines">
-                                        Philippines
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇵🇱"}' value="Poland">
-                                        Poland
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇵🇹"}' value="Portugal">
-                                        Portugal
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇶🇦"}' value="Qatar">
-                                        Qatar
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇷🇴"}' value="Romania">
-                                        Romania
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇷🇺"}' value="Russia">
-                                        Russia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇷🇼"}' value="Rwanda">
-                                        Rwanda
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇰🇳"}' value="Saint Kitts and Nevis">
-                                        Saint Kitts and Nevis
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇱🇨"}' value="Saint Lucia">
-                                        Saint Lucia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇻🇨"}' value="Saint Vincent and the Grenadines">
-                                        Saint Vincent and the Grenadines
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇼🇸"}' value="Samoa">
-                                        Samoa
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇲"}' value="San Marino">
-                                        San Marino
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇹"}' value="Sao Tome and Principe">
-                                        Sao Tome and Principe
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇦"}' value="Saudi Arabia">
-                                        Saudi Arabia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇳"}' value="Senegal">
-                                        Senegal
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇷🇸"}' value="Serbia">
-                                        Serbia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇨"}' value="Seychelles">
-                                        Seychelles
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇱"}' value="Sierra Leone">
-                                        Sierra Leone
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇬"}' value="Singapore">
-                                        Singapore
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇰"}' value="Slovakia">
-                                        Slovakia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇮"}' value="Slovenia">
-                                        Slovenia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇧"}' value="Solomon Islands">
-                                        Solomon Islands
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇴"}' value="Somalia">
-                                        Somalia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇿🇦"}' value="South Africa">
-                                        South Africa
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇰🇷"}' value="South Korea">
-                                        South Korea
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇸"}' value="South Sudan">
-                                        South Sudan
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇪🇸"}' value="Spain">
-                                        Spain
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇱🇰"}' value="Sri Lanka">
-                                        Sri Lanka
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇩"}' value="Sudan">
-                                        Sudan
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇷"}' value="Suriname">
-                                        Suriname
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇪"}' value="Sweden">
-                                        Sweden
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇨🇭"}' value="Switzerland">
-                                        Switzerland
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇸🇾"}' value="Syria">
-                                        Syria
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇹🇼"}' value="Taiwan">
-                                        Taiwan
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇹🇯"}' value="Tajikistan">
-                                        Tajikistan
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇹🇿"}' value="Tanzania">
-                                        Tanzania
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇹🇭"}' value="Thailand">
-                                        Thailand
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇹🇱"}' value="Timor-Leste">
-                                        Timor-Leste
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇹🇬"}' value="Togo">
-                                        Togo
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇹🇴"}' value="Tonga">
-                                        Tonga
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇹🇹"}' value="Trinidad and Tobago">
-                                        Trinidad and Tobago
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇹🇳"}' value="Tunisia">
-                                        Tunisia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇹🇷"}' value="Turkey">
-                                        Turkey
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇹🇲"}' value="Turkmenistan">
-                                        Turkmenistan
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇹🇻"}' value="Tuvalu">
-                                        Tuvalu
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇺🇬"}' value="Uganda">
-                                        Uganda
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇺🇦"}' value="Ukraine">
-                                        Ukraine
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇦🇪"}' value="United Arab Emirates">
-                                        United Arab Emirates
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇬🇧"}' value="United Kingdom">
-                                        United Kingdom
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇺🇸"}' value="United States">
-                                        United States
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇺🇾"}' value="Uruguay">
-                                        Uruguay
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇺🇿"}' value="Uzbekistan">
-                                        Uzbekistan
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇻🇺"}' value="Vanuatu">
-                                        Vanuatu
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇻🇦"}' value="Vatican City">
-                                        Vatican City
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇻🇪"}' value="Venezuela">
-                                        Venezuela
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇻🇳"}' value="Vietnam">
-                                        Vietnam
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇾🇪"}' value="Yemen">
-                                        Yemen
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇿🇲"}' value="Zambia">
-                                        Zambia
-                                    </option>
-                                    <option data-kt-select-option='{"flag": "🇿🇼"}' value="Zimbabwe">
-                                        Zimbabwe
-                                    </option>
-                                </select> --}}
                             </div>
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
@@ -837,7 +267,7 @@
                             <label class="kt-form-label max-w-56">
                                 Profession <span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" name="profession" placeholder="" type="text" value="{{ Auth::user()->profession ?? null }}" />
+                            <input class="kt-input" name="profession" placeholder="Entrez votre profession" type="text" value="{{ Auth::user()->profession ?? null }}" />
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
@@ -852,27 +282,284 @@
                         </div>
                     </form>
                 </div>
-                <div class="kt-card">
-                    <div class="kt-card-header" id="advanced_settings_address">
+                {{-- Identification de la Personne Morale --}}
+                @elseif (Auth::user()->type_of_lender == "Personne morale")
+                <div class="kt-card pb-2.5">
+                    <div class="kt-card-header" id="basic_settings">
                         <h3 class="kt-card-title">
-                            KYC
+                            Identification de la Personne Morale
                         </h3>
                     </div>
-                    <form method="POST" action="{{ route('investisseur.kyc.store') }}" enctype="multipart/form-data" class="kt-card-content grid gap-5 lg:py-7.5">
+                    <form action="{{ route('investisseur.legalEntity.update') }}" method="post" enctype="multipart/form-data" class="kt-card-content grid gap-5">
                         @csrf
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                            <label class="kt-form-label flex items-center gap-1 max-w-56">
-                                Pièce d’identité
+                            <label class="kt-form-label max-w-56">
+                                Photo <span class="text-destructive">*</span>
                             </label>
-                            <input type="file" name="identity_doc" class="kt-input" required>
+                            <div class="flex items-center justify-between flex-wrap grow gap-2.5">
+                                <span class="text-sm">
+                                    150x150px JPEG, PNG Image
+                                </span>
+                                <div class="group relative size-18 rounded-full border border-gray-300 bg-gray-50 overflow-hidden cursor-pointer" id="avatar-container">
+                                    <input accept=".png, .jpg, .jpeg" name="avatar" type="file" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" id="avatar-input" />
+                                    
+                                    <div id="avatar-preview" class="w-full h-full bg-cover bg-center rounded-full" style="background-image: url('{{ Auth::user()->profilePicture ? Storage::url(Auth::user()->profilePicture->filename) : asset('assets/media/avatars/blank.png') }}');"></div>
+                                    
+                                    <div class="absolute bottom-0 left-0 right-0 h-1/3 flex items-center justify-center bg-gray-300 bg-opacity-70">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.867-1.442A2 2 0 0110.437 3h3.125a2 2 0 011.664.89l.867 1.442A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                    </div>
+                                    
+                                    <button type="button" id="avatar-remove-btn" class="absolute -top-2 -right-2 size-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer opacity-0 transition-opacity">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
-                                Justificatif de domicile
+                                Dénomination sociale <span class="text-destructive">*</span>
                             </label>
-                            <input type="file" name="proof_address" class="kt-input" required>
+                            <input class="kt-input" name="nationality" placeholder="" type="text" value="{{ Auth::user()->legalEntity ? Auth::user()->legalEntity->denomination_sociale : null }}" />
+                        </div>
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label max-w-56">
+                                Forme juridique <span class="text-destructive">*</span>
+                            </label>
+                            <input class="kt-input" name="nationality" placeholder="" type="text" value="{{ Auth::user()->legalEntity ? Auth::user()->legalEntity->forme_juridique : null }}" />
+                        </div>
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label max-w-56">
+                                Numéro d'immatriculation au registre national (ou équivalent)<span class="text-destructive">*</span>
+                            </label>
+                            <input class="kt-input" name="nationality" placeholder="" type="text" value="{{ Auth::user()->legalEntity ? Auth::user()->legalEntity->numero_immatriculation : null }}" />
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                <label class="kt-form-label max-w-56">
+                                    Dirigeants <span class="text-destructive">*</span>
+                                </label>
+
+                                <div id="directors-wrapper" class="flex flex-col w-full gap-4">
+                                    @php
+                                        $directors = Auth::user()->legalEntity?->dirigeants ?? [['civilite' => '', 'nom' => '', 'prenoms' => '', 'poste' => '', 'pourcentage_actions' => '', 'telephone' => '', 'email' => '']];
+                                    @endphp
+
+                                    @foreach ($directors as $index => $dirigeant)
+                                        <div class="director-item flex flex-col gap-3 p-4 border border-gray-200 rounded-md bg-gray-50 relative">
+                                            <button type="button" class="remove-director absolute top-2 right-2 text-red-500 hover:text-red-700 text-sm">
+                                                Supprimer
+                                            </button>
+
+                                            <div class="grid md:grid-cols-2 gap-3">
+                                                <input class="kt-input grow" name="dirigeants[{{ $index }}][civilite]" placeholder="Civilité (M., Mme...)" type="text" value="{{ $dirigeant['civilite'] ?? '' }}" />
+                                                <input class="kt-input grow" name="dirigeants[{{ $index }}][nom]" placeholder="Nom et prénoms" type="text" value="{{ $dirigeant['nom'] ?? '' }}" />
+                                            </div>
+
+                                            <div class="grid md:grid-cols-2 gap-3">
+                                                <input class="kt-input grow" name="dirigeants[{{ $index }}][poste]" placeholder="Poste" type="text" value="{{ $dirigeant['poste'] ?? '' }}" />
+                                                <input class="kt-input grow" name="dirigeants[{{ $index }}][pourcentage_actions]" placeholder="% d'actions" type="number" min="0" max="100" value="{{ $dirigeant['pourcentage_actions'] ?? '' }}" />
+                                            </div>
+
+                                            <div class="grid md:grid-cols-2 gap-3">
+                                                <input class="kt-input grow" name="dirigeants[{{ $index }}][telephone]" placeholder="Téléphone" type="text" value="{{ $dirigeant['telephone'] ?? '' }}" />
+                                                <input class="kt-input grow" name="dirigeants[{{ $index }}][email]" placeholder="Email" type="email" value="{{ $dirigeant['email'] ?? '' }}" />
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <button type="button" id="add-director" class="kt-btn kt-btn-outline self-start">
+                                + Ajouter un dirigeant
+                            </button>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="kt-btn kt-btn-primary">
+                                Sauvegarder
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                @endif
+                {{-- Adresse postale --}}
+                <div class="kt-card">
+                    <div class="kt-card-header" id="advanced_settings_address">
+                        <h3 class="kt-card-title">
+                            Adresse postale
+                        </h3>
+                    </div>
+                    <form action="{{ route('profil.adresse.update') }}" method="post" class="kt-card-content grid gap-5 lg:py-7.5">
+                        @csrf
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label flex items-center gap-1 max-w-56">
+                                Adresse <span class="text-destructive">*</span>
+                            </label>
+                            <input class="kt-input" type="text" name="adresse" value="{{ Auth::user()->address['adresse'] ?? null }}">
+                        </div>
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label max-w-56">
+                                Rue <span class="text-destructive">*</span>
+                            </label>
+                            <input class="kt-input" placeholder="" name="rue" type="text" value="{{ Auth::user()->address['rue'] ?? null }}">
+                        </div>
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label max-w-56">
+                                Code postal <span class="text-destructive">*</span>
+                            </label>
+                            <input class="kt-input" type="text" name="code_postal" value="{{ Auth::user()->address['code_postal'] ?? null }}" />
+                        </div>
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label max-w-56">
+                                Ville <span class="text-destructive">*</span>
+                            </label>
+                            <input class="kt-input" type="text" name="ville" value="{{ Auth::user()->address['ville'] ?? null }}" />
+                        </div>
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label max-w-56">
+                                Pays de résidence <span class="text-destructive">*</span>
+                            </label>
+                            <div class="grow">
+                                <select name="pays" class="kt-select" name="pays" data-kt-select="true">
+                                    <option {{ Auth::user()->address['pays'] == 'Belgique' ? 'selected' : '' }}>Belgique</option>
+                                    <option {{ Auth::user()->address['pays'] == 'Congo' ? 'selected' : '' }}>Congo</option>
+                                    <option {{ Auth::user()->address['pays'] == 'Côte d\'Ivoire' ? 'selected' : '' }}>Côte d'Ivoire</option>
+                                    <option {{ Auth::user()->address['pays'] == 'Cameroun' ? 'selected' : '' }}>Cameroun</option>
+                                    <option {{ Auth::user()->address['pays'] == 'Canada' ? 'selected' : '' }}>Canada</option>
+                                    <option {{ Auth::user()->address['pays'] == 'Espagne' ? 'selected' : '' }}>Espagne</option>
+                                    <option {{ Auth::user()->address['pays'] == 'France' ? 'selected' : '' }}>France</option>
+                                    <option {{ Auth::user()->address['pays'] == 'Italie' ? 'selected' : '' }}>Italie</option>
+                                    <option {{ Auth::user()->address['pays'] == 'Guinnée' ? 'selected' : '' }}>Guinnée</option>
+                                    <option {{ Auth::user()->address['pays'] == 'Mali' ? 'selected' : '' }}>Mali</option>
+                                    <option {{ Auth::user()->address['pays'] == 'Senegal' ? 'selected' : '' }}>Senegal</option>
+                                    <option {{ Auth::user()->address['pays'] == 'Mali' ? 'selected' : '' }}>Mali</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="flex justify-end pt-2.5">
+                            <button type="submit" class="kt-btn kt-btn-primary">
+                                Sauvegarder
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                {{-- Justificatifs Obligatoires --}}
+                <div class="kt-card">
+                    <div class="kt-card-header" id="external_services_integrations">
+                        <h3 class="kt-card-title">
+                            Justificatifs Obligatoires
+                        </h3>
+                        <div class="kt-form-description">Format de fichiers (pdf, jpg, png, etc...)</div>
+                    </div>
+                    <form action="{{ route('profil.documents.update') }}" method="post" enctype="multipart/form-data" class="kt-card-content grid gap-5 lg:py-7.5">
+                        @csrf
+                        <div class="grid gap-5">
+                            @foreach($documentsAttendus as $type => $label)
+                            <div class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 p-3.5">
+
+                                @if($userDocuments->has($type))
+                                    @php
+                                        $doc = $userDocuments[$type];
+                                        
+                                        $filename = basename($doc->file->filename);
+                                        $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+                                        $icon = match($extension) {
+                                            'pdf' => 'pdf.svg',
+                                            'doc', 'docx' => 'doc.svg',
+                                            'jpg', 'jpeg', 'png' => 'js.svg',
+                                            default => 'file.svg',
+                                        };
+                                    @endphp
+                                    {{-- Vue du fichier --}}
+                                    <div class="file-view flex items-center flex-wrap gap-3.5">
+                                        <img alt="" class="size-8 shrink-0 rounded-md" src="{{ asset('assets/media/file-types/' . $icon) }}" />
+                                        <div class="flex flex-col">
+                                            <div class="flex items-center gap-1.5">
+                                                <a class="text-sm font-medium text-mono hover:text-primary"
+                                                    href="{{ route('profil.documents.export', $doc->id) }}">
+                                                    {{ $label }}
+                                                </a>
+                                            </div>
+                                            <span class="text-sm text-secondary-foreground">
+                                                {{ $doc->explanation }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="file-view flex items-center gap-2 lg:gap-5">
+                                        <span class="text-sm font-semibold px-3 py-1 rounded-full
+                                            {{ $doc->status === 'valide' ? 'bg-green-100 text-green-800' : ($doc->status === 'refuse' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
+                                            {{ ucfirst($doc->status) }}
+                                        </span>
+                                        <div class="kt-btn kt-btn-icon kt-btn-ghost" data-kt-menu="true">
+                                            <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
+                                                data-kt-menu-item-placement="bottom-end"
+                                                data-kt-menu-item-placement-rtl="bottom-start"
+                                                data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
+                                                <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
+                                                    <i class="ki-filled ki-setting-2"></i>
+                                                </button>
+                                                <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
+                                                    data-kt-menu-dismiss="true">
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link edit-btn" href="javascript:;" data-doc-type="{{ $type }}">
+                                                            <span class="kt-menu-icon">
+                                                                <i class="ki-filled ki-setting-3"></i>
+                                                            </span>
+                                                            <span class="kt-menu-title">
+                                                                Modifier
+                                                            </span>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link"
+                                                            href="{{ route('profil.documents.export', $doc->id) }}">
+                                                            <span class="kt-menu-icon">
+                                                                <i class="ki-filled ki-some-files"></i>
+                                                            </span>
+                                                            <span class="kt-menu-title">
+                                                                Exporter
+                                                            </span>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="kt-menu-item">
+                                                        <a href="{{ route('profil.documents.delete', $doc->id) }}" class="kt-menu-link w-full text-left" onclick="return confirm('Supprimer ce document ?');">
+                                                            <span class="kt-menu-icon">
+                                                                <i class="ki-filled ki-trash"></i>
+                                                            </span>
+                                                            <span class="kt-menu-title">
+                                                                Supprimer
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- Formulaire édition --}}
+                                    <div class="file-edit hidden relative w-full">
+                                        {{-- Formulaire de départ --}}
+                                        <label class="kt-form-label w-full block font-bold mb-5">{{ $label }} <span class="text-destructive">*</span></label>
+                                        <input type="file" name="{{ $type }}[]" class="kt-input w-full" multiple />
+                                        <input type="text" name="{{ $type }}_explain" class="kt-input w-full mt-2" value="{{ $doc->explanation }}" placeholder="Donner une brève explication sur le document attendu..." />
+                                        <div class="absolute top-0 right-0 w-16 h-8">
+                                            <button type="button" class="kt-btn kt-btn-sm kt-btn-secondary cancel-btn">Annuler</button>
+                                        </div>
+                                    </div>
+                                @else
+                                    {{-- Formulaire de départ --}}
+                                    <label class="kt-form-label w-full block font-bold">{{ $label }} <span class="text-destructive">*</span></label>
+                                    <input type="file" name="{{ $type }}[]" class="kt-input w-full" multiple required />
+                                    <input type="text" name="{{ $type }}_explain" class="kt-input w-full" placeholder="Donner une brève explication sur le document attendu..." />
+                                @endif
+                            </div>
+                            @endforeach
+                        </div>
+                        <div class="flex justify-end">
                             <button type="submit" class="kt-btn kt-btn-primary">
                                 Sauvegarder
                             </button>
@@ -882,7 +569,7 @@
                 <div class="kt-card">
                     <div class="kt-card-header" id="advanced_settings_preferences">
                         <h3 class="kt-card-title">
-                            Déclarer IBAN
+                            Déclaration IBAN
                         </h3>
                     </div>
                     <form method="POST" action="{{ route('investisseur.iban.store') }}" class="kt-card-content grid gap-5 lg:py-7.5">
@@ -906,7 +593,7 @@
                             Notifications
                         </h3>
                     </div>
-                    <form action="{{ route('emprunteur.profil.notifications.preferences') }}" method="post" class="kt-card-content lg:py-7.5">
+                    <form action="{{ route('profil.notifications.preferences') }}" method="post" class="kt-card-content lg:py-7.5">
                         @csrf
                         @php
                             $notif = Auth::user()->notificationPreference ?? null;
@@ -1132,7 +819,7 @@
                             Email
                         </h3>
                     </div>
-                    <form action="{{ route('emprunteur.profil.email.update') }}" method="post" class="kt-card-content grid gap-5 pt-7.5">
+                    <form action="{{ route('profil.email.update') }}" method="post" class="kt-card-content grid gap-5 pt-7.5">
                         @csrf
                         <div class="w-full">
                             <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
@@ -1272,7 +959,7 @@
                             Authentification à deux facteurs (2FA)
                         </h3>
                     </div>
-                    <form action="{{ route('emprunteur.profil.2fa.setup') }}" method="post" class="kt-card-content">
+                    <form action="{{ route('profil.2fa.setup') }}" method="post" class="kt-card-content">
                         @csrf
                         <div class="grid gap-5 mb-7">
                             <div
@@ -1395,7 +1082,7 @@
                             Mot de passe
                         </h3>
                     </div>
-                    <form action="{{ route('emprunteur.profil.password.update') }}" method="post" class="kt-card-content grid gap-5">
+                    <form action="{{ route('profil.password.update') }}" method="post" class="kt-card-content grid gap-5">
                         @csrf
                         <div class="w-full">
                             <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
@@ -1443,7 +1130,7 @@
                             Supprimer le compte
                         </h3>
                     </div>
-                    <form action="{{ route('emprunteur.profil.delete') }}" method="POST" class="kt-card-content flex flex-col lg:py-7.5 lg:gap-7.5 gap-3">
+                    <form action="{{ route('profil.delete') }}" method="POST" class="kt-card-content flex flex-col lg:py-7.5 lg:gap-7.5 gap-3">
                         <div class="flex flex-col gap-5">
                             <div class="text-sm text-foreground">
                                 Nous regrettons votre départ. Confirmez la suppression de votre compte ci-dessous. 
@@ -1460,7 +1147,7 @@
                             </label>
                         </div>
                         <div class="flex justify-end gap-2.5">
-                            <a href="{{ route('emprunteur.profil.deactivate') }}" class="kt-btn kt-btn-outline">
+                            <a href="{{ route('profil.deactivate') }}" class="kt-btn kt-btn-outline">
                                 Désactiver plutôt
                             </a>
                             <button type="submit" class="kt-btn kt-btn-destructive">
@@ -1589,7 +1276,39 @@
                     container.querySelectorAll('.file-view').forEach((view, i) => { view.classList.remove('hidden') });
                 });
             });
-        });
+            
+            const wrapper = document.getElementById('directors-wrapper');
+            const addBtn = document.getElementById('add-director');
 
+            addBtn.addEventListener('click', function () {
+                const items = wrapper.querySelectorAll('.director-item');
+                const newIndex = items.length;
+
+                // Cloner le premier élément
+                const first = items[0];
+                const clone = first.cloneNode(true);
+
+                // Nettoyer les champs
+                clone.querySelectorAll('input').forEach(input => {
+                    input.value = '';
+                    input.name = input.name.replace(/\[\d+\]/, `[${newIndex}]`);
+                });
+
+                wrapper.appendChild(clone);
+            });
+
+            // Gestion suppression
+            wrapper.addEventListener('click', function (e) {
+                if (e.target.classList.contains('remove-director')) {
+                    const items = wrapper.querySelectorAll('.director-item');
+                    if (items.length > 1) {
+                        e.target.closest('.director-item').remove();
+                    } else {
+                        // Si on supprime le dernier, juste nettoyer les champs
+                        e.target.closest('.director-item').querySelectorAll('input').forEach(i => i.value = '');
+                    }
+                }
+            });
+        });
     </script>
 @endsection

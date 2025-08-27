@@ -33,18 +33,44 @@
             @csrf
 
             <div id="registration-step" class="flex flex-col gap-5">
-                <!-- Name -->
-                <div class="grid md:grid-cols-2 gap-5">
+                <!-- Type de prêteur -->
+                <div class="flex flex-col gap-1">
+                    <div class="flex flex-center">
+                        <label for="type" class="text-mono font-semibold text-sm">
+                            Type de prêteur
+                        </label>
+                    </div>
+                    <select name="type_of_lender" id="type" class="kt-select"
+                        data-kt-select="true"
+                        data-kt-select-placeholder="Sélectionner votre type..."
+                        data-kt-select-config='{
+                            "optionsClass": "kt-scrollable overflow-auto max-h-[250px]"
+                        }'
+                    >
+                        <option value="Personne physique" selected>Particulier</option>
+                        <option value="Personne morale">Association ou Fondation</option>
+                    </select>
+                </div>
+
+                <!-- Noms et prénoms -->
+                <div class="grid md:grid-cols-2 gap-5 section-physique">
                     <div class="flex flex-col gap-1">
                         <x-input-label for="first_name" :value="__('Prénoms')" class="kt-form-label text-mono" />
-                        <x-text-input id="first_name" class="kt-input" type="text" name="first_name" :value="old('first_name')" required autocomplete="given-name" />
+                        <x-text-input id="first_name" class="kt-input" type="text" name="first_name" :value="old('first_name')" autocomplete="given-name" />
                         <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
                     </div>
                     <div class="flex flex-col gap-1">
                         <x-input-label for="last_name" :value="__('Nom')" class="kt-form-label text-mono" />
-                        <x-text-input id="last_name" class="kt-input" type="text" name="last_name" :value="old('last_name')" required autocomplete="family-name" />
+                        <x-text-input id="last_name" class="kt-input" type="text" name="last_name" :value="old('last_name')" autocomplete="family-name" />
                         <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
                     </div>
+                </div>
+
+                <!-- Dénomination sociale -->
+                <div class="flex flex-col gap-1 section-morale" style="display: none;">
+                    <x-input-label for="denomination_sociale" :value="__('Dénomination sociale')" class="kt-form-label text-mono" />
+                    <x-text-input id="denomination_sociale" class="kt-input" type="text" name="denomination_sociale" :value="old('denomination_sociale')" autocomplete="" />
+                    <x-input-error :messages="$errors->get('denomination_sociale')" class="mt-2" />
                 </div>
 
                 <!-- Email Address -->
@@ -105,7 +131,7 @@
                     <input class="kt-checkbox kt-checkbox-sm" name="check" type="checkbox" value="1" required/>
                     <span class="kt-checkbox-label">
                         J'ai lu et j'accepte les 
-                        <a class="text-sm link" href="#">
+                        <a class="kt-link kt-link-underlined kt-link-dashed" href="{{route('terms-of-use')}}" target="_blank">
                             Termes &amp; Conditions générales
                         </a>
                     </span>
@@ -178,6 +204,25 @@
                     passwordInput.addEventListener('input', updatePasswordStrength);
                 }
 
+                const select = document.getElementById('type');
+                const physique = document.querySelector('.section-physique');
+                const morale = document.querySelector('.section-morale');
+
+                function toggleSections() {
+                    if (select.value === 'Personne physique') {
+                        physique.style.display = 'grid';
+                        morale.style.display = 'none';
+                    } else {
+                        physique.style.display = 'none';
+                        morale.style.display = 'flex';
+                    }
+                }
+
+                // État initial
+                toggleSections();
+
+                // Sur changement
+                select.addEventListener('change', toggleSections);
             });
         </script>
     @endsection

@@ -24,15 +24,19 @@ class InvestisseurRegisterController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'first_name' => 'required|string|max:100',
-            'last_name' => 'required|string|max:100',
+            'type_of_lender' => 'required|string|max:100',
+            'first_name' => 'nullable|string|max:100',
+            'last_name' => 'nullable|string|max:100',
+            'denomination_sociale' => 'nullable|string|max:100',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed|min:8',
         ]);
 
         $user = User::create([
+            'type_of_lender' => $validated['type_of_lender'],
             'last_name' => $validated['last_name'],
             'first_name' => $validated['first_name'],
+            'denomination_sociale' => $validated['denomination_sociale'],
             'email' => $validated['email'],
             'created_at' => new \DateTime(),
             'password' => Hash::make($validated['password']),

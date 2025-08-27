@@ -16,7 +16,11 @@ class LoanRequest extends Model
         'debt_params',
         'debt_ratio',
         'object',
+        'duree_campagne',
         'description',
+        'explication',
+        'presentation',
+        'duree_campagne_modifications'
     ];
 
     protected $casts = [

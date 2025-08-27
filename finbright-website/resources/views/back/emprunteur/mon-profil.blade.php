@@ -222,7 +222,7 @@
                         </div>
                         <div class="kt-card-content">
                             <div class="grid gap-2.5 lg:gap-5">
-                                @foreach($documentsGroupByType as $type => $docs)
+                                @forelse($documentsGroupByType as $type => $docs)
                                     <div class="flex items-center gap-3">
                                         <div class="flex items-center grow gap-2.5">
                                             @php
@@ -246,9 +246,9 @@
                                             <img src="{{ asset('assets/media/file-types/' . $icon) }}" class="w-6 h-6">
 
                                             <div class="flex flex-col">
-                                                <span class="text-sm font-medium text-mono cursor-pointer hover:text-primary mb-px">
+                                                <a href="{{ route('profil.documents.export', $docs->first()->id) }}" class="text-sm font-medium text-mono cursor-pointer hover:text-primary mb-px">
                                                     {{ $docs->count() > 1 ? $type : $filename }}
-                                                </span>
+                                                </a>
                                                 <span class="text-xs text-secondary-foreground">
                                                     {{ str_pad($docs->count(), 2, '0', STR_PAD_LEFT) }} fichiers |
                                                     {{ $totalSizeMb }} MB |
@@ -271,13 +271,13 @@
                                                         </a>
                                                     </div>
                                                     <div class="kt-menu-item">
-                                                        <a class="kt-menu-link" href="{{ route('emprunteur.profil.documents.export', $docs->first()->id) }}">
+                                                        <a class="kt-menu-link" href="{{ route('profil.documents.export', $docs->first()->id) }}">
                                                             <span class="kt-menu-icon"><i class="ki-filled ki-file-up"></i></span>
                                                             <span class="kt-menu-title">Exporter</span>
                                                         </a>
                                                     </div>
                                                     <div class="kt-menu-item">
-                                                        <form action="{{ route('emprunteur.profil.documents.delete', $docs->first()->id) }}" method="POST" onsubmit="return confirm('Supprimer ce document ?');">
+                                                        <form action="{{ route('profil.documents.delete', $docs->first()->id) }}" method="POST" onsubmit="return confirm('Supprimer ce document ?');">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="kt-menu-link">
@@ -290,7 +290,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                @empty
+                                    <div class="flex items-center gap-3">Aucun documents téléchargé</div>
+                                @endforelse
                             </div>
                         </div>
                         <div class="kt-card-footer justify-center">
@@ -582,7 +584,7 @@
                                 </div>
                             </div>
                             @endif
-                            <form action="{{ route('emprunteur.profil.general.update') }}" method="post" enctype="multipart/form-data" class="kt-card pb-2.5">
+                            <form action="{{ route('profil.general.update') }}" method="post" enctype="multipart/form-data" class="kt-card pb-2.5">
                                 @csrf
                                 <div class="kt-card-header" id="basic_settings">
                                     <h3 class="kt-card-title">
@@ -1288,7 +1290,7 @@
                                 </div>
                             </form>
                             {{-- Adresse postale --}}
-                            <form action="{{ route('emprunteur.profil.adresse.update') }}" method="post" class="kt-card">
+                            <form action="{{ route('profil.adresse.update') }}" method="post" class="kt-card">
                                 @csrf
                                 <div class="kt-card-header" id="advanced_settings_address">
                                     <h3 class="kt-card-title">
@@ -1416,13 +1418,20 @@
                                         <label class="kt-form-label max-w-56">
                                             Année d'études actuelle <span class="text-destructive">*</span>
                                         </label>
-                                        <input class="kt-input" name="annee_etude" type="text" placeholder="ex: 1ère année de Master / 2ème année du cycle ingénieur" value="{{ Auth::user()->current_study_year ?? null }}">
+                                        <select class="kt-select" name="annee_etude" data-kt-select="true">
+                                            <option {{ Auth::user()->current_study_year == 'Première année' ? 'selected' : '' }}>Première année</option>
+                                            <option {{ Auth::user()->current_study_year == 'Deuxième année' ? 'selected' : '' }}>Deuxième année</option>
+                                            <option {{ Auth::user()->current_study_year == 'Troisième année' ? 'selected' : '' }}>Troisième année</option>
+                                            <option {{ Auth::user()->current_study_year == 'Quatrième année' ? 'selected' : '' }}>Quatrième année</option>
+                                            <option {{ Auth::user()->current_study_year == 'Cinquième année' ? 'selected' : '' }}>Cinquième année</option>
+                                            <option {{ Auth::user()->current_study_year == 'Dernière année' ? 'selected' : '' }}>Dernière année</option>
+                                        </select>
                                     </div>
                                     <div class="flex items-center flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
                                             Nombre d'années d'études restantes <span class="text-destructive">*</span>
                                         </label>
-                                        <input class="kt-input" name="nombre_annees_restantes" type="text" placeholder="(avant diplomation)" value="{{ Auth::user()->remaining_years ?? null }}">
+                                        <input class="kt-input" name="nombre_annees_restantes" type="text" placeholder="(avant diplomation)" value="{{ Auth::user()->remaining_years ?? null }}" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
@@ -1438,12 +1447,13 @@
                                 </div>
                             </form>
                             {{-- Justificatifs Obligatoires --}}
-                            <form action="{{ route('emprunteur.profil.documents.update') }}" method="post" enctype="multipart/form-data" class="kt-card">
+                            <form action="{{ route('profil.documents.update') }}" method="post" enctype="multipart/form-data" class="kt-card">
                                 @csrf
                                 <div class="kt-card-header" id="external_services_integrations">
                                     <h3 class="kt-card-title">
                                         Justificatifs Obligatoires
                                     </h3>
+                                    <div class="kt-form-description">Format de fichiers (pdf, jpg, png, etc...)</div>
                                 </div>
                                 <div class="kt-card-content grid gap-5 lg:gap-7.5 lg:py-7.5 py-5">
                                     <div class="grid gap-5">
@@ -1469,7 +1479,7 @@
                                                     <div class="flex flex-col">
                                                         <div class="flex items-center gap-1.5">
                                                             <a class="text-sm font-medium text-mono hover:text-primary"
-                                                                href="#">
+                                                                href="{{ route('profil.documents.export', $doc->id) }}">
                                                                 {{ $label }}
                                                             </a>
                                                         </div>
@@ -1506,7 +1516,7 @@
 
                                                                 <div class="kt-menu-item">
                                                                     <a class="kt-menu-link"
-                                                                        href="{{ route('emprunteur.profil.documents.export', $doc->id) }}">
+                                                                        href="{{ route('profil.documents.export', $doc->id) }}">
                                                                         <span class="kt-menu-icon">
                                                                             <i class="ki-filled ki-some-files"></i>
                                                                         </span>
@@ -1517,18 +1527,14 @@
                                                                 </div>
 
                                                                 <div class="kt-menu-item">
-                                                                    <form action="{{ route('emprunteur.profil.documents.delete', $doc->id) }}" method="POST" onsubmit="return confirm('Supprimer ce document ?');">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit" class="kt-menu-link w-full text-left">
-                                                                            <span class="kt-menu-icon">
-                                                                                <i class="ki-filled ki-trash"></i>
-                                                                            </span>
-                                                                            <span class="kt-menu-title">
-                                                                                Supprimer
-                                                                            </span>
-                                                                        </button>
-                                                                    </form>
+                                                                    <a href="{{ route('profil.documents.delete', $doc->id) }}" class="kt-menu-link w-full text-left" onclick="return confirm('Supprimer ce document ?');">
+                                                                        <span class="kt-menu-icon">
+                                                                            <i class="ki-filled ki-trash"></i>
+                                                                        </span>
+                                                                        <span class="kt-menu-title">
+                                                                            Supprimer
+                                                                        </span>
+                                                                    </a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1538,8 +1544,8 @@
                                                 <div class="file-edit hidden relative w-full">
                                                     {{-- Formulaire de départ --}}
                                                     <label class="kt-form-label w-full block font-bold mb-5">{{ $label }} <span class="text-destructive">*</span></label>
-                                                    <input type="file" name="{{ $type }}[]" class="kt-input w-full" multiple required />
-                                                    <input type="text" name="{{ $type }}_explain" class="kt-input w-full mt-2" value="{{ $doc->explanation }}" placeholder="Donner une brève explication sur le document attendu..." required />
+                                                    <input type="file" name="{{ $type }}[]" class="kt-input w-full" multiple />
+                                                    <input type="text" name="{{ $type }}_explain" class="kt-input w-full mt-2" value="{{ $doc->explanation }}" placeholder="Donner une brève explication sur le document attendu..." />
                                                     <div class="absolute top-0 right-0 w-16 h-8">
                                                         <button type="button" class="kt-btn kt-btn-sm kt-btn-secondary cancel-btn">Annuler</button>
                                                     </div>
@@ -1548,7 +1554,7 @@
                                                 {{-- Formulaire de départ --}}
                                                 <label class="kt-form-label w-full block font-bold">{{ $label }} <span class="text-destructive">*</span></label>
                                                 <input type="file" name="{{ $type }}[]" class="kt-input w-full" multiple required />
-                                                <input type="text" name="{{ $type }}_explain" class="kt-input w-full" placeholder="Donner une brève explication sur le document attendu..." required />
+                                                <input type="text" name="{{ $type }}_explain" class="kt-input w-full" placeholder="Donner une brève explication sur le document attendu..." />
                                             @endif
                                         </div>
                                         @endforeach
@@ -1561,7 +1567,7 @@
                                 </div>
                             </form>
                             {{-- Notifications --}}
-                            <form action="{{ route('emprunteur.profil.notifications.preferences') }}" method="post" class="kt-card">
+                            <form action="{{ route('profil.notifications.preferences') }}" method="post" class="kt-card">
                                 @csrf
                                 @php
                                     $notif = Auth::user()->notificationPreference ?? null;
@@ -1573,7 +1579,8 @@
                                     </h3>
                                 </div>
                                 <div class="kt-card-content lg:py-7.5">
-                                    <div class="flex flex-wrap items-center gap-5 mb-5 lg:mb-7">
+                                    {{-- <div class="flex flex-wrap items-center gap-5 mb-5 lg:mb-7"> --}}
+                                    <div class="grid md:grid-cols-2 items-center gap-5 mb-5 lg:mb-7">
                                         <div
                                             class="flex items-center justify-between flex-wrap grow border border-border rounded-xl gap-2 px-3.5 py-2.5">
                                             <div class="flex items-center flex-wrap gap-3.5">
@@ -1616,7 +1623,7 @@
                                                     type="checkbox" value="email_notifications" />
                                             </label>
                                         </div>
-                                        <div
+                                        {{-- <div
                                             class="bg-muted cursor-not-allowed flex items-center justify-between flex-wrap grow border border-border rounded-xl gap-2 px-3.5 py-2.5">
                                             <div class="flex items-center flex-wrap gap-3.5">
                                                 <div class="relative size-[50px] shrink-0">
@@ -1654,7 +1661,7 @@
                                                 <input disabled class="kt-switch kt-switch-sm" name="notification_types"
                                                     type="checkbox" value="sms_notifications" />
                                             </label>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="flex flex-col gap-3.5 mb-7">
                                         <span class="text-base font-medium text-mono pb-0.5">
@@ -1708,7 +1715,7 @@
                                 </div>
                             </form>
                             {{-- Email --}}
-                            <form action="{{ route('emprunteur.profil.email.update') }}" method="post" class="kt-card pb-2.5">
+                            <form action="{{ route('profil.email.update') }}" method="post" class="kt-card pb-2.5">
                                 @csrf
                                 <div class="kt-card-header" id="auth_email">
                                     <h3 class="kt-card-title">
@@ -1850,7 +1857,7 @@
                                 </div>
                             </form>
                             {{-- Authentification à deux facteurs (2FA) --}}
-                            <form action="{{ route('emprunteur.profil.2fa.setup') }}" method="post" class="kt-card">
+                            <form action="{{ route('profil.2fa.setup') }}" method="post" class="kt-card">
                                 @csrf
                                 <div class="kt-card-header" id="auth_two_factor">
                                     <h3 class="kt-card-title">
@@ -1901,12 +1908,12 @@
                                             <div class="flex items-center gap-2 lg:gap-6">
                                                 <label class="kt-label">
                                                     Activer sur le profil
-                                                    <input {{ Auth::user()->twoFactor ? 'checked' : '' }} class="kt-switch kt-switch-sm" name="twoFactor_email"
+                                                    <input {{ Auth::user()->twoFactor ? (Auth::user()->twoFactor->is_enabled ? 'checked' : '') : '' }} class="kt-switch kt-switch-sm" name="twoFactor_email"
                                                         type="checkbox" value="1" />
                                                 </label>
                                             </div>
                                         </div>
-                                        <div
+                                        {{-- <div
                                             class="bg-muted cursor-not-allowed flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 px-3.5 py-2.5">
                                             <div class="flex items-center flex-wrap gap-3.5">
                                                 <div class="flex items-center">
@@ -1951,7 +1958,7 @@
                                                         type="checkbox" value="1" />
                                                 </label>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="w-full">
                                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5 mb-7">
@@ -1983,7 +1990,7 @@
                                 }
                             </style>
                             {{-- Mot de passe --}}
-                            <form action="{{ route('emprunteur.profil.password.update') }}" method="post" class="kt-card">
+                            <form action="{{ route('profil.password.update') }}" method="post" class="kt-card">
                                 @csrf
                                 <div class="kt-card-header" id="auth_password">
                                     <h3 class="kt-card-title">
@@ -2032,7 +2039,7 @@
                                 }
                             </style>
                             {{-- Supprimer le compte --}}
-                            <form action="{{ route('emprunteur.profil.delete') }}" method="POST" class="kt-card" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer définitivement votre compte ?');">
+                            <form action="{{ route('profil.delete') }}" method="POST" class="kt-card" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer définitivement votre compte ?');">
                                 @csrf
                                 @method('DELETE')
                                 <div class="kt-card-header" id="delete_account">
@@ -2057,7 +2064,7 @@
                                         </label>
                                     </div>
                                     <div class="flex justify-end gap-2.5">
-                                        <a href="{{ route('emprunteur.profil.deactivate') }}" class="kt-btn kt-btn-outline">
+                                        <a href="{{ route('profil.deactivate') }}" class="kt-btn kt-btn-outline">
                                             Désactiver plutôt
                                         </a>
                                         <button type="submit" class="kt-btn kt-btn-destructive">
