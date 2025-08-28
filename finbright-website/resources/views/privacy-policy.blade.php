@@ -53,7 +53,6 @@
                     </p>
                     <ul class="list-disc list-inside text-gray-700 space-y-2">
                         <li>Le produit "Prêt Étudiant" destiné aux étudiants en formation supérieure</li>
-                        <li>Le produit "Mini Prêt" pour les besoins de financement de courte durée</li>
                         <li>La plateforme de mise en relation entre emprunteurs et prêteurs particuliers</li>
                         <li>Tous les services connexes (support client, gestion des comptes, etc.)</li>
                     </ul>

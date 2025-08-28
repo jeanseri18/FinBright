@@ -129,10 +129,7 @@
                         <p class="text-gray-600">Désigne le statut d'Intermédiaire en Financement Participatif.</p>
                     </div>
                     
-                    <div class="border-l-4 border-finbright-purple pl-6 bg-gray-50 p-4 rounded">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Mini-Prêt</h3>
-                        <p class="text-gray-600">Désigne le produit de prêt à court terme proposé sur la Plateforme, dont les caractéristiques sont décrites à l'Article 4.</p>
-                    </div>
+
                     
                     <div class="border-l-4 border-finbright-cyan pl-6 bg-gray-50 p-4 rounded">
                         <h3 class="text-lg font-semibold text-gray-900 mb-2">ORIAS</h3>
@@ -369,17 +366,6 @@
                     </div>
                     
                     <div class="mb-6">
-                        <h4 class="text-lg font-semibold text-gray-900 mb-3">4.2.2 Mini-Prêt</h4>
-                        <div class="bg-finbright-cyan text-white rounded-lg p-6">
-                            <p class="mb-3 font-semibold">Caractéristiques principales :</p>
-                            <ul class="list-disc list-inside space-y-2">
-                                <li><strong>Objet :</strong> Financement de besoins ponctuels de trésorerie (urgences, opportunités, projets personnels)</li>
-                                <li><strong>Montant :</strong> De 100 € à 5 000 € par Emprunteur</li>
-                                <li><strong>Durée :</strong> De 1 à 24 mois</li>
-                                <li><strong>Taux d'intérêt :</strong> Taux fixe déterminé en fonction du profil de l'Emprunteur et de la durée</li>
-                                <li><strong>Remboursement :</strong> Mensuel, sans différé</li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
                 
@@ -513,7 +499,6 @@
                         <p class="mb-3">Ces frais sont prélevés mensuellement avec chaque échéance de remboursement :</p>
                         <ul class="list-disc list-inside space-y-2">
                             <li><strong>Prêt Étudiant :</strong> 1% du montant de l'échéance mensuelle (capital + intérêts)</li>
-                            <li><strong>Mini-Prêt :</strong> 2% du montant de l'échéance mensuelle (capital + intérêts)</li>
                         </ul>
                         <p class="mt-3 text-sm">
                             Ces frais sont automatiquement prélevés lors de chaque échéance et sont dus même en cas de remboursement anticipé.
@@ -531,9 +516,7 @@
                             <li><strong>Prélèvement :</strong> Au moment du financement du prêt</li>
                             <li><strong>Exemple :</strong> Pour un prêt de 1 000 €, les frais d'entrée s'élèvent à 50 €</li>
                         </ul>
-                        <p class="mt-3 text-sm">
-                            Aucun frais d'entrée n'est appliqué pour les Mini-Prêts.
-                        </p>
+
                     </div>
                 </div>
                 

@@ -138,7 +138,7 @@
                         <li><a href="{{ route('risk-levels') }}" class="text-gray-300 hover:text-finbright-cyan transition-colors">Niveau des risques des projets</a></li>
                         <li><a href="{{ route('risk-management') }}" class="text-gray-300 hover:text-finbright-cyan transition-colors">Politique de gestion des risques</a></li>
                         <li><a href="{{ route('glossary') }}" class="text-gray-300 hover:text-finbright-cyan transition-colors">Glossaire</a></li>
-                        <li><a href="{{ route('legal-framework') }}" class="text-gray-300 hover:text-finbright-cyan transition-colors">Cadre juridique de l'activité</a></li>
+                        <!-- <li><a href="{{ route('legal-framework') }}" class="text-gray-300 hover:text-finbright-cyan transition-colors">Cadre juridique de l'activité</a></li> -->
                         <li><a href="{{ route('contact') }}" class="text-gray-300 hover:text-finbright-cyan transition-colors">Contact</a></li>
                     </ul>
                 </div>
