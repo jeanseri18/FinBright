@@ -1806,7 +1806,7 @@
                                                     </a>
                                                     <a class="text-sm text-secondary-foreground hover:text-primary"
                                                         href="#">
-                                                        jasontt@keenthemes.com
+                                                        jasontt@finbright.com
                                                     </a>
                                                 </div>
                                             </div>
@@ -1833,7 +1833,7 @@
                                                     </a>
                                                     <a class="text-sm text-secondary-foreground hover:text-primary"
                                                         href="#">
-                                                        jasontt@keenthemes.com
+                                                        jasontt@finbright.com
                                                     </a>
                                                 </div>
                                             </div>

@@ -73,6 +73,12 @@ DB_PASSWORD=root
 php artisan migrate
 ```
 
+### 6. Lancer les seeders
+
+```bash
+php artisan db:seed
+```
+
 ### 7. Lancer le serveur de développement
 
 ```bash

@@ -6,26 +6,26 @@
                 <span class="text-muted-foreground">
                     2025©
                 </span>
-                <a class="text-secondary-foreground hover:text-primary" href="https://keenthemes.com">
-                    Keenthemes Inc.
+                <a class="text-secondary-foreground hover:text-primary" href="">
+                    Fin'Bright.
                 </a>
             </div>
             <nav class="flex order-1 md:order-2 gap-4 font-normal text-sm text-secondary-foreground">
-                <a class="hover:text-primary" href="https://keenthemes.com/metronic/tailwind/docs">
+                <a class="hover:text-primary" href="">
                     Docs
                 </a>
-                <a class="hover:text-primary" href="https://1.envato.market/Vm7VRE">
+                <a class="hover:text-primary" href="">
                     Purchase
                 </a>
                 <a class="hover:text-primary"
-                    href="https://keenthemes.com/metronic/tailwind/docs/getting-started/license">
+                    href="">
                     FAQ
                 </a>
-                <a class="hover:text-primary" href="https://devs.keenthemes.com">
+                <a class="hover:text-primary" href="">
                     Support
                 </a>
                 <a class="hover:text-primary"
-                    href="https://keenthemes.com/metronic/tailwind/docs/getting-started/license">
+                    href="">
                     License
                 </a>
             </nav>

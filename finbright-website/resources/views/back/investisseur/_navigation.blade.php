@@ -1589,7 +1589,7 @@
                                 <a class="kt-dropdown-menu-link" href="{{ route('investisseur.decouvrir') }}">
                                     <i class="ki-filled ki-message-programming">
                                     </i>
-                                    Demandes de prêt
+                                    Exploration des Projets
                                 </a>
                             </li>
                             <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start"
@@ -1695,7 +1695,15 @@
                 <a class="kt-menu-link lg:py-3.5 border-b border-b-transparent kt-menu-item-active:border-b-mono text-foreground kt-menu-item-hover:text-mono kt-menu-item-active:text-mono kt-menu-item-here:border-b-mono kt-menu-item-here:text-mono"
                     href="{{route('investisseur.decouvrir')}}">
                     <span class="kt-menu-title font-medium text-foreground text-sm">
-                        Demandes de prêt
+                        Exploration des Projets
+                    </span>
+                </a>
+            </div>
+            <div class="kt-menu-item {{ session('menu_actif') === 'decouvrir' ? 'active' : '' }}">
+                <a class="kt-menu-link lg:py-3.5 border-b border-b-transparent kt-menu-item-active:border-b-mono text-foreground kt-menu-item-hover:text-mono kt-menu-item-active:text-mono kt-menu-item-here:border-b-mono kt-menu-item-here:text-mono"
+                    href="{{route('investisseur.decouvrir')}}">
+                    <span class="kt-menu-title font-medium text-foreground text-sm">
+                        Mes investissements
                     </span>
                 </a>
             </div>
@@ -1730,7 +1738,7 @@
                 <div class="kt-menu-dropdown kt-menu-default py-2.5 w-full max-w-[220px]">
                     <div class="kt-menu-item">
                         <a class="kt-menu-link"
-                            href="https://keenthemes.com/metronic/tailwind/docs/getting-started/installation"
+                            href=""
                             tabindex="0">
                             <span class="kt-menu-icon">
                                 <i class="ki-filled ki-coffee">
@@ -1759,7 +1767,7 @@
                         </div>
                         <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px] lg:max-w-[220px]">
                             <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="https://devs.keenthemes.com" tabindex="0">
+                                <a class="kt-menu-link" href="" tabindex="0">
                                     <span class="kt-menu-icon">
                                         <i class="ki-filled ki-questionnaire-tablet">
                                         </i>
@@ -1770,7 +1778,7 @@
                                 </a>
                             </div>
                             <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="https://devs.keenthemes.com/popular" tabindex="0">
+                                <a class="kt-menu-link" href="" tabindex="0">
                                     <span class="kt-menu-icon">
                                         <i class="ki-filled ki-star">
                                         </i>
@@ -1781,7 +1789,7 @@
                                 </a>
                             </div>
                             <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="https://devs.keenthemes.com/question/create"
+                                <a class="kt-menu-link" href=""
                                     tabindex="0">
                                     <span class="kt-menu-icon">
                                         <i class="ki-filled ki-message-question">
@@ -1796,7 +1804,7 @@
                     </div>
                     <div class="kt-menu-item">
                         <a class="kt-menu-link"
-                            href="https://keenthemes.com/metronic/tailwind/docs/getting-started/license"
+                            href=""
                             tabindex="0">
                             <span class="kt-menu-icon">
                                 <i class="ki-filled ki-subtitle">
@@ -1815,7 +1823,7 @@
                         </a>
                     </div>
                     <div class="kt-menu-item">
-                        <a class="kt-menu-link" href="https://keenthemes.com/metronic/tailwind/docs"
+                        <a class="kt-menu-link" href=""
                             tabindex="0">
                             <span class="kt-menu-icon">
                                 <i class="ki-filled ki-questionnaire-tablet">
@@ -1829,7 +1837,7 @@
                     <div class="kt-menu-separator">
                     </div>
                     <div class="kt-menu-item">
-                        <a class="kt-menu-link" href="https://keenthemes.com/contact" tabindex="0">
+                        <a class="kt-menu-link" href="" tabindex="0">
                             <span class="kt-menu-icon">
                                 <i class="ki-filled ki-share">
                                 </i>

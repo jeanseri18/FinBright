@@ -110,6 +110,7 @@ Route::prefix('investisseur')->name('investisseur.')->middleware(['auth', '2fa',
 
         Route::get('/', [InvestmentController::class, 'index'])->name('dashboard');
         Route::get('/decouverte-des-projets', [InvestmentController::class, 'decouvrir'])->name('decouvrir');
+        Route::get('/projet/{loanRequest}/json', [InvestmentController::class, 'json'])->name('project.json');
 
         // Panier
         Route::get('/panier', [InvestmentController::class, 'index'])->name('panier.index');

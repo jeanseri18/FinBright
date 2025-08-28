@@ -789,8 +789,8 @@
                                     </div>
                                     <div class="kt-form-description text-2sm">
                                         This API key can only access
-                                        <a class="kt-link" href="https://keenthemes.com/">
-                                            @keenthemes
+                                        <a class="kt-link" href="">
+                                            @finbright
                                         </a>
                                         <br />
                                         Secure access with a unique API key for enhanced functionality.
@@ -903,7 +903,7 @@
                                         </a>
                                         <a class="text-sm text-secondary-foreground hover:text-primary"
                                             href="#">
-                                            jasontt@keenthemes.com
+                                            jasontt@finbright.com
                                         </a>
                                     </div>
                                 </div>
@@ -930,7 +930,7 @@
                                         </a>
                                         <a class="text-sm text-secondary-foreground hover:text-primary"
                                             href="#">
-                                            jasontt@keenthemes.com
+                                            jasontt@finbright.com
                                         </a>
                                     </div>
                                 </div>

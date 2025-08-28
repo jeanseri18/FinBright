@@ -2101,10 +2101,10 @@
                 <i class="ki-filled ki-euro"></i>
                 Simuler un prêt
             </button>
-            {{-- <a class="hover:text-primary" href="https://keenthemes.com/metronic/tailwind/docs/">
+            {{-- <a class="hover:text-primary" href="">
                 User Guides
             </a>
-            <a class="hover:text-primary" href="https://devs.keenthemes.com">
+            <a class="hover:text-primary" href="">
                 Support
             </a> --}}
         </div>
