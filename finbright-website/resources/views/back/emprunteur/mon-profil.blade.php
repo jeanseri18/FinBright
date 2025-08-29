@@ -1302,25 +1302,25 @@
                                         <label class="kt-form-label flex items-center gap-1 max-w-56">
                                             Adresse <span class="text-destructive">*</span>
                                         </label>
-                                        <input class="kt-input" type="text" name="adresse" value="{{ Auth::user()->address['adresse'] ?? null }}">
+                                        <input class="kt-input" type="text" name="adresse" required value="{{ Auth::user()->address['adresse'] ?? null }}">
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
                                             Rue <span class="text-destructive">*</span>
                                         </label>
-                                        <input class="kt-input" placeholder="" name="rue" type="text" value="{{ Auth::user()->address['rue'] ?? null }}">
+                                        <input class="kt-input" placeholder="" name="rue" type="text" required value="{{ Auth::user()->address['rue'] ?? null }}">
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
                                             Code postal <span class="text-destructive">*</span>
                                         </label>
-                                        <input class="kt-input" type="text" name="code_postal" value="{{ Auth::user()->address['code_postal'] ?? null }}" />
+                                        <input class="kt-input" type="text" name="code_postal" required value="{{ Auth::user()->address['code_postal'] ?? null }}" />
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
                                             Ville <span class="text-destructive">*</span>
                                         </label>
-                                        <input class="kt-input" type="text" name="ville" value="{{ Auth::user()->address['ville'] ?? null }}" />
+                                        <input class="kt-input" type="text" name="ville" required value="{{ Auth::user()->address['ville'] ?? null }}" />
                                     </div>
                                     {{-- <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
@@ -1351,7 +1351,7 @@
                                 </div>
                             </form>
                             {{-- Cursus Académique --}}
-                            <form action="{{ route('emprunteur.profil.cursus.update') }}" method="post" class="kt-card">
+                            <form action="{{ route('profil.cursus.update') }}" method="post" class="kt-card">
                                 @csrf
                                 <div class="kt-card-header" id="advanced_settings_preferences">
                                     <h3 class="kt-card-title">
@@ -1385,10 +1385,10 @@
                                         </label>
                                         <div class="grow">
                                             <select class="kt-select" name="diplome" data-kt-select="true">
-                                                <option {{ Auth::user()->diploma == 'Master Grande École' ? 'selected' : '' }}>Master Grande École</option>
-                                                <option {{ Auth::user()->diploma == 'Diplôme d\'Ingénieur' ? 'selected' : '' }}>Diplôme d'Ingénieur</option>
-                                                <option {{ Auth::user()->diploma == 'Master Universitaire' ? 'selected' : '' }}>Master Universitaire</option>
-                                                <option {{ Auth::user()->diploma == 'Mastère Spécialisé' ? 'selected' : '' }}>Mastère Spécialisé</option>
+                                                <option {{ Auth::user()->diploma == 'Master grande école' ? 'selected' : '' }}>Master Grande École</option>
+                                                <option {{ Auth::user()->diploma == 'Diplôme d\'ingénieur' ? 'selected' : '' }}>Diplôme d'Ingénieur</option>
+                                                <option {{ Auth::user()->diploma == 'Master universitaire' ? 'selected' : '' }}>Master Universitaire</option>
+                                                <option {{ Auth::user()->diploma == 'Master spécialisé' ? 'selected' : '' }}>Master Spécialisé</option>
                                                 <option {{ Auth::user()->diploma == 'Autre' ? 'selected' : '' }}>Autre</option>
                                             </select>
                                         </div>
@@ -2211,7 +2211,7 @@
             const selected = this.value;
             const filiereSelect = document.querySelector('select[name="filiere"]');
             
-            fetch(`/emprunteur/filieres/${encodeURIComponent(selected)}`)
+            fetch(`/mon-profil/filieres/${encodeURIComponent(selected)}`)
                 .then(response => response.json())
                 .then(data => {
                     filiereSelect.innerHTML = '';

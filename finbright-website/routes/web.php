@@ -60,9 +60,6 @@ Route::get('/cadre-juridique', [PageController::class, 'legalFramework'])->name(
 
 Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', '2fa', 'profile.completed', 'role:emprunteur|admin'])->group(function () {
     Route::get('/', [EmprunteurController::class, 'index'])->name('dashboard');
-    Route::get('/mon-profil', [EmprunteurController::class, 'profil'])->name('mon-profil');
-    Route::get('/filieres/{diplome}', [EmprunteurController::class, 'filieresParDiplome']);
-    Route::post('/mon-profil/cursus', [EmprunteurController::class, 'updateCursus'])->name('profil.cursus.update');
     
     Route::prefix('/demande-de-pret')->group(function () {
         Route::post('/simulateur', [LoanRequestController::class, 'simulate'])->name('simuler');
@@ -76,6 +73,10 @@ Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', '2fa', 'pr
 });
 
 Route::prefix('mon-profil')->name('profil.')->middleware(['auth', '2fa', 'role:emprunteur|investisseur|admin'])->group(function () {
+    Route::get('/', [EmprunteurController::class, 'profil'])->name('mon-profil');
+    Route::get('/filieres/{diplome}', [EmprunteurController::class, 'filieresParDiplome']);
+    Route::post('/cursus', [EmprunteurController::class, 'updateCursus'])->name('cursus.update');
+
     Route::post('/general', [ProfilController::class, 'updateProfil'])->name('general.update');
     Route::post('/adresse', [ProfilController::class, 'updateAdresse'])->name('adresse.update');
     Route::post('/documents', [ProfilController::class, 'enregistrerDocuments'])->name('documents.update');

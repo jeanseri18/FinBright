@@ -60,7 +60,6 @@ class InvestisseurController extends Controller
             'dirigeants.*.telephone' => 'nullable|string',
             'dirigeants.*.email' => 'nullable|email',
         ]);
-        dd($validated);
 
         $user = Auth::user();
         $user->legalEntity()->updateOrCreate([], [

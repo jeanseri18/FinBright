@@ -1840,7 +1840,7 @@
                         </li>
                         <li>
                             <a class="kt-dropdown-menu-link"
-                                href="{{route('emprunteur.mon-profil')}}">
+                                href="{{route('profil.mon-profil')}}">
                                 <i class="ki-filled ki-profile-circle">
                                 </i>
                                 Mon profil
@@ -2052,7 +2052,7 @@
                     <div
                         class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono {{ session('menu_actif') === 'mon_profil' ? 'here' : '' }}">
                         <a class="kt-menu-link gap-2.5 pb-2 lg:pb-4"
-                            href="{{route('emprunteur.mon-profil')}}" tabindex="0">
+                            href="{{route('profil.mon-profil')}}" tabindex="0">
                             <span
                                 class="kt-menu-title text-nowrap text-sm text-foreground kt-menu-item-active:text-mono kt-menu-item-active:font-medium kt-menu-item-here:text-mono kt-menu-item-here:font-medium kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
                                 Mon profil

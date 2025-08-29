@@ -80,9 +80,10 @@ class EmprunteurController extends Controller
     public function filieresParDiplome(string $diplome)
     {
         $map = [
-            'Master Grande École' => ['Finance de Marché', 'Management', 'Audit'],
-            'Diplôme d\'Ingénieur' => ['IA', 'Robotique', 'Cybersécurité'],
-            'Mastère Spécialisé' => ['Droit des Affaires', 'Fiscalité'],
+            'Master grande école' => ['Finance d’entreprise', 'Management Stratégique', 'Management', 'Audit'],
+            'Diplôme d\'ingénieur' => ['Sécurité des systèmes d’information', 'Cyberdéfense', 'Énergies durables', 'Ingénierie nucléaire', 'Systèmes aérospatiaux', 'IA', 'Robotique', 'Cybersécurité'],
+            'Master spécialisé' => ['Finance de marché', 'Banque d’investissement', 'Conseil en organisation', 'Ingénierie Financière', 'Business Analytics', 'Data Science for Business', 'Stratégie IA, Machine Learning', 'Systèmes aérospatiaux', 'Cyberdéfense', 'Énergies durables', 'Ingénierie nucléaire', 'Droit des Affaires', 'Fiscalité'],
+            'Master universitaire' => ['Finance d’entreprise', 'Finance de marché', 'Management Stratégique', 'Data Science for Business', 'Stratégie IA, Machine Learning'],
             'Autre' => ['Autre spécialisation'],
         ];
 

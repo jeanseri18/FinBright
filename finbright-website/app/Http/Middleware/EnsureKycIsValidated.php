@@ -11,7 +11,7 @@ class EnsureKycIsValidated
     {
         $user = $request->user();
         if (!$user 
-            // || !$user->is_profile_completed 
+            || !$user->is_profile_completed 
             // || $user->kyc_status !== 'Validé'
         ) {
             return redirect()->route('investisseur.profil')

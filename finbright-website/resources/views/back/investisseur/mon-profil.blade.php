@@ -324,19 +324,19 @@
                             <label class="kt-form-label max-w-56">
                                 Dénomination sociale <span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" name="nationality" placeholder="" type="text" value="{{ Auth::user()->legalEntity ? Auth::user()->legalEntity->denomination_sociale : null }}" />
+                            <input class="kt-input" name="denomination_sociale" placeholder="" type="text" value="{{ Auth::user()->legalEntity ? Auth::user()->legalEntity->denomination_sociale : null }}" />
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
                                 Forme juridique <span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" name="nationality" placeholder="" type="text" value="{{ Auth::user()->legalEntity ? Auth::user()->legalEntity->forme_juridique : null }}" />
+                            <input class="kt-input" name="forme_juridique" placeholder="" type="text" value="{{ Auth::user()->legalEntity ? Auth::user()->legalEntity->forme_juridique : null }}" />
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
                                 Numéro d'immatriculation au registre national (ou équivalent)<span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" name="nationality" placeholder="" type="text" value="{{ Auth::user()->legalEntity ? Auth::user()->legalEntity->numero_immatriculation : null }}" />
+                            <input class="kt-input" name="numero_immatriculation" placeholder="" type="text" value="{{ Auth::user()->legalEntity ? Auth::user()->legalEntity->numero_immatriculation : null }}" />
                         </div>
                         <div class="flex flex-col gap-4">
                             <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">

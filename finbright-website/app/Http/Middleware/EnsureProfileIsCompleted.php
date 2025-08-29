@@ -25,7 +25,7 @@ class EnsureProfileIsCompleted
                 // !isset($address['address']) ||
                 // !isset($address['ville'])
             ) {
-                return redirect()->route('emprunteur.mon-profil');
+                return redirect()->route('profil.mon-profil');
             }
         }
 

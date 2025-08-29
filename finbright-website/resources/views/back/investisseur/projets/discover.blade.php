@@ -481,13 +481,13 @@
                         <div class="kt-scrollable overflow-y-auto max-h-[300px] pe-2 w-full">
                             <p id="modal_project_description" class="text-gray-700"></p>
                         </div>
-                        <select class="kt-select w-36" data-kt-select="true" data-kt-select-placeholder="Type de prêt">
+                        <select id="loan_type" class="kt-select w-full" data-kt-select="true" data-kt-select-placeholder="Type de prêt">
                             <option>Prêt sans intérêt</option>
                             <option>Prêt avec intérêt</option>
                             <option>Dons</option>
                         </select>
                         <div class="kt-input-group">
-                            <input type="number" name="amount" min="" max="2000" placeholder="Montant à investir" class="kt-input" required onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                            <input id="amount" type="number" name="amount" min="100" max="2000" placeholder="Montant à investir" class="kt-input" required onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
                             <span class="kt-input-addon kt-input-addon-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-euro" aria-hidden="true">
                                     <path d="M4 10h12"></path>
@@ -552,5 +552,22 @@
                     modal.show();
                 });
         }
+
+        const loanType = document.getElementById('loan_type');
+        const amountInput = document.getElementById('amount');
+
+        function updateMax() {
+            if (loanType.value === 'Prêt sans intérêt' || loanType.value === 'Prêt avec intérêt') {
+                amountInput.setAttribute('max', '2000');
+            } else if (loanType.value === 'don') {
+                amountInput.removeAttribute('max');
+            }
+        }
+
+        // Initialiser au chargement
+        updateMax();
+
+        // Mettre à jour à chaque changement
+        loanType.addEventListener('change', updateMax);
         </script>
     @endsection
