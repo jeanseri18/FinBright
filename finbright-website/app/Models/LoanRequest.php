@@ -10,7 +10,7 @@ class LoanRequest extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'emprunteur_id',
         'status',
         'simulation_result',
         'debt_params',
@@ -29,12 +29,12 @@ class LoanRequest extends Model
     ];
 
     // Relations
-    public function user()
+    public function emprunteur()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Emprunteur::class);
     }
 
-    public function carts()
+    public function investments()
     {
         return $this->hasMany(Investment::class);
     }

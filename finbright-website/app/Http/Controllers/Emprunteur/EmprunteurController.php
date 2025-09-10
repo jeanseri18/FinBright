@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Emprunteur;
 
+use App\Models\Files;
 use App\Models\LoanRequest;
 use App\Services\RiskEvaluator;
 use Illuminate\Http\Request;
@@ -9,6 +10,8 @@ use App\Models\Etablissement;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 
 class EmprunteurController extends Controller
@@ -17,8 +20,9 @@ class EmprunteurController extends Controller
     {
         Session::put('menu_actif', 'dashboard');
         // Session::forget('menu_actif');
-        // $loanRequests = LoanRequest::where('user_id', Auth::id())->latest()->get();
-        $loan = LoanRequest::where('user_id', Auth::id())->latest()->first();
+        // $loanRequests = LoanRequest::where('emprunteur_id', Auth::id())->latest()->get();
+        $emprunteur = Auth::user()->emprunteur;
+        $loan = $emprunteur ? LoanRequest::where('emprunteur_id', $emprunteur->id)->latest()->first() : null;
         return view('back.emprunteur.dashboard', compact('loan'));
     }
 
@@ -35,8 +39,9 @@ class EmprunteurController extends Controller
             'certificat_scolarite' => "Certificat de scolarité de l'année en cours ou Lettre d'admission définitive",
             'releve_bancaire' => "Relevé d'Identité Bancaire (RIB) à votre nom",
         ];
-        $userDocuments = Auth::user()->documents->keyBy('type');
-        $documentsGroupByType = Auth::user()->documents->groupBy('type');
+        $emprunteur = Auth::user()->emprunteur;
+        $userDocuments = ($emprunteur) ? $emprunteur->documents->keyBy('type') : [];
+        $documentsGroupByType = ($emprunteur) ? $emprunteur->documents->groupBy('type') : [];
 
         return view('back.emprunteur.mon-profil', compact([
             'etablissements',
@@ -46,33 +51,97 @@ class EmprunteurController extends Controller
         ]));
     }
 
+    public function updateProfil(Request $request)
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        $validated = $request->validate([
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'civilite' => 'required|in:M.,Mme.,Mx.',
+            'firstname' => 'nullable|string|max:100',
+            'lastname' => 'nullable|string|max:100',
+            'birth_date' => 'nullable|date',
+            'birth_place' => 'nullable|string|max:255',
+            'nationality' => 'nullable|string|max:100',
+            'phone_number' => 'nullable|string|max:20',
+        ]);
+        
+        // 1. Upload avatar si présent
+        if ($request->hasFile('avatar')) {
+            // Supprimer l'ancien avatar
+            if ($user->profile_picture_id && $user->profilePicture) {
+                Storage::disk('public')->delete($user->profilePicture->filename);
+                $user->profilePicture->delete();
+            }
+
+            $file = $request->file('avatar');
+            $safeName = uniqid().'_'.preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
+            $path = $file->storeAs('uploads/avatars', $safeName, 'public');
+
+            $uploadedFile = Files::create([
+                'filename' => $path,
+                'alt' => 'Avatar utilisateur',
+                'type' => 'image',
+                'filesize' => $file->getSize()
+            ]);
+
+            $user->profile_picture_id = $uploadedFile->id;
+        }
+
+        // 2. Mise à jour des champs
+        $user->fill([
+            'civility' => $validated['civilite'] ?? null,
+            'first_name' => $validated['firstname'] ?? null,
+            'last_name' => $validated['lastname'] ?? null,
+            'birth_date' => $validated['birth_date'] ?? null,
+            'birth_place' => $validated['birth_place'] ?? null,
+            'nationality' => $validated['nationality'] ?? null,
+            'phone_number' => $validated['phone_number'] ?? null,
+        ]);
+
+        $user->save();
+
+        return back()->with('success', 'Profil mis à jour avec succès.');
+    }
+
     public function updateCursus(Request $request, RiskEvaluator $evaluator)
     {
-        $request->validate([
+        $validated = $request->validate([
             'etablissement' => 'required|exists:etablissements,id',
             'diplome' => 'required|string|max:100',
             'filiere' => 'required|string|max:100',
-            'annee_etude' => 'nullable|string|max:50',
-            'nombre_annees_restantes' => 'nullable|string|max:50',
+            'annee_etude' => 'required|string|max:50',
+            'nombre_annees_restantes' => 'nullable|integer',
             'date_diplome_prevue' => 'nullable|date',
         ]);
 
         /** @var User $user */
         $user = Auth::user();
 
-        $user->etablissement_id = $request->etablissement;
-        $user->diploma = $request->diplome;
-        $user->specialization = $request->filiere;
-        $user->current_study_year = $request->annee_etude;
-        $user->remaining_years = (int) $request->nombre_annees_restantes;
-        $user->graduation_date = $request->date_diplome_prevue;
-        $user->is_profile_completed = true;
+        DB::transaction(function () use ($user, $validated, $evaluator) {
+            // 1) updateOrCreate sur la relation hasOne (emprunteurs.user_id doit exister)
+            $emprunteur = $user->emprunteur()->updateOrCreate(
+                ['user_id' => $user->id], // condition pour retrouver l'enregistrement
+                [
+                    'etablissement_id'    => $validated['etablissement'],
+                    'diploma'             => $validated['diplome'],
+                    'specialization'      => $validated['filiere'],
+                    'current_study_year'  => $validated['annee_etude'] ?? null,
+                    'remaining_years'     => isset($validated['nombre_annees_restantes']) ? (int)$validated['nombre_annees_restantes'] : null,
+                    'graduation_date'     => $validated['date_diplome_prevue'] ?? null,
+                    'is_profile_completed'=> true,
+                ]
+            );
 
-        $riskLevel = $evaluator->evaluate($user);
-        $user->risk_level_id = $riskLevel->id;
+            // 2) Évaluer le niveau de risque (adapter selon ce que attend ton RiskEvaluator)
+            // Si le service attend un User, appelle $evaluator->evaluate($user) après avoir refresh le user.
+            // Ici j'essaie avec $emprunteur (si RiskEvaluator lit les mêmes champs).
+            $riskLevel = $evaluator->evaluate($emprunteur);
 
-        $user->save();
-        
+            $emprunteur->risk_level_id = $riskLevel ? $riskLevel->id : null;
+            $emprunteur->save();
+        });
 
         return back()->with('success', 'Cursus académique mis à jour.');
     }
@@ -80,11 +149,12 @@ class EmprunteurController extends Controller
     public function filieresParDiplome(string $diplome)
     {
         $map = [
-            'Master grande école' => ['Finance d’entreprise', 'Management Stratégique', 'Management', 'Audit'],
-            'Diplôme d\'ingénieur' => ['Sécurité des systèmes d’information', 'Cyberdéfense', 'Énergies durables', 'Ingénierie nucléaire', 'Systèmes aérospatiaux', 'IA', 'Robotique', 'Cybersécurité'],
-            'Master spécialisé' => ['Finance de marché', 'Banque d’investissement', 'Conseil en organisation', 'Ingénierie Financière', 'Business Analytics', 'Data Science for Business', 'Stratégie IA, Machine Learning', 'Systèmes aérospatiaux', 'Cyberdéfense', 'Énergies durables', 'Ingénierie nucléaire', 'Droit des Affaires', 'Fiscalité'],
-            'Master universitaire' => ['Finance d’entreprise', 'Finance de marché', 'Management Stratégique', 'Data Science for Business', 'Stratégie IA, Machine Learning'],
-            'Autre' => ['Autre spécialisation'],
+            'master_grande_ecole' => ['Finance d\'entreprise', 'Management Stratégique'],
+            'diplome_ingenieur' => ['Sécurité des systèmes d\'information', 'Cyberdéfense', 'Énergies durables', 'Ingénierie nucléaire', 'Systèmes aérospatiaux'],
+            'master_specialise' => ['Finance de marché', 'Banque d\'investissement', 'Conseil en organisation', 'Ingénierie Financière', 'Business Analytics', 'Data Science for Business', 'Stratégie IA', 'Machine Learning', 'Systèmes aérospatiaux'],
+            'master_universitaire' => ['Finance d\'entreprise', 'Finance de marché', 'Management Stratégique', 'Data Science for Business', 'Stratégie IA', 'Machine Learning'],
+            'mba' => ['Finance d’entreprise', 'Management Stratégique', 'Conseil en organisation', 'Business Analytics', 'International Business', 'Entrepreneurship & Innovation', 'Marketing Management', 'Human Resources Management', 'Supply Chain Management'],
+            'autre' => ['Autre spécialisation'],
         ];
 
         return response()->json($map[$diplome] ?? []);

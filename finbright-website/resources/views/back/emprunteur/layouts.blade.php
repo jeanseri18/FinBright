@@ -38,7 +38,7 @@ Contact:
     <body class="antialiased flex h-full text-base text-foreground bg-background [--header-height-default:100px] data-kt-[sticky-header=on]:[--header-height:60px] [--header-height:var(--header-height-default)]">
         <!-- Theme Mode -->
         <script>
-            const defaultThemeMode = 'light'; // light|dark|system
+            const defaultThemeMode = 'system'; // light|dark|system
 			let themeMode;
 
 			if (document.documentElement) {
@@ -116,7 +116,7 @@ Contact:
                     </button>
                 </div>
                 <div class="kt-modal-body">
-                    <form id="modal_simulate_form" class="space-y-4">
+                    <form id="modal_simulate_form" action="{{ route('emprunteur.simuler') }}" method="post" class="space-y-4">
                         @csrf
 
                         {{-- <div class="flex flex-col px-5 gap-1">
@@ -222,14 +222,15 @@ Contact:
                             </div>
                         </div>
 
+                        @php $emprunteur = Auth::user()->emprunteur @endphp
                         <div class="flex flex-col px-5 gap-1">
                             <div class="flex flex-center">
                                 <label for="taux_interet" class="text-mono font-semibold text-sm">
-                                    Taux d'intérêt <b>{{ Auth::user()->riskLevel ? Auth::user()->riskLevel->yield .'%' : 'Indefinie' }}</b>
+                                    Taux d'intérêt <b>{{ ($emprunteur && $emprunteur->riskLevel) ? $emprunteur->riskLevel->yield .'%' : 'Indefinie ! Veuillez renseigner votre cursus scolaire.' }}</b>
                                 </label>
                             </div>
                             <div class="">
-                                <input type="hidden" name="taux_interet" value="{{  Auth::user()->riskLevel ? Auth::user()->riskLevel->yield : 0 }}">
+                                <input type="hidden" name="taux_interet" value="{{  ($emprunteur && $emprunteur->riskLevel) ? $emprunteur->riskLevel->yield : 0 }}">
                                 <i>"Ce taux généré est proposé sur la base de vos informations. Il est indicatif et ne vaut pas contrat."</i>
                             </div>
                         </div>
@@ -420,7 +421,7 @@ Contact:
 
                     <div class="flex justify-end gap-4 pt-4">
                         @php
-                            if (Auth::user()->loanRequests && $loan = Auth::user()->loanRequests->last()) {
+                            if ($emprunteur && $emprunteur->loanRequests && $loan = $emprunteur->loanRequests->last()) {
                                 $disabled = $loan->status != "Terminé";
                             }
                             else $disabled = false;
@@ -457,7 +458,12 @@ Contact:
         @yield('javascripts')
         <!-- End of Scripts -->
 
+        @php
+            $isProfileCompleted = auth()->user()->is_profile_completed ?? false;
+        @endphp
+
         <script>
+            const isProfileCompleted = @json($isProfileCompleted);
             document.getElementById('modal_simulate_form').addEventListener('submit', function (e) {
                 e.preventDefault();
 
@@ -471,7 +477,18 @@ Contact:
                     },
                     body: formData
                 })
-                .then(response => response.json())
+                .then(response => {
+                    // Vérifier si la réponse est OK (statut 200-299)
+                    if (!response.ok) {
+                        // Si la réponse n'est pas OK, elle contient probablement une erreur
+                        // On renvoie un objet avec l'erreur.
+                        return response.text().then(text => { 
+                            throw new Error(text);
+                        });
+                    }
+                    // Si la réponse est OK, on la parse en JSON
+                    return response.json();
+                })
                 .then(data => {
                     if(data.success){
                         const modalSimulate = document.querySelector('#modal_simulate_result');
@@ -480,10 +497,10 @@ Contact:
                         modalSimulate.querySelector('.kt-modal-body').innerHTML = `
                             <div class="rounded-lg bg-muted w-full grow grid md:grid-cols-2 gap-4 p-5">
                                 <div class="md:col-span-1 rounded-lg bg-white flex flex-col justify-center gap-1 p-3">
-                                    <span>Montant :</span> <strong class="text-xl">${data.amount} €</strong>
+                                    <span>Montant démandé :</span> <strong class="text-xl">${data.amount} €</strong>
                                 </div>
                                 <div class="md:col-span-1 rounded-lg bg-white flex flex-col justify-center gap-1 p-3">
-                                    <span>Durée :</span> <strong class="text-xl">${data.duration} mois</strong>
+                                    <span>Durée de remboursement :</span> <strong class="text-xl">${data.duration} mois</strong>
                                 </div>
                                 <div class="md:col-span-1 rounded-lg bg-white flex flex-col justify-center gap-1 p-3">
                                     <span>Coût des intérêts :</span> <strong class="text-xl text-warning">${data.interets} €</strong>
@@ -508,32 +525,20 @@ Contact:
                         document.getElementById('btn_show_debt_check').addEventListener('click', function () {
                         const formDebt = document.getElementById('form_debt_check');
 
-                        // Nettoyage des anciens champs cachés
-                        // formDebt.querySelectorAll('input[type=hidden]').forEach(el => el.remove());
-
-                        // const fields = {
-                        //     '_token': document.querySelector('input[name=_token]').value,
-                        //     'amount': data.inputs.amount,
-                        //     'duration': data.inputs.duration,
-                        //     'interets': data.interets,
-                        //     'assurances': data.assurances,
-                        //     'deferred': data.inputs.deferred ?? 0,
-                        //     'deferred_months': data.inputs.deferred_months ?? 0,
-                        // };
-
-                        // for (const [name, value] of Object.entries(fields)) {
-                        //     const input = document.createElement('input');
-                        //     input.type = 'hidden';
-                        //     input.name = name;
-                        //     input.value = value;
-                        //     formDebt.appendChild(input);
-                        // }
-
                         // Afficher le modal
                         KTModal.getInstance(document.querySelector('#modal_debt_check')).show();
                     });
                     } else {
                         alert(data.message || "Une erreur s'est produite.");
+                    }
+                })
+                .catch(error => {
+                    // Gérer les erreurs de la requête ou du parsing
+                    console.error('Erreur:', error);
+                    if (isProfileCompleted) {
+                        alert("Une erreur de communication s'est produite. Veuillez réessayer.");
+                    } else {
+                        alert("Veuillez renseigner tous les champs obligatoires de votre profil avant d'utiliser le simulateur");
                     }
                 });
             });

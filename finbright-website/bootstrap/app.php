@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
             'role' => RoleMiddleware::class,
+            'setrole' => \App\Http\Middleware\SetRoleToPrefixMiddleware::class,
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,
             'profile.completed' => EnsureProfileIsCompleted::class,

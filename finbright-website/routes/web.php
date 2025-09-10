@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ProfilController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
@@ -58,28 +59,29 @@ Route::get('/cadre-juridique', [PageController::class, 'legalFramework'])->name(
 
 /////////// Les Routes du Backend /////////
 
-Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', '2fa', 'profile.completed', 'role:emprunteur|admin'])->group(function () {
-    Route::get('/', [EmprunteurController::class, 'index'])->name('dashboard');
+Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', '2fa', 'role:emprunteur|admin'])->group(function () {
+    Route::get('/mon-profil', [EmprunteurController::class, 'profil'])->name('mon-profil');
+    Route::post('/mon-profil/general', [EmprunteurController::class, 'updateProfil'])->name('profil-general.update');
+    Route::post('/mon-profil/cursus', [EmprunteurController::class, 'updateCursus'])->name('profil-cursus.update');
+    Route::get('/filieres/{diplome}', [EmprunteurController::class, 'filieresParDiplome']);
     
-    Route::prefix('/demande-de-pret')->group(function () {
-        Route::post('/simulateur', [LoanRequestController::class, 'simulate'])->name('simuler');
-        Route::post('/creer-une-demande', [LoanRequestController::class, 'createDemande'])->name('create.demande');
-        Route::post('/soumettre-une-demande/{loanId?}', [LoanRequestController::class, 'saveDemande'])->name('save.demande');
-        Route::get('/mes-demandes', [LoanRequestController::class, 'demandes'])->name('mes-demandes');
-        Route::get('/ma-demande/{loan?}', [LoanRequestController::class, 'details'])->name('loan-requests.details');
-        Route::post('/{loan}/annuler', [LoanRequestController::class, 'annuler'])->name('loan-requests.annuler');
-        Route::get('/{loan}/modification', [LoanRequestController::class, 'edit'])->name('loan-requests.edit');
+    Route::middleware(['profile.completed'])->group(function () {
+        Route::get('/', [EmprunteurController::class, 'index'])->name('dashboard');
+        
+        Route::prefix('/demande-de-pret')->group(function () {
+            Route::post('/simulateur', [LoanRequestController::class, 'simulate'])->name('simuler');
+            Route::post('/creer-une-demande', [LoanRequestController::class, 'createDemande'])->name('create.demande');
+            Route::post('/soumettre-une-demande/{loanId?}', [LoanRequestController::class, 'saveDemande'])->name('save.demande');
+            Route::get('/mes-demandes', [LoanRequestController::class, 'demandes'])->name('mes-demandes');
+            Route::get('/ma-demande/{loan?}', [LoanRequestController::class, 'details'])->name('loan-requests.details');
+            Route::post('/{loan}/annuler', [LoanRequestController::class, 'annuler'])->name('loan-requests.annuler');
+            Route::get('/{loan}/modification', [LoanRequestController::class, 'edit'])->name('loan-requests.edit');
+        });
     });
 });
 
 Route::prefix('mon-profil')->name('profil.')->middleware(['auth', '2fa', 'role:emprunteur|investisseur|admin'])->group(function () {
-    Route::get('/', [EmprunteurController::class, 'profil'])->name('mon-profil');
-    Route::get('/filieres/{diplome}', [EmprunteurController::class, 'filieresParDiplome']);
-    Route::post('/cursus', [EmprunteurController::class, 'updateCursus'])->name('cursus.update');
-
-    Route::post('/general', [ProfilController::class, 'updateProfil'])->name('general.update');
     Route::post('/adresse', [ProfilController::class, 'updateAdresse'])->name('adresse.update');
-    Route::post('/documents', [ProfilController::class, 'enregistrerDocuments'])->name('documents.update');
     Route::post('/notifications', [ProfilController::class, 'notificationsPreference'])->name('notifications.preferences');
     Route::post('/email', [ProfilController::class, 'updateEmail'])->name('email.update');
     Route::post('/2fa', [ProfilController::class, 'twoFactorSetup'])->name('2fa.setup');
@@ -88,10 +90,11 @@ Route::prefix('mon-profil')->name('profil.')->middleware(['auth', '2fa', 'role:e
     Route::get('/desactiver', [ProfilController::class, 'deactivateAccount'])->name('deactivate');
 
     Route::prefix('documents')->name('documents.')->group(function () {
+        Route::post('/', [ProfilController::class, 'enregistrerDocuments'])->name('update');
         Route::get('{id}/export', [ProfilController::class, 'exportDocument'])->name('export');
         Route::get('{id}/edit', [ProfilController::class, 'editDocument'])->name('edit');
-        Route::get('{id}', [ProfilController::class, 'deleteDocument'])->name('delete');
-        Route::delete('{id}', [ProfilController::class, 'deleteDocument'])->name('delete');
+        Route::get('{id}/delete', [ProfilController::class, 'deleteDocument'])->name('delete');
+        Route::delete('{id}/delete', [ProfilController::class, 'deleteDocument'])->name('delete');
     });
 });
 
@@ -104,13 +107,17 @@ Route::prefix('investisseur')->name('investisseur.')->middleware(['auth', '2fa',
     Route::post('/iban', [IbanController::class, 'store'])->name('iban.store');
 
     Route::get('/mon-profil', [InvestisseurController::class, 'profil'])->name('profil');
-    Route::post('/mon-profil/general', [InvestisseurController::class, 'updateLegalEntity'])->name('legalEntity.update');
+    Route::post('/mon-profil/evaluer', [InvestisseurController::class, 'evaluerProfil'])->name('profil.evaluer');
+    Route::post('/mon-profil/personne-physique', [InvestisseurController::class, 'updateProfil'])->name('general.update');
+    Route::post('/mon-profil/personne-morale', [InvestisseurController::class, 'updateLegalEntity'])->name('legalEntity.update');
 
     // Zone soumise au KYC validé
     Route::middleware(['kyc.validated'])->group(function () {
 
         Route::get('/', [InvestmentController::class, 'index'])->name('dashboard');
         Route::get('/decouverte-des-projets', [InvestmentController::class, 'decouvrir'])->name('decouvrir');
+        Route::get('/mes-investissements', [InvestmentController::class, 'myProjects'])->name('projets');
+        Route::get('/projet/{loan}', [InvestmentController::class, 'details'])->name('projet.details');
         Route::get('/projet/{loanRequest}/json', [InvestmentController::class, 'json'])->name('project.json');
 
         // Panier
@@ -124,6 +131,14 @@ Route::prefix('investisseur')->name('investisseur.')->middleware(['auth', '2fa',
         Route::post('/contribuer/{loanRequest}', [InvestmentController::class, 'investir'])->name('investir');
     });
 });
+
+Route::prefix('admin')->name('admin.')->middleware(['auth', '2fa', 'role:admin'])->group(function () {
+    Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::prefix('prets')->name('prets.')->group(function () {
+        Route::get('/demandes-de-prets', [AdminController::class, 'demandesPrets'])->name('demandes');
+    });
+});
+
 
 // Auth routes (login, register, etc.)
 require __DIR__.'/auth.php';

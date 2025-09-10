@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="flex items-center flex-wrap gap-1.5 lg:gap-3.5">
-                <a class="kt-btn kt-btn-sm kt-btn-outline" href="/metronic/tailwind/demo9/account/home/get-started">
+                {{-- <a class="kt-btn kt-btn-sm kt-btn-outline" href="/metronic/tailwind/demo9/account/home/get-started">
                     <i class="ki-filled ki-exit-down">
                     </i>
                     Exporter
@@ -134,7 +134,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
         <!-- End of Container -->
@@ -364,7 +364,7 @@
                                     <br />
                                     du
                                     <a class="kt-link" href="#">
-                                        réseau Fin'Bright
+                                        Réseau Fin'Bright
                                     </a>
                                 </h2>
                                 <p class="text-sm font-normal text-secondary-foreground leading-5.5">
@@ -388,17 +388,17 @@
                     <div class="kt-card h-full">
                         <div class="kt-card-header">
                             <h3 class="kt-card-title">
-                                Block List
+                                Contributeurs
                             </h3>
                         </div>
                         <div class="kt-card-content flex flex-col gap-5">
                             <div class="text-sm text-foreground">
-                                Les utilisateurs figurant sur la liste de blocage ne peuvent plus jamais vous envoyer de demandes de chat ou de messages.
+                                Les utilisateurs figurant sur la liste des projets auxquels vous avez déjà investi, vous pouvez leur envoyer une demande de chat ou un message.
                             </div>
                             <div class="kt-input-group">
-                                <input class="kt-input" placeholder="Block new user" type="text" value="">
+                                <input class="kt-input" placeholder="Rechercher un utilisateur" type="text" value="">
                                 <span class="kt-btn kt-btn-primary">
-                                    Ajouter
+                                    Rechercher
                                 </span>
                                 </input>
                             </div>
@@ -415,14 +415,13 @@
                                                 Esther Howard
                                             </a>
                                             <span class="text-sm text-secondary-foreground">
-                                                6 commits
+                                                6 contributions
                                             </span>
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-2.5">
                                         <a class="kt-btn kt-btn-icon kt-btn-ghost" href="#">
-                                            <i class="ki-filled ki-trash">
-                                            </i>
+                                            <i class="ki-filled ki-message-text-2"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -438,14 +437,13 @@
                                                 Tyler Hero
                                             </a>
                                             <span class="text-sm text-secondary-foreground">
-                                                29 commits
+                                                29 contributions
                                             </span>
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-2.5">
                                         <a class="kt-btn kt-btn-icon kt-btn-ghost" href="#">
-                                            <i class="ki-filled ki-trash">
-                                            </i>
+                                            <i class="ki-filled ki-message-text-2"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -461,14 +459,13 @@
                                                 Arlene McCoy
                                             </a>
                                             <span class="text-sm text-secondary-foreground">
-                                                34 commits
+                                                34 contributions
                                             </span>
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-2.5">
                                         <a class="kt-btn kt-btn-icon kt-btn-ghost" href="#">
-                                            <i class="ki-filled ki-trash">
-                                            </i>
+                                            <i class="ki-filled ki-message-text-2"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -484,14 +481,13 @@
                                                 Cody Fisher
                                             </a>
                                             <span class="text-sm text-secondary-foreground">
-                                                1 commit
+                                                1 contributions
                                             </span>
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-2.5">
                                         <a class="kt-btn kt-btn-icon kt-btn-ghost" href="#">
-                                            <i class="ki-filled ki-trash">
-                                            </i>
+                                            <i class="ki-filled ki-message-text-2"></i>
                                         </a>
                                     </div>
                                 </div>

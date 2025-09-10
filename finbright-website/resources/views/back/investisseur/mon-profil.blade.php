@@ -26,6 +26,7 @@
         <!-- End of Container -->
     </div>
     <!-- End of Toolbar -->
+    @php $investisseur = Auth::user()->investisseur @endphp
     <!-- Container -->
     <div class="kt-container-fixed">
         <div class="flex grow gap-5 lg:gap-7.5">
@@ -35,19 +36,28 @@
                     data-kt-sticky-name="scrollspy" data-kt-sticky-offset="200" data-kt-sticky-target="body">
                     <div class="flex flex-col grow relative before:absolute before:left-[11px] before:top-0 before:bottom-0 before:border-l before:border-border"
                         data-kt-scrollspy="true" data-kt-scrollspy-offset="110px" data-kt-scrollspy-target="body">
+                        @if ($investisseur->type_of_lender == "Personne morale")
                         <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-1.5 active border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
+                            data-kt-scrollspy-anchor="true" href="#personne_morale">
+                            <span
+                                class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
+                            </span>
+                            Identification de la Personne Morale
+                        </a>
+                        @endif
+                        <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-1.5 {{$investisseur->type_of_lender == "Personne physique" ? 'active' : null}} border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
                             data-kt-scrollspy-anchor="true" href="#basic_settings">
                             <span
                                 class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
                             </span>
-                            {{ Auth::user()->type_of_lender == "Personne physique" ? 'Informations Personnelles' : 'Identification de la Personne Morale' }}
+                            {{ $investisseur->type_of_lender == "Personne physique" ? 'Informations Personnelles' : 'Informations sur le Représentant Légal' }}
                         </a>
                         <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-1.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
                             data-kt-scrollspy-anchor="true" href="#advanced_settings_address">
                             <span
                                 class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
                             </span>
-                            Adresse postale
+                            {{ $investisseur->type_of_lender == "Personne physique" ? 'Adresse postale' : 'Adresse du siège social' }}
                         </a>
                         <div class="flex flex-col">
                             <div class="pl-6 pr-2.5 py-2.5 text-sm font-semibold text-mono">
@@ -164,16 +174,17 @@
                     </div>
                 </div>
                 @endif
-                @if (Auth::user()->type_of_lender == "Personne physique")
-                {{-- Informations Personnelles --}}
+                {{-- Identification de la Personne Morale --}}
+                @if ($investisseur->type_of_lender == "Personne morale")
                 <div class="kt-card pb-2.5">
-                    <div class="kt-card-header" id="basic_settings">
+                    <div class="kt-card-header" id="personne_morale">
                         <h3 class="kt-card-title">
-                            Informations Personnelles
+                            Identification de la Personne Morale
                         </h3>
                     </div>
-                    <form action="{{ route('profil.general.update') }}" method="post" enctype="multipart/form-data" class="kt-card-content grid gap-5">
+                    <form action="{{ route('investisseur.legalEntity.update') }}" method="post" enctype="multipart/form-data" class="kt-card-content grid gap-5">
                         @csrf
+
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
                                 Photo <span class="text-destructive">*</span>
@@ -202,6 +213,185 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label max-w-56">
+                                Dénomination sociale <span class="text-destructive">*</span>
+                            </label>
+                            <input class="kt-input" name="denomination_sociale" placeholder="" type="text" value="{{ $investisseur->denomination_sociale ?? null }}" required />
+                        </div>
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label max-w-56">
+                                Forme juridique <span class="text-destructive">*</span>
+                            </label>
+                            <div class="grow">
+                                <select class="kt-select" name="forme_juridique" data-kt-select="true" required>
+                                    <option {{ $investisseur ?? $investisseur->forme_juridique == 'Association loi 1901' ? 'selected' : '' }}>Association loi 1901</option>
+                                    <option {{ $investisseur ?? $investisseur->forme_juridique == 'Fondation reconnue d\'utilité publique' ? 'selected' : '' }}>Fondation reconnue d'utilité publique</option>
+                                    <option {{ $investisseur ?? $investisseur->forme_juridique == 'Fonds de dotation' ? 'selected' : '' }}>Fonds de dotation</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label max-w-56">
+                                Numéro d'immatriculation<span class="text-destructive">*</span>
+                            </label>
+                            <input class="kt-input" name="numero_immatriculation" placeholder="" type="text" value="{{ $investisseur->numero_immatriculation ?? null }}" required />
+                        </div>
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label max-w-56">
+                                Date de création <span class="text-destructive">*</span>
+                            </label>
+                            <input class="kt-input" name="creation_date" placeholder="JJ/MM/AAAA" type="date" value="{{ \Carbon\Carbon::parse($investisseur->create_date)->format('Y-m-d') ?? null }}" required />
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                                <label class="kt-form-label max-w-56">
+                                    Bénéficiaires Effectifs <span class="text-destructive">*</span>
+                                </label>
+
+                                <div id="beneficiaires-wrapper" class="flex flex-col w-full gap-4">
+                                    @php
+                                        // On charge les bénéficiaires existants OU on met une "coquille vide"
+                                        $beneficiaires = $investisseur->beneficiaires->isNotEmpty() 
+                                            ? $investisseur->beneficiaires 
+                                            : collect([new \App\Models\Beneficiaire()]);
+                                    @endphp
+
+                                    @foreach ($beneficiaires as $index => $dirigeant)
+                                        <div class="director-item flex flex-col gap-2 p-4 border border-gray-200 rounded-md bg-gray-50 relative">
+                                            <button type="button" class="remove-director absolute top-2 right-2 text-red-500 hover:text-red-700 text-sm">
+                                                Supprimer
+                                            </button>
+                                            
+                                            <input type="hidden" name="beneficiaires[{{ $index }}][id]" value="{{ $dirigeant->id ?? '' }}">
+                                            
+                                            <div class="grid md:grid-cols-2 gap-3">
+                                                <label>
+                                                    <span class="kt-form-description">Nom</span>
+                                                    <input class="kt-input grow" name="beneficiaires[{{ $index }}][nom]" placeholder="Nom" type="text" value="{{ $dirigeant->nom ?? null }}" required />
+                                                </label>
+                                                <label>
+                                                    <span class="kt-form-description">Prénoms</span>
+                                                    <input class="kt-input grow" name="beneficiaires[{{ $index }}][prenoms]" placeholder="Prénoms" type="text" value="{{ $dirigeant->prenoms ?? null }}" required />
+                                                </label>
+                                            </div>
+
+                                            <div class="grid md:grid-cols-2 gap-3">
+                                                <label>
+                                                    <span class="kt-form-description">Date de naissance</span>
+                                                    <input class="kt-input" name="beneficiaires[{{ $index }}][birth_date]" placeholder="Date de naissance" type="date" value="{{ isset($dirigeant->birth_date) ? \Carbon\Carbon::parse($dirigeant->birth_date)->format('Y-m-d') : null }}" required />
+                                                </label>
+                                                <label>
+                                                    <span class="kt-form-description">Lieu de naissance</span>    
+                                                    <select class="kt-select grow" name="beneficiaires[{{ $index }}][birth_place]" required  
+                                                        data-kt-select="true" data-kt-select-placeholder="Lieu de naissance" 
+                                                        data-kt-select-config='{
+                                                            "placeholder": "Lieu de naissance",
+                                                            "optionsClass": "kt-scrollable overflow-auto max-h-[250px]"
+                                                        }'
+                                                        >
+                                                        <option value="Belgique" {{ isset($dirigeant->birth_place) && $dirigeant->birth_place == 'Belgique' ? 'selected' : '' }}>Belgique</option>
+                                                        <option value="Congo" {{ isset($dirigeant->birth_place) && $dirigeant->birth_place == 'Congo' ? 'selected' : '' }}>Congo</option>
+                                                        <option value="Côte d'Ivoire" {{ isset($dirigeant->birth_place) && $dirigeant->birth_place == "Côte d'Ivoire" ? 'selected' : '' }}>Côte d'Ivoire</option>
+                                                        <option value="Cameroun" {{ isset($dirigeant->birth_place) && $dirigeant->birth_place == 'Cameroun' ? 'selected' : '' }}>Cameroun</option>
+                                                        <option value="Canada" {{ isset($dirigeant->birth_place) && $dirigeant->birth_place == 'Canada' ? 'selected' : '' }}>Canada</option>
+                                                        <option value="Espagne" {{ isset($dirigeant->birth_place) && $dirigeant->birth_place == 'Espagne' ? 'selected' : '' }}>Espagne</option>
+                                                        <option value="France" {{ isset($dirigeant->birth_place) && $dirigeant->birth_place == 'France' ? 'selected' : '' }}>France</option>
+                                                        <option value="Italie" {{ isset($dirigeant->birth_place) && $dirigeant->birth_place == 'Italie' ? 'selected' : '' }}>Italie</option>
+                                                        <option value="Guinée" {{ isset($dirigeant->birth_place) && $dirigeant->birth_place == 'Guinée' ? 'selected' : '' }}>Guinée</option>
+                                                        <option value="Mali" {{ isset($dirigeant->birth_place) && $dirigeant->birth_place == 'Mali' ? 'selected' : '' }}>Mali</option>
+                                                        <option value="Senegal" {{ isset($dirigeant->birth_place) && $dirigeant->birth_place == 'Senegal' ? 'selected' : '' }}>Senegal</option>
+                                                    </select>
+                                                </label>
+                                            </div>
+
+                                            <div class="grid md:grid-cols-2 gap-3">
+                                                <label>
+                                                    <span class="kt-form-description">Nationalité</span>
+                                                    <input class="kt-input grow" name="beneficiaires[{{ $index }}][nationalite]" placeholder="Nationalité" type="text" value="{{ $dirigeant->nationalite ?? null }}" required />
+                                                </label>
+                                                <label>
+                                                    <span class="kt-form-description">Adresse</span>
+                                                    <input class="kt-input grow" name="beneficiaires[{{ $index }}][adresse]" placeholder="Adresse (Nom de la voie, Code Postal, Ville, Pays)" type="text" value="{{ $dirigeant->adresse ?? null }}" required />
+                                                </label>
+                                            </div>
+
+                                            <div class="col-span-2">
+                                                <label class="kt-form-description">
+                                                    Pièce d'identité en cours de validité
+                                                </label>
+                                                <input class="kt-input grow" name="beneficiaires[{{ $index }}][piece_identite][]" placeholder="Pièce d'identité en cours de validité" type="file" multiple />
+                                                <div class="uploaded_files grid md:grid-cols-2 gap-2 mt-2">
+                                                    @foreach($dirigeant->documents as $doc)
+                                                    <div class="kt-alert" id="alert_1">
+                                                        <div class="kt-alert-title">
+                                                            {{$doc->file->alt}}
+                                                            <span class="kt-badge kt-badge-outline kt-badge-{{$doc->status == 'À vérifier' ? 'warning' : ($doc->status == 'Validé' ? 'success' : 'destructive')}} rounded-full">{{$doc->status}}</span>
+                                                        </div>
+                                                        <div class="kt-alert-toolbar">
+                                                            <div class="kt-alert-actions">
+                                                                <a href="{{ Storage::url($doc->file->filename) }}" target="_blank" class="kt-link kt-link-xs kt-link-underlined text-mono hover:text-primary">Voir</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <button type="button" id="add-director" class="kt-btn kt-btn-outline self-start">
+                                + Ajouter un bénéficiaire
+                            </button>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="kt-btn kt-btn-primary">
+                                Sauvegarder
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                @endif
+                {{-- Informations Personnelles --}}
+                <div class="kt-card pb-2.5">
+                    <div class="kt-card-header" id="basic_settings">
+                        <h3 class="kt-card-title">
+                            {{ ($investisseur->type_of_lender == "Personne physique") ? 'Informations Personnelles' : 'Informations sur le Représentant Légal' }}
+                        </h3>
+                    </div>
+                    <form action="{{ route('investisseur.general.update') }}" method="post" enctype="multipart/form-data" class="kt-card-content grid gap-5">
+                        @csrf
+                        @if ($investisseur->type_of_lender == "Personne physique")
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label max-w-56">
+                                Photo <span class="text-destructive">*</span>
+                            </label>
+                            <div class="flex items-center justify-between flex-wrap grow gap-2.5">
+                                <span class="text-sm">
+                                    150x150px JPEG, PNG Image
+                                </span>
+                                <div class="group relative size-18 rounded-full border border-gray-300 bg-gray-50 overflow-hidden cursor-pointer" id="avatar-container">
+                                    <input accept=".png, .jpg, .jpeg" name="avatar" type="file" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" id="avatar-input" />
+                                    
+                                    <div id="avatar-preview" class="w-full h-full bg-cover bg-center rounded-full" style="background-image: url('{{ Auth::user()->profilePicture ? Storage::url(Auth::user()->profilePicture->filename) : asset('assets/media/avatars/blank.png') }}');"></div>
+                                    
+                                    <div class="absolute bottom-0 left-0 right-0 h-1/3 flex items-center justify-center bg-gray-300 bg-opacity-70">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.867-1.442A2 2 0 0110.437 3h3.125a2 2 0 011.664.89l.867 1.442A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                    </div>
+                                    
+                                    <button type="button" id="avatar-remove-btn" class="absolute -top-2 -right-2 size-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer opacity-0 transition-opacity">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                         <div class="flex items-center flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
                                 Civilité <span class="text-destructive">*</span>
@@ -241,19 +431,19 @@
                                 Lieu de naissance <span class="text-destructive">*</span>
                             </label>
                             <div class="grow">
-                                <select name="birth_place" class="kt-select" name="pays" data-kt-select="true">
-                                    <option {{ Auth::user()->birth_place == 'Belgique' ? 'selected' : '' }}>Belgique</option>
-                                    <option {{ Auth::user()->birth_place == 'Congo' ? 'selected' : '' }}>Congo</option>
-                                    <option {{ Auth::user()->birth_place == 'Côte d\'Ivoire' ? 'selected' : '' }}>Côte d'Ivoire</option>
-                                    <option {{ Auth::user()->birth_place == 'Cameroun' ? 'selected' : '' }}>Cameroun</option>
-                                    <option {{ Auth::user()->birth_place == 'Canada' ? 'selected' : '' }}>Canada</option>
-                                    <option {{ Auth::user()->birth_place == 'Espagne' ? 'selected' : '' }}>Espagne</option>
-                                    <option {{ Auth::user()->birth_place == 'France' ? 'selected' : '' }}>France</option>
-                                    <option {{ Auth::user()->birth_place == 'Italie' ? 'selected' : '' }}>Italie</option>
-                                    <option {{ Auth::user()->birth_place == 'Guinnée' ? 'selected' : '' }}>Guinnée</option>
-                                    <option {{ Auth::user()->birth_place == 'Mali' ? 'selected' : '' }}>Mali</option>
-                                    <option {{ Auth::user()->birth_place == 'Senegal' ? 'selected' : '' }}>Senegal</option>
-                                    <option {{ Auth::user()->birth_place == 'Mali' ? 'selected' : '' }}>Mali</option>
+                                <select name="birth_place" class="kt-select" data-kt-select="true">
+                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Belgique' ? 'selected' : '' }}>Belgique</option>
+                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Congo' ? 'selected' : '' }}>Congo</option>
+                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Côte d\'Ivoire' ? 'selected' : '' }}>Côte d'Ivoire</option>
+                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Cameroun' ? 'selected' : '' }}>Cameroun</option>
+                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Canada' ? 'selected' : '' }}>Canada</option>
+                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Espagne' ? 'selected' : '' }}>Espagne</option>
+                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'France' ? 'selected' : '' }}>France</option>
+                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Italie' ? 'selected' : '' }}>Italie</option>
+                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Guinnée' ? 'selected' : '' }}>Guinnée</option>
+                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Mali' ? 'selected' : '' }}>Mali</option>
+                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Senegal' ? 'selected' : '' }}>Senegal</option>
+                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Mali' ? 'selected' : '' }}>Mali</option>
                                 </select>
                             </div>
                         </div>
@@ -265,118 +455,66 @@
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
-                                Profession <span class="text-destructive">*</span>
-                            </label>
-                            <input class="kt-input" name="profession" placeholder="Entrez votre profession" type="text" value="{{ Auth::user()->profession ?? null }}" />
-                        </div>
-                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                            <label class="kt-form-label max-w-56">
                                 Numéro de téléphone <span class="text-destructive">*</span>
                             </label>
                             <input class="kt-input" name="phone_number" placeholder="Numéro de téléphone mobile" type="tel" value="{{ Auth::user()->phone_number ?? null }}" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" />
                         </div>
-                        <div class="flex justify-end">
-                            <button type="submit" class="kt-btn kt-btn-primary">
-                                Sauvegarder
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                {{-- Identification de la Personne Morale --}}
-                @elseif (Auth::user()->type_of_lender == "Personne morale")
-                <div class="kt-card pb-2.5">
-                    <div class="kt-card-header" id="basic_settings">
-                        <h3 class="kt-card-title">
-                            Identification de la Personne Morale
-                        </h3>
-                    </div>
-                    <form action="{{ route('investisseur.legalEntity.update') }}" method="post" enctype="multipart/form-data" class="kt-card-content grid gap-5">
-                        @csrf
+                        @if ($investisseur->type_of_lender == "Personne physique")
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
-                                Photo <span class="text-destructive">*</span>
+                                Profession <span class="text-destructive">*</span>
                             </label>
-                            <div class="flex items-center justify-between flex-wrap grow gap-2.5">
-                                <span class="text-sm">
-                                    150x150px JPEG, PNG Image
-                                </span>
-                                <div class="group relative size-18 rounded-full border border-gray-300 bg-gray-50 overflow-hidden cursor-pointer" id="avatar-container">
-                                    <input accept=".png, .jpg, .jpeg" name="avatar" type="file" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" id="avatar-input" />
-                                    
-                                    <div id="avatar-preview" class="w-full h-full bg-cover bg-center rounded-full" style="background-image: url('{{ Auth::user()->profilePicture ? Storage::url(Auth::user()->profilePicture->filename) : asset('assets/media/avatars/blank.png') }}');"></div>
-                                    
-                                    <div class="absolute bottom-0 left-0 right-0 h-1/3 flex items-center justify-center bg-gray-300 bg-opacity-70">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.867-1.442A2 2 0 0110.437 3h3.125a2 2 0 011.664.89l.867 1.442A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
-                                    </div>
-                                    
-                                    <button type="button" id="avatar-remove-btn" class="absolute -top-2 -right-2 size-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer opacity-0 transition-opacity">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
+                            <input class="kt-input" name="profession" placeholder="Entrez votre profession" type="text" value="{{ $investisseur->profession ?? null }}" required />
+                        </div>
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label max-w-56" for="ppe">
+                                Êtes-vous une Personne Politiquement Exposée (PPE) ?
+                            </label>
+                            <label class="flex items-center gap-2" for="ppe">
+                                <input class="kt-switch" name="ppe" type="checkbox" id="ppe" value="1" 
+                                    onchange="document.getElementById('ppe_libelle').innerText = this.checked ? 'Oui' : 'Non';"
+                                    {{ $investisseur->ppe ? "checked" : "" }} 
+                                /> 
+                                <span id="ppe_libelle">{{ $investisseur ? ($investisseur->ppe ? "Oui" : "Non") : "Non" }}</span>
+                            </label>
+                        </div>
+                        @else
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label max-w-56">
+                                Adresse <span class="text-destructive">*</span>
+                            </label>
+                            <input class="kt-input" name="adresse" placeholder="Entrez votre adresse (Nom de la voie, Code Postal, Ville, Pays)" type="text" value="{{ $investisseur->adresse_representant ?? null }}" required />
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
-                                Dénomination sociale <span class="text-destructive">*</span>
+                                Fonction au sein de l'entité <span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" name="denomination_sociale" placeholder="" type="text" value="{{ Auth::user()->legalEntity ? Auth::user()->legalEntity->denomination_sociale : null }}" />
+                            <input class="kt-input" name="fonction" placeholder="Entrez votre fonction" type="text" value="{{ $investisseur->fonction ?? null }}" required />
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
-                                Forme juridique <span class="text-destructive">*</span>
+                                Pièce d'identité en cours de validité<span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" name="forme_juridique" placeholder="" type="text" value="{{ Auth::user()->legalEntity ? Auth::user()->legalEntity->forme_juridique : null }}" />
-                        </div>
-                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                            <label class="kt-form-label max-w-56">
-                                Numéro d'immatriculation au registre national (ou équivalent)<span class="text-destructive">*</span>
-                            </label>
-                            <input class="kt-input" name="numero_immatriculation" placeholder="" type="text" value="{{ Auth::user()->legalEntity ? Auth::user()->legalEntity->numero_immatriculation : null }}" />
-                        </div>
-                        <div class="flex flex-col gap-4">
-                            <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                <label class="kt-form-label max-w-56">
-                                    Dirigeants <span class="text-destructive">*</span>
-                                </label>
-
-                                <div id="directors-wrapper" class="flex flex-col w-full gap-4">
-                                    @php
-                                        $directors = Auth::user()->legalEntity?->dirigeants ?? [['civilite' => '', 'nom' => '', 'prenoms' => '', 'poste' => '', 'pourcentage_actions' => '', 'telephone' => '', 'email' => '']];
-                                    @endphp
-
-                                    @foreach ($directors as $index => $dirigeant)
-                                        <div class="director-item flex flex-col gap-3 p-4 border border-gray-200 rounded-md bg-gray-50 relative">
-                                            <button type="button" class="remove-director absolute top-2 right-2 text-red-500 hover:text-red-700 text-sm">
-                                                Supprimer
-                                            </button>
-
-                                            <div class="grid md:grid-cols-2 gap-3">
-                                                <input class="kt-input grow" name="dirigeants[{{ $index }}][civilite]" placeholder="Civilité (M., Mme...)" type="text" value="{{ $dirigeant['civilite'] ?? '' }}" />
-                                                <input class="kt-input grow" name="dirigeants[{{ $index }}][nom]" placeholder="Nom et prénoms" type="text" value="{{ $dirigeant['nom'] ?? '' }}" />
-                                            </div>
-
-                                            <div class="grid md:grid-cols-2 gap-3">
-                                                <input class="kt-input grow" name="dirigeants[{{ $index }}][poste]" placeholder="Poste" type="text" value="{{ $dirigeant['poste'] ?? '' }}" />
-                                                <input class="kt-input grow" name="dirigeants[{{ $index }}][pourcentage_actions]" placeholder="% d'actions" type="number" min="0" max="100" value="{{ $dirigeant['pourcentage_actions'] ?? '' }}" />
-                                            </div>
-
-                                            <div class="grid md:grid-cols-2 gap-3">
-                                                <input class="kt-input grow" name="dirigeants[{{ $index }}][telephone]" placeholder="Téléphone" type="text" value="{{ $dirigeant['telephone'] ?? '' }}" />
-                                                <input class="kt-input grow" name="dirigeants[{{ $index }}][email]" placeholder="Email" type="email" value="{{ $dirigeant['email'] ?? '' }}" />
+                            <div>
+                                <input class="kt-input grow" name="piece_identite[]" type="file" multiple {{ empty($investisseur->documents) ? 'required' : null }} />
+                                <div class="uploaded_files grid md:grid-cols-2 gap-2 mt-2">
+                                    @foreach($investisseur->documents ?? [] as $doc)
+                                    <div class="kt-alert" id="alert_1">
+                                        <div class="kt-alert-title">
+                                            {{$doc->file->alt}}
+                                            <span class="kt-badge kt-badge-outline kt-badge-{{$doc->status == 'À vérifier' ? 'warning' : ($doc->status == 'Validé' ? 'success' : 'destructive')}} rounded-full">{{$doc->status}}</span>
+                                        </div>
+                                        <div class="kt-alert-toolbar">
+                                            <div class="kt-alert-actions">
+                                                <a href="{{ Storage::url($doc->file->filename) }}" target="_blank" class="kt-link kt-link-xs kt-link-underlined text-mono hover:text-primary">Voir</a>
                                             </div>
                                         </div>
+                                    </div>
                                     @endforeach
                                 </div>
                             </div>
-                            <button type="button" id="add-director" class="kt-btn kt-btn-outline self-start">
-                                + Ajouter un dirigeant
-                            </button>
                         </div>
+                        @endif
                         <div class="flex justify-end">
                             <button type="submit" class="kt-btn kt-btn-primary">
                                 Sauvegarder
@@ -384,12 +522,11 @@
                         </div>
                     </form>
                 </div>
-                @endif
                 {{-- Adresse postale --}}
                 <div class="kt-card">
                     <div class="kt-card-header" id="advanced_settings_address">
                         <h3 class="kt-card-title">
-                            Adresse postale
+                            {{ ($investisseur->type_of_lender == "Personne physique") ? 'Adresse postale' : 'Adresse complète du siège social' }}
                         </h3>
                     </div>
                     <form action="{{ route('profil.adresse.update') }}" method="post" class="kt-card-content grid gap-5 lg:py-7.5">
@@ -398,25 +535,25 @@
                             <label class="kt-form-label flex items-center gap-1 max-w-56">
                                 Adresse <span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" type="text" name="adresse" value="{{ Auth::user()->address['adresse'] ?? null }}">
+                            <input class="kt-input" type="text" name="adresse" value="{{ Auth::user()->address['adresse'] ?? null }}" required>
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
                                 Rue <span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" placeholder="" name="rue" type="text" value="{{ Auth::user()->address['rue'] ?? null }}">
+                            <input class="kt-input" placeholder="" name="rue" type="text" value="{{ Auth::user()->address['rue'] ?? null }}" required>
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
                                 Code postal <span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" type="text" name="code_postal" value="{{ Auth::user()->address['code_postal'] ?? null }}" />
+                            <input class="kt-input" type="text" name="code_postal" value="{{ Auth::user()->address['code_postal'] ?? null }}" required />
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
                                 Ville <span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" type="text" name="ville" value="{{ Auth::user()->address['ville'] ?? null }}" />
+                            <input class="kt-input" type="text" name="ville" value="{{ Auth::user()->address['ville'] ?? null }}" required />
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
@@ -450,9 +587,8 @@
                 <div class="kt-card">
                     <div class="kt-card-header" id="external_services_integrations">
                         <h3 class="kt-card-title">
-                            Justificatifs Obligatoires
+                            Justificatifs Obligatoires <span class="kt-form-description">(Format de fichiers : pdf, jpg, png)</span>
                         </h3>
-                        <div class="kt-form-description">Format de fichiers (pdf, jpg, png, etc...)</div>
                     </div>
                     <form action="{{ route('profil.documents.update') }}" method="post" enctype="multipart/form-data" class="kt-card-content grid gap-5 lg:py-7.5">
                         @csrf
@@ -478,7 +614,7 @@
                                         <img alt="" class="size-8 shrink-0 rounded-md" src="{{ asset('assets/media/file-types/' . $icon) }}" />
                                         <div class="flex flex-col">
                                             <div class="flex items-center gap-1.5">
-                                                <a class="text-sm font-medium text-mono hover:text-primary"
+                                                <a class="text-sm font-medium text-mono hover:text-primary max-w-xl"
                                                     href="{{ route('profil.documents.export', $doc->id) }}">
                                                     {{ $label }}
                                                 </a>
@@ -544,7 +680,7 @@
                                     <div class="file-edit hidden relative w-full">
                                         {{-- Formulaire de départ --}}
                                         <label class="kt-form-label w-full block font-bold mb-5">{{ $label }} <span class="text-destructive">*</span></label>
-                                        <input type="file" name="{{ $type }}[]" class="kt-input w-full" multiple />
+                                        <input type="file" accept="image/*,.pdf" name="{{ $type }}[]" class="kt-input w-full" multiple />
                                         <input type="text" name="{{ $type }}_explain" class="kt-input w-full mt-2" value="{{ $doc->explanation }}" placeholder="Donner une brève explication sur le document attendu..." />
                                         <div class="absolute top-0 right-0 w-16 h-8">
                                             <button type="button" class="kt-btn kt-btn-sm kt-btn-secondary cancel-btn">Annuler</button>
@@ -553,7 +689,7 @@
                                 @else
                                     {{-- Formulaire de départ --}}
                                     <label class="kt-form-label w-full block font-bold">{{ $label }} <span class="text-destructive">*</span></label>
-                                    <input type="file" name="{{ $type }}[]" class="kt-input w-full" multiple required />
+                                    <input type="file" accept="image/*,.pdf" name="{{ $type }}[]" class="kt-input w-full" multiple required />
                                     <input type="text" name="{{ $type }}_explain" class="kt-input w-full" placeholder="Donner une brève explication sur le document attendu..." />
                                 @endif
                             </div>
@@ -1277,7 +1413,7 @@
                 });
             });
             
-            const wrapper = document.getElementById('directors-wrapper');
+            const wrapper = document.getElementById('beneficiaires-wrapper');
             const addBtn = document.getElementById('add-director');
 
             addBtn.addEventListener('click', function () {
@@ -1289,12 +1425,36 @@
                 const clone = first.cloneNode(true);
 
                 // Nettoyer les champs
-                clone.querySelectorAll('input').forEach(input => {
-                    input.value = '';
-                    input.name = input.name.replace(/\[\d+\]/, `[${newIndex}]`);
+                clone.querySelectorAll('input, select').forEach(el => {
+                    el.value = '';
+                    if (el.name) {
+                        el.name = el.name.replace(/\[\d+\]/, `[${newIndex}]`);
+                    }
                 });
 
+                // Vider toutes les div.uploaded_files
+                const uploadedFilesDiv = clone.querySelector('.uploaded_files');
+                if (uploadedFilesDiv) {
+                    uploadedFilesDiv.innerHTML = '';
+                }
+
+                // Ajouter le clone au DOM
                 wrapper.appendChild(clone);
+
+                // INITIALISER KTSelect pour les selects du clone
+                clone.querySelectorAll('select.kt-select[data-kt-select]').forEach(sel => {
+                    let cfg = sel.getAttribute('data-kt-select-config') || '{}';
+                    let config = {};
+                    try { config = JSON.parse(cfg); } catch(e) { config = {}; }
+
+                    if (window.KTSelect && typeof window.KTSelect.getOrCreateInstance === 'function') {
+                    // Metronic/KTUI récent
+                    window.KTSelect.getOrCreateInstance(sel, config);
+                    } else if (window.KTSelect && typeof window.KTSelect === 'function') {
+                    // fallback: constructeur
+                    new window.KTSelect(sel, config);
+                    }
+                });
             });
 
             // Gestion suppression
@@ -1306,6 +1466,7 @@
                     } else {
                         // Si on supprime le dernier, juste nettoyer les champs
                         e.target.closest('.director-item').querySelectorAll('input').forEach(i => i.value = '');
+                        e.target.closest('.director-item').querySelector('.uploaded_files').innerHTML = '';
                     }
                 }
             });

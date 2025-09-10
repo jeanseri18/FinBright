@@ -1833,6 +1833,7 @@
                             Pro
                         </span> --}}
                     </div>
+                    @php $emprunteur = Auth::user()->emprunteur ?? null @endphp
                     <ul class="kt-dropdown-menu-sub">
                         <li>
                             <div class="kt-dropdown-menu-separator">
@@ -1840,7 +1841,7 @@
                         </li>
                         <li>
                             <a class="kt-dropdown-menu-link"
-                                href="{{route('profil.mon-profil')}}">
+                                href="{{route('emprunteur.mon-profil')}}">
                                 <i class="ki-filled ki-profile-circle">
                                 </i>
                                 Mon profil
@@ -1936,7 +1937,7 @@
                             </div>
                         </li> --}}
                         <li>
-                            <a class="kt-dropdown-menu-link" href="{{route('emprunteur.loan-requests.details', ['loan' => Auth::user()->loanRequests ? Auth::user()->loanRequests->last() : null])}}">
+                            <a class="kt-dropdown-menu-link" href="{{route('emprunteur.loan-requests.details', ['loan' => ($emprunteur && $emprunteur->loanRequests) ? $emprunteur->loanRequests->last() : null])}}">
                                 <i class="ki-filled ki-message-programming">
                                 </i>
                                 Mon projet
@@ -2042,7 +2043,7 @@
                     <div
                         class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono {{ session('menu_actif') === 'mes_demandes' ? 'here' : '' }}">
                         <a class="kt-menu-link gap-2.5 pb-2 lg:pb-4"
-                            href="{{route('emprunteur.loan-requests.details', ['loan' => Auth::user()->loanRequests ? Auth::user()->loanRequests->last() : null])}}" tabindex="0">
+                            href="{{route('emprunteur.loan-requests.details', ['loan' => ($emprunteur && $emprunteur->loanRequests) ? $emprunteur->loanRequests->last() : null])}}" tabindex="0">
                             <span
                                 class="kt-menu-title text-nowrap text-sm text-foreground kt-menu-item-active:text-mono kt-menu-item-active:font-medium kt-menu-item-here:text-mono kt-menu-item-here:font-medium kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
                                 Mon projet
@@ -2052,7 +2053,7 @@
                     <div
                         class="kt-menu-item border-b-2 border-b-transparent kt-menu-item-active:border-b-mono kt-menu-item-here:border-b-mono {{ session('menu_actif') === 'mon_profil' ? 'here' : '' }}">
                         <a class="kt-menu-link gap-2.5 pb-2 lg:pb-4"
-                            href="{{route('profil.mon-profil')}}" tabindex="0">
+                            href="{{route('emprunteur.mon-profil')}}" tabindex="0">
                             <span
                                 class="kt-menu-title text-nowrap text-sm text-foreground kt-menu-item-active:text-mono kt-menu-item-active:font-medium kt-menu-item-here:text-mono kt-menu-item-here:font-medium kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
                                 Mon profil
@@ -2098,7 +2099,7 @@
         </div>
         <div class="flex items-center text-sm text-foreground gap-5 pb-2 lg:pb-2">
             <button type="button" class="kt-btn kt-btn-primary" data-kt-modal-toggle="#modal_simulate">
-                <i class="ki-filled ki-euro"></i>
+                <i class="ki-filled ki-calculator"></i>
                 Simuler un prêt
             </button>
             {{-- <a class="hover:text-primary" href="">

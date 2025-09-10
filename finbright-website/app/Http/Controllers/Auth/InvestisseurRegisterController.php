@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\LegalEntity;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -33,13 +34,16 @@ class InvestisseurRegisterController extends Controller
         ]);
 
         $user = User::create([
-            'type_of_lender' => $validated['type_of_lender'],
-            'last_name' => $validated['last_name'],
-            'first_name' => $validated['first_name'],
-            'denomination_sociale' => $validated['denomination_sociale'],
+            'last_name' => $validated['last_name'] ?? null,
+            'first_name' => $validated['first_name'] ?? null,
             'email' => $validated['email'],
             'created_at' => new \DateTime(),
             'password' => Hash::make($validated['password']),
+        ]);
+
+        $user->investisseur()->create([
+            'type_of_lender' => $validated['type_of_lender'],
+            'denomination_sociale' => $validated['denomination_sociale'] ?? null,
         ]);
 
         $user->assignRole('investisseur');

@@ -10,7 +10,7 @@
                 <h1 class="font-medium text-lg text-mono">{{ $loan ? 'Modifier la' : 'Soumettre une' }} demande de prêt</h1>
             </div>
             <div class="flex items-center gap-1">
-                <a class="kt-btn kt-btn-outline flex gap-1.5" href="{{route('emprunteur.loan-requests.details', ['loan' => Auth::user()->loanRequests ? Auth::user()->loanRequests->last() : null])}}">
+                <a class="kt-btn kt-btn-outline flex gap-1.5" href="{{route('emprunteur.loan-requests.details', ['loan' => Auth::user()->emprunteur->loanRequests ? Auth::user()->emprunteur->loanRequests->last() : null])}}">
                     <i class="ki-filled ki-exit-left text-destructive"></i>
                     {{ $loan ? 'Annuler la modification' : 'Annuler la demande' }}
                 </a>

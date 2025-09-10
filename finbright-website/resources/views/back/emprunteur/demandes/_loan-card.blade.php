@@ -2,16 +2,21 @@
     <div class="flex flex-wrap gap-7.5">
         <div
             class="flex flex-col gap-3 items-center justify-center size-[140px] rounded-xl ring-1 ring-border bg-secondary-transparent">
-            <div class="flex justify-center items-center size-14 rounded-full ring-1 ring-input bg-accent/60">
-                <i class="ki-filled ki-ghost text-2xl text-muted-foreground"></i>
-            </div>
+            @if (Auth::user()->emprunteur)
+                <div class="flex justify-center items-center size-14 rounded-full ring-1 ring-input bg-accent/60">
+                    <i class="ki-filled ki-ghost text-2xl text-muted-foreground"></i>
+                </div>
+            @elseif (Auth::user()->investisseur)
+                <img alt="" class="size-[70px] rounded-2xl" src="{{ $loan->emprunteur->user->profilePicture ? Storage::url($loan->emprunteur->user->profilePicture->filename) : asset('assets/media/avatars/blank.png') }}">
+                <span class="text-sm font-semibold text-mono">{{ $loan->emprunteur->user->first_name .' '. $loan->emprunteur->user->last_name }}</span>
+            @endif
         </div>
         <div class="flex flex-col gap-5 lg:gap-7.5 grow">
             <div class="flex flex-wrap items-center justify-between gap-2">
                 <div class="flex flex-col gap-1">
                     <div class="flex items-center flex-wrap sm:flex-nowrap gap-2.5">
-                        <h2 class="text-2xl font-semibold text-mono">
-                            {{ substr($loan->object, 0, 70) }}
+                        <h2 class="text-2xl font-semibold text-mono hover:text-primary">
+                            <a href="{{ route('emprunteur.loan-requests.details', $loan) }}">{{ substr($loan->object, 0, 70) }}</a>
                         </h2>
                         @if ($loan->status == "En attente d'approbation") <span class="kt-badge kt-badge-sm kt-badge-warning kt-badge-outline shrink-0">
                         @elseif ($loan->status == "En cours de financement") <span class="kt-badge kt-badge-sm kt-badge-primary kt-badge-outline shrink-0">
@@ -25,15 +30,21 @@
                     </p>
                 </div>
                 <div class="flex items-center gap-2.5">
-                    @if ($loan->status === 'En attente d\'approbation' && !request()->routeIs('emprunteur.dashboard'))
-                    <form class="kt-menu-item" method="POST" action="{{ route('emprunteur.loan-requests.annuler', $loan) }}" onsubmit="return confirm('Annuler cette demande ?')">
-                        @csrf
-                        <button type="submit" class="kt-btn kt-btn-outline">Annuler la demande</button>
-                    </form>
+                    @if (Auth::user()->emprunteur)
+                        @if ($loan->status === 'En attente d\'approbation' && !request()->routeIs('emprunteur.dashboard'))
+                        <form class="kt-menu-item" method="POST" action="{{ route('emprunteur.loan-requests.annuler', $loan) }}" onsubmit="return confirm('Annuler cette demande ?')">
+                            @csrf
+                            <button type="submit" class="kt-btn kt-btn-outline">Annuler la demande</button>
+                        </form>
+                        @endif
+                        <a class="kt-btn kt-btn-primary" href="{{ route('emprunteur.loan-requests.edit', $loan) }}">
+                            Modifier
+                        </a>
+                    @elseif (Auth::user()->investisseur)
+                        <a class="kt-btn kt-btn-primary" href="{{ route('emprunteur.loan-requests.edit', $loan) }}">
+                            Investir
+                        </a>
                     @endif
-                    <a class="kt-btn kt-btn-primary" href="{{ route('emprunteur.loan-requests.edit', $loan) }}">
-                        Modifier
-                    </a>
                 </div>
             </div>
             <div class="flex items-center flex-wrap gap-3 lg:gap-5">
@@ -52,7 +63,7 @@
                         Taux proposé
                     </span>
                     <span class="text-mono text-sm leading-none font-medium">
-                        {{ Auth::user()->riskLevel->yield .'%' ?? 'Indefinie' }}
+                        {{ (Auth::user()->emprunteur && Auth::user()->emprunteur->riskLevel) ? Auth::user()->emprunteur->riskLevel->yield .'%' : 'Indefinie' }}
                     </span>
                 </div>
                 <div

@@ -21,13 +21,24 @@ class LoanRequestController extends Controller
      */
     public function simulate(Request $request)
     {
+        // Récupère l'utilisateur connecté
+        $user = Auth::user();
+
+        // Vérifie si le profil est complété
+        if (!$user->is_profile_completed) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Veuillez renseigner tous les champs obligatoires avant d\'utiliser le simulateur'
+            ]);
+        }
+
         $validated = $request->validate([
             'amount' => 'required|numeric|min:500|max:100000',
             'taux_interet' => 'required|numeric|min:3',
             'taux_assurance' => 'required|numeric|max:1',
             'duration' => 'required|integer|min:6|max:60',
             'deferred' => 'nullable|boolean',
-            'deferred_months' => 'nullable|integer|min:0|max:36',
+            'deferred_months' => 'nullable|integer|min:0|max:6',
             'date_mois' => 'required|string',
             'date_annee' => 'required|integer|min:2025|max:2100',
         ]);
@@ -68,7 +79,7 @@ class LoanRequestController extends Controller
             'interets' => $resultat['total_interets'],
             'assurances' => $resultat['total_assurances'],
             'total' => $resultat['total_cout_credit'],
-            'deferred_months' => $validated['deferred_months'],
+            'deferred_months' => $dureediffere,
             'date_debut' => $date_debut->format('Y-m-d'),
             // 'inputs' => $validated
         ]);
@@ -192,7 +203,7 @@ class LoanRequestController extends Controller
      *
      * @return array Le tableau d'amortissement complet.
      */
-    function genererTableauAmortissement(
+    public function genererTableauAmortissement(
         float $pret,
         int $dureepret,
         float $tauxinteret,
@@ -346,7 +357,7 @@ class LoanRequestController extends Controller
                 ]));
             } else {
                 $loan = LoanRequest::create([
-                    'user_id' => Auth::id(),
+                    'emprunteur_id' => Auth::user()->emprunteur->id,
                     'object' => $validated['object'],
                     'duree_campagne' => $validated['duree_campagne'],
                     'description' => $validated['description'],
@@ -392,7 +403,7 @@ class LoanRequestController extends Controller
     public function demandes(Request $request)
     {
         Session::put('menu_actif', 'mes_demandes');
-        $loanRequests = LoanRequest::where('user_id', Auth::id())->latest()->get();
+        $loanRequests = LoanRequest::where('emprunteur_id', Auth::user()->emprunteur->id)->latest()->get();
         return view('back.emprunteur.demandes.liste', compact('loanRequests'));
     }
     
@@ -420,7 +431,8 @@ class LoanRequestController extends Controller
     public function edit(LoanRequest $loan)
     {
         Session::put('menu_actif', 'mes_demandes');
-        if ($loan->user_id !== Auth::id() || $loan->status !== 'En attente d\'approbation') {
+
+        if ($loan->emprunteur_id !== Auth::user()->emprunteur->id || $loan->status !== 'En attente d\'approbation') {
             abort(403, 'Modification interdite.');
         }
 
@@ -429,7 +441,7 @@ class LoanRequestController extends Controller
 
     public function annuler(LoanRequest $loan)
     {
-        if ($loan->user_id !== Auth::id() || $loan->status !== 'En attente d\'approbation') {
+        if ($loan->emprunteur_id !== Auth::user()->emprunteur->id || $loan->status !== 'En attente d\'approbation') {
             abort(403, 'Action non autorisée.');
         }
 

@@ -28,27 +28,20 @@ class User extends Authenticatable
         'nationality',
         'address',
         'phone_number',
-        'diploma',
-        'specialization',
-        'current_study_year',
-        'remaining_years',
-        'graduation_date',
-        'etablissement_id',
         'profile_picture_id',
         'is_profile_completed',
-        'profession',
-        'type_of_lender',
+        'admin_id',
+        'investisseur_id',
+        'emprunteur_id',
+        'role', // emprunteur | investisseur | admin
     ];
 
     protected $casts = [
         'birth_date' => 'date',
-        'graduation_date' => 'string',
         'address' => 'array',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'password_changed_at' => 'datetime',
-        'profession',
-        'type_of_lender'
     ];
 
     protected $hidden = [
@@ -67,8 +60,7 @@ class User extends Authenticatable
         // Champs nécessaires pour dire que le profil investisseur est complété
         'investisseur' => [
             'civility', 'last_name', 'first_name', 'email', 'password', 'birth_date',
-            'birth_place', 'nationality', 'address', 'phone_number', 'profession',
-            'type_of_lender', 'profile_picture_id',
+            'birth_place', 'nationality', 'address', 'phone_number', 'profile_picture_id',
         ],
     ];
 
@@ -83,31 +75,27 @@ class User extends Authenticatable
         });
     }
 
+    // Relations
+    public function investisseur()
+    {
+        return $this->hasOne(Investisseur::class);
+    }
+
+    public function emprunteur()
+    {
+        return $this->hasOne(Emprunteur::class);
+    }
+
+    public function admin()
+    {
+        return $this->hasOne(Admin::class);
+    }
+
     public function profilePicture()
     {
         return $this->belongsTo(Files::class, 'profile_picture_id');
     }
     
-    public function legalEntity()
-    {
-        return $this->hasOne(LegalEntity::class);
-    }
-    
-    public function etablissement()
-    {
-        return $this->belongsTo(Etablissement::class);
-    }
-
-    public function loanRequests()
-    {
-        return $this->hasMany(LoanRequest::class);
-    }
-
-    public function investments()
-    {
-        return $this->hasMany(Investment::class);
-    }
-
     public function twoFactor()
     {
         return $this->hasOne(TwoFactorAuthentication::class);
@@ -116,11 +104,6 @@ class User extends Authenticatable
     public function documents()
     {
         return $this->hasMany(UserDocument::class);
-    }
-
-    public function riskLevel()
-    {
-        return $this->belongsTo(RiskLevel::class);
     }
 
     public function notificationPreference()

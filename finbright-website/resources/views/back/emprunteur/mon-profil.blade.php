@@ -41,7 +41,7 @@
                                         {{ Auth::user()->first_name .' '. Auth::user()->last_name }}
                                     </td>
                                     <td class="min-w-16 text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#infos_perso" data-kt-modal-toggle="#modal_settings">
                                             <i class="ki-filled ki-notepad-edit">
                                             </i>
                                         </a>
@@ -55,7 +55,7 @@
                                         {{ Auth::user()->birth_date ?? '' }}
                                     </td>
                                     <td class="text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#infos_perso" data-kt-modal-toggle="#modal_settings">
                                             <i class="ki-filled ki-notepad-edit">
                                             </i>
                                         </a>
@@ -66,13 +66,10 @@
                                         Lieu de naissance
                                     </td>
                                     <td class="text-foreground font-normal">
-                                        {{-- <span class="kt-badge kt-badge-sm kt-badge-outline kt-badge-destructive">
-                                            Missing Details
-                                        </span> --}}
                                         {{ Auth::user()->birth_place ?? '' }}
                                     </td>
                                     <td class="text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#infos_perso" data-kt-modal-toggle="#modal_settings">
                                             <i class="ki-filled ki-notepad-edit">
                                             </i>
                                         </a>
@@ -86,7 +83,7 @@
                                         {{ Auth::user()->phone_number ?? '' }}
                                     </td>
                                     <td class="text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#infos_perso" data-kt-modal-toggle="#modal_settings">
                                             <i class="ki-filled ki-notepad-edit">
                                             </i>
                                         </a>
@@ -100,7 +97,7 @@
                                         {{ Auth::user()->address['adresse'] ?? null .' '. Auth::user()->address['rue'] ?? null .' '. Auth::user()->address['code_postal'] ?? null .' '. Auth::user()->address['ville'] ?? null }}
                                     </td>
                                     <td class="text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#adresse_postale" data-kt-modal-toggle="#modal_settings">
                                             <i class="ki-filled ki-notepad-edit">
                                             </i>
                                         </a>
@@ -127,7 +124,7 @@
                                         </a>
                                     </td>
                                     <td class="min-w-28 text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#auth_email" data-kt-modal-toggle="#modal_settings">
                                             <i class="ki-filled ki-notepad-edit">
                                             </i>
                                         </a>
@@ -141,7 +138,7 @@
                                         {{ Auth::user()->password_changed_at ? 'Dernier changement de mot de passe '. Auth::user()->password_changed_at->diffForHumans() : 'Vous n’avez jamais changé votre mot de passe.' }}
                                     </td>
                                     <td class="text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#auth_password" data-kt-modal-toggle="#modal_settings">
                                             <i class="ki-filled ki-notepad-edit">
                                             </i>
                                         </a>
@@ -171,7 +168,7 @@
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#auth_two_factor" data-kt-modal-toggle="#modal_settings">
                                             <i class="ki-filled ki-notepad-edit">
                                             </i>
                                         </a>
@@ -188,7 +185,7 @@
                                         !!}
                                     </td>
                                     <td class="text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#auth_two_factor" data-kt-modal-toggle="#modal_settings">
                                             <i class="ki-filled ki-notepad-edit">
                                             </i>
                                         </a>
@@ -205,7 +202,7 @@
                                         !!}
                                     </td>
                                     <td class="text-center">
-                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="javascript:;" data-kt-modal-toggle="#modal_settings">
+                                        <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#notifications" data-kt-modal-toggle="#modal_settings">
                                             <i class="ki-filled ki-notepad-edit">
                                             </i>
                                         </a>
@@ -246,7 +243,7 @@
                                             <img src="{{ asset('assets/media/file-types/' . $icon) }}" class="w-6 h-6">
 
                                             <div class="flex flex-col">
-                                                <a href="{{ route('profil.documents.export', $docs->first()->id) }}" class="text-sm font-medium text-mono cursor-pointer hover:text-primary mb-px">
+                                                <a href="{{ route('profil.documents.export', ['id' => $docs->first()->id]) }}" class="text-sm font-medium text-mono cursor-pointer hover:text-primary mb-px">
                                                     {{ $docs->count() > 1 ? $type : $filename }}
                                                 </a>
                                                 <span class="text-xs text-secondary-foreground">
@@ -265,19 +262,19 @@
                                                 </button>
                                                 <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]">
                                                     <div class="kt-menu-item">
-                                                        <a class="kt-menu-link" href="javascript:;" data-kt-modal-toggle="#modal_settings">
+                                                        <a class="kt-menu-link" href="#documents_justificatifs" data-kt-modal-toggle="#modal_settings">
                                                             <span class="kt-menu-icon"><i class="ki-filled ki-document"></i></span>
                                                             <span class="kt-menu-title">Modifier</span>
                                                         </a>
                                                     </div>
                                                     <div class="kt-menu-item">
-                                                        <a class="kt-menu-link" href="{{ route('profil.documents.export', $docs->first()->id) }}">
+                                                        <a class="kt-menu-link" href="{{ route('profil.documents.export', ['id' => $docs->first()->id]) }}">
                                                             <span class="kt-menu-icon"><i class="ki-filled ki-file-up"></i></span>
                                                             <span class="kt-menu-title">Exporter</span>
                                                         </a>
                                                     </div>
                                                     <div class="kt-menu-item">
-                                                        <form action="{{ route('profil.documents.delete', $docs->first()->id) }}" method="POST" onsubmit="return confirm('Supprimer ce document ?');">
+                                                        <form action="{{ route('profil.documents.delete', ['id' => $docs->first()->id]) }}" method="POST" onsubmit="return confirm('Supprimer ce document ?');">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="kt-menu-link">
@@ -466,21 +463,21 @@
                                     data-kt-scrollspy="true" data-kt-scrollspy-offset="110px"
                                     data-kt-scrollspy-target="#modal_settings_body">
                                     <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-1.5 active border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
-                                        data-kt-scrollspy-anchor="true" href="#basic_settings">
+                                        data-kt-scrollspy-anchor="true" href="#infos_perso">
                                         <span
                                             class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
                                         </span>
                                         Informations Personnelles
                                     </a>
                                     <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-1.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
-                                        data-kt-scrollspy-anchor="true" href="#advanced_settings_address">
+                                        data-kt-scrollspy-anchor="true" href="#adresse_postale">
                                         <span
                                             class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
                                         </span>
                                         Adresse postale
                                     </a>
                                     <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-1.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
-                                        data-kt-scrollspy-anchor="true" href="#advanced_settings_preferences">
+                                        data-kt-scrollspy-anchor="true" href="#cursus_academique">
                                         <span
                                             class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
                                         </span>
@@ -492,7 +489,7 @@
                                         </div>
                                         <div class="flex flex-col">
                                             <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
-                                                data-kt-scrollspy-anchor="true" href="#external_services_integrations">
+                                                data-kt-scrollspy-anchor="true" href="#documents_justificatifs">
                                                 <span
                                                     class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
                                                 </span>
@@ -506,7 +503,7 @@
                                         </div>
                                         <div class="flex flex-col">
                                             <a class="flex items-center rounded-lg pl-2.5 pr-2.5 py-2.5 gap-3.5 border border-transparent text-sm text-foreground hover:text-primary hover:font-medium kt-scrollspy-active:bg-secondary-active kt-scrollspy-active:text-primary kt-scrollspy-active:font-medium hover:rounded-lg"
-                                                data-kt-scrollspy-anchor="true" href="#advanced_settings_notifications">
+                                                data-kt-scrollspy-anchor="true" href="#notifications">
                                                 <span
                                                     class="flex w-1.5 relative before:absolute before:top-0 before:size-1.5 before:rounded-full before:-translate-x-2/4 before:-translate-y-2/4 kt-scrollspy-active:before:bg-primary">
                                                 </span>
@@ -584,9 +581,9 @@
                                 </div>
                             </div>
                             @endif
-                            <form action="{{ route('profil.general.update') }}" method="post" enctype="multipart/form-data" class="kt-card pb-2.5">
+                            <form action="{{ route('emprunteur.profil-general.update') }}" method="post" enctype="multipart/form-data" class="kt-card pb-2.5">
                                 @csrf
-                                <div class="kt-card-header" id="basic_settings">
+                                <div class="kt-card-header" id="infos_perso">
                                     <h3 class="kt-card-title">
                                         Informations Personnelles
                                     </h3>
@@ -1292,7 +1289,7 @@
                             {{-- Adresse postale --}}
                             <form action="{{ route('profil.adresse.update') }}" method="post" class="kt-card">
                                 @csrf
-                                <div class="kt-card-header" id="advanced_settings_address">
+                                <div class="kt-card-header" id="adresse_postale">
                                     <h3 class="kt-card-title">
                                         Adresse postale
                                     </h3>
@@ -1351,9 +1348,10 @@
                                 </div>
                             </form>
                             {{-- Cursus Académique --}}
-                            <form action="{{ route('profil.cursus.update') }}" method="post" class="kt-card">
+                            @php $emprunteur = Auth::user()->emprunteur @endphp
+                            <form action="{{ route('emprunteur.profil-cursus.update') }}" method="post" class="kt-card">
                                 @csrf
-                                <div class="kt-card-header" id="advanced_settings_preferences">
+                                <div class="kt-card-header" id="cursus_academique">
                                     <h3 class="kt-card-title">
                                         Cursus Académique
                                     </h3>
@@ -1363,7 +1361,7 @@
                                         <label class="kt-form-label max-w-56">
                                             Votre établissement <span class="text-destructive">*</span>
                                         </label>
-                                        <select class="kt-select"
+                                        <select class="kt-select" required 
                                             name="etablissement"
                                             data-kt-select="true"
                                             data-kt-select-enable-search="true"
@@ -1373,7 +1371,7 @@
                                                 "optionsClass": "kt-scrollable overflow-auto max-h-[250px]"
                                             }'>
                                             @foreach($etablissements as $etablissement)
-                                                <option value="{{ $etablissement->id }}" {{ Auth::user()->etablissement_id == $etablissement->id ? 'selected' : '' }}>
+                                                <option value="{{ $etablissement->id }}" {{ $emprunteur && $emprunteur->etablissement_id == $etablissement->id ? 'selected' : '' }}>
                                                     {{ $etablissement->nom }}
                                                 </option>
                                             @endforeach
@@ -1384,12 +1382,13 @@
                                             Diplôme préparé <span class="text-destructive">*</span>
                                         </label>
                                         <div class="grow">
-                                            <select class="kt-select" name="diplome" data-kt-select="true">
-                                                <option {{ Auth::user()->diploma == 'Master grande école' ? 'selected' : '' }}>Master Grande École</option>
-                                                <option {{ Auth::user()->diploma == 'Diplôme d\'ingénieur' ? 'selected' : '' }}>Diplôme d'Ingénieur</option>
-                                                <option {{ Auth::user()->diploma == 'Master universitaire' ? 'selected' : '' }}>Master Universitaire</option>
-                                                <option {{ Auth::user()->diploma == 'Master spécialisé' ? 'selected' : '' }}>Master Spécialisé</option>
-                                                <option {{ Auth::user()->diploma == 'Autre' ? 'selected' : '' }}>Autre</option>
+                                            <select class="kt-select" name="diplome" data-kt-select="true" required>
+                                                <option value="master_grande_ecole" {{ $emprunteur && $emprunteur->diploma == 'master_grande_ecole' ? 'selected' : '' }}>Master Grande École</option>
+                                                <option value="diplome_ingenieur" {{ $emprunteur && $emprunteur->diploma == 'diplome_ingenieur' ? 'selected' : '' }}>Diplôme d'Ingénieur</option>
+                                                <option value="master_universitaire" {{ $emprunteur && $emprunteur->diploma == 'master_universitaire' ? 'selected' : '' }}>Master Universitaire</option>
+                                                <option value="master_specialise" {{ $emprunteur && $emprunteur->diploma == 'master_specialise' ? 'selected' : '' }}>Master Spécialisé</option>
+                                                <option value="mba" {{ $emprunteur && $emprunteur->diploma == 'mba' ? 'selected' : '' }}>MBA (Master of Business Administration)</option>
+                                                <option value="autre" {{ $emprunteur && $emprunteur->diploma == 'autre' ? 'selected' : '' }}>Autre</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1398,19 +1397,10 @@
                                             Filière / Spécialisation principale <span class="text-destructive">*</span>
                                         </label>
                                         <div class="grow">
-                                            <select class="kt-select" name="filiere" data-kt-select="true">
-                                                <option>
-                                                    Finance de Marché (conditionnée par le diplôme sélectionné)
-                                                </option>
-                                                <option>
-                                                    Marketing Digital (conditionnée par le diplôme sélectionné)
-                                                </option>
-                                                <option>
-                                                    Intelligence Artificielle (conditionnée par le diplôme sélectionné)
-                                                </option>
-                                                <option>
-                                                    Droit des Affaires (conditionnée par le diplôme sélectionné)
-                                                </option>
+                                            <select class="kt-select" name="filiere" data-kt-select="true" required>
+                                                @if($emprunteur && $emprunteur->filiere)
+                                                    <option selected>{{ $emprunteur->filiere }}</option>
+                                                @endif
                                             </select>
                                         </div>
                                     </div>
@@ -1418,26 +1408,24 @@
                                         <label class="kt-form-label max-w-56">
                                             Année d'études actuelle <span class="text-destructive">*</span>
                                         </label>
-                                        <select class="kt-select" name="annee_etude" data-kt-select="true">
-                                            <option {{ Auth::user()->current_study_year == 'Première année' ? 'selected' : '' }}>Première année</option>
-                                            <option {{ Auth::user()->current_study_year == 'Deuxième année' ? 'selected' : '' }}>Deuxième année</option>
-                                            <option {{ Auth::user()->current_study_year == 'Troisième année' ? 'selected' : '' }}>Troisième année</option>
-                                            <option {{ Auth::user()->current_study_year == 'Quatrième année' ? 'selected' : '' }}>Quatrième année</option>
-                                            <option {{ Auth::user()->current_study_year == 'Cinquième année' ? 'selected' : '' }}>Cinquième année</option>
-                                            <option {{ Auth::user()->current_study_year == 'Dernière année' ? 'selected' : '' }}>Dernière année</option>
+                                        <select class="kt-select" name="annee_etude" data-kt-select="true" required>
+                                            <option {{ $emprunteur && $emprunteur->current_study_year == 'Première année' ? 'selected' : '' }}>Première année</option>
+                                            <option {{ $emprunteur && $emprunteur->current_study_year == 'Deuxième année' ? 'selected' : '' }}>Deuxième année</option>
+                                            <option {{ $emprunteur && $emprunteur->current_study_year == 'Troisième année' ? 'selected' : '' }}>Troisième année</option>
+                                            <option {{ $emprunteur && $emprunteur->current_study_year == 'Dernière année' ? 'selected' : '' }}>Dernière année</option>
                                         </select>
                                     </div>
                                     <div class="flex items-center flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
                                             Nombre d'années d'études restantes <span class="text-destructive">*</span>
                                         </label>
-                                        <input class="kt-input" name="nombre_annees_restantes" type="text" placeholder="(avant diplomation)" value="{{ Auth::user()->remaining_years ?? null }}" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                                        <input class="kt-input" name="nombre_annees_restantes" type="text" placeholder="(avant diplomation)" value="{{ $emprunteur->remaining_years ?? null }}" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
                                             Date de diplomation prévue <span class="text-destructive">*</span>
                                         </label>
-                                        <input class="kt-input" name="date_diplome_prevue" placeholder="Mois / Année" type="date" value="{{ \Carbon\Carbon::parse(Auth::user()->graduation_date)->format('Y-m-d') ?? null }}" />
+                                        <input class="kt-input" name="date_diplome_prevue" placeholder="Mois / Année" type="date" value="{{ $emprunteur ? \Carbon\Carbon::parse($emprunteur->graduation_date)->format('Y-m-d') : null }}" />
                                     </div>
                                     <div class="flex justify-end">
                                         <button type="submit" class="kt-btn kt-btn-primary">
@@ -1449,18 +1437,17 @@
                             {{-- Justificatifs Obligatoires --}}
                             <form action="{{ route('profil.documents.update') }}" method="post" enctype="multipart/form-data" class="kt-card">
                                 @csrf
-                                <div class="kt-card-header" id="external_services_integrations">
+                                <div class="kt-card-header" id="documents_justificatifs">
                                     <h3 class="kt-card-title">
-                                        Justificatifs Obligatoires
+                                        Justificatifs Obligatoires <span class="kt-form-description">(Format de fichiers : pdf, jpg, png)</span>
                                     </h3>
-                                    <div class="kt-form-description">Format de fichiers (pdf, jpg, png, etc...)</div>
                                 </div>
                                 <div class="kt-card-content grid gap-5 lg:gap-7.5 lg:py-7.5 py-5">
                                     <div class="grid gap-5">
                                         @foreach($documentsAttendus as $type => $label)
                                         <div class="flex items-center justify-between flex-wrap border border-border rounded-xl gap-2 p-3.5">
 
-                                            @if($userDocuments->has($type))
+                                            @if(!empty($userDocuments) && $userDocuments->has($type))
                                                 @php
                                                     $doc = $userDocuments[$type];
                                                     
@@ -1478,8 +1465,8 @@
                                                     <img alt="" class="size-8 shrink-0 rounded-md" src="{{ asset('assets/media/file-types/' . $icon) }}" />
                                                     <div class="flex flex-col">
                                                         <div class="flex items-center gap-1.5">
-                                                            <a class="text-sm font-medium text-mono hover:text-primary"
-                                                                href="{{ route('profil.documents.export', $doc->id) }}">
+                                                            <a class="text-sm font-medium text-mono hover:text-primary max-w-xl"
+                                                                href="{{ route('profil.documents.export', ['id' => $doc->id]) }}">
                                                                 {{ $label }}
                                                             </a>
                                                         </div>
@@ -1516,7 +1503,7 @@
 
                                                                 <div class="kt-menu-item">
                                                                     <a class="kt-menu-link"
-                                                                        href="{{ route('profil.documents.export', $doc->id) }}">
+                                                                        href="{{ route('profil.documents.export', ['id' => $doc->id]) }}">
                                                                         <span class="kt-menu-icon">
                                                                             <i class="ki-filled ki-some-files"></i>
                                                                         </span>
@@ -1527,7 +1514,7 @@
                                                                 </div>
 
                                                                 <div class="kt-menu-item">
-                                                                    <a href="{{ route('profil.documents.delete', $doc->id) }}" class="kt-menu-link w-full text-left" onclick="return confirm('Supprimer ce document ?');">
+                                                                    <a href="{{ route('profil.documents.delete', ['id' => $doc->id]) }}" class="kt-menu-link w-full text-left" onclick="return confirm('Supprimer ce document ?');">
                                                                         <span class="kt-menu-icon">
                                                                             <i class="ki-filled ki-trash"></i>
                                                                         </span>
@@ -1544,7 +1531,7 @@
                                                 <div class="file-edit hidden relative w-full">
                                                     {{-- Formulaire de départ --}}
                                                     <label class="kt-form-label w-full block font-bold mb-5">{{ $label }} <span class="text-destructive">*</span></label>
-                                                    <input type="file" name="{{ $type }}[]" class="kt-input w-full" multiple />
+                                                    <input type="file" accept="image/*,.pdf" name="{{ $type }}[]" class="kt-input w-full" multiple />
                                                     <input type="text" name="{{ $type }}_explain" class="kt-input w-full mt-2" value="{{ $doc->explanation }}" placeholder="Donner une brève explication sur le document attendu..." />
                                                     <div class="absolute top-0 right-0 w-16 h-8">
                                                         <button type="button" class="kt-btn kt-btn-sm kt-btn-secondary cancel-btn">Annuler</button>
@@ -1553,7 +1540,7 @@
                                             @else
                                                 {{-- Formulaire de départ --}}
                                                 <label class="kt-form-label w-full block font-bold">{{ $label }} <span class="text-destructive">*</span></label>
-                                                <input type="file" name="{{ $type }}[]" class="kt-input w-full" multiple required />
+                                                <input type="file" accept="image/*,.pdf" name="{{ $type }}[]" class="kt-input w-full" multiple required />
                                                 <input type="text" name="{{ $type }}_explain" class="kt-input w-full" placeholder="Donner une brève explication sur le document attendu..." />
                                             @endif
                                         </div>
@@ -1573,7 +1560,7 @@
                                     $notif = Auth::user()->notificationPreference ?? null;
                                 @endphp
 
-                                <div class="kt-card-header" id="advanced_settings_notifications">
+                                <div class="kt-card-header" id="notifications">
                                     <h3 class="kt-card-title">
                                         Notifications
                                     </h3>
@@ -2205,6 +2192,34 @@
                     container.querySelectorAll('.file-view').forEach((view, i) => { view.classList.remove('hidden') });
                 });
             });
+
+            const modalEl = document.querySelector('#modal_settings');
+            const modal = KTModal.getInstance(modalEl);
+
+            function scrollToAnchor() {
+                const anchor = window.location.hash;
+                if (anchor) {
+                    const scrolltoEl = document.querySelector(anchor);
+                    if (scrolltoEl) {
+                        // scrolltoEl.scrollIntoView({ behavior: "smooth", block: "center" });
+                        const scrollto = KTScrollto.getInstance(scrolltoEl);
+                        scrollto.scroll();
+                    }
+                }
+            }
+
+            if (modal) {
+                // utiliser l’événement "shown.bs.modal" (modal entièrement visible)
+                modalEl.addEventListener('shown.bs.modal', () => {
+                    scrollToAnchor();
+                });
+
+                // Si la page se charge déjà avec une ancre dans l’URL
+                if (window.location.hash) {
+                    modal.show();
+                    setTimeout(scrollToAnchor, 350); // délai pour l’animation
+                }
+            }
         });
 
         document.querySelector('select[name="diplome"]').addEventListener('change', function () {

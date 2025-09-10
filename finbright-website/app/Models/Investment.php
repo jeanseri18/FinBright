@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Investment extends Model
 {
-    protected $table = 'investment_cart';
-
     protected $fillable = [
-        'user_id',
+        'investisseur_id',
         'loan_request_id',
+        'type_Investment',
         'amount',
+        'status'
     ];
 
-    public function user() { return $this->belongsTo(User::class); }
+    public function investisseur() { return $this->belongsTo(Investisseur::class); }
     public function loanRequest() { return $this->belongsTo(LoanRequest::class); }
 }

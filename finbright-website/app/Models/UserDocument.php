@@ -11,6 +11,9 @@ class UserDocument extends Model
 
     protected $fillable = [
         'user_id',
+        'beneficiaire_id',
+        'investisseur_id',
+        'emprunteur_id',
         'file_id',
         'type',
         'explanation',
@@ -20,6 +23,21 @@ class UserDocument extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function beneficiaire()
+    {
+        return $this->belongsTo(Beneficiaire::class);
+    }
+
+    public function investisseur()
+    {
+        return $this->belongsTo(Investisseur::class);
+    }
+
+    public function emprunteur()
+    {
+        return $this->belongsTo(Emprunteur::class);
     }
 
     public function file()

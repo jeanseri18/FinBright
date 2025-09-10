@@ -14,62 +14,6 @@ use ZipArchive;
 
 class ProfilController extends Controller
 {
-    public function updateProfil(Request $request)
-    {
-        /** @var User $user */
-        $user = Auth::user();
-
-        $validated = $request->validate([
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'civilite' => 'required|in:M.,Mme.,Mx.',
-            'firstname' => 'nullable|string|max:100',
-            'lastname' => 'nullable|string|max:100',
-            'birth_date' => 'nullable|date',
-            'birth_place' => 'nullable|string|max:255',
-            'nationality' => 'nullable|string|max:100',
-            'profession' => 'nullable|string|max:255',
-            'phone_number' => 'nullable|string|max:20',
-        ]);
-        
-        // 1. Upload avatar si présent
-        if ($request->hasFile('avatar')) {
-            // Supprimer l'ancien avatar
-            if ($user->profile_picture_id && $user->profilePicture) {
-                Storage::disk('public')->delete($user->profilePicture->filename);
-                $user->profilePicture->delete();
-            }
-
-            $file = $request->file('avatar');
-            $safeName = uniqid().'_'.preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
-            $path = $file->storeAs('uploads/avatars', $safeName, 'public');
-
-            $uploadedFile = Files::create([
-                'filename' => $path,
-                'alt' => 'Avatar utilisateur',
-                'type' => 'image',
-                'filesize' => $file->getSize()
-            ]);
-
-            $user->profile_picture_id = $uploadedFile->id;
-        }
-
-        // 2. Mise à jour des champs
-        $user->fill([
-            'civility' => $validated['civilite'] ?? null,
-            'first_name' => $validated['firstname'] ?? null,
-            'last_name' => $validated['lastname'] ?? null,
-            'birth_date' => $validated['birth_date'] ?? null,
-            'birth_place' => $validated['birth_place'] ?? null,
-            'nationality' => $validated['nationality'] ?? null,
-            'profession' => $validated['profession'] ?? null,
-            'phone_number' => $validated['phone_number'] ?? null,
-        ]);
-
-        $user->save();
-
-        return back()->with('success', 'Profil mis à jour avec succès.');
-    }
-
     public function updateAdresse(Request $request)
     {
         /** @var User $user */
@@ -107,8 +51,9 @@ class ProfilController extends Controller
             'releve_bancaire' => 'Relevé bancaire',
             'justificatif_activite_pro' => 'Justificatif d\'activité professionnelle',
             'declaration_origine_fonds' => 'Déclaration sur l\'origine des fonds',
-            'extrait_immatriculation' => "Extrait d'immatriculation",
-            'statuts_a_jour_signes' => "Statuts à jour et signés"
+            'statuts_a_jour_signes' => "Statuts à jour et signés",
+            'recepisse_de_declaration' => "Récépissé de déclaration en préfecture",
+            'liste_des_membres_du_conseil' => "Liste des membres du conseil d'administration"
         ];
 
         foreach ($documents as $field => $label) {
@@ -168,7 +113,7 @@ class ProfilController extends Controller
                             'file_id' => $fileEntity->id,
                             'type' => $field,
                             'explanation' => $explanation,
-                            'status' => 'verification',
+                            'status' => 'À vérifier',
                         ]);
                     }
                 }

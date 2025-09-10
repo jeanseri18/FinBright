@@ -154,7 +154,7 @@
                         </div>
                         <div class="kt-card-footer justify-center">
                             <a class="kt-link kt-link-underlined kt-link-dashed"
-                                href="/metronic/tailwind/demo2/public-profile/works">
+                                href="">
                                 Open to Work
                             </a>
                         </div>
@@ -182,13 +182,13 @@
                                         data-kt-menu-dismiss="true">
                                         <div class="kt-menu-item">
                                             <a class="kt-menu-link"
-                                                href="/metronic/tailwind/demo2/account/home/settings-plain">
+                                                href="{{ route('emprunteur.loan-requests.details', $loan) }}">
                                                 <span class="kt-menu-icon">
                                                     <i class="ki-filled ki-add-files">
                                                     </i>
                                                 </span>
                                                 <span class="kt-menu-title">
-                                                    Ajouter
+                                                    Consulter
                                                 </span>
                                             </a>
                                         </div>
@@ -211,7 +211,7 @@
                                             <div class="kt-menu-dropdown kt-menu-default w-full max-w-[125px]">
                                                 <div class="kt-menu-item">
                                                     <a class="kt-menu-link"
-                                                        href="/metronic/tailwind/demo2/account/home/settings-sidebar">
+                                                        href="">
                                                         <span class="kt-menu-title">
                                                             PDF
                                                         </span>
@@ -219,7 +219,7 @@
                                                 </div>
                                                 <div class="kt-menu-item">
                                                     <a class="kt-menu-link"
-                                                        href="/metronic/tailwind/demo2/account/home/settings-sidebar">
+                                                        href="">
                                                         <span class="kt-menu-title">
                                                             CVS
                                                         </span>
@@ -227,7 +227,7 @@
                                                 </div>
                                                 <div class="kt-menu-item">
                                                     <a class="kt-menu-link"
-                                                        href="/metronic/tailwind/demo2/account/home/settings-sidebar">
+                                                        href="">
                                                         <span class="kt-menu-title">
                                                             Excel
                                                         </span>
@@ -237,13 +237,13 @@
                                         </div>
                                         <div class="kt-menu-item">
                                             <a class="kt-menu-link"
-                                                href="/metronic/tailwind/demo2/account/security/privacy-settings">
+                                                href="">
                                                 <span class="kt-menu-icon">
                                                     <i class="ki-filled ki-setting-3">
                                                     </i>
                                                 </span>
                                                 <span class="kt-menu-title">
-                                                    Paramètres
+                                                    Modifier
                                                 </span>
                                             </a>
                                         </div>
@@ -494,7 +494,7 @@
                                                 <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]">
                                                     <div class="kt-menu-item">
                                                         <a class="kt-menu-link"
-                                                            href="/metronic/tailwind/demo2/account/home/settings-sidebar">
+                                                            href="">
                                                             <span class="kt-menu-icon">
                                                                 <i class="ki-filled ki-sms">
                                                                 </i>
@@ -506,7 +506,7 @@
                                                     </div>
                                                     <div class="kt-menu-item">
                                                         <a class="kt-menu-link"
-                                                            href="/metronic/tailwind/demo2/account/home/settings-sidebar">
+                                                            href="">
                                                             <span class="kt-menu-icon">
                                                                 <i class="ki-filled ki-message-notify">
                                                                 </i>
@@ -518,7 +518,7 @@
                                                     </div>
                                                     <div class="kt-menu-item">
                                                         <a class="kt-menu-link"
-                                                            href="/metronic/tailwind/demo2/account/home/settings-sidebar">
+                                                            href="">
                                                             <span class="kt-menu-icon">
                                                                 <i class="ki-filled ki-notification-status">
                                                                 </i>
@@ -546,7 +546,7 @@
                                             </div>
                                             <div class="kt-menu-item">
                                                 <a class="kt-menu-link"
-                                                    href="/metronic/tailwind/demo2/account/home/settings-enterprise">
+                                                    href="">
                                                     <span class="kt-menu-icon">
                                                         <i class="ki-filled ki-setting-3">
                                                         </i>
@@ -634,7 +634,7 @@
                             </div>
                             <div class="kt-card-footer justify-center">
                                 <a class="kt-link kt-link-underlined kt-link-dashed"
-                                    href="/metronic/tailwind/demo2/public-profile/network">
+                                    href="">
                                     Tous les contributeurs
                                 </a>
                             </div>
@@ -657,7 +657,7 @@
                                             data-kt-menu-dismiss="true">
                                             <div class="kt-menu-item">
                                                 <a class="kt-menu-link"
-                                                    href="/metronic/tailwind/demo2/account/home/settings-enterprise">
+                                                    href="">
                                                     <span class="kt-menu-icon">
                                                         <i class="ki-filled ki-setting-3">
                                                         </i>
@@ -669,7 +669,7 @@
                                             </div>
                                             <div class="kt-menu-item">
                                                 <a class="kt-menu-link"
-                                                    href="/metronic/tailwind/demo2/account/members/import-members">
+                                                    href="">
                                                     <span class="kt-menu-icon">
                                                         <i class="ki-filled ki-some-files">
                                                         </i>
@@ -736,7 +736,7 @@
                             </div>
                             <div class="kt-card-footer justify-center">
                                 <a class="kt-link kt-link-underlined kt-link-dashed"
-                                    href="/metronic/tailwind/demo2/network/get-started">
+                                    href="">
                                     Get Started
                                 </a>
                             </div>

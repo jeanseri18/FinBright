@@ -1699,9 +1699,9 @@
                     </span>
                 </a>
             </div>
-            <div class="kt-menu-item {{ session('menu_actif') === 'decouvrir' ? 'active' : '' }}">
+            <div class="kt-menu-item {{ session('menu_actif') === 'investissements' ? 'active' : '' }}">
                 <a class="kt-menu-link lg:py-3.5 border-b border-b-transparent kt-menu-item-active:border-b-mono text-foreground kt-menu-item-hover:text-mono kt-menu-item-active:text-mono kt-menu-item-here:border-b-mono kt-menu-item-here:text-mono"
-                    href="{{route('investisseur.decouvrir')}}">
+                    href="{{ route('investisseur.projets') }}">
                     <span class="kt-menu-title font-medium text-foreground text-sm">
                         Mes investissements
                     </span>
