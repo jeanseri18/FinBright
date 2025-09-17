@@ -8,6 +8,7 @@ use App\Services\RiskEvaluator;
 use Illuminate\Http\Request;
 use App\Models\Etablissement;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ParametresController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -23,13 +24,14 @@ class EmprunteurController extends Controller
         // $loanRequests = LoanRequest::where('emprunteur_id', Auth::id())->latest()->get();
         $emprunteur = Auth::user()->emprunteur;
         $loan = $emprunteur ? LoanRequest::where('emprunteur_id', $emprunteur->id)->latest()->first() : null;
+        
         return view('back.emprunteur.dashboard', compact('loan'));
     }
 
     /**
      * Affiche le formulaire de simulation.
      */
-    public function profil()
+    public function profil(ParametresController $parametres)
     {
         Session::put('menu_actif', 'mon_profil');
         $etablissements = Etablissement::all();
@@ -40,14 +42,16 @@ class EmprunteurController extends Controller
             'releve_bancaire' => "Relevé d'Identité Bancaire (RIB) à votre nom",
         ];
         $emprunteur = Auth::user()->emprunteur;
-        $userDocuments = ($emprunteur) ? $emprunteur->documents->keyBy('type') : [];
-        $documentsGroupByType = ($emprunteur) ? $emprunteur->documents->groupBy('type') : [];
+        $countries = $parametres->getContries();
+        $userDocuments = Auth::user()->documents->keyBy('type');
+        $documentsGroupByType = Auth::user()->documents->groupBy('type');
 
         return view('back.emprunteur.mon-profil', compact([
             'etablissements',
             'documentsAttendus',
             'userDocuments',
             'documentsGroupByType',
+            'countries'
         ]));
     }
 
@@ -59,12 +63,12 @@ class EmprunteurController extends Controller
         $validated = $request->validate([
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'civilite' => 'required|in:M.,Mme.,Mx.',
-            'firstname' => 'nullable|string|max:100',
-            'lastname' => 'nullable|string|max:100',
-            'birth_date' => 'nullable|date',
-            'birth_place' => 'nullable|string|max:255',
-            'nationality' => 'nullable|string|max:100',
-            'phone_number' => 'nullable|string|max:20',
+            'firstname' => 'required|string|max:100',
+            'lastname' => 'required|string|max:100',
+            'birth_date' => ['required', 'date', 'before_or_equal:' . now()->subYears(15)->format('Y-m-d')],
+            'birth_place' => 'required|string|max:255',
+            'nationality' => 'required|string|max:100',
+            'phone_number' => 'required|string|max:20',
         ]);
         
         // 1. Upload avatar si présent
@@ -113,7 +117,7 @@ class EmprunteurController extends Controller
             'filiere' => 'required|string|max:100',
             'annee_etude' => 'required|string|max:50',
             'nombre_annees_restantes' => 'nullable|integer',
-            'date_diplome_prevue' => 'nullable|date',
+            'date_diplome_prevue' => ['nullable', 'date', 'after_or_equal:' . now()->format('Y-m-d')],
         ]);
 
         /** @var User $user */
@@ -130,7 +134,7 @@ class EmprunteurController extends Controller
                     'current_study_year'  => $validated['annee_etude'] ?? null,
                     'remaining_years'     => isset($validated['nombre_annees_restantes']) ? (int)$validated['nombre_annees_restantes'] : null,
                     'graduation_date'     => $validated['date_diplome_prevue'] ?? null,
-                    'is_profile_completed'=> true,
+                    // 'is_profile_completed'=> true,
                 ]
             );
 

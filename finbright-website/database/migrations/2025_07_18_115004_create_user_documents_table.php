@@ -17,8 +17,12 @@ return new class extends Migration
             $table->foreignId('file_id')->nullable()->constrained('files')->onDelete('set null');
             $table->string('type'); // Ex: 'piece_identite', 'justificatif_domicile', etc.
             $table->string('explanation')->nullable();
-            $table->enum('status', ['en_attente', 'valide', 'refuse'])->default('en_attente');
+            $table->enum('status', ['À approuver', 'Validé', 'Refusé'])->default('À approuver');
             $table->timestamps();
+
+            $table->foreignId('beneficiaire_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('investisseur_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('emprunteur_id')->nullable()->constrained()->onDelete('cascade');
         });
     }
 

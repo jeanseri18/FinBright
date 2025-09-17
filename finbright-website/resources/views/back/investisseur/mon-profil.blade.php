@@ -2,6 +2,15 @@
 
 @section('title', 'Mon profil')
 
+@section('stylesheet')
+    <style type="text/css">
+        .kt-select-display.kt-select {
+            border-start-end-radius: 0;
+            border-end-end-radius: 0;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="mb-5 lg:mb-7.5">
         <!-- Container -->
@@ -235,18 +244,18 @@
                             <label class="kt-form-label max-w-56">
                                 Numéro d'immatriculation<span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" name="numero_immatriculation" placeholder="" type="text" value="{{ $investisseur->numero_immatriculation ?? null }}" required />
+                            <input class="kt-input" name="numero_immatriculation" placeholder="" type="text" value="{{ old('numero_immatriculation', $investisseur->numero_immatriculation ?? '') }}" required />
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
                                 Date de création <span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" name="creation_date" placeholder="JJ/MM/AAAA" type="date" value="{{ \Carbon\Carbon::parse($investisseur->create_date)->format('Y-m-d') ?? null }}" required />
+                            <input class="kt-input" name="creation_date" placeholder="JJ/MM/AAAA" type="date" value="{{ old('birth_date', optional(Auth::user()->birth_date)->format('Y-m-d') ?? now()->subYears(15)->format('Y-m-d')) }}" max="{{ now()->subYears(15)->format('Y-m-d') }}" required />
                         </div>
                         <div class="flex flex-col gap-4">
                             <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                 <label class="kt-form-label max-w-56">
-                                    Bénéficiaires Effectifs <span class="text-destructive">*</span>
+                                    Membres du conseil d'administration <span class="text-destructive">*</span>
                                 </label>
 
                                 <div id="beneficiaires-wrapper" class="flex flex-col w-full gap-4">
@@ -279,12 +288,17 @@
                                             <div class="grid md:grid-cols-2 gap-3">
                                                 <label>
                                                     <span class="kt-form-description">Date de naissance</span>
-                                                    <input class="kt-input" name="beneficiaires[{{ $index }}][birth_date]" placeholder="Date de naissance" type="date" value="{{ isset($dirigeant->birth_date) ? \Carbon\Carbon::parse($dirigeant->birth_date)->format('Y-m-d') : null }}" required />
+                                                    <input class="kt-input" name="beneficiaires[{{ $index }}][birth_date]" type="date" 
+                                                        value="{{ isset($dirigeant->birth_date) 
+                                                            ? old('birth_date', optional($dirigeant->birth_date)->format('Y-m-d') ?? now()->subYears(15)->format('Y-m-d'))
+                                                            : now()->subYears(15)->format('Y-m-d') }}" 
+                                                        max="{{ now()->subYears(15)->format('Y-m-d') }}" 
+                                                        required />
                                                 </label>
                                                 <label>
                                                     <span class="kt-form-description">Lieu de naissance</span>    
                                                     <select class="kt-select grow" name="beneficiaires[{{ $index }}][birth_place]" required  
-                                                        data-kt-select="true" data-kt-select-placeholder="Lieu de naissance" 
+                                                        data-kt-select-placeholder="Lieu de naissance" 
                                                         data-kt-select-config='{
                                                             "placeholder": "Lieu de naissance",
                                                             "optionsClass": "kt-scrollable overflow-auto max-h-[250px]"
@@ -342,7 +356,7 @@
                                 </div>
                             </div>
                             <button type="button" id="add-director" class="kt-btn kt-btn-outline self-start">
-                                + Ajouter un bénéficiaire
+                                + Ajouter un membre
                             </button>
                         </div>
                         <div class="flex justify-end">
@@ -424,26 +438,38 @@
                             <label class="kt-form-label max-w-56">
                                 Date de naissance <span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" name="birth_date" placeholder="JJ/MM/AAAA" type="date" value="{{ \Carbon\Carbon::parse(Auth::user()->birth_date)->format('Y-m-d') ?? null }}" />
+                            <input class="kt-input" name="birth_date" placeholder="JJ/MM/AAAA" type="date" value="{{ old('birth_date', optional(Auth::user()->birth_date)->format('Y-m-d') ?? now()->subYears(15)->format('Y-m-d')) }}" max="{{ now()->subYears(15)->format('Y-m-d') }}" />
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
                                 Lieu de naissance <span class="text-destructive">*</span>
                             </label>
                             <div class="grow">
-                                <select name="birth_place" class="kt-select" data-kt-select="true">
-                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Belgique' ? 'selected' : '' }}>Belgique</option>
-                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Congo' ? 'selected' : '' }}>Congo</option>
-                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Côte d\'Ivoire' ? 'selected' : '' }}>Côte d'Ivoire</option>
-                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Cameroun' ? 'selected' : '' }}>Cameroun</option>
-                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Canada' ? 'selected' : '' }}>Canada</option>
-                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Espagne' ? 'selected' : '' }}>Espagne</option>
-                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'France' ? 'selected' : '' }}>France</option>
-                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Italie' ? 'selected' : '' }}>Italie</option>
-                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Guinnée' ? 'selected' : '' }}>Guinnée</option>
-                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Mali' ? 'selected' : '' }}>Mali</option>
-                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Senegal' ? 'selected' : '' }}>Senegal</option>
-                                    <option {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == 'Mali' ? 'selected' : '' }}>Mali</option>
+                                @php
+                                    // Définir la configuration en tant que tableau PHP
+                                    $config = [
+                                        'displayTemplate' => '<div class="flex items-center leading-none gap-2">{{flag}}<span class="text-foreground">{{text}}</span></div>',
+                                        'optionTemplate' => '<div class="flex items-center leading-none gap-2">{{flag}} <span class="text-foreground">{{text}}</span></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-3.5 ms-auto hidden text-primary kt-select-option-selected:block"><path d="M20 6 9 17l-5-5"/></svg></div>',
+                                    ];
+                                @endphp
+                                <select
+                                    name="birth_place"
+                                    class="kt-select"
+                                    data-kt-select="true"
+                                    data-kt-select-enable-search="true"
+                                    data-kt-select-search-placeholder="Rechercher..."
+                                    data-kt-select-placeholder="Sélectionner un pays..."
+                                    data-kt-select-config='@json($config)'
+                                >
+                                    @foreach($countries as $country)
+                                        <option
+                                            value="{{ $country['value'] }}"
+                                            {{ isset(Auth::user()->birth_place) && Auth::user()->birth_place == $country['value'] ? 'selected' : '' }}
+                                            data-kt-select-option='@json(["flag" => $country["flag"]])'
+                                        >
+                                            {{ $country['label'] }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -457,7 +483,35 @@
                             <label class="kt-form-label max-w-56">
                                 Numéro de téléphone <span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" name="phone_number" placeholder="Numéro de téléphone mobile" type="tel" value="{{ Auth::user()->phone_number ?? null }}" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" />
+                            <div class="kt-input-group w-full">
+                                @php
+                                    // Options statiques ou dynamiques
+                                    $indicatifs = [
+                                        ['value' => 'usa', 'label' => '+1', 'flag' => '🇺🇸'],
+                                        ['value' => 'france', 'label' => '+33', 'flag' => '🇫🇷'],
+                                        ['value' => 'cote-ivoire', 'label' => "+225", 'flag' => '🇨🇮'],
+                                    ];
+                                @endphp
+                                <select
+                                    class="kt-select max-w-22 rounded-e-none"
+                                    data-kt-select="true"
+                                    data-kt-select-enable-search="false"
+                                    data-kt-select-search-placeholder="Rechercher..."
+                                    data-kt-select-placeholder="Sélectionner un indicatif pays..."
+                                    data-kt-select-config='@json($config)'
+                                >
+                                    @foreach($indicatifs as $indicatif)
+                                        <option
+                                            value="{{ $indicatif['value'] }}"
+                                            {{ $indicatif['value'] == 'france' ? 'selected' : '' }}
+                                            data-kt-select-option='@json(["flag" => $indicatif["flag"]])'
+                                        >
+                                            {{ $indicatif['label'] }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <input class="kt-input rounded-s-none" name="phone_number" placeholder="Numéro de téléphone mobile" type="tel" value="{{ Auth::user()->phone_number ?? null }}" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" />
+                            </div>
                         </div>
                         @if ($investisseur->type_of_lender == "Personne physique")
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
@@ -560,19 +614,24 @@
                                 Pays de résidence <span class="text-destructive">*</span>
                             </label>
                             <div class="grow">
-                                <select name="pays" class="kt-select" name="pays" data-kt-select="true">
-                                    <option {{ Auth::user()->address['pays'] == 'Belgique' ? 'selected' : '' }}>Belgique</option>
-                                    <option {{ Auth::user()->address['pays'] == 'Congo' ? 'selected' : '' }}>Congo</option>
-                                    <option {{ Auth::user()->address['pays'] == 'Côte d\'Ivoire' ? 'selected' : '' }}>Côte d'Ivoire</option>
-                                    <option {{ Auth::user()->address['pays'] == 'Cameroun' ? 'selected' : '' }}>Cameroun</option>
-                                    <option {{ Auth::user()->address['pays'] == 'Canada' ? 'selected' : '' }}>Canada</option>
-                                    <option {{ Auth::user()->address['pays'] == 'Espagne' ? 'selected' : '' }}>Espagne</option>
-                                    <option {{ Auth::user()->address['pays'] == 'France' ? 'selected' : '' }}>France</option>
-                                    <option {{ Auth::user()->address['pays'] == 'Italie' ? 'selected' : '' }}>Italie</option>
-                                    <option {{ Auth::user()->address['pays'] == 'Guinnée' ? 'selected' : '' }}>Guinnée</option>
-                                    <option {{ Auth::user()->address['pays'] == 'Mali' ? 'selected' : '' }}>Mali</option>
-                                    <option {{ Auth::user()->address['pays'] == 'Senegal' ? 'selected' : '' }}>Senegal</option>
-                                    <option {{ Auth::user()->address['pays'] == 'Mali' ? 'selected' : '' }}>Mali</option>
+                                <select
+                                    name="pays"
+                                    class="kt-select"
+                                    data-kt-select="true"
+                                    data-kt-select-enable-search="true"
+                                    data-kt-select-search-placeholder="Rechercher..."
+                                    data-kt-select-placeholder="Sélectionner un pays..."
+                                    data-kt-select-config='@json($config)'
+                                >
+                                    @foreach($countries as $country)
+                                        <option
+                                            value="{{ $country['value'] }}"
+                                            {{ Auth::user()->address['pays'] == $country['value'] ? 'selected' : '' }}
+                                            data-kt-select-option='@json(["flag" => $country["flag"]])'
+                                        >
+                                            {{ $country['label'] }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -626,7 +685,7 @@
                                     </div>
                                     <div class="file-view flex items-center gap-2 lg:gap-5">
                                         <span class="text-sm font-semibold px-3 py-1 rounded-full
-                                            {{ $doc->status === 'valide' ? 'bg-green-100 text-green-800' : ($doc->status === 'refuse' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
+                                            {{ $doc->status === 'Validé' ? 'bg-green-100 text-green-800' : ($doc->status === 'Refusé' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
                                             {{ ucfirst($doc->status) }}
                                         </span>
                                         <div class="kt-btn kt-btn-icon kt-btn-ghost" data-kt-menu="true">

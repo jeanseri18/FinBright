@@ -48,10 +48,10 @@ class AuthenticatedSessionController extends Controller
         $user = Auth::user();
 
         // Gestion 2FA email
-        if ($user->twoFactor && $user->twoFactor->is_enabled) {
-            $user->twoFactor->generateCode();
-            return redirect()->route('2fa.verify.form');
-        }
+        // if ($user->twoFactor && $user->twoFactor->is_enabled) {
+        //     $user->twoFactor->generateCode();
+        //     return redirect()->route('2fa.verify.form');
+        // }
         
         return $this->redirectByRole($user);
     }

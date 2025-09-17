@@ -113,7 +113,7 @@ class ProfilController extends Controller
                             'file_id' => $fileEntity->id,
                             'type' => $field,
                             'explanation' => $explanation,
-                            'status' => 'À vérifier',
+                            'status' => 'À approuver',
                         ]);
                     }
                 }

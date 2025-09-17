@@ -14,7 +14,7 @@
         <div class="kt-container-fixed flex items-center justify-between flex-wrap gap-3">
             <div class="flex flex-col flex-wrap gap-1">
                 <h1 class="font-medium text-lg text-mono">
-                    Team Crew
+                    Demandes de prêts
                 </h1>
                 <div class="flex items-center gap-1 text-sm font-normal">
                     <a class="text-secondary-foreground hover:text-primary" href="/metronic/tailwind/demo10/">
@@ -44,7 +44,7 @@
                 <a class="kt-btn kt-btn-outline" href="/metronic/tailwind/demo10/account/home/get-started">
                     <i class="ki-filled ki-exit-down">
                     </i>
-                    Export
+                    Exporter
                 </a>
                 <div class="kt-menu kt-menu-default" data-kt-menu="true">
                     <div class="kt-menu-item" data-kt-menu-item-offset="0, 0" data-kt-menu-item-placement="bottom-end"
@@ -164,7 +164,7 @@
             <div class="kt-card kt-card-grid min-w-full">
                 <div class="kt-card-header flex-wrap gap-2">
                     <h3 class="kt-card-title text-sm">
-                        Showing 20 of 34 users
+                        Affichage de 10 sur {{count($loanRequests)}} prêts
                     </h3>
                     <div class="flex flex-wrap gap-2 lg:gap-5">
                         <div class="flex">
@@ -218,10 +218,19 @@
                                             <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-check="true"
                                                 type="checkbox" />
                                         </th>
+                                        <th class="min-w-[180px]">
+                                            <span class="kt-table-col">
+                                                <span class="kt-table-col-label">
+                                                    Projet
+                                                </span>
+                                                <span class="kt-table-col-sort">
+                                                </span>
+                                            </span>
+                                        </th>
                                         <th class="min-w-[300px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label">
-                                                    Member
+                                                    Emprunteur
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>
@@ -230,34 +239,25 @@
                                         <th class="min-w-[180px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label">
-                                                    Role
+                                                    Statut
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>
                                             </span>
                                         </th>
-                                        <th class="min-w-[180px]">
+                                        <th class="max-w-[130px]">
                                             <span class="kt-table-col">
-                                                <span class="kt-table-col-label">
-                                                    Status
+                                                <span class="kt-table-col-label whitespace-normal">
+                                                    Montant demandé
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>
                                             </span>
                                         </th>
-                                        <th class="min-w-[180px]">
+                                        <th class="max-w-[120px]">
                                             <span class="kt-table-col">
-                                                <span class="kt-table-col-label">
-                                                    Location
-                                                </span>
-                                                <span class="kt-table-col-sort">
-                                                </span>
-                                            </span>
-                                        </th>
-                                        <th class="min-w-[180px]">
-                                            <span class="kt-table-col">
-                                                <span class="kt-table-col-label">
-                                                    Activity
+                                                <span class="kt-table-col-label whitespace-normal">
+                                                    Durée de campagne
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>
@@ -268,11 +268,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($loanRequests as $loan)
+                                    @forelse ($loanRequests as $loan)
                                     <tr>
                                         <td class="text-center">
                                             <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true"
                                                 type="checkbox" value="1" />
+                                        </td>
+                                        <td class="text-foreground font-normal">
+                                            {{ $loan->object }}
                                         </td>
                                         <td>
                                             <div class="flex items-center gap-2.5">
@@ -290,25 +293,19 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="text-foreground font-normal">
-                                            Editor
-                                        </td>
                                         <td>
-                                            <span class="kt-badge kt-badge-warning kt-badge-outline rounded-[30px]">
-                                                <span class="kt-badge-dot size-1.5">
-                                                </span>
-                                                En attente d'approbation
+                                            <span class="kt-badge 
+                                                {{ $loan->status == 'En attente d\'approbation' ? 'kt-badge-warning' : ($loan->status == 'Validé' ? 'success' : 'destructive') }}
+                                                kt-badge-outline rounded-[30px]">
+                                                <span class="kt-badge-dot size-1.5"></span>
+                                                {{ $loan->status }}
                                             </span>
                                         </td>
                                         <td>
-                                            <div class="flex items-center text-foreground font-normal gap-1.5">
-                                                <img alt="" class="rounded-full size-4 shrink-0"
-                                                    src="{{asset('assets/media/flags/malaysia.svg')}}" />
-                                                Malaysia
-                                            </div>
+                                            {{ $loan->simulation_result['total'] . ' €' ?? null }}
                                         </td>
                                         <td class="text-foreground font-normal">
-                                            Week ago
+                                            {{ $loan->simulation_result['duration'] . ' mois' ?? 'Non disponible' }}
                                         </td>
                                         <td class="text-center">
                                             <div class="kt-menu flex-inline" data-kt-menu="true">
@@ -387,7 +384,9 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    @endforeach
+                                    @empty
+                                        
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

@@ -28,6 +28,9 @@ return new class extends Migration
             $table->timestamps();
             $table->string('iban')->nullable();
             $table->enum('iban_status', ['none','pending','validated','rejected'])->default('none');
+            $table->json('profile')->nullable();
+            $table->boolean('consentent')->default(false);
+            $table->string('adresse_representant')->nullable();
 
             $table->string('psp_account_id')->nullable(); // id compte Stripe/MangoPay
         });

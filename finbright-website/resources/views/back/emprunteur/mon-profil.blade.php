@@ -2,6 +2,15 @@
 
 @section('title', 'Mon profil')
 
+@section('stylesheet')
+    <style type="text/css">
+        .kt-select-display.kt-select {
+            border-start-end-radius: 0;
+            border-end-end-radius: 0;
+        }
+    </style>
+@endsection
+
 @section('content')
     <!-- Container -->
     <div class="kt-container-fixed" id="contentContainer">
@@ -641,643 +650,89 @@
                                             Nom & Prénoms <span class="text-destructive">*</span>
                                         </label>
                                         <div class="grid md:grid-cols-2 w-full gap-5">
-                                            <input class="kt-input" name="firstname" type="text" placeholder="Vos prénoms" value="{{ Auth::user()->first_name ?? null }}" />
-                                            <input class="kt-input" name="lastname" type="text" placeholder="Votre nom" value="{{ Auth::user()->last_name ?? null }}" />
+                                            <input class="kt-input" name="firstname" type="text" placeholder="Vos prénoms" value="{{ Auth::user()->first_name ?? null }}" required />
+                                            <input class="kt-input" name="lastname" type="text" placeholder="Votre nom" value="{{ Auth::user()->last_name ?? null }}" required />
                                         </div>
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
                                             Date de naissance <span class="text-destructive">*</span>
                                         </label>
-                                        <input class="kt-input" name="birth_date" placeholder="JJ/MM/AAAA" type="date" value="{{ \Carbon\Carbon::parse(Auth::user()->birth_date)->format('Y-m-d') ?? null }}" />
+                                        <input class="kt-input" name="birth_date" placeholder="JJ/MM/AAAA" type="date" value="{{ old('birth_date', optional(Auth::user()->birth_date)->format('Y-m-d') ?? now()->subYears(15)->format('Y-m-d')) }}" max="{{ now()->subYears(15)->format('Y-m-d') }}" required />
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
                                             Lieu de naissance <span class="text-destructive">*</span>
                                         </label>
                                         <div class="grow">
-                                            <select name="birth_place" class="kt-select" name="pays" data-kt-select="true">
-                                                <option {{ Auth::user()->birth_place == 'Belgique' ? 'selected' : '' }}>Belgique</option>
-                                                <option {{ Auth::user()->birth_place == 'Congo' ? 'selected' : '' }}>Congo</option>
-                                                <option {{ Auth::user()->birth_place == 'Côte d\'Ivoire' ? 'selected' : '' }}>Côte d'Ivoire</option>
-                                                <option {{ Auth::user()->birth_place == 'Cameroun' ? 'selected' : '' }}>Cameroun</option>
-                                                <option {{ Auth::user()->birth_place == 'Canada' ? 'selected' : '' }}>Canada</option>
-                                                <option {{ Auth::user()->birth_place == 'Espagne' ? 'selected' : '' }}>Espagne</option>
-                                                <option {{ Auth::user()->birth_place == 'France' ? 'selected' : '' }}>France</option>
-                                                <option {{ Auth::user()->birth_place == 'Italie' ? 'selected' : '' }}>Italie</option>
-                                                <option {{ Auth::user()->birth_place == 'Guinnée' ? 'selected' : '' }}>Guinnée</option>
-                                                <option {{ Auth::user()->birth_place == 'Mali' ? 'selected' : '' }}>Mali</option>
-                                                <option {{ Auth::user()->birth_place == 'Senegal' ? 'selected' : '' }}>Senegal</option>
-                                                <option {{ Auth::user()->birth_place == 'Mali' ? 'selected' : '' }}>Mali</option>
+                                            @php
+                                                // Définir la configuration en tant que tableau PHP
+                                                $config = [
+                                                    'displayTemplate' => '<div class="flex items-center leading-none gap-2">{{flag}}<span class="text-foreground">{{text}}</span></div>',
+                                                    'optionTemplate' => '<div class="flex items-center leading-none gap-2">{{flag}} <span class="text-foreground">{{text}}</span></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-3.5 ms-auto hidden text-primary kt-select-option-selected:block"><path d="M20 6 9 17l-5-5"/></svg></div>',
+                                                ];
+                                            @endphp
+                                            <select
+                                                required
+                                                name="birth_place"
+                                                class="kt-select"
+                                                data-kt-select="true"
+                                                data-kt-select-enable-search="true"
+                                                data-kt-select-search-placeholder="Rechercher..."
+                                                data-kt-select-placeholder="Sélectionner un pays..."
+                                                data-kt-select-config='@json($config)'
+                                            >
+                                                @foreach($countries as $country)
+                                                    <option
+                                                        value="{{ $country['value'] }}"
+                                                        {{ Auth::user()->birth_place == $country['value'] ? 'selected' : '' }}
+                                                        data-kt-select-option='@json(["flag" => $country["flag"]])'
+                                                    >
+                                                        {{ $country['label'] }}
+                                                    </option>
+                                                @endforeach
                                             </select>
-
-                                            {{-- <select class="kt-select {class if class else ''}" data-kt-select="true"
-                                                data-kt-select-config='{
-                                                    "optionsClass": "kt-scrollable overflow-auto max-h-[250px]",
-                                                    "displayTemplate": "&lt;div class=\"flex items-center leading-none gap-2\"&gt;@{{ flag }}&lt;span class=\"text-foreground\"&gt;@{{ text }}&lt;/span&gt;&lt;/div&gt;",
-                                                    "optionTemplate": "&lt;div class=\"flex items-center leading-none gap-2\"&gt;@{{ flag }} &lt;span class=\"text-foreground\"&gt;@{{ text }}&lt;/span&gt;&lt;/div&gt;&lt;svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"size-3.5 ms-auto hidden text-primary kt-select-option-selected:block\"&gt;&lt;path d=\"M20 6 9 17l-5-5\"/&gt;&lt;/svg&gt;&lt;/div&gt;"
-                                                }'
-                                                data-kt-select-enable-search="true" data-kt-select-placeholder="Select a country..."
-                                                data-kt-select-search-placeholder="Search...">
-                                                <option data-kt-select-option='{"flag": "🇦🇫"}' value="Afghanistan">
-                                                    Afghanistan
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇦🇱"}' value="Albania">
-                                                    Albania
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇩🇿"}' value="Algeria">
-                                                    Algeria
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇦🇩"}' value="Andorra">
-                                                    Andorra
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇦🇴"}' value="Angola">
-                                                    Angola
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇦🇬"}' value="Antigua and Barbuda">
-                                                    Antigua and Barbuda
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇦🇷"}' value="Argentina">
-                                                    Argentina
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇦🇲"}' value="Armenia">
-                                                    Armenia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇦🇺"}' value="Australia">
-                                                    Australia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇦🇹"}' value="Austria">
-                                                    Austria
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇦🇿"}' value="Azerbaijan">
-                                                    Azerbaijan
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇧🇸"}' value="Bahamas">
-                                                    Bahamas
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇧🇭"}' value="Bahrain">
-                                                    Bahrain
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇧🇩"}' value="Bangladesh">
-                                                    Bangladesh
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇧🇧"}' value="Barbados">
-                                                    Barbados
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇧🇾"}' value="Belarus">
-                                                    Belarus
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇧🇪"}' value="Belgium">
-                                                    Belgium
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇧🇿"}' value="Belize">
-                                                    Belize
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇧🇯"}' value="Benin">
-                                                    Benin
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇧🇹"}' value="Bhutan">
-                                                    Bhutan
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇧🇴"}' value="Bolivia">
-                                                    Bolivia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇧🇦"}' value="Bosnia and Herzegovina">
-                                                    Bosnia and Herzegovina
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇧🇼"}' value="Botswana">
-                                                    Botswana
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇧🇷"}' value="Brazil">
-                                                    Brazil
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇧🇳"}' value="Brunei">
-                                                    Brunei
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇧🇬"}' value="Bulgaria">
-                                                    Bulgaria
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇧🇫"}' value="Burkina Faso">
-                                                    Burkina Faso
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇧🇮"}' value="Burundi">
-                                                    Burundi
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇨🇻"}' value="Cabo Verde">
-                                                    Cabo Verde
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇰🇭"}' value="Cambodia">
-                                                    Cambodia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇨🇲"}' value="Cameroon">
-                                                    Cameroon
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇨🇦"}' value="Canada">
-                                                    Canada
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇨🇫"}' value="Central African Republic">
-                                                    Central African Republic
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇹🇩"}' value="Chad">
-                                                    Chad
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇨🇱"}' value="Chile">
-                                                    Chile
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇨🇳"}' value="China">
-                                                    China
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇨🇴"}' value="Colombia">
-                                                    Colombia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇰🇲"}' value="Comoros">
-                                                    Comoros
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇨🇬"}' value="Congo (Congo-Brazzaville)">
-                                                    Congo (Congo-Brazzaville)
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇨🇷"}' value="Costa Rica">
-                                                    Costa Rica
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇭🇷"}' value="Croatia">
-                                                    Croatia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇨🇺"}' value="Cuba">
-                                                    Cuba
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇨🇾"}' value="Cyprus">
-                                                    Cyprus
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇨🇿"}' value="Czechia">
-                                                    Czechia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇨🇩"}' value="Democratic Republic of the Congo">
-                                                    Democratic Republic of the Congo
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇩🇰"}' value="Denmark">
-                                                    Denmark
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇩🇯"}' value="Djibouti">
-                                                    Djibouti
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇩🇲"}' value="Dominica">
-                                                    Dominica
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇩🇴"}' value="Dominican Republic">
-                                                    Dominican Republic
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇪🇨"}' value="Ecuador">
-                                                    Ecuador
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇪🇬"}' value="Egypt">
-                                                    Egypt
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇻"}' value="El Salvador">
-                                                    El Salvador
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇬🇶"}' value="Equatorial Guinea">
-                                                    Equatorial Guinea
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇪🇷"}' value="Eritrea">
-                                                    Eritrea
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇪🇪"}' value="Estonia">
-                                                    Estonia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇿"}' value="Eswatini">
-                                                    Eswatini
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇪🇹"}' value="Ethiopia">
-                                                    Ethiopia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇫🇯"}' value="Fiji">
-                                                    Fiji
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇫🇮"}' value="Finland">
-                                                    Finland
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇫🇷"}' value="France">
-                                                    France
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇬🇦"}' value="Gabon">
-                                                    Gabon
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇬🇲"}' value="Gambia">
-                                                    Gambia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇬🇪"}' value="Georgia">
-                                                    Georgia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇩🇪"}' value="Germany">
-                                                    Germany
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇬🇭"}' value="Ghana">
-                                                    Ghana
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇬🇷"}' value="Greece">
-                                                    Greece
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇬🇩"}' value="Grenada">
-                                                    Grenada
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇬🇹"}' value="Guatemala">
-                                                    Guatemala
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇬🇳"}' value="Guinea">
-                                                    Guinea
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇬🇼"}' value="Guinea-Bissau">
-                                                    Guinea-Bissau
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇬🇾"}' value="Guyana">
-                                                    Guyana
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇭🇹"}' value="Haiti">
-                                                    Haiti
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇭🇳"}' value="Honduras">
-                                                    Honduras
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇭🇺"}' value="Hungary">
-                                                    Hungary
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇮🇸"}' value="Iceland">
-                                                    Iceland
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇮🇳"}' value="India">
-                                                    India
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇮🇩"}' value="Indonesia">
-                                                    Indonesia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇮🇷"}' value="Iran">
-                                                    Iran
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇮🇶"}' value="Iraq">
-                                                    Iraq
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇮🇪"}' value="Ireland">
-                                                    Ireland
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇮🇱"}' value="Israel">
-                                                    Israel
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇮🇹"}' value="Italy">
-                                                    Italy
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇯🇲"}' value="Jamaica">
-                                                    Jamaica
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇯🇵"}' value="Japan">
-                                                    Japan
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇯🇴"}' value="Jordan">
-                                                    Jordan
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇰🇿"}' value="Kazakhstan">
-                                                    Kazakhstan
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇰🇪"}' value="Kenya">
-                                                    Kenya
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇰🇮"}' value="Kiribati">
-                                                    Kiribati
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇰🇼"}' value="Kuwait">
-                                                    Kuwait
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇰🇬"}' value="Kyrgyzstan">
-                                                    Kyrgyzstan
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇱🇦"}' value="Laos">
-                                                    Laos
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇱🇻"}' value="Latvia">
-                                                    Latvia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇱🇧"}' value="Lebanon">
-                                                    Lebanon
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇱🇸"}' value="Lesotho">
-                                                    Lesotho
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇱🇷"}' value="Liberia">
-                                                    Liberia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇱🇾"}' value="Libya">
-                                                    Libya
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇱🇮"}' value="Liechtenstein">
-                                                    Liechtenstein
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇱🇹"}' value="Lithuania">
-                                                    Lithuania
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇱🇺"}' value="Luxembourg">
-                                                    Luxembourg
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇬"}' value="Madagascar">
-                                                    Madagascar
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇼"}' value="Malawi">
-                                                    Malawi
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇾"}' value="Malaysia">
-                                                    Malaysia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇻"}' value="Maldives">
-                                                    Maldives
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇱"}' value="Mali">
-                                                    Mali
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇹"}' value="Malta">
-                                                    Malta
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇭"}' value="Marshall Islands">
-                                                    Marshall Islands
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇷"}' value="Mauritania">
-                                                    Mauritania
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇺"}' value="Mauritius">
-                                                    Mauritius
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇽"}' value="Mexico">
-                                                    Mexico
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇫🇲"}' value="Micronesia">
-                                                    Micronesia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇩"}' value="Moldova">
-                                                    Moldova
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇨"}' value="Monaco">
-                                                    Monaco
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇳"}' value="Mongolia">
-                                                    Mongolia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇪"}' value="Montenegro">
-                                                    Montenegro
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇦"}' value="Morocco">
-                                                    Morocco
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇿"}' value="Mozambique">
-                                                    Mozambique
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇲"}' value="Myanmar">
-                                                    Myanmar
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇳🇦"}' value="Namibia">
-                                                    Namibia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇳🇷"}' value="Nauru">
-                                                    Nauru
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇳🇵"}' value="Nepal">
-                                                    Nepal
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇳🇱"}' value="Netherlands">
-                                                    Netherlands
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇳🇿"}' value="New Zealand">
-                                                    New Zealand
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇳🇮"}' value="Nicaragua">
-                                                    Nicaragua
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇳🇪"}' value="Niger">
-                                                    Niger
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇳🇬"}' value="Nigeria">
-                                                    Nigeria
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇰🇵"}' value="North Korea">
-                                                    North Korea
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇲🇰"}' value="North Macedonia">
-                                                    North Macedonia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇳🇴"}' value="Norway">
-                                                    Norway
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇴🇲"}' value="Oman">
-                                                    Oman
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇵🇰"}' value="Pakistan">
-                                                    Pakistan
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇵🇼"}' value="Palau">
-                                                    Palau
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇵🇸"}' value="Palestine">
-                                                    Palestine
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇵🇦"}' value="Panama">
-                                                    Panama
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇵🇬"}' value="Papua New Guinea">
-                                                    Papua New Guinea
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇵🇾"}' value="Paraguay">
-                                                    Paraguay
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇵🇪"}' value="Peru">
-                                                    Peru
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇵🇭"}' value="Philippines">
-                                                    Philippines
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇵🇱"}' value="Poland">
-                                                    Poland
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇵🇹"}' value="Portugal">
-                                                    Portugal
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇶🇦"}' value="Qatar">
-                                                    Qatar
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇷🇴"}' value="Romania">
-                                                    Romania
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇷🇺"}' value="Russia">
-                                                    Russia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇷🇼"}' value="Rwanda">
-                                                    Rwanda
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇰🇳"}' value="Saint Kitts and Nevis">
-                                                    Saint Kitts and Nevis
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇱🇨"}' value="Saint Lucia">
-                                                    Saint Lucia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇻🇨"}' value="Saint Vincent and the Grenadines">
-                                                    Saint Vincent and the Grenadines
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇼🇸"}' value="Samoa">
-                                                    Samoa
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇲"}' value="San Marino">
-                                                    San Marino
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇹"}' value="Sao Tome and Principe">
-                                                    Sao Tome and Principe
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇦"}' value="Saudi Arabia">
-                                                    Saudi Arabia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇳"}' value="Senegal">
-                                                    Senegal
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇷🇸"}' value="Serbia">
-                                                    Serbia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇨"}' value="Seychelles">
-                                                    Seychelles
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇱"}' value="Sierra Leone">
-                                                    Sierra Leone
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇬"}' value="Singapore">
-                                                    Singapore
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇰"}' value="Slovakia">
-                                                    Slovakia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇮"}' value="Slovenia">
-                                                    Slovenia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇧"}' value="Solomon Islands">
-                                                    Solomon Islands
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇴"}' value="Somalia">
-                                                    Somalia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇿🇦"}' value="South Africa">
-                                                    South Africa
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇰🇷"}' value="South Korea">
-                                                    South Korea
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇸"}' value="South Sudan">
-                                                    South Sudan
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇪🇸"}' value="Spain">
-                                                    Spain
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇱🇰"}' value="Sri Lanka">
-                                                    Sri Lanka
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇩"}' value="Sudan">
-                                                    Sudan
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇷"}' value="Suriname">
-                                                    Suriname
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇪"}' value="Sweden">
-                                                    Sweden
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇨🇭"}' value="Switzerland">
-                                                    Switzerland
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇸🇾"}' value="Syria">
-                                                    Syria
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇹🇼"}' value="Taiwan">
-                                                    Taiwan
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇹🇯"}' value="Tajikistan">
-                                                    Tajikistan
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇹🇿"}' value="Tanzania">
-                                                    Tanzania
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇹🇭"}' value="Thailand">
-                                                    Thailand
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇹🇱"}' value="Timor-Leste">
-                                                    Timor-Leste
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇹🇬"}' value="Togo">
-                                                    Togo
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇹🇴"}' value="Tonga">
-                                                    Tonga
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇹🇹"}' value="Trinidad and Tobago">
-                                                    Trinidad and Tobago
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇹🇳"}' value="Tunisia">
-                                                    Tunisia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇹🇷"}' value="Turkey">
-                                                    Turkey
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇹🇲"}' value="Turkmenistan">
-                                                    Turkmenistan
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇹🇻"}' value="Tuvalu">
-                                                    Tuvalu
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇺🇬"}' value="Uganda">
-                                                    Uganda
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇺🇦"}' value="Ukraine">
-                                                    Ukraine
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇦🇪"}' value="United Arab Emirates">
-                                                    United Arab Emirates
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇬🇧"}' value="United Kingdom">
-                                                    United Kingdom
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇺🇸"}' value="United States">
-                                                    United States
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇺🇾"}' value="Uruguay">
-                                                    Uruguay
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇺🇿"}' value="Uzbekistan">
-                                                    Uzbekistan
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇻🇺"}' value="Vanuatu">
-                                                    Vanuatu
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇻🇦"}' value="Vatican City">
-                                                    Vatican City
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇻🇪"}' value="Venezuela">
-                                                    Venezuela
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇻🇳"}' value="Vietnam">
-                                                    Vietnam
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇾🇪"}' value="Yemen">
-                                                    Yemen
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇿🇲"}' value="Zambia">
-                                                    Zambia
-                                                </option>
-                                                <option data-kt-select-option='{"flag": "🇿🇼"}' value="Zimbabwe">
-                                                    Zimbabwe
-                                                </option>
-                                            </select> --}}
                                         </div>
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
                                             Nationalité <span class="text-destructive">*</span>
                                         </label>
-                                        <input class="kt-input" name="nationality" placeholder="" type="text" value="{{ Auth::user()->nationality ?? null }}" />
+                                        <input class="kt-input" name="nationality" placeholder="" type="text" value="{{ Auth::user()->nationality ?? null }}" required />
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
                                             Numéro de téléphone <span class="text-destructive">*</span>
                                         </label>
-                                        <input class="kt-input" name="phone_number" placeholder="Numéro de téléphone mobile" type="tel" value="{{ Auth::user()->phone_number ?? null }}" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" />
+                                        <div class="kt-input-group w-full">
+                                            @php
+                                                // Options statiques ou dynamiques
+                                                $indicatifs = [
+                                                    ['value' => 'usa', 'label' => '+1', 'flag' => '🇺🇸'],
+                                                    ['value' => 'france', 'label' => '+33', 'flag' => '🇫🇷'],
+                                                    ['value' => 'cote-ivoire', 'label' => "+225", 'flag' => '🇨🇮'],
+                                                ];
+                                            @endphp
+                                            <select
+                                                class="kt-select max-w-22 rounded-e-none"
+                                                data-kt-select="true"
+                                                data-kt-select-enable-search="false"
+                                                data-kt-select-search-placeholder="Rechercher..."
+                                                data-kt-select-placeholder="Sélectionner un indicatif pays..."
+                                                data-kt-select-config='@json($config)'
+                                            >
+                                                @foreach($indicatifs as $indicatif)
+                                                    <option
+                                                        value="{{ $indicatif['value'] }}"
+                                                        {{ $indicatif['value'] == 'france' ? 'selected' : '' }}
+                                                        data-kt-select-option='@json(["flag" => $indicatif["flag"]])'
+                                                    >
+                                                        {{ $indicatif['label'] }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <input class="kt-input rounded-s-none" name="phone_number" placeholder="Numéro de téléphone mobile" type="tel" value="{{ Auth::user()->phone_number ?? null }}" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" required />
+                                        </div>
                                     </div>
                                     <div class="flex justify-end">
                                         <button type="submit" class="kt-btn kt-btn-primary">
@@ -1319,27 +774,6 @@
                                         </label>
                                         <input class="kt-input" type="text" name="ville" required value="{{ Auth::user()->address['ville'] ?? null }}" />
                                     </div>
-                                    {{-- <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                                        <label class="kt-form-label max-w-56">
-                                            Pays
-                                        </label>
-                                        <div class="grow">
-                                            <select class="kt-select" name="pays" data-kt-select="true">
-                                                <option>Belgique</option>
-                                                <option>Congo</option>
-                                                <option>Côte d'Ivoire</option>
-                                                <option>Cameroun</option>
-                                                <option>Canada</option>
-                                                <option>Espagne</option>
-                                                <option>France</option>
-                                                <option>Italie</option>
-                                                <option>Guinnée</option>
-                                                <option>Mali</option>
-                                                <option>Senegal</option>
-                                                <option>Mali</option>
-                                            </select>
-                                        </div>
-                                    </div> --}}
                                     <div class="flex justify-end pt-2.5">
                                         <button type="submit" class="kt-btn kt-btn-primary">
                                             Sauvegarder
@@ -1417,15 +851,21 @@
                                     </div>
                                     <div class="flex items-center flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Nombre d'années d'études restantes <span class="text-destructive">*</span>
+                                            Nombre d'années d'études restantes
                                         </label>
                                         <input class="kt-input" name="nombre_annees_restantes" type="text" placeholder="(avant diplomation)" value="{{ $emprunteur->remaining_years ?? null }}" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Date de diplomation prévue <span class="text-destructive">*</span>
+                                            Date de diplomation prévue
                                         </label>
-                                        <input class="kt-input" name="date_diplome_prevue" placeholder="Mois / Année" type="date" value="{{ $emprunteur ? \Carbon\Carbon::parse($emprunteur->graduation_date)->format('Y-m-d') : null }}" />
+                                        <input 
+                                            class="kt-input" 
+                                            name="date_diplome_prevue" 
+                                            type="date" 
+                                            value="{{ $emprunteur ? old('date_diplome_prevue', optional($emprunteur->graduation_date)->format('Y-m-d') ?? now()->format('Y-m-d')) : now()->format('Y-m-d') }}"
+                                            min="{{ now()->format('Y-m-d') }}" 
+                                        />
                                     </div>
                                     <div class="flex justify-end">
                                         <button type="submit" class="kt-btn kt-btn-primary">
@@ -1477,7 +917,7 @@
                                                 </div>
                                                 <div class="file-view flex items-center gap-2 lg:gap-5">
                                                     <span class="text-sm font-semibold px-3 py-1 rounded-full
-                                                        {{ $doc->status === 'valide' ? 'bg-green-100 text-green-800' : ($doc->status === 'refuse' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
+                                                        {{ $doc->status === 'Validé' ? 'bg-green-100 text-green-800' : ($doc->status === 'Refusé' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
                                                         {{ ucfirst($doc->status) }}
                                                     </span>
                                                     <div class="kt-btn kt-btn-icon kt-btn-ghost" data-kt-menu="true">
@@ -2226,7 +1666,7 @@
             const selected = this.value;
             const filiereSelect = document.querySelector('select[name="filiere"]');
             
-            fetch(`/mon-profil/filieres/${encodeURIComponent(selected)}`)
+            fetch(`/emprunteur/filieres/${encodeURIComponent(selected)}`)
                 .then(response => response.json())
                 .then(data => {
                     filiereSelect.innerHTML = '';

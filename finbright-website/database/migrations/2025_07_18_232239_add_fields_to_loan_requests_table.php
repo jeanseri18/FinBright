@@ -12,29 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('loan_requests', function (Blueprint $table) {
-            if (!Schema::hasColumn('loan_requests', 'amount')) {
-                $table->decimal('amount', 15, 2)->after('user_id');
-            }
+            $table->decimal('amount', 15, 2)->after('emprunteur_id');
+            $table->integer('duree_campagne')->nullable()->default(9);
+            $table->boolean('deferred')->default(false)->after('duree_campagne');
+            $table->integer('deferred_months')->nullable()->after('deferred');
+            $table->json('simulation_result')->nullable()->after('deferred_months');
+            $table->string('status')->default('pending')->after('simulation_result');
+            $table->integer('interest_ratio');
+            $table->integer('assurance_ratio')->nullable();
 
-            if (!Schema::hasColumn('loan_requests', 'duration')) {
-                $table->integer('duration')->after('amount');
-            }
-
-            if (!Schema::hasColumn('loan_requests', 'deferred')) {
-                $table->boolean('deferred')->default(false)->after('duration');
-            }
-
-            if (!Schema::hasColumn('loan_requests', 'deferred_months')) {
-                $table->integer('deferred_months')->nullable()->after('deferred');
-            }
-
-            if (!Schema::hasColumn('loan_requests', 'simulation_result')) {
-                $table->json('simulation_result')->nullable()->after('deferred_months');
-            }
-
-            if (!Schema::hasColumn('loan_requests', 'status')) {
-                $table->string('status')->default('pending')->after('simulation_result');
-            }
+            $table->json('debt_params')->nullable()->after('status');
+            $table->float('debt_ratio')->nullable()->after('debt_params');
+            $table->string('object')->nullable()->after('debt_ratio');
+            $table->longText('description')->nullable()->after('object');
+            $table->longText('explication')->nullable()->after('object');
+            $table->longText('presentation')->nullable()->after('object');
+            $table->integer('duree_campagne_modifications')->default(0);
         });
     }
 
@@ -46,11 +39,20 @@ return new class extends Migration
         Schema::table('loan_requests', function (Blueprint $table) {
             $table->dropColumn([
                 'amount',
-                'duration',
+                'duree_campagne',
                 'deferred',
                 'deferred_months',
                 'simulation_result',
                 'status',
+                'interest_ratio',
+                'assurance_ratio',
+                'debt_params', 
+                'debt_ratio', 
+                'object', 
+                'description',
+                'explication',
+                'presentation',
+                'duree_campagne_modifications',
             ]);
         });
     }

@@ -67,32 +67,32 @@
                                     Montant : {{ $loan->simulation_result['total'] . ' €' ?? null }}
                                 </span>
                             </div>
-                            <div class="flex items-center justify-between flex-wrap gap-2 mb-3.5 lg:mb-7">
+                            <div class="grid md:grid-cols-3 items-center justify-between gap-2 mb-3.5 lg:mb-7">
                                 <div
-                                    class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
+                                    class="grid grid-cols-1 h-full content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
                                     <span class="text-secondary-foreground text-xs">
-                                        Durée
+                                        Durée de remboursement
                                     </span>
                                     <span class="text-mono text-sm leading-none font-medium">
                                         {{ $loan->simulation_result['duration'] . ' mois' ?? 'Non disponible' }}
                                     </span>
                                 </div>
                                 <div
-                                    class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
+                                    class="grid grid-cols-1 h-full content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
                                     <span class="text-secondary-foreground text-xs">
-                                        Taux
+                                        Taux d'intérêt
                                     </span>
                                     <span class="text-mono text-sm leading-none font-medium">
                                         {{ $loan->simulation_result['interets'] . '€' ?? 'Non évalué' }}
                                     </span>
                                 </div>
                                 <div
-                                    class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
+                                    class="grid grid-cols-1 h-full content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
                                     <span class="text-secondary-foreground text-xs">
                                         Niveau de risque
                                     </span>
                                     <span class="text-mono text-sm leading-none font-medium">
-                                        {{ $loan->emprunteur->riskLevel ? ($loan->emprunteur->riskLevel->profile == 'A' ? 'Risque faible' : ($loan->emprunteur->riskLevel->profile == 'B' ? 'Risque moyen' : 'Risque élévé')) : 'Non évalué' }}
+                                        {{ $loan->emprunteur->riskLevel ? ($loan->emprunteur->riskLevel->profile == 'A' ? 'Faible' : ($loan->emprunteur->riskLevel->profile == 'B' ? 'Moyen' : 'Risque élévé')) : 'Évalué' }}
                                     </span>
                                 </div>
                             </div>
@@ -225,7 +225,7 @@
                                         <div
                                             class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
                                             <span class="text-secondary-foreground text-xs">
-                                                Durée
+                                                Durée de remboursement
                                             </span>
                                             <span class="text-mono text-sm leading-none font-medium">
                                                 {{ $loan->simulation_result['duration'] . ' mois' ?? 'Non disponible' }}
@@ -234,7 +234,7 @@
                                         <div
                                             class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
                                             <span class="text-secondary-foreground text-xs">
-                                                Taux
+                                                Taux d'intérêt
                                             </span>
                                             <span class="text-mono text-sm leading-none font-medium">
                                                 {{ $loan->simulation_result['interets'] . '€' ?? 'Non évalué' }}

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Investisseur;
 
+use Illuminate\Validation\Rule;
 use App\Models\Files;
 use App\Models\UserDocument;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ParametresController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +16,7 @@ use ZipArchive;
 
 class InvestisseurController extends Controller
 {
-    public function profil()
+    public function profil(ParametresController $parametres)
     {
         Session::put('menu_actif', 'mon_compte');
         $investisseur = Auth::user()->investisseur;
@@ -34,14 +36,17 @@ class InvestisseurController extends Controller
                 'liste_des_membres_du_conseil' => "Liste des membres du conseil d'administration",
             ];
         }
-        $user = Auth::user();
-        $userDocuments = $user->documents->keyBy('type');
-        $documentsGroupByType = $user->documents->groupBy('type');
+        $investisseur = Auth::user()->investisseur;
+
+        $countries = $parametres->getContries();
+        $userDocuments = Auth::user()->documents->keyBy('type');
+        $documentsGroupByType = Auth::user()->documents->groupBy('type');
 
         return view('back.investisseur.mon-profil', compact([
             'documentsAttendus',
             'userDocuments',
             'documentsGroupByType',
+            'countries'
         ]));
     }
     
@@ -67,6 +72,10 @@ class InvestisseurController extends Controller
         // --- Tolérance au risque ---
         if (($data['reaction_apres_defaults'] ?? '') === 'fait partir des risques') $score += 2;
         if (($data['reaction_apres_defaults'] ?? '') === 'inquiet') $score += 1;
+
+        // --- Part à consacrer placement risqué ---
+        if (($data['part_a_consacrer'] ?? '') === '5% - 10%') $score += 1;
+        if (($data['part_a_consacrer'] ?? '') === '+10%') $score += 2;
 
         // Déterminer le profil
         $profil = [
@@ -115,7 +124,7 @@ class InvestisseurController extends Controller
             'civilite' => 'required|in:M.,Mme.,Mx.',
             'firstname' => 'nullable|string|max:100',
             'lastname' => 'nullable|string|max:100',
-            'birth_date' => 'nullable|date',
+            'birth_date' => ['required', 'date', 'before_or_equal:' . now()->subYears(15)->format('Y-m-d')],
             'birth_place' => 'nullable|string|max:255',
             'nationality' => 'nullable|string|max:100',
             'phone_number' => 'nullable|string|max:20',
@@ -228,7 +237,7 @@ class InvestisseurController extends Controller
                         'investisseur_id' => $investisseur->id,
                         'file_id' => $fileEntity->id,
                         'type' => $field,
-                        'status' => 'À vérifier',
+                        'status' => 'À approuver',
                     ]);
                 }
             }
@@ -246,16 +255,24 @@ class InvestisseurController extends Controller
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'denomination_sociale' => 'required|string',
             'forme_juridique' => 'required|string',
-            'numero_immatriculation' => 'required|string',
+            'numero_immatriculation' => [
+                'required',
+                'string',
+                Rule::unique('legal_entities', 'numero_immatriculation')
+                    ->ignore(optional($user->investisseur)->id), 
+            ],
             'creation_date' => 'required|date',
             'beneficiaires' => 'required|array|min:1',
             'beneficiaires.*.nom' => 'nullable|string',
             'beneficiaires.*.prenoms' => 'nullable|string',
-            'beneficiaires.*.birth_date' => 'nullable|date',
+            'beneficiaires.*.birth_date' => ['required', 'date', 'before_or_equal:' . now()->subYears(15)->format('Y-m-d')],
             'beneficiaires.*.birth_place' => 'nullable|string|max:255',
             'beneficiaires.*.nationalite' => 'nullable|string',
             'beneficiaires.*.adresse' => 'nullable|string',
             'beneficiaires.*.piece_identite.*' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:2048',
+        ], [
+            // Messages personnalisés
+            'numero_immatriculation.unique' => 'Ce numéro d’immatriculation est déjà réservé.',
         ]);
 
         $investisseur = $user->investisseur()->updateOrCreate([], [
@@ -323,7 +340,7 @@ class InvestisseurController extends Controller
                         'beneficiaire_id' => $beneficiaire->id,
                         'file_id' => $fileEntity->id,
                         'type' => 'piece_identite',
-                        'status' => 'À vérifier',
+                        'status' => 'À approuver',
                     ]);
                 }
             }

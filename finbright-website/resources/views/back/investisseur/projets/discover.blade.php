@@ -4,6 +4,10 @@
 
 @section('stylesheet')
 <style type="text/css">
+    #report_user_modal .kt-select-dropdown.open {
+        position: absolute !important;
+    }
+
     @layer utilities {
         .kt-stepper-first\:hidden {
             [data-kt-stepper-initialized].first & {
@@ -68,6 +72,7 @@
                         <input type="number" name="min_amount" placeholder="Montant min" value="{{ request('min_amount') }}" class="kt-input max-w-[130px]">
                         <input type="number" name="max_amount" placeholder="Montant max" value="{{ request('max_amount') }}" class="kt-input max-w-[130px]">
                         <select name="risk_level" class="kt-select w-36" data-kt-select="true" data-kt-select-placeholder="Niveau de risque">
+                            <option value="Tout" {{ request('risk_level') == "Tout" ? "selected" : null }}>Tous les niveaux</option>
                             <option value="A" {{ request('risk_level') == "A" ? "selected" : null }}>Faible</option>
                             <option value="B" {{ request('risk_level') == "B" ? "selected" : null }}>Moyen</option>
                             <option value="C" {{ request('risk_level') == "C" ? "selected" : null }}>Élévé</option>
@@ -132,32 +137,32 @@
                                     Montant : {{ $loan->simulation_result['total'] . ' €' ?? null }}
                                 </span>
                             </div>
-                            <div class="flex items-center justify-between flex-wrap gap-2 mb-3.5 lg:mb-7">
+                            <div class="grid md:grid-cols-3 items-center justify-between gap-2 mb-3.5 lg:mb-7">
                                 <div
-                                    class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
+                                    class="grid grid-cols-1 h-full content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
                                     <span class="text-secondary-foreground text-xs">
-                                        Durée
+                                        Durée de remboursement
                                     </span>
                                     <span class="text-mono text-sm leading-none font-medium">
                                         {{ $loan->simulation_result['duration'] . ' mois' ?? 'Non disponible' }}
                                     </span>
                                 </div>
                                 <div
-                                    class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
+                                    class="grid grid-cols-1 h-full content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
                                     <span class="text-secondary-foreground text-xs">
-                                        Taux
+                                        Taux d'intérêt
                                     </span>
                                     <span class="text-mono text-sm leading-none font-medium">
                                         {{ $loan->simulation_result['interets'] . '€' ?? 'Non évalué' }}
                                     </span>
                                 </div>
                                 <div
-                                    class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
+                                    class="grid grid-cols-1 h-full content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
                                     <span class="text-secondary-foreground text-xs">
                                         Niveau de risque
                                     </span>
                                     <span class="text-mono text-sm leading-none font-medium">
-                                        {{ $loan->emprunteur->riskLevel ? ($loan->emprunteur->riskLevel->profile == 'A' ? 'Risque faible' : ($loan->emprunteur->riskLevel->profile == 'B' ? 'Risque moyen' : 'Risque élévé')) : 'Non évalué' }}
+                                        {{ $loan->emprunteur->riskLevel ? ($loan->emprunteur->riskLevel->profile == 'A' ? 'Faible' : ($loan->emprunteur->riskLevel->profile == 'B' ? 'Moyen' : 'Élévé')) : 'Non évalué' }}
                                     </span>
                                 </div>
                             </div>
@@ -240,7 +245,7 @@
                                         <div
                                             class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
                                             <span class="text-secondary-foreground text-xs">
-                                                Durée
+                                                Durée de remboursement
                                             </span>
                                             <span class="text-mono text-sm leading-none font-medium">
                                                 {{ $loan->simulation_result['duration'] . ' mois' ?? 'Non disponible' }}
@@ -249,7 +254,7 @@
                                         <div
                                             class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
                                             <span class="text-secondary-foreground text-xs">
-                                                Taux
+                                                Taux d'intérêt
                                             </span>
                                             <span class="text-mono text-sm leading-none font-medium">
                                                 {{ $loan->simulation_result['interets'] . '€' ?? 'Non évalué' }}
@@ -340,8 +345,8 @@
         <!-- end: projects -->
     </div>
 
-    <div class="kt-modal" data-kt-modal="true" id="report_user_modal">
-        <div class="kt-modal-content max-w-2xl top-[15%]">
+    <div class="kt-modal kt-modal-center" data-kt-modal="true" id="report_user_modal">
+        <div class="kt-modal-content max-w-2xl">
             <div class="kt-modal-header">
                 <h3 class="kt-modal-title">
                     Projet : <span id="modal_project_subject"></span>
@@ -376,22 +381,24 @@
                     <div class="border-b border-b-border">
                     </div>
                     <div class="flex flex-col gap-5 p-5">
-                        <div class="grid md:grid-cols-2 gap-x-4 sm:gap-x-40">
+                        <div class="grid md:grid-cols-2 gap-x-4 sm:gap-x-15">
                             <div class="flex justify-between gap-3"><strong>Montant demandé :</strong> <span id="modal_project_amount"></span></div>
                             <div class="flex justify-between gap-3"><strong>Montant restant :</strong> <span id="modal_project_remaining_amount"></span></div>
-                            <div class="flex justify-between gap-3"><strong>Durée :</strong> <span id="modal_project_duration"></span></div>
+                            <div class="flex justify-between gap-3"><strong>Durée de remboursement :</strong> <span id="modal_project_duration"></span></div>
                             <div class="flex justify-between gap-3"><strong>Taux d'intérêt :</strong> <span id="modal_project_rate"></span></div>
                             <div class="flex justify-between gap-3"><strong>Niveau de risque :</strong> <span id="modal_project_risk"></span></div>
                         </div>
-                        <p><strong>Description :</strong></p>
-                        <div class="kt-scrollable overflow-y-auto max-h-[300px] pe-2 w-full">
-                            <p id="modal_project_description" class="text-gray-700"></p>
+                        <div>
+                            <p><strong>Description :</strong></p>
+                            <div class="kt-scrollable overflow-y-auto max-h-[150px] pe-2 w-full">
+                                <p id="modal_project_description" class="text-gray-700"></p>
+                            </div>
                         </div>
                     </div>
                     <div class="p-5 space-y-4">
                         <select id="loan_type" name="type_investissement" class="kt-select w-full" data-kt-select="true" data-kt-select-placeholder="Type d'investissement" required>
-                            <option value="sans_interet">Prêt sans intérêt</option>
-                            <option value="avec_interet">Prêt avec intérêt</option>
+                            <option value="pret_sans_interet">Prêt sans intérêt</option>
+                            <option value="pret_avec_interet">Prêt avec intérêt</option>
                             <option value="don">Dons</option>
                         </select>
 
@@ -420,15 +427,15 @@
         </div>
     </div>
 
-    <div class="kt-modal" data-kt-modal="true" id="profiled_user_modal">
-        <div class="kt-modal-content max-w-2xl top-[15%]">
+    <div class="kt-modal kt-modal-center" data-kt-modal-persistent="true" data-kt-modal="true" id="profiled_user_modal">
+        <div class="kt-modal-content max-w-2xl">
             <div class="kt-modal-header">
-                <h3 class="kt-modal-title">Questionnaire de Profil d'Investisseur</h3>
-                <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost shrink-0" data-kt-modal-dismiss="true">
+                <h3 class="kt-modal-title">Questionnaire de Profil d'Investisseur (obligatoire)</h3>
+                {{-- <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost shrink-0" data-kt-modal-dismiss="true">
                     <i class="ki-filled ki-cross"></i>
-                </button>
+                </button> --}}
             </div>
-            <div class="kt-modal-body p-0">
+            <div class="kt-modal-body max-h-[700px] p-0">
                 <form action="" method="post">
                     @csrf
                     <div id="form_stepper" data-kt-stepper="true">
@@ -774,7 +781,7 @@
                                 </div>
                                 <div class="flex flex-col gap-3.5">
                                     <label class="kt-form-label flex items-center gap-2.5">
-                                        <input checked="" class="kt-radio radio-sm" name="reaction_apres_defaults" type="radio" value="-5%"/>
+                                        <input checked="" class="kt-radio radio-sm" name="part_a_consacrer" type="radio" value="-5%"/>
                                         <div class="flex flex-col gap-0.5">
                                             <div class="text-sm font-semibold text-mono">
                                                 Moins de 5%
@@ -782,7 +789,7 @@
                                         </div>
                                     </label>
                                     <label class="kt-form-label flex items-center gap-2.5">
-                                        <input class="kt-radio radio-sm" name="reaction_apres_defaults" type="radio" value="5%-10%"/>
+                                        <input class="kt-radio radio-sm" name="part_a_consacrer" type="radio" value="5% - 10%"/>
                                         <div class="flex flex-col gap-0.5">
                                             <div class="text-sm font-semibold text-mono">
                                                 Entre 5% et 10%
@@ -790,7 +797,7 @@
                                         </div>
                                     </label>
                                     <label class="kt-form-label flex items-center gap-2.5">
-                                        <input class="kt-radio radio-sm" name="reaction_apres_defaults" type="radio" value="+10%"/>
+                                        <input class="kt-radio radio-sm" name="part_a_consacrer" type="radio" value="+10%"/>
                                         <div class="flex flex-col gap-0.5">
                                             <div class="text-sm font-semibold text-mono">
                                                 Plus de 10%
@@ -801,13 +808,13 @@
                             </div>
                         </div>
 
-                        <div class="border-b border-b-border"></div>
+                        {{-- <div class="border-b border-b-border"></div>
 
                         <div class="text-2sm font-medium text-center text-foreground p-5">
                             Don't worry, your report is completely anonymous; the person you're
                             <br/>
                             reporting will not be informed that you've submitted it
-                        </div>
+                        </div> --}}
 
                         <div class="border-b border-b-border"></div>
                     
@@ -836,8 +843,8 @@
         </div>
     </div>
 
-    <div class="kt-modal" data-kt-modal="true" id="user_evaluate_modal">
-        <div class="kt-modal-content max-w-[500px] top-[15%]">
+    <div class="kt-modal kt-modal-center" data-kt-modal="true" id="user_evaluate_modal">
+        <div class="kt-modal-content max-w-[500px]">
             <div class="kt-modal-header">
                 <h3 class="kt-modal-title">Évaluation de l'Adéquation du Prêteur</h3>
                 <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost shrink-0" data-kt-modal-dismiss="true">
@@ -882,11 +889,11 @@
 
 @section('javascripts')
     <script type="text/javascript">
-    window.onload = () => {
+    document.addEventListener('DOMContentLoaded', () => {
         const modalEl = KTDom.getElement('#profiled_user_modal');
-        const modal = KTModal.getInstance(modalEl);
-        @if (!Auth::user()->investisseur->profile)
-        modal?.show();
+        const modal1 = KTModal.getInstance(modalEl);
+        @if (!Auth::user()->investisseur or !Auth::user()->investisseur->profile)
+            modal1?.show();
         @endif
         
         const stepperEl = document.querySelector('#form_stepper');
@@ -933,18 +940,27 @@
                 if (data.success) {
                     // cible le modal résultat
                     const modalEvaluate = document.querySelector('#user_evaluate_modal');
-                    const modal = KTModal.getInstance(modalEvaluate);
+                    const modal2 = KTModal.getInstance(modalEvaluate);
                     const statut = data.evaluation['profil'] == "Prudent" ? "primary" : (data.evaluation['profil'] == "Équilibré" ? "warning" : "destructive");
                     
                     modalEvaluate.querySelector('#profil').innerHTML = `Profile : <span class="kt-badge kt-badge-outline kt-badge-${statut} rounded-full">${data.evaluation['profil']}</span>`;
                     modalEvaluate.querySelector('#score').innerText = `Score : ${data.evaluation['score']}`;
                     modalEvaluate.querySelector('#message').innerText = data.evaluation['message'];
-                    modal.show();
+                    
+                    modal1.on('hide', (detail) => {
+                        detail.cancel = false;
+                    });
+                    modal2.show();
                 }
             })
             .catch(err => console.error("Erreur:", err));
         });
-    }
+
+        modal1.on('hide', (detail) => {
+            detail.cancel = true;
+            console.log('hide action canceled');
+        });
+    });
     
     document.getElementById('search_input').addEventListener('input', function() {
         const query = this.value.toLowerCase().trim();
@@ -963,7 +979,7 @@
     });
 
     const modalEl = document.querySelector('#report_user_modal');
-    const modal = KTModal.getInstance(modalEl);
+    const modal3 = KTModal.getInstance(modalEl);
     // Initialisation de la variable (exemple)
     var remaining_amount = 0;
 
@@ -1004,7 +1020,7 @@
                 form.action = `/investisseur/contribuer/${loanId}`;
 
                 // Ouvrir le modal
-                modal.show();
+                modal3.show();
             });
     }
 
@@ -1017,8 +1033,8 @@
     function updateLimit() {
         // Définir les limites max par type
         const limits = {
-            "sans_interet": 5000,
-            "avec_interet": 2000,
+            "pret_sans_interet": 5000,
+            "pret_avec_interet": 2000,
             "don": remaining_amount
         };
 
@@ -1039,8 +1055,8 @@
 
         // Mettre à jour le message
         let messages = {
-            "sans_interet": `Pour un financement sans intérêt, vous pouvez investir jusqu’à ${maxLimit} € maximum.`,
-            "avec_interet": `Pour un financement avec intérêt, vous pouvez investir jusqu’à ${maxLimit} € maximum.`,
+            "pret_sans_interet": `Pour un financement sans intérêt, vous pouvez investir jusqu’à ${maxLimit} € maximum.`,
+            "pret_avec_interet": `Pour un financement avec intérêt, vous pouvez investir jusqu’à ${maxLimit} € maximum.`,
             "don": `Pour un don, vous pouvez donner jusqu’à ${maxLimit} € maximum.`
         };
         message.innerText = messages[type] || "";

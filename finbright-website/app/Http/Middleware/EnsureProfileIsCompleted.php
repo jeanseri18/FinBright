@@ -16,15 +16,7 @@ class EnsureProfileIsCompleted
         if ($user->hasRole('emprunteur')) {
             $address = $user->address ?? [];
 
-            if (
-                !$user->is_profile_completed
-                // !isset($user->birth_date) ||
-                // !isset($user->birth_place) ||
-                // !isset($user->nationality) ||
-                // !isset($user->diploma) ||
-                // !isset($address['address']) ||
-                // !isset($address['ville'])
-            ) {
+            if (!$user->is_profile_completed) {
                 return redirect()->route('emprunteur.mon-profil');
             }
         }

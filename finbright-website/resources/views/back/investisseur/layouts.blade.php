@@ -89,6 +89,40 @@ Contact:
         </div>
         <!-- End of Main -->
         
+        @php
+            $type = session('success') ? 'success' : (session('error') || $errors->any() ? 'error' : null);
+            $message = session('success') ?? session('error') ?? ($errors->any() ? $errors->first() : null);
+        @endphp
+
+        @if ($type && $message)
+        <div id="floating-alert"
+            class="fixed top-0 left-1/2 transform -translate-x-1/2 mt-6 z-100 px-6 py-4 rounded shadow-lg flex items-center gap-3
+                    transition-all duration-500 ease-in-out opacity-0 scale-95
+                    {{ $type === 'success' ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700' }}">
+            @if ($type === 'success')
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 text-green-700"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4m5 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            @else
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 text-red-700"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            @endif
+
+            <span>{{ $message }}</span>
+        </div>
+        @endif
+
         <!-- Scripts -->
         <script src="{{ asset('assets/js/core.bundle.js') }}"></script>
         <script src="{{ asset('assets/vendors/ktui/ktui.min.js') }}"></script>
@@ -98,6 +132,27 @@ Contact:
         <!-- End of Scripts -->
 
         <script type="text/javascript">
+        window.onload = () => {
+            const alert = document.getElementById('floating-alert');
+            if (alert) {
+                // Affiche avec animation (scale + fade)
+                setTimeout(() => {
+                    alert.classList.remove('opacity-0', 'scale-95');
+                    alert.classList.add('opacity-100', 'scale-100');
+                }, 100); // petit délai pour trigger l'animation CSS
+
+                // Masquer après 5 secondes
+                setTimeout(() => {
+                    alert.classList.remove('opacity-100', 'scale-100');
+                    alert.classList.add('opacity-0', 'scale-95');
+
+                    // Supprimer du DOM après disparition
+                    setTimeout(() => {
+                        alert.remove();
+                    }, 500); // correspond à la durée de transition
+                }, 5000);
+            }
+        };
         </script>
     </body>
 </html>

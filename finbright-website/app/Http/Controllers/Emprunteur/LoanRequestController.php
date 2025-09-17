@@ -415,7 +415,8 @@ class LoanRequestController extends Controller
         // }
 
         // Appel de la fonction pour générer le tableau
-        if ($loan) {
+        $tableauAmortissement = [];
+        if ($loan && $loan->id) {
             $tableauAmortissement = $this->genererTableauAmortissement(
                 $loan->simulation_result['amount'],
                 $loan->simulation_result['duration'],

@@ -53,9 +53,9 @@ class User extends Authenticatable
         // Champs nécessaires pour dire que le profil emprunteur est complété
         'emprunteur' => [
             'civility', 'last_name', 'first_name', 'email', 'password', 'birth_date',
-            'birth_place', 'nationality', 'address', 'phone_number', 'diploma',
+            'birth_place', 'nationality', 'address', 'phone_number', 'profile_picture_id', 'diploma',
             'specialization', 'current_study_year', 'remaining_years',
-            'graduation_date', 'etablissement_id', 'profile_picture_id',
+            'graduation_date', 'etablissement_id',
         ],
         // Champs nécessaires pour dire que le profil investisseur est complété
         'investisseur' => [
@@ -70,8 +70,19 @@ class User extends Authenticatable
         
         static::saving(function ($user) {
             $fields = static::$requiredFields[$user->getRoleNames()->first()] ?? [];
-            $user->is_profile_completed = collect($fields)
-                ->every(fn($field) => !empty($user->{$field}));
+
+            $user->is_profile_completed = collect($fields)->every(function($field) use ($user) {
+                if (isset($user->{$field}) && $user->{$field} !== null && $user->{$field} !== '') {
+                    return true;
+                }
+                if ($user->emprunteur && isset($user->emprunteur->{$field}) && $user->emprunteur->{$field} !== null && $user->emprunteur->{$field} !== '') {
+                    return true;
+                }
+                if ($user->investisseur && isset($user->investisseur->{$field}) && $user->investisseur->{$field} !== null && $user->investisseur->{$field} !== '') {
+                    return true;
+                }
+                return false;
+            });
         });
     }
 

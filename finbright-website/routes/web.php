@@ -134,8 +134,27 @@ Route::prefix('investisseur')->name('investisseur.')->middleware(['auth', '2fa',
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', '2fa', 'role:admin'])->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::post('/documents/{document}/update-status', [AdminController::class, 'updateStatus']);
+    
+    Route::prefix('emprunteurs')->name('emprunteurs.')->group(function () {
+        Route::get('/liste-des-emprunteurs', [AdminController::class, 'listeEmprunteurs'])->name('liste');
+        Route::get('/{emprunteur}/json', [AdminController::class, 'jsonEmprunteur'])->name('emprunteur.json');
+        Route::post('/{emprunteur}/update-kyc-status', [AdminController::class, 'updateKycStatus']);
+    });
+
+    Route::prefix('investisseurs')->name('investisseurs.')->group(function () {
+        Route::get('/liste-des-investisseurs', [AdminController::class, 'listeInvestisseurs'])->name('liste');
+        Route::get('/{investisseur}/json', [AdminController::class, 'jsonInvestisseurs'])->name('investisseurs.json');
+        Route::post('/{investisseur}/update-kyc-status', [AdminController::class, 'updateKycInvestStatus']);
+    });
+
     Route::prefix('prets')->name('prets.')->group(function () {
         Route::get('/demandes-de-prets', [AdminController::class, 'demandesPrets'])->name('demandes');
+        Route::get('/projets-en-cours', [AdminController::class, 'projetsEnCours'])->name('enCours');
+    });
+
+    Route::prefix('investissements')->name('investissements.')->group(function () {
+        Route::get('/demandes-d-investissement', [AdminController::class, 'demandesInvestments'])->name('demandes');
     });
 });
 

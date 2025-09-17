@@ -13,28 +13,29 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('civility')->nullable()->after('id'); // M. Mme, Mlle
-            $table->string('first_name')->after('civility');
-            $table->string('last_name')->after('first_name');
+            $table->string('first_name')->nullable()->after('civility');
+            $table->string('last_name')->nullable()->after('first_name');
             $table->string('email')->after('last_name');
             $table->string('password')->after('email');
             $table->date('birth_date')->nullable()->after('password');
             $table->string('birth_place')->nullable()->after('birth_date');
             $table->string('nationality')->nullable()->after('birth_place');
-            $table->string('address')->nullable()->after('nationality');
+            $table->json('address')->nullable()->after('nationality');
             $table->string('phone_number')->nullable()->unique()->after('address'); // Rend le numéro de téléphone unique
-            $table->string('diploma')->nullable()->after('phone_number');
-            $table->string('specialization')->nullable()->after('diploma');
-            $table->string('current_study_year')->nullable()->after('specialization'); // Ex: L1, M2, etc.
-            $table->integer('remaining_years')->nullable()->after('current_study_year'); // Années restantes d'études
-            $table->string('graduation_date')->nullable()->after('remaining_years'); // Date de diplomation si connu
+            $table->softDeletes();
+            $table->rememberToken()->after('password')->nullable();
+            $table->timestamp('password_changed_at')->nullable();
+            $table->boolean('is_profile_completed')->default(false);
+            $table->string('status')->default('active'); // 'active', 'inactive'
+            $table->enum('kyc_status', ['pending','validated','rejected'])->default('pending')->after('status');
+            $table->timestamp('kyc_validated_at')->nullable()->after('kyc_status');
+            $table->longText('kyc_refused_motif')->nullable()->after('kyc_validated_at');
 
             // Clés étrangères (ajoutées après les autres champs pour une meilleure lisibilité)
-            $table->foreignId('etablissement_id')->nullable()->constrained('etablissements')->onDelete('set null');
             $table->foreignId('profile_picture_id')->nullable()->constrained('files')->onDelete('set null'); // Assurez-vous que la table 'files' existera
-        });
-
-        Schema::table('users', function (Blueprint $table) {
-            //
+            $table->foreignId('investisseur_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('emprunteur_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('admin_id')->nullable()->constrained()->onDelete('cascade');
         });
     }
 
@@ -45,7 +46,6 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             // Pour annuler l'ajout de clés étrangères, il faut d'abord supprimer la contrainte
-            $table->dropConstrainedForeignId('etablissement_id');
             $table->dropConstrainedForeignId('profile_picture_id');
 
             $table->dropColumn([
@@ -57,16 +57,25 @@ return new class extends Migration
                 'nationality',
                 'address',
                 'phone_number',
-                'diploma',
-                'specialization',
-                'current_study_year',
-                'remaining_years',
-                'graduation_date',
+                'status',
+                'kyc_status',
+                'kyc_validated_at',
+                'kyc_refused_motif',
+                'remember_token',
+                'is_profile_completed',
+                'password_changed_at',
             ]);
         });
-         // Si vous avez supprimé le champ 'name' dans up(), ajoutez-le ici pour la fonction down()
+        // Si vous avez supprimé le champ 'name' dans up(), ajoutez-le ici pour la fonction down()
         Schema::table('users', function (Blueprint $table) {
-            // $table->string('name')->after('email'); // Décommenter si vous l'avez supprimé dans up()
+            $table->dropForeign(['investisseur_id']);
+            $table->dropColumn('investisseur_id');
+
+            $table->dropForeign(['emprunteur_id']);
+            $table->dropColumn('emprunteur_id');
+
+            $table->dropForeign(['admin_id']);
+            $table->dropColumn('admin_id');
         });
     }
 };

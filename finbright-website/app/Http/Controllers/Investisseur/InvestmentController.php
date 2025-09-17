@@ -32,12 +32,14 @@ class InvestmentController extends Controller
 
         // Exemple de filtres
         if ($request->filled('min_amount')) {
-            $query->where('simulation_result->amount', '>=', $request->min_amount);
+            $query->whereRaw("CAST(JSON_UNQUOTE(JSON_EXTRACT(simulation_result, '$.total')) AS DECIMAL(10,2)) >= ?", [$request->min_amount]);
         }
+
         if ($request->filled('max_amount')) {
-            $query->where('simulation_result->amount', '<=', $request->max_amount);
+            $query->whereRaw("CAST(JSON_UNQUOTE(JSON_EXTRACT(simulation_result, '$.total')) AS DECIMAL(10,2)) <= ?", [$request->max_amount]);
         }
-        if ($request->filled('risk_level')) {
+
+        if ($request->filled('risk_level') && $request->risk_level != "Tout") {
             $query->whereHas('emprunteur.riskLevel', function($q) use ($request) {
                 $q->where('profile', $request->risk_level);
             });
@@ -106,6 +108,16 @@ class InvestmentController extends Controller
             'type_investissement' => 'required|string',
         ]);
 
+        $investisseurId = Auth::user()->investisseur->id;
+
+        $existing = Investment::where('investisseur_id', $investisseurId)
+            ->where('loan_request_id', $loanRequest->id)
+            ->first();
+        
+        if ($existing) {
+            return redirect()->back()->with('error', 'Vous avez déjà investi dans ce projet.');
+        }
+
         Investment::create([
             'investisseur_id' => Auth::user()->investisseur->id,
             'loan_request_id' => $loanRequest->id,
@@ -114,6 +126,6 @@ class InvestmentController extends Controller
             'status' => 'À approuver', // valeur par défaut
         ]);
 
-        return redirect()->back()->with('success', 'Investissement réalisé avec succès.');
+        return redirect()->back()->with('success', 'Investissement réalisé avec succès. Un administrateur se chargera de vous notifier du statut de la demande.');
     }
 }

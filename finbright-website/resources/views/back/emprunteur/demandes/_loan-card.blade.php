@@ -60,7 +60,7 @@
                 <div
                     class="flex flex-col gap-1.5 px-2.75 py-2.25 border border-dashed border-input rounded-md">
                     <span class="text-secondary-foreground text-xs">
-                        Taux proposé
+                        Taux d'intérêt
                     </span>
                     <span class="text-mono text-sm leading-none font-medium">
                         {{ (Auth::user()->emprunteur && Auth::user()->emprunteur->riskLevel) ? Auth::user()->emprunteur->riskLevel->yield .'%' : 'Indefinie' }}
@@ -69,7 +69,7 @@
                 <div
                     class="flex flex-col gap-1.5 px-2.75 py-2.25 border border-dashed border-input rounded-md">
                     <span class="text-secondary-foreground text-xs">
-                        Durée
+                        Durée de remboursement
                     </span>
                     <span class="text-mono text-sm leading-none font-medium">
                         {{ $loan->simulation_result['duration']. ' mois' ?? 'Non disponible' }}

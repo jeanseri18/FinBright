@@ -9,7 +9,7 @@ class Investment extends Model
     protected $fillable = [
         'investisseur_id',
         'loan_request_id',
-        'type_Investment',
+        'type_investment',
         'amount',
         'status'
     ];

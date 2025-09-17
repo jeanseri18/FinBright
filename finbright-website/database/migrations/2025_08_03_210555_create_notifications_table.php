@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('investisseurs', function (Blueprint $table) {
-            $table->json('profile')->nullable();
-            $table->boolean('consentent')->default(false);
+        Schema::create('notifications', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
         });
     }
 
@@ -22,11 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('investisseurs', function (Blueprint $table) {
-            $table->dropColumn([
-                'profile',
-                'consentent',
-            ]);
-        });
+        Schema::dropIfExists('notifications');
     }
 };
