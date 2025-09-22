@@ -61,7 +61,7 @@
                                         Date de naissance
                                     </td>
                                     <td class="text-foreground font-normal">
-                                        {{ Auth::user()->birth_date ?? '' }}
+                                        {{ Auth::user()->birth_date ?? 'Non définie' }}
                                     </td>
                                     <td class="text-center">
                                         <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#infos_perso" data-kt-modal-toggle="#modal_settings">
@@ -75,7 +75,7 @@
                                         Lieu de naissance
                                     </td>
                                     <td class="text-foreground font-normal">
-                                        {{ Auth::user()->birth_place ?? '' }}
+                                        {{ Auth::user()->birth_place ?? 'Non définie' }}
                                     </td>
                                     <td class="text-center">
                                         <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#infos_perso" data-kt-modal-toggle="#modal_settings">
@@ -89,7 +89,7 @@
                                         Numéro de téléphone
                                     </td>
                                     <td class="text-foreground font-normal">
-                                        {{ Auth::user()->phone_number ?? '' }}
+                                        {{ Auth::user()->phone_number ?? 'Non définie' }}
                                     </td>
                                     <td class="text-center">
                                         <a class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost kt-btn-primary" href="#infos_perso" data-kt-modal-toggle="#modal_settings">
@@ -129,7 +129,7 @@
                                     </td>
                                     <td class="min-w-60 w-full">
                                         <a class="text-foreground text-sm font-normal hover:text-primary" href="#">
-                                            {{ Auth::user()->email ?? '' }}
+                                            {{ Auth::user()->email ?? 'Non définie' }}
                                         </a>
                                     </td>
                                     <td class="min-w-28 text-center">
@@ -253,7 +253,7 @@
 
                                             <div class="flex flex-col">
                                                 <a href="{{ route('profil.documents.export', ['id' => $docs->first()->id]) }}" class="text-sm font-medium text-mono cursor-pointer hover:text-primary mb-px">
-                                                    {{ $docs->count() > 1 ? $type : $filename }}
+                                                    {{ ucfirst(str_replace('_', ' ', $type)) }}
                                                 </a>
                                                 <span class="text-xs text-secondary-foreground">
                                                     {{ str_pad($docs->count(), 2, '0', STR_PAD_LEFT) }} fichiers |
@@ -265,6 +265,10 @@
 
                                         {{-- Menu (Détails, Partager, Exporter) --}}
                                         <div class="kt-menu" data-kt-menu="true">
+                                            <span class="text-sm font-semibold px-3 py-1 rounded-full
+                                                {{ $docs->first()->status === 'Validé' ? 'bg-green-100 text-green-800' : ($docs->first()->status === 'Refusé' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
+                                                {{ ucfirst($docs->first()->status) }}
+                                            </span>
                                             <div class="kt-menu-item" data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
                                                 <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
                                                     <i class="ki-filled ki-dots-vertical text-lg"></i>
@@ -658,7 +662,7 @@
                                         <label class="kt-form-label max-w-56">
                                             Date de naissance <span class="text-destructive">*</span>
                                         </label>
-                                        <input class="kt-input" name="birth_date" placeholder="JJ/MM/AAAA" type="date" value="{{ old('birth_date', optional(Auth::user()->birth_date)->format('Y-m-d') ?? now()->subYears(15)->format('Y-m-d')) }}" max="{{ now()->subYears(15)->format('Y-m-d') }}" required />
+                                        <input class="kt-input" name="birth_date" placeholder="JJ/MM/AAAA" type="date" value="{{ old('birth_date', optional(Auth::user()->birth_date)->format('Y-m-d') ?? now()->subYears(18)->format('Y-m-d')) }}" max="{{ now()->subYears(18)->format('Y-m-d') }}" required />
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
@@ -731,7 +735,7 @@
                                                     </option>
                                                 @endforeach
                                             </select>
-                                            <input class="kt-input rounded-s-none" name="phone_number" placeholder="Numéro de téléphone mobile" type="tel" value="{{ Auth::user()->phone_number ?? null }}" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" required />
+                                            <input class="kt-input rounded-s-none" name="phone_number" placeholder="Numéro de téléphone mobile" type="tel" value="{{ old('phone_number', Auth::user()->phone_number ?? '') }}" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" required />
                                         </div>
                                     </div>
                                     <div class="flex justify-end">
@@ -931,17 +935,6 @@
                                                             <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
                                                                 data-kt-menu-dismiss="true">
                                                                 <div class="kt-menu-item">
-                                                                    <a class="kt-menu-link edit-btn" href="javascript:;" data-doc-type="{{ $type }}">
-                                                                        <span class="kt-menu-icon">
-                                                                            <i class="ki-filled ki-setting-3"></i>
-                                                                        </span>
-                                                                        <span class="kt-menu-title">
-                                                                            Modifier
-                                                                        </span>
-                                                                    </a>
-                                                                </div>
-
-                                                                <div class="kt-menu-item">
                                                                     <a class="kt-menu-link"
                                                                         href="{{ route('profil.documents.export', ['id' => $doc->id]) }}">
                                                                         <span class="kt-menu-icon">
@@ -952,7 +945,17 @@
                                                                         </span>
                                                                     </a>
                                                                 </div>
-
+                                                                @if ($doc->status !== 'Validé')
+                                                                <div class="kt-menu-item">
+                                                                    <a class="kt-menu-link edit-btn" href="javascript:;" data-doc-type="{{ $type }}">
+                                                                        <span class="kt-menu-icon">
+                                                                            <i class="ki-filled ki-setting-3"></i>
+                                                                        </span>
+                                                                        <span class="kt-menu-title">
+                                                                            Modifier
+                                                                        </span>
+                                                                    </a>
+                                                                </div>
                                                                 <div class="kt-menu-item">
                                                                     <a href="{{ route('profil.documents.delete', ['id' => $doc->id]) }}" class="kt-menu-link w-full text-left" onclick="return confirm('Supprimer ce document ?');">
                                                                         <span class="kt-menu-icon">
@@ -963,6 +966,7 @@
                                                                         </span>
                                                                     </a>
                                                                 </div>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>

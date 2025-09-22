@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 
 class EmprunteurController extends Controller
@@ -65,10 +66,18 @@ class EmprunteurController extends Controller
             'civilite' => 'required|in:M.,Mme.,Mx.',
             'firstname' => 'required|string|max:100',
             'lastname' => 'required|string|max:100',
-            'birth_date' => ['required', 'date', 'before_or_equal:' . now()->subYears(15)->format('Y-m-d')],
+            'birth_date' => ['required', 'date', 'before_or_equal:' . now()->subYears(18)->format('Y-m-d')],
             'birth_place' => 'required|string|max:255',
             'nationality' => 'required|string|max:100',
-            'phone_number' => 'required|string|max:20',
+            'phone_number' => [
+                'required',
+                'string',
+                Rule::unique('users', 'phone_number')
+                    ->ignore(optional($user->investisseur)->id), 
+            ],
+        ], [
+            // Messages personnalisés
+            'phone_number.unique' => 'Ce numéro de téléphone est déjà utilisé.',
         ]);
         
         // 1. Upload avatar si présent

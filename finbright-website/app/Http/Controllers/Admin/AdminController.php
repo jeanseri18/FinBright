@@ -46,7 +46,7 @@ class AdminController extends Controller
     {
         $documents = [];
 
-        foreach ($emprunteur->documents as $document) {
+        foreach ($emprunteur->user->documents as $document) {
             $documents[] = [
                 'id' => $document->id,
                 'type' => $document->type,
@@ -60,6 +60,7 @@ class AdminController extends Controller
             'id' => $emprunteur->id,
             'user_name' => $emprunteur->user->first_name . ' ' . $emprunteur->user->last_name,
             'etablissement' => $emprunteur->etablissement ? $emprunteur->etablissement->nom : null,
+            'birth_date' => $emprunteur->user->birth_date ?? null,
             'adresse' => trim(
                 ($emprunteur->user->address['adresse'] ?? '') .' '.
                 ($emprunteur->user->address['rue'] ?? '') .' '.

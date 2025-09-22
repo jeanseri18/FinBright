@@ -149,13 +149,13 @@ Contact:
                             </div>
                             <div class="flex flex-wrap md:flex-nowrap justify-between gap-2.5">
                                 <select name="date_mois" id="mois"
+                                    required
                                     class="kt-select"
                                     data-kt-select="true"
                                     data-kt-select-placeholder="Sélectionner un mois"
                                     data-kt-select-config='{
                                         "optionsClass": "kt-scrollable overflow-auto max-h-[250px]"
                                     }'
-                                    required
                                     >
                                     <option>Janvier</option>
                                     <option>Février</option>

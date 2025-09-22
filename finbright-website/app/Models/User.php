@@ -50,38 +50,17 @@ class User extends Authenticatable
     ];
 
     protected static $requiredFields = [
-        // Champs nécessaires pour dire que le profil emprunteur est complété
-        'emprunteur' => [
-            'civility', 'last_name', 'first_name', 'email', 'password', 'birth_date',
-            'birth_place', 'nationality', 'address', 'phone_number', 'profile_picture_id', 'diploma',
-            'specialization', 'current_study_year', 'remaining_years',
-            'graduation_date', 'etablissement_id',
-        ],
-        // Champs nécessaires pour dire que le profil investisseur est complété
-        'investisseur' => [
-            'civility', 'last_name', 'first_name', 'email', 'password', 'birth_date',
-            'birth_place', 'nationality', 'address', 'phone_number', 'profile_picture_id',
-        ],
+        'civility', 'last_name', 'first_name', 'email', 'password', 'birth_date',
+        'birth_place', 'nationality', 'address', 'phone_number', 'profile_picture_id',
     ];
 
     protected static function boot()
     {
         parent::boot();
         
-        static::saving(function ($user) {
-            $fields = static::$requiredFields[$user->getRoleNames()->first()] ?? [];
-
-            $user->is_profile_completed = collect($fields)->every(function($field) use ($user) {
-                if (isset($user->{$field}) && $user->{$field} !== null && $user->{$field} !== '') {
-                    return true;
-                }
-                if ($user->emprunteur && isset($user->emprunteur->{$field}) && $user->emprunteur->{$field} !== null && $user->emprunteur->{$field} !== '') {
-                    return true;
-                }
-                if ($user->investisseur && isset($user->investisseur->{$field}) && $user->investisseur->{$field} !== null && $user->investisseur->{$field} !== '') {
-                    return true;
-                }
-                return false;
+        static::updating(function ($user) {
+            $user->is_profile_completed = collect(static::$requiredFields)->every(function ($field) use ($user) {
+                return !empty($user->{$field});
             });
         });
     }

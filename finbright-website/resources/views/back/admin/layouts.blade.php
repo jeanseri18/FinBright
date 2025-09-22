@@ -204,7 +204,7 @@ Contact:
                                                 href="{{ route('admin.prets.demandes') }}">
                                                 <span
                                                     class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
-                                                    Demandes de Prêts
+                                                    Demandes de prêts
                                                 </span>
                                             </a>
                                         </div>
@@ -213,7 +213,7 @@ Contact:
                                                 href="{{ route('admin.investissements.demandes') }}">
                                                 <span
                                                     class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
-                                                    Demandes d'investissment
+                                                    Demandes d'investissement
                                                 </span>
                                             </a>
                                         </div>

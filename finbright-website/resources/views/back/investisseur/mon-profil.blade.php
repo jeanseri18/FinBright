@@ -250,7 +250,7 @@
                             <label class="kt-form-label max-w-56">
                                 Date de création <span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" name="creation_date" placeholder="JJ/MM/AAAA" type="date" value="{{ old('birth_date', optional(Auth::user()->birth_date)->format('Y-m-d') ?? now()->subYears(15)->format('Y-m-d')) }}" max="{{ now()->subYears(15)->format('Y-m-d') }}" required />
+                            <input class="kt-input" name="creation_date" placeholder="JJ/MM/AAAA" type="date" value="{{ old('birth_date', optional(Auth::user()->birth_date)->format('Y-m-d') ?? now()->subYears(18)->format('Y-m-d')) }}" max="{{ now()->subYears(18)->format('Y-m-d') }}" required />
                         </div>
                         <div class="flex flex-col gap-4">
                             <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
@@ -290,9 +290,9 @@
                                                     <span class="kt-form-description">Date de naissance</span>
                                                     <input class="kt-input" name="beneficiaires[{{ $index }}][birth_date]" type="date" 
                                                         value="{{ isset($dirigeant->birth_date) 
-                                                            ? old('birth_date', optional($dirigeant->birth_date)->format('Y-m-d') ?? now()->subYears(15)->format('Y-m-d'))
-                                                            : now()->subYears(15)->format('Y-m-d') }}" 
-                                                        max="{{ now()->subYears(15)->format('Y-m-d') }}" 
+                                                            ? old('birth_date', optional($dirigeant->birth_date)->format('Y-m-d') ?? now()->subYears(18)->format('Y-m-d'))
+                                                            : now()->subYears(18)->format('Y-m-d') }}" 
+                                                        max="{{ now()->subYears(18)->format('Y-m-d') }}" 
                                                         required />
                                                 </label>
                                                 <label>
@@ -438,7 +438,7 @@
                             <label class="kt-form-label max-w-56">
                                 Date de naissance <span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" name="birth_date" placeholder="JJ/MM/AAAA" type="date" value="{{ old('birth_date', optional(Auth::user()->birth_date)->format('Y-m-d') ?? now()->subYears(15)->format('Y-m-d')) }}" max="{{ now()->subYears(15)->format('Y-m-d') }}" />
+                            <input class="kt-input" name="birth_date" placeholder="JJ/MM/AAAA" type="date" value="{{ old('birth_date', optional(Auth::user()->birth_date)->format('Y-m-d') ?? now()->subYears(18)->format('Y-m-d')) }}" max="{{ now()->subYears(18)->format('Y-m-d') }}" />
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
@@ -699,17 +699,6 @@
                                                 <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
                                                     data-kt-menu-dismiss="true">
                                                     <div class="kt-menu-item">
-                                                        <a class="kt-menu-link edit-btn" href="javascript:;" data-doc-type="{{ $type }}">
-                                                            <span class="kt-menu-icon">
-                                                                <i class="ki-filled ki-setting-3"></i>
-                                                            </span>
-                                                            <span class="kt-menu-title">
-                                                                Modifier
-                                                            </span>
-                                                        </a>
-                                                    </div>
-
-                                                    <div class="kt-menu-item">
                                                         <a class="kt-menu-link"
                                                             href="{{ route('profil.documents.export', $doc->id) }}">
                                                             <span class="kt-menu-icon">
@@ -720,7 +709,17 @@
                                                             </span>
                                                         </a>
                                                     </div>
-
+                                                    @if ($doc->status !== 'Validé')
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link edit-btn" href="javascript:;" data-doc-type="{{ $type }}">
+                                                            <span class="kt-menu-icon">
+                                                                <i class="ki-filled ki-setting-3"></i>
+                                                            </span>
+                                                            <span class="kt-menu-title">
+                                                                Modifier
+                                                            </span>
+                                                        </a>
+                                                    </div>
                                                     <div class="kt-menu-item">
                                                         <a href="{{ route('profil.documents.delete', $doc->id) }}" class="kt-menu-link w-full text-left" onclick="return confirm('Supprimer ce document ?');">
                                                             <span class="kt-menu-icon">
@@ -731,6 +730,7 @@
                                                             </span>
                                                         </a>
                                                     </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

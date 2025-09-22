@@ -20,6 +20,22 @@ class Emprunteur extends Model
         'graduation_date' => 'string',
     ];
 
+    protected static $requiredFields = [
+        'diploma', 'specialization', 'current_study_year', 'remaining_years',
+        'graduation_date', 'etablissement_id',
+    ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::updating(function ($user) {
+            $user->is_profile_completed = collect(static::$requiredFields)->every(function ($field) use ($user) {
+                return !empty($user->{$field});
+            });
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
