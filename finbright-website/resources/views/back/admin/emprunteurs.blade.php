@@ -274,6 +274,15 @@
                                                 </span>
                                             </span>
                                         </th>
+                                        <th class="min-w-[125px]">
+                                            <span class="kt-table-col">
+                                                <span class="kt-table-col-label">
+                                                    Responsable
+                                                </span>
+                                                <span class="kt-table-col-sort">
+                                                </span>
+                                            </span>
+                                        </th>
                                         <th class="w-[60px]">
                                         </th>
                                     </tr>
@@ -321,6 +330,12 @@
                                                 name="check_kyc" type="checkbox"
                                                 {{ $emprunteur->user->kyc_status == "validated" ? "checked" : null }}
                                                 value="{{ $emprunteur->id }}" />
+                                        </td>
+                                        <td>
+                                            <a class="text-sm font-medium text-mono hover:text-primary"
+                                                href="#">
+                                                {{ Auth::user()->first_name .' '. Auth::user()->last_name }}
+                                            </a>
                                         </td>
                                         <td>
                                             <div class="kt-menu" data-kt-menu="true">

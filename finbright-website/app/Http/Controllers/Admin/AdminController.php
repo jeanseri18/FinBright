@@ -9,11 +9,16 @@ use App\Models\Investment;
 use App\Models\LoanRequest;
 use App\Models\UserDocument;
 use Illuminate\Support\Facades\Auth;
+use App\Services\InvestorRiskService;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    public function __construct(
+        private InvestorRiskService $riskService,
+    ) {}
+
     public function dashboard()
     {
         return view('back.admin.dashboard');
@@ -131,16 +136,43 @@ class AdminController extends Controller
         //         $q->where('profile', $request->risk_level);
         //     });
         // }
+        $investisseurs = Investisseur::with('user')->latest()->paginate(10);
 
-        $investisseurs = Investisseur::latest()->paginate(10);
+        // Ajouter le scoring risque
+        foreach ($investisseurs as $investisseur) {
+            $data = [
+                'is_legal_entity' => $investisseur->type_of_lender, // "Personne physique" / "Personne morale"
+                'is_ppe' => $investisseur->ppe ?? false,
+                'is_complex_structure' => $investisseur->beneficiaires ? count($investisseur->beneficiaires) : 0,
+                'resides_risk_country' => $investisseur->user->address['pays'] ?? null,
+                'funds_from_risk_country' => $investisseur->funds_from_country ?? null,
+                // 'amount' => $investisseur->user->wallet->balance ?? 0,
+                // 'seuil_interne' => 10000,
+                // 'unjustified_early_repayment' => false,
+                'channel_remote_only' => true,
+            ];
+
+            $investisseur->risk = $this->riskService->evaluate($data);
+        }
+
         return view('back.admin.investisseurs', compact('investisseurs'));
     }
 
     public function jsonInvestisseurs(Investisseur $investisseur)
     {
-        $documents = [];
+        $data = [
+            'is_legal_entity' => $investisseur->type_of_lender, // "Personne physique" / "Personne morale"
+            'is_ppe' => $investisseur->ppe ?? false,
+            'is_complex_structure' => $investisseur->beneficiaires ? count($investisseur->beneficiaires) : 0,
+            'resides_risk_country' => $investisseur->user->address['pays'] ?? null,
+            'funds_from_risk_country' => $investisseur->funds_from_country ?? null,
+            // 'amount' => $investisseur->user->wallet->balance ?? 0,
+            // 'seuil_interne' => 10000,
+            // 'unjustified_early_repayment' => false,
+            'channel_remote_only' => true,
+        ];
 
-        foreach ($investisseur->documents as $document) {
+        foreach ($investisseur->user->documents as $document) {
             $documents[] = [
                 'id' => $document->id,
                 'type' => $document->type,
@@ -152,17 +184,30 @@ class AdminController extends Controller
 
         return response()->json([
             'id' => $investisseur->id,
+            'type_of_lender' => $investisseur->type_of_lender,
+            'avatar' => $investisseur->user->profilePicture->filename ?? null,
             'user_name' => $investisseur->user->first_name . ' ' . $investisseur->user->last_name,
-            'etablissement' => $investisseur->etablissement ? $investisseur->etablissement->nom : null,
+            'birth_date' => $investisseur->user->birth_date ?? null,
+            'birth_place' => $investisseur->user->birth_place ?? null,
+            'nationality' => $investisseur->user->nationality ?? null,
+            'phone_number' => $investisseur->user->phone_number ?? null,
             'adresse' => trim(
                 ($investisseur->user->address['adresse'] ?? '') .' '.
                 ($investisseur->user->address['rue'] ?? '') .' '.
                 ($investisseur->user->address['code_postal'] ?? '') .' '.
                 ($investisseur->user->address['ville'] ?? '')
             ),
-            'user_docs' => $documents,
+            'risk' => $this->riskService->evaluate($data),
+            'denomination_sociale' => $investisseur->denomination_sociale,
+            'forme_juridique' => $investisseur->forme_juridique,
+            'numero_immatriculation' => $investisseur->numero_immatriculation,
+            'creation_date' => $investisseur->creation_date,
+            'adresse_representant' => $investisseur->adresse_representant,
+            'fonction' => $investisseur->fonction,
+            'user_docs' => $investisseur->documents ?? [],
+            'invest_docs' => $documents ?? [],
+            'membres' => $investisseur->beneficiaires ?? [],
             'kyc_status' => $investisseur->user->kyc_status,
-            'avatar' => $investisseur->user->profilePicture->filename ?? null,
         ]);
     }
 

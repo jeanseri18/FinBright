@@ -16,6 +16,7 @@ class Investisseur extends Model
         'adresse_representant',
         'fonction',
         'type_of_lender',
+        'funds_from_country',
         'creation_date',
         'denomination_sociale',
         'forme_juridique',
@@ -26,6 +27,7 @@ class Investisseur extends Model
     protected $casts = [
         'profession',
         'type_of_lender',
+        'funds_from_country'
     ];
 
     public function user()

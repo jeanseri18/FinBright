@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('denomination_sociale')->nullable();
             $table->string('forme_juridique')->nullable();
             $table->string('numero_immatriculation')->unique()->nullable();
+            $table->string('funds_from_country')->nullable();
             $table->timestamps();
             $table->string('iban')->nullable();
             $table->enum('iban_status', ['none','pending','validated','rejected'])->default('none');

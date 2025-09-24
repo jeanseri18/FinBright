@@ -241,16 +241,7 @@
                                         <th class="max-w-[100px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label whitespace-normal">
-                                                    Date de naisssance
-                                                </span>
-                                                <span class="kt-table-col-sort">
-                                                </span>
-                                            </span>
-                                        </th>
-                                        <th class="max-w-[100px]">
-                                            <span class="kt-table-col">
-                                                <span class="kt-table-col-label whitespace-normal">
-                                                    Lieu de naissance
+                                                    Scoring risque
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>
@@ -269,6 +260,15 @@
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label whitespace-normal">
                                                     Check KYC
+                                                </span>
+                                                <span class="kt-table-col-sort">
+                                                </span>
+                                            </span>
+                                        </th>
+                                        <th class="min-w-[125px]">
+                                            <span class="kt-table-col">
+                                                <span class="kt-table-col-label">
+                                                    Responsable
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>
@@ -304,10 +304,16 @@
                                             {{ $investisseur->type_of_lender }}
                                         </td>
                                         <td class="font-normal text-foreground">
-                                            {{ \Carbon\Carbon::parse($investisseur->user->birth_date)->format('d-m-Y') ?? null }}
-                                        </td>
-                                        <td class="font-normal text-foreground">
-                                            {{ ucwords(str_replace(['-', '_'], ' ', $investisseur->user->birth_place)) }}
+                                            @if(isset($investisseur->risk))
+                                                <span class="kt-badge 
+                                                    {{ $investisseur->risk['level'] === 'Élevé' ? 'bg-red-100 text-red-800' : 
+                                                    ($investisseur->risk['level'] === 'Standard' ? 'bg-yellow-100 text-yellow-800' : 
+                                                        'bg-green-100 text-green-800') }}">
+                                                    {{ $investisseur->risk['level'] }} ({{ $investisseur->risk['score'] }})
+                                                </span>
+                                            @else
+                                                <span class="text-gray-400">-</span>
+                                            @endif
                                         </td>
                                         <td>
                                             <div class="flex flex-wrap gap-1.5">
@@ -323,6 +329,12 @@
                                                 name="check_kyc" type="checkbox"
                                                 {{ $investisseur->user->kyc_status == "validated" ? "checked" : null }}
                                                 value="{{ $investisseur->id }}" />
+                                        </td>
+                                        <td>
+                                            <a class="text-sm font-medium text-mono hover:text-primary"
+                                                href="#">
+                                                {{ Auth::user()->first_name .' '. Auth::user()->last_name }}
+                                            </a>
                                         </td>
                                         <td>
                                             <div class="kt-menu" data-kt-menu="true">
@@ -607,7 +619,7 @@
                     <div class="kt-card-content mb-7.5 p-0">
                         <div class="flex transform -translate-y-1/2 px-5 lg:px-7.5 gap-1.5">
                             <div class="size-[120px] in-[.authors-row]:size-[80px] shrink-0 relative">
-                                <img id="user_avatar" class="rounded-full" src="{{asset('assets/media/avatars/blank.png')}}" />
+                                <img id="invest_avatar" class="rounded-full" src="{{asset('assets/media/avatars/blank.png')}}" />
                                 <div
                                     class="flex size-3 bg-green-500 rounded-full ring-2 ring-background absolute bottom-2 start-[93px] in-[.authors-row]:start-[64px]">
                                 </div>
@@ -616,7 +628,7 @@
                                 <div class="flex items-center justify-between flex-wrap md:flex-nowrap gap-2">
                                     <div class="flex flex-col justify-end gap-0.5">
                                         <div class="flex items-center gap-1.5">
-                                            <a id="user_name" class="hover:text-primary text-base leading-5 font-medium text-mono" href="#">
+                                            <a id="invest_name" class="hover:text-primary text-base leading-5 font-medium text-mono" href="#">
                                                 Lorem Ipsum
                                             </a>
                                             <svg class="text-primary" fill="none" height="16" viewbox="0 0 15 16" width="15"
@@ -628,8 +640,7 @@
                                             </svg>
                                         </div>
                                         <span class="text-secondary-foreground text-xs">
-                                            <span id="user_etablissement">Houston</span>, 
-                                            <span id="user_adresse">Texas</span>
+                                            <span id="invest_details"></span>
                                         </span>
                                     </div>
                                     <div class="w-45">
@@ -665,22 +676,50 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="user_docs" class="flex gap-5 kt-scrollable-x -mt-8 ms-7.5" style="position: unset">
-                            <div class="kt-card mb-4 border-0 last:me-5">
-                                <div class="bg-cover bg-no-repeat kt-card-rounded-t w-[240px] shrink-0 h-44"
-                                    style="background-image: url({{asset('assets/media/images/600x600/6.jpg')}})">
-                                </div>
-                                <div class="kt-card-border kt-card-rounded-b px-3.5 pt-5 pb-2.5">
-                                    <a class="font-medium block text-mono hover:text-primary text-base leading-4 mb-2" href="#">
-                                        Geometric Patterns
-                                    </a>
-                                    <div class="text-sm text-secondary-foreground">
-                                        Token ID:
-                                        <span class="text-sm font-medium text-foreground">
-                                            81023
-                                        </span>
+                        <div id="modal_tabs" class="max-h-[400px] kt-scrollable -mt-8">
+                            <div id="invest_legal_pers" class="grid md:grid-cols-2 mb-4 px-5 lg:px-7.5 gap-x-4"></div>
+                            <div id="invest_members" class="grid md:grid-cols-2 mb-4 px-5 lg:px-7.5"></div>
+                            <div id="invest_docs" class="flex gap-5 kt-scrollable-x ms-7.5" style="position: unset">
+                                <div class="kt-card mb-4 border-0 last:me-5">
+                                    <div class="bg-cover bg-no-repeat kt-card-rounded-t w-[240px] shrink-0 h-44"
+                                        style="background-image: url({{asset('assets/media/images/600x600/6.jpg')}})">
+                                    </div>
+                                    <div class="kt-card-border kt-card-rounded-b px-3.5 pt-5 pb-2.5">
+                                        <a class="font-medium block text-mono hover:text-primary text-base leading-4 mb-2" href="#">
+                                            Geometric Patterns
+                                        </a>
+                                        <div class="text-sm text-secondary-foreground">
+                                            Token ID:
+                                            <span class="text-sm font-medium text-foreground">
+                                                81023
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div id="reject_motif" class="hidden px-8">
+                                <form action="" method="post" class="kt-form">
+                                    @csrf
+                                    <div class="kt-form-item">
+                                        <label class="kt-form-label">Motif du rejet</label>
+                                        <div class="kt-form-control">
+                                            <input name="status" type="hidden" value="rejected">
+                                            <textarea
+                                                required
+                                                name="kyc_motif"
+                                                class="kt-textarea"
+                                                placeholder="Saisissez le motif du refus..."
+                                                rows="8"
+                                            ></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2.5 justify-end">
+                                        <button type="submit" class="kt-btn kt-btn-primary">Enregistrer</button>
+                                        <button type="button" class="kt-btn kt-btn-outline" data-kt-modal-dismiss="true">
+                                            Annuler
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -774,25 +813,72 @@
         fetch(`/admin/investisseurs/${entityId}/json`)
             .then(res => res.json())
             .then(data => {
-                const userNameEl = modalEl.querySelector('#user_name');
+                const userNameEl = modalEl.querySelector('#invest_name');
                 const kycIconEl = userNameEl.nextElementSibling; // Le <svg> juste après l'a
 
                 // Mettre le nom de l'utilisateur
-                userNameEl.innerText = data.user_name;
+                userNameEl.innerText = data.type_of_lender == "Personne morale" ? `${data.denomination_sociale} (${data.forme_juridique})` : data.user_name;
                 // Afficher ou cacher le SVG selon kyc_status
                 if (data.kyc_status === "validated" || data.kyc_status === "Validé") {
                     kycIconEl.style.display = "inline-block";
                 } else {
                     kycIconEl.style.display = "none";
                 }
-                modalEl.querySelector('#user_etablissement').innerText = data.etablissement;
-                modalEl.querySelector('#user_adresse').innerText = data.adresse;
-                modalEl.querySelector('#user_avatar').src = data.avatar 
+
+                modalEl.querySelector('#invest_details').innerText = data.type_of_lender == "Personne morale"
+                    ? `Créé le ${new Intl.DateTimeFormat('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date(data.creation_date))}, situé à ${data.adresse}`
+                    : `Né le ${new Intl.DateTimeFormat('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date(data.birth_date))}, habite à ${data.adresse}`;
+                modalEl.querySelector('#invest_legal_pers').innerHTML = data.type_of_lender == "Personne morale"
+                    ? `<span class="text-base leading-5 font-medium text-mono">Représentant Légal</span>
+                        <span class="md:text-end">${data.user_name}</span>
+                        <span class="text-base leading-5 font-medium text-mono">Date de naissance</span>
+                        <span class="md:text-end">${new Intl.DateTimeFormat('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date(data.birth_date))}</span>
+                        <span class="text-base leading-5 font-medium text-mono">Lieu de naissance</span>
+                        <span class="md:text-end">${data.birth_place}</span>
+                        <span class="text-base leading-5 font-medium text-mono">Nationalité</span>
+                        <span class="md:text-end">${data.nationality}</span>
+                        <span class="text-base leading-5 font-medium text-mono">Numéro de téléphone</span>
+                        <span class="md:text-end">${data.phone_number}</span>
+                        <span class="text-base leading-5 font-medium text-mono">Adresse</span>
+                        <span class="md:text-end">${data.adresse_representant}</span>
+                        <span class="text-base leading-5 font-medium text-mono">Fonction au sein de l'entité</span>
+                        <span class="md:text-end">${data.fonction}</span>
+                        <span class="col-span-2 mb-2 text-base leading-5 font-medium text-mono">Pièce d'identité en cours de validité</span>
+                        <div class="kt-alert" id="alert_1">
+                            <div class="kt-alert-title">
+                                Pièce d'identité du représentant
+                                <span class="kt-badge kt-badge-outline kt-badge-destructive rounded-full">À approuver</span>
+                            </div>
+                            <div class="kt-alert-toolbar">
+                                <div class="kt-alert-actions">
+                                    <a href="" target="_blank" class="kt-link kt-link-xs kt-link-underlined text-mono hover:text-primary">Voir</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kt-alert" id="alert_1">
+                            <div class="kt-alert-title">
+                                Pièce d'identité du représentant
+                                <span class="kt-badge kt-badge-outline kt-badge-destructive rounded-full">À approuver</span>
+                            </div>
+                            <div class="kt-alert-toolbar">
+                                <div class="kt-alert-actions">
+                                    <a href="" target="_blank" class="kt-link kt-link-xs kt-link-underlined text-mono hover:text-primary">Voir</a>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                    : '';
+                
+                // modalEl.querySelector('#invest_members').innerText = data.adresse;
+                modalEl.querySelector('#invest_avatar').src = data.avatar 
                     ? ('/storage/' + data.avatar) 
                     : "{{ asset('assets/media/avatars/blank.png') }}";
 
+                let form = modalEl.querySelector('form');
+                form.action = `/admin/emprunteurs/${currentEntityId}/update-kyc-status`;
+                
                 let documents = '';
-                data.user_docs.forEach(doc => {
+                data.invest_docs.forEach(doc => {
                     const fileUrl = `/storage/${doc['file_name']}`;
                     const extension = doc['file_name'].split('.').pop().toLowerCase();
 
@@ -851,7 +937,7 @@
                     `;
                 });
 
-                modalEl.querySelector('#user_docs').innerHTML = documents;
+                modalEl.querySelector('#invest_docs').innerHTML = documents;
                 modal.show();
                 // On mémorise le statut KYC
                 modalEl.dataset.kycStatus = data.kyc_status;
@@ -891,6 +977,13 @@
             }
             else if (e.target.name === 'kyc_status') {
                 if (e.target.value !== 'rejected') {
+                    // afficher user_docs
+                    document.querySelector('#invest_legal_pers').classList.remove('hidden');
+                    document.querySelector('#invest_members').classList.remove('hidden');
+                    document.querySelector('#invest_docs').classList.remove('hidden');
+                    // cacher reject_motif
+                    document.querySelector('#reject_motif').classList.add('hidden');
+
                     fetch(`/admin/investisseurs/${currentEntityId}/update-kyc-status`, {
                         method: "POST",
                         headers: {
@@ -908,13 +1001,12 @@
                     .catch(err => console.error("Erreur maj statut :", err));
                 }
                 else {
-                    const modalEl2 = document.querySelector('#modal_motif');
-                    const modalMotif = KTModal.getInstance(modalEl2) || new KTModal(modalEl2);
-                    
-                    let form = modalEl2.querySelector('form');
-                    form.action = `/admin/investisseurs/${currentEntityId}/update-kyc-status`;
-                    
-                    modalMotif.show();
+                    // cacher user_docs
+                    document.querySelector('#invest_legal_pers').classList.add('hidden');
+                    document.querySelector('#invest_members').classList.add('hidden');
+                    document.querySelector('#invest_docs').classList.add('hidden');
+                    // afficher reject_motif
+                    document.querySelector('#reject_motif').classList.remove('hidden');
                 }
             }
         });
