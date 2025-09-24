@@ -41,6 +41,7 @@ composer install
 ### 4. Installer les dépendances front-end
 
 ```bash
+php artisan storage:link
 npm install
 npm run dev
 ```
@@ -61,7 +62,7 @@ Puis configurer la base de données :
 ```bash
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
-DB_PORT=3306
+DB_PORT=8889
 DB_DATABASE=finBright_db
 DB_USERNAME=root
 DB_PASSWORD=root
@@ -102,8 +103,12 @@ Voici des identifiants de démonstration :
 - **Email** : emprunteur@test.com
 - **Mot de passe** : empruntpass
 
-**Investisseur**
-- **Email** : investisseur@test.com
+**Investisseur (Personne physique)**
+- **Email** : investisseur.physique@test.com
+- **Mot de passe** : investpass
+
+**Investisseur (Personne morale)**
+- **Email** : investisseur.morale@test.com
 - **Mot de passe** : investpass
 
 

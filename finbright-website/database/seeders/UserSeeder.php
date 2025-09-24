@@ -37,9 +37,9 @@ class UserSeeder extends Seeder
         );
         $emprunteur->assignRole('emprunteur');
 
-        // Investisseur
-        $investisseur = User::firstOrCreate(
-            ['email' => 'investisseur@test.com'],
+        // Investisseur PP
+        $investisseurPP = User::firstOrCreate(
+            ['email' => 'investisseur.physique@test.com'],
             [
                 'civility' => 'Mme',
                 'last_name' => 'Smith',
@@ -47,6 +47,22 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('investpass'),
             ]
         );
-        $investisseur->assignRole('investisseur');
+        $investisseurPP->investisseur()->create([
+            'type_of_lender' => 'Personne physique',
+        ]);
+        $investisseurPP->assignRole('investisseur');
+
+        // Investisseur PM
+        $investisseurPM = User::firstOrCreate(
+            ['email' => 'investisseur.morale@test.com'],
+            [
+                'password' => Hash::make('investpass'),
+            ]
+        );
+        $investisseurPM->investisseur()->create([
+            'denomination_sociale' => 'Mon entreprise',
+            'type_of_lender' => 'Personne morale',
+        ]);
+        $investisseurPM->assignRole('investisseur');
     }
 }

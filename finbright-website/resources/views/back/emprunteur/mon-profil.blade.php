@@ -712,12 +712,15 @@
                                             @php
                                                 // Options statiques ou dynamiques
                                                 $indicatifs = [
-                                                    ['value' => 'usa', 'label' => '+1', 'flag' => '🇺🇸'],
-                                                    ['value' => 'france', 'label' => '+33', 'flag' => '🇫🇷'],
-                                                    ['value' => 'cote-ivoire', 'label' => "+225", 'flag' => '🇨🇮'],
+                                                    ['value' => '+1', 'label' => '+1', 'flag' => '🇺🇸'],
+                                                    ['value' => '+33', 'label' => '+33', 'flag' => '🇫🇷'],
+                                                    ['value' => '+225', 'label' => "+225", 'flag' => '🇨🇮'],
                                                 ];
+                                                // Récupérer le préfixe déjà enregistré (si existant)
+                                                [$selectedPrefix, $plainNumber] = splitPhoneNumber(Auth::user()->phone_number ?? '', $indicatifs, '+33');
                                             @endphp
                                             <select
+                                                name="phone_prefix"
                                                 class="kt-select max-w-22 rounded-e-none"
                                                 data-kt-select="true"
                                                 data-kt-select-enable-search="false"
@@ -728,14 +731,14 @@
                                                 @foreach($indicatifs as $indicatif)
                                                     <option
                                                         value="{{ $indicatif['value'] }}"
-                                                        {{ $indicatif['value'] == 'france' ? 'selected' : '' }}
+                                                        {{ $indicatif['value'] === $selectedPrefix ? 'selected' : '' }}
                                                         data-kt-select-option='@json(["flag" => $indicatif["flag"]])'
                                                     >
                                                         {{ $indicatif['label'] }}
                                                     </option>
                                                 @endforeach
                                             </select>
-                                            <input class="kt-input rounded-s-none" name="phone_number" placeholder="Numéro de téléphone mobile" type="tel" value="{{ old('phone_number', Auth::user()->phone_number ?? '') }}" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" required />
+                                            <input class="kt-input rounded-s-none" name="phone_number" placeholder="Numéro de téléphone mobile" type="tel" value="{{ old('phone_number', $plainNumber) }}" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" required />
                                         </div>
                                     </div>
                                     <div class="flex justify-end">

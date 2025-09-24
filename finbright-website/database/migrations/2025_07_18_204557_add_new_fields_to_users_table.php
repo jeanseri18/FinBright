@@ -16,11 +16,13 @@ return new class extends Migration
             $table->string('first_name')->nullable()->after('civility');
             $table->string('last_name')->nullable()->after('first_name');
             $table->string('email')->after('last_name');
+            $table->date('email_verified_at')->nullable()->after('email');
             $table->string('password')->after('email');
             $table->date('birth_date')->nullable()->after('password');
             $table->string('birth_place')->nullable()->after('birth_date');
             $table->string('nationality')->nullable()->after('birth_place');
-            $table->json('address')->nullable()->after('nationality');
+            $table->string('funds_from_country')->nullable()->after('nationality');
+            $table->json('address')->nullable()->after('funds_from_country');
             $table->string('phone_number')->nullable()->unique()->after('address'); // Rend le numéro de téléphone unique
             $table->softDeletes();
             $table->rememberToken()->after('password')->nullable();
@@ -52,9 +54,12 @@ return new class extends Migration
                 'civility',
                 'last_name',
                 'first_name',
+                'email',
+                'email_verified_at',
                 'birth_date',
                 'birth_place',
                 'nationality',
+                'funds_from_country',
                 'address',
                 'phone_number',
                 'status',

@@ -49,21 +49,21 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected static $requiredFields = [
-        'civility', 'last_name', 'first_name', 'email', 'password', 'birth_date',
-        'birth_place', 'nationality', 'address', 'phone_number', 'profile_picture_id',
-    ];
+    // protected static $requiredFields = [
+    //     'civility', 'last_name', 'first_name', 'email', 'password', 'birth_date',
+    //     'birth_place', 'nationality', 'address', 'phone_number', 'profile_picture_id',
+    // ];
 
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
         
-        static::updating(function ($user) {
-            $user->is_profile_completed = collect(static::$requiredFields)->every(function ($field) use ($user) {
-                return !empty($user->{$field});
-            });
-        });
-    }
+    //     static::updating(function ($user) {
+    //         $user->is_profile_completed = collect(static::$requiredFields)->every(function ($field) use ($user) {
+    //             return !empty($user->{$field});
+    //         });
+    //     });
+    // }
 
     // Relations
     public function investisseur()

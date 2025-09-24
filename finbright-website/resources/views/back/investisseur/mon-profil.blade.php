@@ -477,7 +477,33 @@
                             <label class="kt-form-label max-w-56">
                                 Nationalité <span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" name="nationality" placeholder="" type="text" value="{{ Auth::user()->nationality ?? null }}" />
+                            <input class="kt-input" name="nationality" placeholder="" type="text" value="{{ Auth::user()->nationality ?? null }}" required />
+                        </div>
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label max-w-56">
+                                Origine de vos fonds <span class="text-destructive">*</span>
+                            </label>
+                            <div class="grow">
+                                <select
+                                    name="funds_from"
+                                    class="kt-select"
+                                    data-kt-select="true"
+                                    data-kt-select-enable-search="true"
+                                    data-kt-select-search-placeholder="Rechercher..."
+                                    data-kt-select-placeholder="Sélectionner un pays..."
+                                    data-kt-select-config='@json($config)'
+                                >
+                                    @foreach($countries as $country)
+                                        <option
+                                            value="{{ $country['value'] }}"
+                                            {{ isset(Auth::user()->funds_from_country) && Auth::user()->funds_from_country == $country['value'] ? 'selected' : '' }}
+                                            data-kt-select-option='@json(["flag" => $country["flag"]])'
+                                        >
+                                            {{ $country['label'] }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
@@ -510,7 +536,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <input class="kt-input rounded-s-none" name="phone_number" placeholder="Numéro de téléphone mobile" type="tel" value="{{ Auth::user()->phone_number ?? null }}" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" />
+                                <input class="kt-input rounded-s-none" name="phone_number" placeholder="Numéro de téléphone mobile" type="tel" value="{{ Auth::user()->phone_number ?? null }}" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" required />
                             </div>
                         </div>
                         @if ($investisseur->type_of_lender == "Personne physique")

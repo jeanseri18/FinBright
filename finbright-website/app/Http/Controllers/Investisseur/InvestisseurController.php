@@ -120,14 +120,15 @@ class InvestisseurController extends Controller
         $user = Auth::user();
 
         $validated = $request->validate([
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'avatar' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'civilite' => 'required|in:M.,Mme.,Mx.',
-            'firstname' => 'nullable|string|max:100',
-            'lastname' => 'nullable|string|max:100',
+            'firstname' => 'required|string|max:100',
+            'lastname' => 'required|string|max:100',
             'birth_date' => ['required', 'date', 'before_or_equal:' . now()->subYears(18)->format('Y-m-d')],
-            'birth_place' => 'nullable|string|max:255',
-            'nationality' => 'nullable|string|max:100',
-            'phone_number' => 'nullable|string|max:20',
+            'birth_place' => 'required|string|max:255',
+            'nationality' => 'required|string|max:100',
+            'funds_from' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:20',
             'profession' => 'nullable|string|max:255',
             'ppe' => 'nullable|integer',
             'adresse' => 'nullable|string|max:255',
@@ -164,6 +165,7 @@ class InvestisseurController extends Controller
             'birth_date'  => $validated['birth_date'] ?? null,
             'birth_place' => $validated['birth_place'] ?? null,
             'nationality' => $validated['nationality'] ?? null,
+            'funds_from_country' => $validated['funds_from'] ?? null,
             'phone_number'=> $validated['phone_number'] ?? null
         ]);
 

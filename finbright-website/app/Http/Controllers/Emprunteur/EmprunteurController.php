@@ -69,11 +69,11 @@ class EmprunteurController extends Controller
             'birth_date' => ['required', 'date', 'before_or_equal:' . now()->subYears(18)->format('Y-m-d')],
             'birth_place' => 'required|string|max:255',
             'nationality' => 'required|string|max:100',
+            'phone_prefix' => 'required|string|max:10',
             'phone_number' => [
                 'required',
                 'string',
-                Rule::unique('users', 'phone_number')
-                    ->ignore(optional($user->investisseur)->id), 
+                Rule::unique('users', 'phone_number')->ignore($user->id),
             ],
         ], [
             // Messages personnalisés
@@ -110,7 +110,7 @@ class EmprunteurController extends Controller
             'birth_date' => $validated['birth_date'] ?? null,
             'birth_place' => $validated['birth_place'] ?? null,
             'nationality' => $validated['nationality'] ?? null,
-            'phone_number' => $validated['phone_number'] ?? null,
+            'phone_number' => $validated['phone_prefix'] . $validated['phone_number'] ?? null,
         ]);
 
         $user->save();
@@ -143,7 +143,6 @@ class EmprunteurController extends Controller
                     'current_study_year'  => $validated['annee_etude'] ?? null,
                     'remaining_years'     => isset($validated['nombre_annees_restantes']) ? (int)$validated['nombre_annees_restantes'] : null,
                     'graduation_date'     => $validated['date_diplome_prevue'] ?? null,
-                    // 'is_profile_completed'=> true,
                 ]
             );
 
