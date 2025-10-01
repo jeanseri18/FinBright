@@ -17,7 +17,7 @@ return new class extends Migration
             $table->boolean('deferred')->default(false)->after('duree_campagne');
             $table->integer('deferred_months')->nullable()->after('deferred');
             $table->json('simulation_result')->nullable()->after('deferred_months');
-            $table->string('status')->default('pending')->after('simulation_result');
+            $table->enum('status', ['En attente de confirmation', 'En cours de financement', 'Financée', 'Rejetée'])->default('En attente de confirmation')->after('simulation_result');
             $table->integer('interest_ratio');
             $table->integer('assurance_ratio')->nullable();
 

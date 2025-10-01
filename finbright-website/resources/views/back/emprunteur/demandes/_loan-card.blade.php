@@ -1,7 +1,7 @@
 @if($loan)
     <div class="flex flex-wrap gap-7.5">
         <div
-            class="flex flex-col gap-3 items-center justify-center size-[140px] rounded-xl ring-1 ring-border bg-secondary-transparent">
+            class="flex flex-col gap-3 items-center justify-center size-[100px] rounded-xl ring-1 ring-border bg-secondary-transparent">
             @if (Auth::user()->emprunteur)
                 <div class="flex justify-center items-center size-14 rounded-full ring-1 ring-input bg-accent/60">
                     <i class="ki-filled ki-ghost text-2xl text-muted-foreground"></i>
@@ -18,7 +18,7 @@
                         <h2 class="text-2xl font-semibold text-mono hover:text-primary">
                             <a href="{{ route('emprunteur.loan-requests.details', $loan) }}">{{ substr($loan->object, 0, 70) }}</a>
                         </h2>
-                        @if ($loan->status == "En attente d'approbation") <span class="kt-badge kt-badge-sm kt-badge-warning kt-badge-outline shrink-0">
+                        @if ($loan->status == "En attente de confirmation") <span class="kt-badge kt-badge-sm kt-badge-warning kt-badge-outline shrink-0">
                         @elseif ($loan->status == "En cours de financement") <span class="kt-badge kt-badge-sm kt-badge-primary kt-badge-outline shrink-0">
                         @elseif ($loan->status == "Financée") <span class="kt-badge kt-badge-sm kt-badge-success kt-badge-outline shrink-0">
                         @elseif ($loan->status == "Rejetée") <span class="kt-badge kt-badge-sm kt-badge-destructive kt-badge-outline shrink-0">@endif
@@ -31,17 +31,17 @@
                 </div>
                 <div class="flex items-center gap-2.5">
                     @if (Auth::user()->emprunteur)
-                        @if ($loan->status === 'En attente d\'approbation' && !request()->routeIs('emprunteur.dashboard'))
+                        @if ($loan->status === 'En attente de confirmation' && !request()->routeIs('emprunteur.dashboard'))
                         <form class="kt-menu-item" method="POST" action="{{ route('emprunteur.loan-requests.annuler', $loan) }}" onsubmit="return confirm('Annuler cette demande ?')">
                             @csrf
                             <button type="submit" class="kt-btn kt-btn-outline">Annuler la demande</button>
                         </form>
-                        @endif
                         <a class="kt-btn kt-btn-primary" href="{{ route('emprunteur.loan-requests.edit', $loan) }}">
                             Modifier
                         </a>
+                        @endif
                     @elseif (Auth::user()->investisseur)
-                        <a class="kt-btn kt-btn-primary" href="{{ route('emprunteur.loan-requests.edit', $loan) }}">
+                        <a class="kt-btn kt-btn-primary" href="#" onclick="openFicheDetail({{ $loan->id }})">
                             Investir
                         </a>
                     @endif
@@ -94,17 +94,25 @@
                     </span>
                 </div>
             </div>
-            @if($loan->status !== 'En attente d\'approbation')
+            @if($loan->status !== 'En attente de confirmation')
             <div class="flex flex-wrap gap-6 lg:gap-12">
                 <div class="flex flex-col gap-3.5 grow">
                     <div class="text-sm text-secondary-foreground">
                         Collecte :
                         <span class="text-sm font-medium text-mono">
-                            2239 of {{ $loan->simulation_result['amount']. ' €' ?? 0 }}
+                            {{ number_format($loan->total_investissements, 0, ',', ' ') }} sur {{ number_format($loan->simulation_result['amount'], 0, ',', ' '). ' €' ?? 0 }}
                         </span>
                     </div>
-                    <div class="kt-progress kt-progress-primary max-w-2xl w-full">
-                        <div class="kt-progress-indicator" style="width: 47%">
+                    <div class="flex flex-col items-end gap-2 -mt-8 max-w-2xl">
+                        @php $indicator = 0;
+                            if ($loan->simulation_result['amount'] > 0) {
+                                $indicator = ($loan->total_investissements * 100) / $loan->simulation_result['amount'];
+                            }
+                        @endphp
+                        <div class="text-secondary-foreground text-xs"><span class="kt-badge kt-badge-outline kt-badge-secondary rounded-full">{{ number_format($indicator, 1, ',', ' ') }}%</span></div>
+                        <div class="kt-progress kt-progress-primary">
+                            <div class="kt-progress-indicator" style="width: {{$indicator}}%">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -112,28 +120,24 @@
                     <div class="text-sm font-medium text-secondary-foreground">
                         Contributeurs :
                         <span class="text-sm font-semibold text-foreground">
-                            29 pers
+                            {{ count($loan->investments) < 10 ? '0'. count($loan->investments) : count($loan->investments) }} pers
                         </span>
                     </div>
                     <div class="flex -space-x-2">
+                        @foreach ($loan->investments->take(5) as $invest)
                         <div class="flex">
                             <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                src="{{asset('assets/media/avatars/blank.png')}}" />
+                                src="{{ $invest->investisseur->user->profilePicture ? Storage::url($invest->investisseur->user->profilePicture->filename) : asset('assets/media/avatars/blank.png') }}" />
                         </div>
-                        <div class="flex">
-                            <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                src="{{asset('assets/media/avatars/blank.png')}}" />
-                        </div>
-                        <div class="flex">
-                            <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                src="{{asset('assets/media/avatars/blank.png')}}" />
-                        </div>
+                        @endforeach
+                        @if (count($loan->investments) > 5)
                         <div class="flex">
                             <span
                                 class="hover:z-5 relative inline-flex items-center justify-center shrink-0 rounded-full ring-1 font-semibold leading-none text-2xs size-6 text-primary-foreground size-6 ring-background bg-green-500">
-                                +16
+                                +{{count($loan->investments) -5}}
                             </span>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>

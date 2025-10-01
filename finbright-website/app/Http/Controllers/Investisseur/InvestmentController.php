@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Investisseur;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Services\YouSignService;
 use App\Http\Controllers\Emprunteur\LoanRequestController;
 use Illuminate\Http\Request;
 use App\Models\LoanRequest;
@@ -24,7 +26,7 @@ class InvestmentController extends Controller
         Session::put('menu_actif', 'decouvrir');
         $investisseur = Auth::user()->investisseur;
 
-        $query = LoanRequest::where('status', 'En attente d\'approbation')
+        $query = LoanRequest::where('status', 'En cours de financement')
             ->with('emprunteur')
             ->whereDoesntHave('investments', function ($q) use ($investisseur) {
                 $q->where('investisseur_id', $investisseur->id); // exclut les prêts déjà investis
@@ -101,31 +103,126 @@ class InvestmentController extends Controller
         return view('back.investisseur.projets.show', compact('loanRequest'));
     }
 
-    public function investir(Request $request, LoanRequest $loanRequest)
+    /**
+     * Gère l'investissement dans une requête de prêt et lance la signature électronique.
+     */
+    public function investir(Request $request, LoanRequest $loanRequest, YouSignService $yousignService)
     {
         $validated = $request->validate([
             'amount' => 'required|numeric|min:100',
             'type_investissement' => 'required|string',
         ]);
 
-        $investisseurId = Auth::user()->investisseur->id;
+        $investisseur = Auth::user()->investisseur;
 
-        $existing = Investment::where('investisseur_id', $investisseurId)
+        // Vérifier si l'investissement existe déjà
+        $existing = Investment::where('investisseur_id', $investisseur->id)
             ->where('loan_request_id', $loanRequest->id)
             ->first();
-        
+
         if ($existing) {
             return redirect()->back()->with('error', 'Vous avez déjà investi dans ce projet.');
         }
 
-        Investment::create([
-            'investisseur_id' => Auth::user()->investisseur->id,
+        // 1. Création de l'investissement
+        $investment = Investment::create([
+            'investisseur_id' => $investisseur->id,
             'loan_request_id' => $loanRequest->id,
             'amount' => $validated['amount'],
             'type_investment' => $validated['type_investissement'],
-            'status' => 'À approuver', // valeur par défaut
+            'status' => 'En attente de signature', 
         ]);
 
-        return redirect()->back()->with('success', 'Investissement réalisé avec succès. Un administrateur se chargera de vous notifier du statut de la demande.');
+        // 2. Préparation des données pour YouSign
+        // **Simulation de l'Emprunteur et du chemin du PDF**
+        // En réalité, $emprunteur doit être récupéré via la relation $loanRequest->user
+        $emprunteur = $loanRequest->emprunteur;
+        // dd($emprunteur);
+        
+        // Simuler un chemin vers un document PDF unique pour ce prêt (à adapter)
+        $pdfPath = storage_path("app/public/contrats/pret_{$loanRequest->id}_{$investment->id}.pdf");
+        
+        // --- NOTE IMPORTANTE : Générez le PDF ici si ce n'est pas déjà fait ---
+        // Ex: $this->generateContractPDF($loanRequest, $investment, $pdfPath);
+
+        if (!file_exists($pdfPath)) {
+             return redirect()->back()->with('error', 'Erreur : Le contrat de prêt n\'a pas été généré.');
+        }
+
+        // 3. Définir les signataires
+        $signerInvestisseur = [
+            'first_name' => $investisseur->prenom,
+            'last_name' => $investisseur->nom,
+            'email' => $investisseur->email,
+            // Assurez-vous que le champ 'phone_number' existe sur le modèle User/Investisseur
+            'phone_number' => $investisseur->phone_number ?? '+33600000000', 
+            'page' => 5, 
+            'x' => 400, // Position de la signature Investisseur
+            'y' => 150,
+        ];
+
+        $signerEmprunteur = [
+            'first_name' => $emprunteur->prenom,
+            'last_name' => $emprunteur->nom,
+            'email' => $emprunteur->email,
+            'phone_number' => $emprunteur->phone_number ?? '+33600000000', 
+            'page' => 5, 
+            'x' => 100, // Position de la signature Emprunteur
+            'y' => 150,
+        ];
+        
+        // 4. Lancer la procédure de signature
+        $response = $yousignService->createAndActivateSignatureRequest($pdfPath, $signerInvestisseur, $signerEmprunteur);
+
+        if ($response) {
+            // Mise à jour du statut pour suivre la procédure de signature
+            $investment->update(['status' => 'Signature en cours']);
+            
+            // Envoyer une notification à l'Investisseur (et à l'Emprunteur)
+            // L'email d'invitation à signer est envoyé directement par YouSign.
+            // Nous notifions l'utilisateur pour une alerte interne dans l'application.
+            $this->notifyUsers($investisseur, $emprunteur, $response);
+
+            return redirect()->back()->with('success', 'Votre investissement a été enregistré. La procédure de signature électronique a été lancée et vous recevrez un email de YouSign.');
+        }
+
+        // En cas d'échec de l'API YouSign, marquer l'investissement comme nécessitant une action
+        $investment->update(['status' => 'Échec signature']);
+        return redirect()->back()->with('error', 'Erreur critique lors du lancement de la signature électronique. Veuillez contacter un administrateur.');
+    }
+
+    /**
+     * Méthode simulée pour envoyer les notifications internes.
+     * @param User $investisseur
+     * @param User $emprunteur
+     * @param array $response
+     */
+    protected function notifyUsers(User $investisseur, User $emprunteur, array $response)
+    {
+        // Dans un cas réel, vous injecteriez NotificationService ici.
+        // $notificationService->notify(...); 
+
+        $investorSigner = collect($response['signers'])->firstWhere('info.email', $investisseur->email);
+        $investorSignUrl = $investorSigner['links']['redirect'] ?? '#';
+
+        $emprunteurSigner = collect($response['signers'])->firstWhere('info.email', $emprunteur->email);
+        $emprunteurSignUrl = $emprunteurSigner['links']['redirect'] ?? '#';
+
+        // Notification Investisseur
+        // Simule l'envoi d'une notification avec un bouton d'accès direct à la signature (lien fourni par YouSign)
+        \App\Models\Notification::create([
+            'user_id' => $investisseur->id,
+            'type' => 'yousign_invitation',
+            'message' => 'Le **Contrat de Prêt** est prêt à être signé. Cliquez ci-dessous pour commencer !',
+            'data' => ['buttons' => "<a href='{$investorSignUrl}' target='_blank' class='btn btn-primary'>Signer le contrat</a>"],
+        ]);
+        
+        // Notification Emprunteur (pour être complet)
+         \App\Models\Notification::create([
+            'user_id' => $emprunteur->id,
+            'type' => 'yousign_invitation',
+            'message' => 'L\'investissement a été validé ! Votre **Contrat de Prêt** est prêt à être signé. Cliquez ci-dessous pour commencer !',
+            'data' => ['buttons' => "<a href='{$emprunteurSignUrl}' target='_blank' class='btn btn-primary'>Signer le contrat</a>"],
+        ]);
     }
 }

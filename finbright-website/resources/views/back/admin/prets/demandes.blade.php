@@ -17,26 +17,20 @@
                     Demandes de prêts
                 </h1>
                 <div class="flex items-center gap-1 text-sm font-normal">
-                    <a class="text-secondary-foreground hover:text-primary" href="/metronic/tailwind/demo10/">
-                        Home
+                    <a class="text-secondary-foreground hover:text-primary" href="{{ route('admin.dashboard') }}">
+                        Tableau de bord
                     </a>
                     <span class="text-muted-foreground text-sm">
                         /
                     </span>
                     <span class="text-secondary-foreground">
-                        Network
+                        Projets
                     </span>
                     <span class="text-muted-foreground text-sm">
                         /
                     </span>
                     <span class="text-secondary-foreground">
-                        User Table
-                    </span>
-                    <span class="text-muted-foreground text-sm">
-                        /
-                    </span>
-                    <span class="text-mono">
-                        Team Crew
+                        Demandes de prêts
                     </span>
                 </div>
             </div>
@@ -164,7 +158,7 @@
             <div class="kt-card kt-card-grid min-w-full">
                 <div class="kt-card-header flex-wrap gap-2">
                     <h3 class="kt-card-title text-sm">
-                        Affichage de 10 sur {{count($loanRequests)}} prêts
+                        Affichage de {{ count($loanRequests) >= 10 ? '10 sur '. count($loanRequests) : count($loanRequests)}} demandes
                     </h3>
                     <div class="flex flex-wrap gap-2 lg:gap-5">
                         <div class="flex">
@@ -214,10 +208,6 @@
                             <table class="kt-table table-auto kt-table-border" data-kt-datatable-table="true">
                                 <thead>
                                     <tr>
-                                        <th class="w-[60px] text-center">
-                                            <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-check="true"
-                                                type="checkbox" />
-                                        </th>
                                         <th class="min-w-[180px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label">
@@ -270,10 +260,6 @@
                                 <tbody>
                                     @forelse ($loanRequests as $loan)
                                     <tr>
-                                        <td class="text-center">
-                                            <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true"
-                                                type="checkbox" value="1" />
-                                        </td>
                                         <td class="text-foreground font-normal">
                                             {{ $loan->object }}
                                         </td>
@@ -293,9 +279,9 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="loan-status">
                                             <span class="kt-badge 
-                                                {{ $loan->status == 'En attente d\'approbation' ? 'kt-badge-warning' : ($loan->status == 'Validé' ? 'success' : 'destructive') }}
+                                                {{ $loan->status == 'En attente de confirmation' ? 'kt-badge-warning' : ($loan->status == 'En cours de financement' ? 'kt-badge-success' : 'kt-badge-destructive') }}
                                                 kt-badge-outline rounded-[30px]">
                                                 <span class="kt-badge-dot size-1.5"></span>
                                                 {{ $loan->status }}
@@ -321,61 +307,32 @@
                                                     <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]"
                                                         data-kt-menu-dismiss="true">
                                                         <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
+                                                            <a class="kt-menu-link" href="#" data-loan-id="{{ $loan->id }}" data-status="En attente de confirmation">
                                                                 <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-search-list">
-                                                                    </i>
+                                                                    <i class="ki-filled ki-update-file"></i>
                                                                 </span>
                                                                 <span class="kt-menu-title">
-                                                                    View
+                                                                    En attente
                                                                 </span>
                                                             </a>
                                                         </div>
                                                         <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
+                                                            <a class="kt-menu-link" href="#" data-loan-id="{{ $loan->id }}" data-status="En cours de financement">
                                                                 <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-file-up">
-                                                                    </i>
+                                                                    <i class="ki-filled ki-file-right"></i>
                                                                 </span>
                                                                 <span class="kt-menu-title">
-                                                                    Export
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-separator">
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-pencil">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Edit
+                                                                    Valider
                                                                 </span>
                                                             </a>
                                                         </div>
                                                         <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
+                                                            <a class="kt-menu-link" href="#" data-loan-id="{{ $loan->id }}" data-status="Rejetée">
                                                                 <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-copy">
-                                                                    </i>
+                                                                    <i class="ki-filled ki-delete-folder"></i>
                                                                 </span>
                                                                 <span class="kt-menu-title">
-                                                                    Make a copy
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-separator">
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-trash">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Remove
+                                                                    Rejeter
                                                                 </span>
                                                             </a>
                                                         </div>
@@ -619,6 +576,98 @@
 @endsection
 
 @section('javascripts')
-    <script type="text/javascript" >
+    <script type="text/javascript">
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest('.kt-menu-link[data-status]');
+        if (!link) return;
+
+        e.preventDefault();
+
+        const status = link.dataset.status;
+        const loan = link.dataset.loanId;
+        const tdStatus = link.closest('tr').querySelector('.loan-status');
+
+        fetch(`/admin/prets/${loan}/status`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ status })
+        })
+        .then(async res => {
+            const text = await res.text(); 
+            try {
+                return JSON.parse(text);
+            } catch (e) {
+                console.error("Réponse du serveur (non JSON) :", text);
+                throw e;
+            }
+        })
+        .then(data => {
+            if(data.success){
+                showSuccessAlert(data.status);
+                let badgeClass = '';
+                switch(data.status) {
+                    case 'En attente de confirmation': badgeClass = 'kt-badge-warning'; break;
+                    case 'En cours de financement': badgeClass = 'kt-badge-success'; break;
+                    case 'Rejetée': badgeClass = 'kt-badge-destructive'; break;
+                }
+                tdStatus.innerHTML = `
+                    <span class="kt-badge ${badgeClass} kt-badge-outline rounded-[30px]">
+                        <span class="kt-badge-dot size-1.5"></span>
+                        ${data.status}
+                    </span>
+                `;
+            }
+        });
+    });
+    
+    function showSuccessAlert(status) {
+        // Créer le conteneur d'alerte
+        const alert = document.createElement('div');
+        alert.className = 'kt-alert kt-alert-light kt-alert-success absolute inset-x-0 top-10 z-50 max-w-lg m-auto shadow-md';
+        alert.id = 'alert_temp'; // ID temporaire pour pouvoir le retirer
+        alert.innerHTML = `
+            <div class="kt-alert-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
+                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info" 
+                    aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 16v-4"></path>
+                    <path d="M12 8h.01"></path>
+                </svg>
+            </div>
+            <div class="kt-alert-title">Statut mis à jour : ${status}</div>
+            <div class="kt-alert-toolbar">
+                <div class="kt-alert-actions">
+                    <button class="kt-link kt-link-xs kt-link-underlined text-mono">Fermer</button>
+                    <button class="kt-alert-close" data-kt-dismiss="#alert_temp">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
+                            stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" 
+                            aria-hidden="true">
+                            <path d="M18 6 6 18"></path>
+                            <path d="m6 6 12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        // Ajouter l’alerte dans un conteneur dédié ou au début du body
+        document.body.prepend(alert);
+
+        // Fermer au clic sur le bouton "Fermer"
+        alert.querySelector('button.kt-link').addEventListener('click', () => {
+            alert.remove();
+        });
+
+        // Fermer automatiquement après 5 secondes
+        setTimeout(() => {
+            alert.remove();
+        }, 5000);
+    }
     </script>
 @endsection

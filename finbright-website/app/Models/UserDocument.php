@@ -10,24 +10,19 @@ class UserDocument extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'beneficiaire_id',
-        'investisseur_id',
         'emprunteur_id',
+        'investisseur_id',
+        'representant_id',
+        'beneficiaire_id',
         'file_id',
         'type',
         'explanation',
         'status',
     ];
 
-    public function user()
+    public function emprunteur()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function beneficiaire()
-    {
-        return $this->belongsTo(Beneficiaire::class);
+        return $this->belongsTo(Emprunteur::class);
     }
 
     public function investisseur()
@@ -35,9 +30,14 @@ class UserDocument extends Model
         return $this->belongsTo(Investisseur::class);
     }
 
-    public function emprunteur()
+    public function representant()
     {
-        return $this->belongsTo(Emprunteur::class);
+        return $this->belongsTo(User::class, 'representant_id');
+    }
+
+    public function beneficiaire()
+    {
+        return $this->belongsTo(Beneficiaire::class);
     }
 
     public function file()

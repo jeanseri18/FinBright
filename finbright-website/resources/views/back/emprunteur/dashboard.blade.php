@@ -562,18 +562,18 @@
                             </div>
                             <div class="kt-card-content">
                                 <div class="flex flex-col gap-2 lg:gap-5">
-                                    @forelse([] as $contributor)
+                                    @forelse($loan->investments as $invest)
                                     <div class="flex items-center gap-2">
                                         <div class="flex items-center grow gap-2.5">
                                             <img alt="" class="rounded-full size-9 shrink-0"
-                                                src="{{asset('assets/media/avatars/blank.png')}}">
+                                                src="{{ $invest->investisseur->user->profilePicture ? Storage::url($invest->investisseur->user->profilePicture->filename) : asset('assets/media/avatars/blank.png') }}">
                                             <div class="flex flex-col">
                                                 <a class="text-sm font-semibold text-mono hover:text-primary mb-px"
                                                     href="#">
-                                                    Tyler Hero
+                                                    {{ $invest->investisseur->user->first_name .' '. $invest->investisseur->user->last_name }}
                                                 </a>
                                                 <span class="text-xs font-semibold text-secondary-foreground">
-                                                    6 contributors
+                                                    {{ count($invest->investisseur->investments) }} contributrions
                                                 </span>
                                             </div>
                                             </img>

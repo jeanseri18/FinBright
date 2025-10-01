@@ -39,6 +39,11 @@ class LoanRequest extends Model
         return $this->hasMany(Investment::class);
     }
 
+    public function getTotalInvestissementsAttribute()
+    {
+        return $this->investments()->sum('amount');
+    }
+    
     public function justifyRent()
     {
         return $this->hasMany(Files::class, 'loan_request_id')

@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('user_documents', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('file_id')->nullable()->constrained('files')->onDelete('set null');
             $table->string('type'); // Ex: 'piece_identite', 'justificatif_domicile', etc.
             $table->string('explanation')->nullable();
             $table->enum('status', ['À approuver', 'Validé', 'Refusé'])->default('À approuver');
             $table->timestamps();
 
-            $table->foreignId('beneficiaire_id')->nullable()->constrained()->onDelete('cascade');
-            $table->foreignId('investisseur_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('emprunteur_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('investisseur_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('representant_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->foreignId('beneficiaire_id')->nullable()->constrained()->onDelete('cascade');
         });
     }
 

@@ -100,12 +100,12 @@
                         </div>
                     </div>
                 </div>
-                @if($loan->status !== 'En attente d\'approbation')
+                @if($loan->status !== 'En attente de confirmation')
                 <div class="col-span-2 lg:col-span-1 flex">
                     <div class="kt-card grow">
                         <div class="kt-card-header">
                             <h3 class="kt-card-title">
-                                Dernier Payement
+                                Dernier Paiement
                             </h3>
                             <button class="kt-btn kt-btn-outline">
                                 <i class="ki-filled ki-exit-down">
@@ -114,6 +114,7 @@
                             </button>
                         </div>
                         <div class="kt-card-content pt-4 pb-3">
+                            @if ($loan->payements)
                             <table class="kt-table-auto">
                                 <tbody>
                                     <tr>
@@ -152,6 +153,7 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            @else Aucun paiement effectué @endif
                         </div>
                     </div>
                 </div>
@@ -159,7 +161,7 @@
                     <div class="kt-card grow">
                         <div class="kt-card-header">
                             <h3 class="kt-card-title">
-                                Prochain échéance
+                                Prochaine échéance
                             </h3>
                         </div>
                         <div class="kt-card-content lg:7.5">
@@ -192,7 +194,7 @@
                                         </div>
                                         <div class="flex flex-col">
                                             <a class="text-sm font-medium hover:text-primary text-mono" href="#">
-                                                le 17 août 2024
+                                                le 17 octobre 2025
                                             </a>
                                             <p class="text-sm text-secondary-foreground">
                                                 Date d'échéance

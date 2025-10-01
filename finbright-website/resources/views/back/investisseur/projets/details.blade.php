@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            @if($loan->status !== 'En attente d\'approbation')
+            @if($loan->status !== 'En attente de confirmation')
             <div class="col-span-2 lg:col-span-1 flex">
                 <div class="kt-card grow">
                     <div class="kt-card-header">

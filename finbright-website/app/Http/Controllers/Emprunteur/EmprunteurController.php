@@ -44,8 +44,8 @@ class EmprunteurController extends Controller
         ];
         $emprunteur = Auth::user()->emprunteur;
         $countries = $parametres->getContries();
-        $userDocuments = Auth::user()->documents->keyBy('type');
-        $documentsGroupByType = Auth::user()->documents->groupBy('type');
+        $userDocuments = $emprunteur->documents->keyBy('type');
+        $documentsGroupByType = $emprunteur->documents->groupBy('type');
 
         return view('back.emprunteur.mon-profil', compact([
             'etablissements',

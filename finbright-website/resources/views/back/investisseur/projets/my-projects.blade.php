@@ -57,17 +57,17 @@
                                         </span>
                                     </span>
                                 </div>
-                                <span class="kt-badge kt-badge-outline kt-badge-{{ $invest->status == "Validé" ? "success" : ($invest->status == "À approuver" ? "warning" : "destructive") }}">{{$invest->status}}</span>
+                                <span class="kt-badge kt-badge-outline kt-badge-{{ $invest->status == "Accepté" ? "success" : ($invest->status == "En attente de signature" ? "warning" : "destructive") }}">{{$invest->status}}</span>
                             </div>
                             <div class="flex flex-col mb-3 lg:mb-6">
                                 <a class="text-lg font-media/brand text-mono hover:text-primary mb-px" href="{{ route('investisseur.projet.details', $loan) }}">
-                                    {{ $loan->object ?? 'NaN' }}
+                                    {{ $loan->object ?? 'Inconnu' }}
                                 </a>
                                 <span class="text-sm text-secondary-foreground">
                                     Montant : {{ $loan->simulation_result['total'] . ' €' ?? null }}
                                 </span>
                             </div>
-                            <div class="grid md:grid-cols-3 items-center justify-between gap-2 mb-3.5 lg:mb-7">
+                            <div class="grid md:grid-cols-3 items-center justify-between gap-2 mb-3">
                                 <div
                                     class="grid grid-cols-1 h-full content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
                                     <span class="text-secondary-foreground text-xs">
@@ -96,79 +96,35 @@
                                     </span>
                                 </div>
                             </div>
-                            @if ($loan->status != "En attente d'approbation")
-                            <div class="kt-progress h-1.5 kt-progress-primary mb-4 lg:mb-8">
-                                <div class="kt-progress-indicator" style="width: 55%">
+                            @if ($loan->status != "En attente de confirmation")
+                            <div class="flex flex-col items-end gap-2">
+                                @php $indicator = 0;
+                                    if ($loan->simulation_result['amount'] > 0) {
+                                        $indicator = ($loan->total_investissements * 100) / $loan->simulation_result['amount'];
+                                    }
+                                @endphp
+                                <span class="kt-badge kt-badge-outline kt-badge-primary rounded-full">{{ number_format($indicator, 1, ',', ' ') }}%</span>
+                                <div class="kt-progress h-1.5 kt-progress-primary mb-4">
+                                    <div class="kt-progress-indicator" style="width: {{$indicator}}%">
+                                    </div>
                                 </div>
                             </div>
                             <div class="flex -space-x-2">
+                                @foreach ($loan->investments->take(5) as $invest)
                                 <div class="flex">
+                                    @if ($invest->investisseur->user->profilePicture)
                                     <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-[30px]"
-                                        src="{{ asset('assets/media/avatars/blank.png') }}" />
+                                        src="{{ Storage::url($invest->investisseur->user->profilePicture->filename) }}" />
+                                    @else
+                                    <span class="hover:z-5 relative inline-flex items-center justify-center shrink-0 rounded-full ring-1 font-semibold leading-none text-2xs size-[30px] text-primary-foreground ring-background bg-primary">
+                                        S</span>
+                                    @endif
                                 </div>
-                                <div class="flex">
-                                    <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-[30px]"
-                                        src="{{ asset('assets/media/avatars/blank.png') }}" />
-                                </div>
-                                <div class="flex">
-                                    <span
-                                        class="hover:z-5 relative inline-flex items-center justify-center shrink-0 rounded-full ring-1 font-semibold leading-none text-2xs size-[30px] text-primary-foreground ring-background bg-primary">
-                                        S
-                                    </span>
-                                </div>
+                                @endforeach
                             </div>
                             @endif
                         </div>
                     @endforeach
-
-                    {{-- <div class="kt-card p-7.5">
-                        <div class="flex items-center justify-between mb-3 lg:mb-6">
-                            <div class="flex items-center justify-center size-[50px] rounded-lg bg-accent/60">
-                                <img alt="" class=""
-                                    src="{{asset('assets/media/brand-blank.svg')}}" />
-                            </div>
-                            <a class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-users"></i>
-                                Investir
-                            </a>
-                        </div>
-                        <div class="flex flex-col mb-3 lg:mb-6">
-                            <a class="text-lg font-media/brand text-mono hover:text-primary mb-px" href="#">
-                                Radiant Wave
-                            </a>
-                            <span class="text-sm text-secondary-foreground">
-                                Short-term accommodation marketplace
-                            </span>
-                        </div>
-                        <div class="flex items-center gap-5 mb-3.5 lg:mb-7">
-                            <span class="text-sm text-secondary-foreground">
-                                Start:
-                                <span class="text-sm font-medium text-foreground">
-                                    Mar 09
-                                </span>
-                            </span>
-                            <span class="text-sm text-secondary-foreground">
-                                End:
-                                <span class="text-sm font-medium text-foreground">
-                                    Dec 23
-                                </span>
-                            </span>
-                        </div>
-                        <div class="kt-progress h-1.5 kt-progress-success mb-4 lg:mb-8">
-                            <div class="kt-progress-indicator" style="width: 100%">
-                            </div>
-                        </div>
-                        <div class="flex -space-x-2">
-                            <div class="flex">
-                                <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-[30px]"
-                                    src="{{asset('assets/media/avatars/blank.png')}}" />
-                            </div>
-                            <div class="flex">
-                                <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-[30px]"
-                                    src="{{asset('assets/media/avatars/blank.png')}}" />
-                            </div>
-                        </div>
-                    </div> --}}
                 </div>
                 <div class="flex grow justify-center pt-5 lg:pt-7.5">
                     <a class="kt-link kt-link-underlined kt-link-dashed" href="#">
@@ -193,29 +149,14 @@
                                     <div class="flex flex-col">
                                         <a class="text-lg font-media/brand text-mono hover:text-primary mb-px"
                                             href="{{ route('investisseur.projet.details', $loan) }}">
-                                            {{ $loan->object ?? 'NaN' }}
+                                            {{ $loan->object ? Str::limit($loan->object, 35, '...') : 'Inconnu' }}
                                         </a>
                                         <span class="text-sm text-secondary-foreground">
                                             {{ substr($loan->description, 0, 35) }}...
                                         </span>
                                     </div>
                                 </div>
-                                <div class="flex items-center flex-wrap gap-5 lg:gap-20">
-                                    {{-- <div class="flex items-center flex-wrap gap-5 lg:gap-14">
-                                        @if ($loan->status == 'En attente')
-                                            <span class="kt-badge kt-badge-primary kt-badge-outline">
-                                            @elseif ($loan->status == 'Collecte en attente')
-                                                <span class="kt-badge kt-badge-succes kt-badge-outline">
-                                                @elseif ($loan->status == 'Annulée')
-                                                    <span class="kt-badge kt-badge-destructive kt-badge-outline">
-                                        @endif
-                                        {{ ucfirst($loan->status) }}
-                                        </span>
-                                        <div class="kt-progress h-1.5 w-36 kt-progress-primary">
-                                            <div class="kt-progress-indicator" style="width: 55%">
-                                            </div>
-                                        </div>
-                                    </div> --}}
+                                <div class="flex items-center flex-wrap gap-5 lg:gap-10">
                                     <div class="flex">
                                         <span class="text-sm text-secondary-foreground">
                                             Montant : {{ $loan->simulation_result['total'] . ' €' ?? null }}
@@ -223,7 +164,7 @@
                                     </div>
                                     <div class="flex items-center justify-between flex-wrap gap-2">
                                         <div
-                                            class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto">
+                                            class="grid grid-cols-1 content-between gap-1.5 border border-dashed border-input shrink-0 rounded-md px-2.5 py-2 min-w-24 max-w-auto max-w-28 whitespace-normal">
                                             <span class="text-secondary-foreground text-xs">
                                                 Durée de remboursement
                                             </span>
@@ -251,22 +192,30 @@
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-5 lg:gap-14">
-                                        @if ($loan->status != "En attente d'approbation")
-                                        <div class="flex justify-end w-24">
-                                            <div class="flex -space-x-2">
-                                                <div class="flex">
-                                                    <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-[30px]"
-                                                        src="{{ asset('assets/media/avatars/300-4.png') }}" />
+                                        @if ($loan->status != "En attente de confirmation")
+                                        <div class="flex flex-col items-end gap-2">
+                                            @php $indicator = 0;
+                                                if ($loan->simulation_result['amount'] > 0) {
+                                                    $indicator = ($loan->total_investissements * 100) / $loan->simulation_result['amount'];
+                                                }
+                                            @endphp
+                                            <div class="kt-progress h-1.5 w-36 kt-progress-primary mb-2">
+                                                <div class="kt-progress-indicator" style="width: {{$indicator}}%">
                                                 </div>
-                                                <div class="flex">
-                                                    <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-[30px]"
-                                                        src="{{ asset('assets/media/avatars/300-2.png') }}" />
-                                                </div>
-                                                <div class="flex">
-                                                    <span
-                                                        class="hover:z-5 relative inline-flex items-center justify-center shrink-0 rounded-full ring-1 font-semibold leading-none text-2xs size-[30px] text-primary-foreground ring-background bg-primary">
-                                                        S
-                                                    </span>
+                                            </div>
+                                            <div class="flex justify-end w-24">
+                                                <div class="flex -space-x-2">
+                                                    @foreach ($loan->investments->take(5) as $invest)
+                                                    <div class="flex">
+                                                        @if ($invest->investisseur->user->profilePicture)
+                                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-[30px]"
+                                                            src="{{ Storage::url($invest->investisseur->user->profilePicture->filename) }}" />
+                                                        @else
+                                                        <span class="hover:z-5 relative inline-flex items-center justify-center shrink-0 rounded-full ring-1 font-semibold leading-none text-2xs size-[30px] text-primary-foreground ring-background bg-primary">
+                                                            S</span>
+                                                        @endif
+                                                    </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                         </div>

@@ -20,26 +20,20 @@
                     Liste des investisseurs
                 </h1>
                 <div class="flex items-center gap-1 text-sm font-normal">
-                    <a class="text-secondary-foreground hover:text-primary" href="/metronic/tailwind/demo10/">
-                        Home
+                    <a class="text-secondary-foreground hover:text-primary" href="{{ route('admin.dashboard') }}">
+                        Tableau de bord
                     </a>
                     <span class="text-muted-foreground text-sm">
                         /
                     </span>
                     <span class="text-secondary-foreground">
-                        Network
+                        Projets
                     </span>
                     <span class="text-muted-foreground text-sm">
                         /
                     </span>
                     <span class="text-secondary-foreground">
-                        User Table
-                    </span>
-                    <span class="text-muted-foreground text-sm">
-                        /
-                    </span>
-                    <span class="text-mono">
-                        App Roster
+                        Liste des investisseurs
                     </span>
                 </div>
             </div>
@@ -167,7 +161,7 @@
             <div class="kt-card kt-card-grid min-w-full">
                 <div class="kt-card-header flex-wrap gap-2">
                     <h3 class="kt-card-title text-sm">
-                        Affichage de 10 sur {{count($investisseurs)}} investisseurs
+                        Affichage de {{ count($investisseurs) >= 10 ? '10 sur '. count($investisseurs) : count($investisseurs)}} investisseurs
                     </h3>
                     <div class="flex flex-wrap gap-2 lg:gap-5">
                         <div class="flex">
@@ -216,10 +210,6 @@
                             <table class="kt-table table-auto kt-table-border" data-kt-datatable-table="true">
                                 <thead>
                                     <tr>
-                                        <th class="w-[60px] text-center">
-                                            <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-check="true"
-                                                type="checkbox" />
-                                        </th>
                                         <th class="min-w-[200px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label">
@@ -284,10 +274,6 @@
                                         @php $investisseursKycStatus[$investisseur->id] = $investisseur->user->kyc_status; @endphp
 
                                     <tr>
-                                        <td class="text-center">
-                                            <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true"
-                                                type="checkbox" value="1" />
-                                        </td>
                                         <td>
                                             <div class="flex items-center gap-2.5">
                                                 <img alt="" class="rounded-full size-7 shrink-0"
@@ -296,7 +282,7 @@
                                                     href="#" onclick="openModal({{ $investisseur->id }})">
                                                     {{ $investisseur->type_of_lender == "Personne physique" 
                                                     ? $investisseur->user->first_name .' '. $investisseur->user->last_name
-                                                    : $investisseur->denomination_sociale }}
+                                                    : $investisseur->denomination_sociale .' ('. $investisseur->forme_juridique .')' }}
                                                 </a>
                                             </div>
                                         </td>
@@ -608,7 +594,6 @@
         </div>
     </div>
     <!-- End of Container -->
-
     <div class="kt-modal kt-modal-center" data-kt-modal="true" id="modal_kyc">
         <div class="kt-modal-content max-w-2xl">
             <div class="kt-modal-body">
@@ -626,7 +611,7 @@
                             </div>
                             <div class="flex flex-col justify-end grow">
                                 <div class="flex items-center justify-between flex-wrap md:flex-nowrap gap-2">
-                                    <div class="flex flex-col justify-end gap-0.5">
+                                    <div class="flex flex-col justify-end gap-0.5 max-w-[275px]">
                                         <div class="flex items-center gap-1.5">
                                             <a id="invest_name" class="hover:text-primary text-base leading-5 font-medium text-mono" href="#">
                                                 Lorem Ipsum
@@ -640,7 +625,7 @@
                                             </svg>
                                         </div>
                                         <span class="text-secondary-foreground text-xs">
-                                            <span id="invest_details"></span>
+                                            <span id="invest_infos"></span>
                                         </span>
                                     </div>
                                     <div class="w-45">
@@ -660,12 +645,11 @@
                                             name="kyc_status"
                                             class="kt-select"
                                             data-kt-select="true"
-                                            data-kt-select-placeholder="Select a framework..."
+                                            data-kt-select-placeholder="Sélectionner un statut..."
                                             data-kt-select-config='@json($config)'
                                             >
                                             @foreach($statuses as $status)
                                                 <option value="{{ $status['value'] }}"
-                                                    selected
                                                     data-kt-select-option='@json(["icon" => $status["icon"]])'
                                                     >
                                                     {{ $status['label'] }}
@@ -676,25 +660,32 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="modal_tabs" class="max-h-[400px] kt-scrollable -mt-8">
-                            <div id="invest_legal_pers" class="grid md:grid-cols-2 mb-4 px-5 lg:px-7.5 gap-x-4"></div>
-                            <div id="invest_members" class="grid md:grid-cols-2 mb-4 px-5 lg:px-7.5"></div>
-                            <div id="invest_docs" class="flex gap-5 kt-scrollable-x ms-7.5" style="position: unset">
-                                <div class="kt-card mb-4 border-0 last:me-5">
-                                    <div class="bg-cover bg-no-repeat kt-card-rounded-t w-[240px] shrink-0 h-44"
-                                        style="background-image: url({{asset('assets/media/images/600x600/6.jpg')}})">
-                                    </div>
-                                    <div class="kt-card-border kt-card-rounded-b px-3.5 pt-5 pb-2.5">
-                                        <a class="font-medium block text-mono hover:text-primary text-base leading-4 mb-2" href="#">
-                                            Geometric Patterns
-                                        </a>
-                                        <div class="text-sm text-secondary-foreground">
-                                            Token ID:
-                                            <span class="text-sm font-medium text-foreground">
-                                                81023
-                                            </span>
-                                        </div>
-                                    </div>
+                        <div id="modal_tabs" class="max-h-[400px] -mt-8">
+                            <div id="invest_details" class="space-y-3 px-5 lg:px-7.5">
+                                <div class="kt-tabs kt-tabs-line mb-6" data-kt-tabs="true">
+                                    <button class="kt-tab-toggle active" data-kt-tab-toggle="#invest_legal_pers">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-user" aria-hidden="true">
+                                            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                            <path d="M7 21v-2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"></path>
+                                        </svg>Représentant légal
+                                    </button>
+                                    <button class="kt-tab-toggle" data-kt-tab-toggle="#invest_members">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar" aria-hidden="true">
+                                            <path d="M8 2v4"></path>
+                                            <path d="M16 2v4"></path>
+                                            <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                                            <path d="M3 10h18"></path>
+                                        </svg>Liste des membres du conseil
+                                    </button>
+                                    <button class="kt-tab-toggle" data-kt-tab-toggle="#invest_docs">
+                                        <i class="ki-filled ki-note-2"></i>Documents
+                                    </button>
+                                </div>
+                                <div class="text-sm">
+                                    <div id="invest_legal_pers" class="grid md:grid-cols-2 mb-4 gap-x-4"></div>
+                                    <div id="invest_members" class="hidden kt-card-table" data-kt-datatable="true" data-kt-datatable-page-size="5" data-kt-datatable-state-save="true"></div>
+                                    <div id="invest_docs" class="hidden flex gap-5 kt-scrollable-x" style="position: unset"></div>
                                 </div>
                             </div>
                             <div id="reject_motif" class="hidden px-8">
@@ -715,15 +706,14 @@
                                     </div>
                                     <div class="flex items-center gap-2.5 justify-end">
                                         <button type="submit" class="kt-btn kt-btn-primary">Enregistrer</button>
-                                        <button type="button" class="kt-btn kt-btn-outline" data-kt-modal-dismiss="true">
-                                            Annuler
-                                        </button>
+                                        <button type="button" class="kt-btn kt-btn-outline" data-kt-modal-dismiss="true">Annuler</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-                    <div class="kt-card-footer justify-center">
+                    <div class="kt-card-footer flex-col gap-4">
+                        <div id="alert_msg" class="w-full"></div>
                         <a class="kt-link kt-link-underlined kt-link-dashed"
                             type="button"
                             class="kt-modal-close"
@@ -766,7 +756,7 @@
                     </div>
                     <div class="flex items-center gap-2.5 justify-end">
                         <button type="submit" class="kt-btn kt-btn-primary">Enregistrer</button>
-                        <button class="kt-btn kt-btn-outline" data-kt-modal-dismiss="true">
+                        <button type="button" class="kt-btn kt-btn-outline" data-kt-modal-dismiss="true">
                             Annuler
                         </button>
                     </div>
@@ -804,6 +794,8 @@
     }
     const modalEl = document.querySelector('#modal_kyc');
     const modal = KTModal.getInstance(modalEl) || new KTModal(modalEl);
+    const modalEl2 = document.querySelector('#modal_motif');
+    const modal2 = KTModal.getInstance(modalEl2) || new KTModal(modalEl2);
     let currentEntityId = null; // On mémorise l'ID de l'emprunteur ouvert
 
     const openModal = (entityId) => {
@@ -813,6 +805,8 @@
         fetch(`/admin/investisseurs/${entityId}/json`)
             .then(res => res.json())
             .then(data => {
+                document.querySelector('#alert_msg').innerHTML = '';
+                
                 const userNameEl = modalEl.querySelector('#invest_name');
                 const kycIconEl = userNameEl.nextElementSibling; // Le <svg> juste après l'a
 
@@ -825,11 +819,78 @@
                     kycIconEl.style.display = "none";
                 }
 
-                modalEl.querySelector('#invest_details').innerText = data.type_of_lender == "Personne morale"
-                    ? `Créé le ${new Intl.DateTimeFormat('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date(data.creation_date))}, situé à ${data.adresse}`
-                    : `Né le ${new Intl.DateTimeFormat('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date(data.birth_date))}, habite à ${data.adresse}`;
-                modalEl.querySelector('#invest_legal_pers').innerHTML = data.type_of_lender == "Personne morale"
-                    ? `<span class="text-base leading-5 font-medium text-mono">Représentant Légal</span>
+                // recuperer les documents du représentant
+                let userDocs = '';
+                data.user_docs.forEach(doc => {
+                    const file_name = (doc.file_alt ?? doc.file_name).replace(/_/g, ' ').replace(/^./, str => str.toUpperCase());
+                    const statusClass = 
+                        doc.status === 'À approuver' ? 'warning' : 
+                        (doc.status === 'Validé' ? 'success' : 'destructive');
+
+                    userDocs += `
+                        <div class="kt-alert mb-4" id="alert_${doc.id}">
+                            <div class="kt-alert-title">
+                                ${file_name}
+                                <span class="kt-badge kt-badge-outline kt-badge-${statusClass} rounded-full">${doc.status}</span>
+                            </div>
+                            <div class="kt-alert-toolbar">
+                                <div class="kt-alert-actions">
+                                    <a href="/mon-profil/documents/${doc.id}/export" target="_blank" class="kt-link kt-link-xs kt-link-underlined text-mono hover:text-primary">Voir</a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                // recuperer les membre représentant du bureau
+                let invest_members = '';
+                data.membres.forEach(membre => {
+                    var docs = '';
+                    membre.documents.forEach(doc => {
+                        const docClass = 
+                            doc.status === 'À approuver' ? 'text-warning' : 
+                            (doc.status === 'Validé' ? 'text-green-500' : 'text-danger');
+                        docs = `<a href="/mon-profil/documents/${doc.id}/export" target="_blank" class="kt-btn kt-btn-sm kt-btn-icon kt-btn-outline">
+                                    <i class="ki-filled ki-folder-down ${docClass}"></i>
+                                </a>`;
+                    });
+
+                    invest_members += `
+                        <tr>
+                            <td>
+                                ${membre.nom} ${membre.prenoms}
+                            </td>
+                            <td>
+                                ${membre.birth_date}
+                            </td>
+                            <td>
+                                ${membre.birth_place}
+                            </td>
+                            <td>
+                                ${membre.nationalite}
+                            </td>
+                            <td>
+                                ${membre.adresse}
+                            </td>
+                            <td class="text-end">
+                                <span class="inline-flex gap-2.5">${docs}</span>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                var risk = data.risk['level'] == 'Élevé' 
+                    ? '<span class="kt-badge bg-red-100 text-red-800">' 
+                    : (data.risk['level'] === 'Standard' 
+                        ? '<span class="kt-badge bg-yellow-100 text-yellow-800">' 
+                        : '<span class="kt-badge bg-green-100 text-green-800">')
+                risk += `Risque ${data.risk['level']} (${data.risk['score']})</span>`;
+
+                modalEl.querySelector('#invest_infos').innerHTML = data.type_of_lender == "Personne morale"
+                    ? `Créé le ${new Intl.DateTimeFormat('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date(data.creation_date))}, situé à ${data.adresse} ${risk}`
+                    : `Né le ${new Intl.DateTimeFormat('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date(data.birth_date))}, habite à ${data.adresse} ${risk}`;
+                modalEl.querySelector('#invest_legal_pers').innerHTML = data.type_of_lender == "Personne morale"  
+                    ? `<span class="text-base leading-5 font-medium text-mono">Nom & prénoms</span>
                         <span class="md:text-end">${data.user_name}</span>
                         <span class="text-base leading-5 font-medium text-mono">Date de naissance</span>
                         <span class="md:text-end">${new Intl.DateTimeFormat('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date(data.birth_date))}</span>
@@ -844,38 +905,32 @@
                         <span class="text-base leading-5 font-medium text-mono">Fonction au sein de l'entité</span>
                         <span class="md:text-end">${data.fonction}</span>
                         <span class="col-span-2 mb-2 text-base leading-5 font-medium text-mono">Pièce d'identité en cours de validité</span>
-                        <div class="kt-alert" id="alert_1">
-                            <div class="kt-alert-title">
-                                Pièce d'identité du représentant
-                                <span class="kt-badge kt-badge-outline kt-badge-destructive rounded-full">À approuver</span>
-                            </div>
-                            <div class="kt-alert-toolbar">
-                                <div class="kt-alert-actions">
-                                    <a href="" target="_blank" class="kt-link kt-link-xs kt-link-underlined text-mono hover:text-primary">Voir</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kt-alert" id="alert_1">
-                            <div class="kt-alert-title">
-                                Pièce d'identité du représentant
-                                <span class="kt-badge kt-badge-outline kt-badge-destructive rounded-full">À approuver</span>
-                            </div>
-                            <div class="kt-alert-toolbar">
-                                <div class="kt-alert-actions">
-                                    <a href="" target="_blank" class="kt-link kt-link-xs kt-link-underlined text-mono hover:text-primary">Voir</a>
-                                </div>
-                            </div>
-                        </div>
+                        ${userDocs}
                     `
-                    : '';
-                
-                // modalEl.querySelector('#invest_members').innerText = data.adresse;
+                    : null;
+                modalEl.querySelector('#invest_members').innerHTML = data.type_of_lender == "Personne morale" 
+                    ? `<div class="kt-table-wrapper kt-scrollable">
+                        <table class="kt-table" data-kt-datatable-table="true">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="min-w-40" data-kt-datatable-column="nom">Nom & prénoms</th>
+                                    <th scope="col" class="w-30" data-kt-datatable-column="date">Date de naissance</th>
+                                    <th scope="col" class="w-30" data-kt-datatable-column="lieu">Lieu de naissance</th>
+                                    <th scope="col" class="w-30" data-kt-datatable-column="nationalite">Nationalité</th>
+                                    <th scope="col" class="w-30" data-kt-datatable-column="adresse">Adresse</th>
+                                    <th scope="col" class="w-16" data-kt-datatable-column="pi">Pièce d'identité</th>
+                                </tr>
+                            </thead>
+                            <tbody>${invest_members}</tbody>
+                        </table>
+                    </div>`
+                    : null;
                 modalEl.querySelector('#invest_avatar').src = data.avatar 
                     ? ('/storage/' + data.avatar) 
                     : "{{ asset('assets/media/avatars/blank.png') }}";
 
                 let form = modalEl.querySelector('form');
-                form.action = `/admin/emprunteurs/${currentEntityId}/update-kyc-status`;
+                form.action = `/admin/investisseurs/${currentEntityId}/update-kyc-status`;
                 
                 let documents = '';
                 data.invest_docs.forEach(doc => {
@@ -902,14 +957,14 @@
                                     Aperçu Word non dispo
                                 </div>`;
                     }
-                    const formattedType = doc['type']
-                        .replace(/_/g, ' ')
-                        .replace(/\b\w/g, c => c.toUpperCase());
+                    const formattedType = doc['file_alt']
+                        .replace(/_/g, ' ')             // remplace les underscores par des espaces
+                        .replace(/^./, str => str.toUpperCase()); // met en majuscule seulement la première lettre
 
                     documents += `
                         <div class="kt-card mb-4 border-0 last:me-5">
                             <div class="w-[240px] shrink-0 h-44">
-                                ${preview}
+                                <a href="/mon-profil/documents/${doc['id']}/export" target="_blank">${preview}</a>
                             </div>
                             <div class="kt-card-border kt-card-rounded-b px-3.5 pt-5 pb-2.5">
                                 <a class="font-medium block text-mono hover:text-primary text-base leading-4 mb-2" 
@@ -937,6 +992,10 @@
                     `;
                 });
 
+                data.type_of_lender == "Personne physique"
+                    ? (modalEl.querySelector('[data-kt-tabs="true"]').classList.add('hidden'), modalEl.querySelector('#invest_docs').classList.remove('hidden'))
+                    : (modalEl.querySelector('[data-kt-tabs="true"]').classList.remove('hidden'), modalEl.querySelector('#invest_docs').classList.add('hidden'));
+
                 modalEl.querySelector('#invest_docs').innerHTML = documents;
                 modal.show();
                 // On mémorise le statut KYC
@@ -947,9 +1006,16 @@
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('input[name=check_kyc]').forEach(input => {
             input.addEventListener('change', (e) => {
+                currentEntityId = e.target.value; // On garde l'ID
+                
                 if (e.target.checked) {
                     // Et éventuellement envoyer l'ID à ton backend
-                    openModal(e.target.value);
+                    openModal(currentEntityId);
+                }
+                else {
+                    let form = modalEl2.querySelector('form');
+                    form.action = `/admin/investisseurs/${currentEntityId}/update-kyc-status`;
+                    modal2.show()
                 }
             });
         });
@@ -978,9 +1044,7 @@
             else if (e.target.name === 'kyc_status') {
                 if (e.target.value !== 'rejected') {
                     // afficher user_docs
-                    document.querySelector('#invest_legal_pers').classList.remove('hidden');
-                    document.querySelector('#invest_members').classList.remove('hidden');
-                    document.querySelector('#invest_docs').classList.remove('hidden');
+                    document.querySelector('#invest_details').classList.remove('hidden');
                     // cacher reject_motif
                     document.querySelector('#reject_motif').classList.add('hidden');
 
@@ -994,17 +1058,30 @@
                     })
                     .then(res => res.json())
                     .then(resp => {
-                        if (resp.success) {
-                            console.log("Statut mis à jour :", newStatus);
-                        }
+                        var respStatus = resp.success ? 'kt-alert-success' : 'kt-alert-destructive';
+                        
+                        document.querySelector('#alert_msg').innerHTML = `
+                            <div class="kt-alert kt-alert-light ${respStatus}" id="alert_4">
+                                <div class="kt-alert-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                                </div>
+                                <div class="kt-alert-title">${resp.message}</div>
+                                <div class="kt-alert-toolbar">
+                                    <div class="kt-alert-actions">
+                                        <button class="kt-link kt-link-xs kt-link-underlined text-mono">
+                                        Fermer</button>
+                                        <button class="kt-alert-close" data-kt-dismiss="#alert_4">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>`;
                     })
                     .catch(err => console.error("Erreur maj statut :", err));
                 }
                 else {
                     // cacher user_docs
-                    document.querySelector('#invest_legal_pers').classList.add('hidden');
-                    document.querySelector('#invest_members').classList.add('hidden');
-                    document.querySelector('#invest_docs').classList.add('hidden');
+                    document.querySelector('#invest_details').classList.add('hidden');
                     // afficher reject_motif
                     document.querySelector('#reject_motif').classList.remove('hidden');
                 }
@@ -1015,11 +1092,20 @@
         modal.on('hide', () => {
             if (currentEntityId) {
                 const kycSelect = modalEl.querySelector('select[name="kyc_status"]');
+                const input = document.querySelector(`input[name=check_kyc][value="${currentEntityId}"]`);
                 // Si le KYC n'est pas validé, décocher l'input
                 if (modalEl.dataset.kycStatus !== 'validated' && kycSelect.value !== 'validated') {
-                    const input = document.querySelector(`input[name=check_kyc][value="${currentEntityId}"]`);
                     if (input) input.checked = false;
                 }
+                else input.checked = true;
+                currentEntityId = null; // Reset
+            }
+        });
+
+        modal2.on('hide', () => {
+            if (currentEntityId) {
+                const input = document.querySelector(`input[name=check_kyc][value="${currentEntityId}"]`);
+                if (input) input.checked = true;
                 currentEntityId = null; // Reset
             }
         });

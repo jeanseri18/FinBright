@@ -886,7 +886,7 @@
                                 @csrf
                                 <div class="kt-card-header" id="documents_justificatifs">
                                     <h3 class="kt-card-title">
-                                        Justificatifs Obligatoires <span class="kt-form-description">(Format de fichiers : pdf, jpg, png)</span>
+                                        Justificatifs Obligatoires <span class="kt-form-description">(Format de fichiers : pdf, jpg, jpeg, png)</span>
                                     </h3>
                                 </div>
                                 <div class="kt-card-content grid gap-5 lg:gap-7.5 lg:py-7.5 py-5">

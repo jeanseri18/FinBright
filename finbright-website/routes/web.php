@@ -10,6 +10,7 @@ use App\Http\Controllers\Emprunteur\LoanRequestController;
 use App\Http\Controllers\Investisseur\InvestisseurController;
 use App\Http\Controllers\Investisseur\InvestmentController;
 use App\Http\Controllers\Investisseur\InvestorKycController;
+use App\Http\Controllers\YouSignWebhookController;
 
 // Page d'accueil
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -59,7 +60,7 @@ Route::get('/cadre-juridique', [PageController::class, 'legalFramework'])->name(
 
 /////////// Les Routes du Backend /////////
 
-Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', '2fa', 'role:emprunteur|admin'])->group(function () {
+Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', '2fa', 'role:emprunteur'])->group(function () {
     Route::get('/mon-profil', [EmprunteurController::class, 'profil'])->name('mon-profil');
     Route::post('/mon-profil/general', [EmprunteurController::class, 'updateProfil'])->name('profil-general.update');
     Route::post('/mon-profil/cursus', [EmprunteurController::class, 'updateCursus'])->name('profil-cursus.update');
@@ -80,7 +81,7 @@ Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', '2fa', 'ro
     });
 });
 
-Route::prefix('mon-profil')->name('profil.')->middleware(['auth', '2fa', 'role:emprunteur|investisseur|admin'])->group(function () {
+Route::prefix('mon-profil')->name('profil.')->middleware(['auth', '2fa', 'role:emprunteur|investisseur'])->group(function () {
     Route::post('/adresse', [ProfilController::class, 'updateAdresse'])->name('adresse.update');
     Route::post('/notifications', [ProfilController::class, 'notificationsPreference'])->name('notifications.preferences');
     Route::post('/email', [ProfilController::class, 'updateEmail'])->name('email.update');
@@ -98,7 +99,7 @@ Route::prefix('mon-profil')->name('profil.')->middleware(['auth', '2fa', 'role:e
     });
 });
 
-Route::prefix('investisseur')->name('investisseur.')->middleware(['auth', '2fa', 'role:investisseur|admin'])->group(function () {
+Route::prefix('investisseur')->name('investisseur.')->middleware(['auth', '2fa', 'role:investisseur'])->group(function () {
     // KYC + IBAN
     Route::get('/kyc', [InvestorKycController::class, 'form'])->name('kyc.form');
     Route::post('/kyc', [InvestorKycController::class, 'store'])->name('kyc.store');
@@ -136,20 +137,21 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', '2fa', 'role:admin']
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::post('/documents/{document}/update-status', [AdminController::class, 'updateStatus']);
     
+    Route::post('/{type}/{id}/update-kyc-status', [AdminController::class, 'updateKycStatus'])->name('updateKycStatus');
+    
     Route::prefix('emprunteurs')->name('emprunteurs.')->group(function () {
         Route::get('/liste-des-emprunteurs', [AdminController::class, 'listeEmprunteurs'])->name('liste');
         Route::get('/{emprunteur}/json', [AdminController::class, 'jsonEmprunteur'])->name('emprunteur.json');
-        Route::post('/{emprunteur}/update-kyc-status', [AdminController::class, 'updateKycStatus']);
     });
 
     Route::prefix('investisseurs')->name('investisseurs.')->group(function () {
         Route::get('/liste-des-investisseurs', [AdminController::class, 'listeInvestisseurs'])->name('liste');
-        Route::get('/{investisseur}/json', [AdminController::class, 'jsonInvestisseurs'])->name('investisseurs.json');
-        Route::post('/{investisseur}/update-kyc-status', [AdminController::class, 'updateKycInvestStatus']);
+        Route::get('/{investisseur}/json', [AdminController::class, 'jsonInvestisseurs'])->name('json');
     });
 
     Route::prefix('prets')->name('prets.')->group(function () {
         Route::get('/demandes-de-prets', [AdminController::class, 'demandesPrets'])->name('demandes');
+        Route::post('{loan}/status', [AdminController::class, 'updateLoanStatus'])->name('update_status');
         Route::get('/projets-en-cours', [AdminController::class, 'projetsEnCours'])->name('enCours');
     });
 
@@ -158,6 +160,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', '2fa', 'role:admin']
     });
 });
 
+// Route pour recevoir les notifications de YouSign
+Route::post('/yousign/webhook', [YouSignWebhookController::class, 'handle']);
 
 // Auth routes (login, register, etc.)
 require __DIR__.'/auth.php';

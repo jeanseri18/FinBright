@@ -30,6 +30,8 @@ class User extends Authenticatable
         'phone_number',
         'profile_picture_id',
         'is_profile_completed',
+        'kyc_status',
+        'kyc_refused_motif',
         'admin_id',
         'investisseur_id',
         'emprunteur_id',
@@ -93,7 +95,17 @@ class User extends Authenticatable
 
     public function documents()
     {
-        return $this->hasMany(UserDocument::class);
+        return $this->hasMany(UserDocument::class, 'representant_id');
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class)->latest();
+    }
+
+    public function unreadNotifications()
+    {
+        return $this->hasMany(Notification::class)->where('is_read', false)->latest();
     }
 
     public function notificationPreference()

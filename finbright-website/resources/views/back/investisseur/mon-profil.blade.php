@@ -250,7 +250,40 @@
                             <label class="kt-form-label max-w-56">
                                 Date de création <span class="text-destructive">*</span>
                             </label>
-                            <input class="kt-input" name="creation_date" placeholder="JJ/MM/AAAA" type="date" value="{{ old('birth_date', optional(Auth::user()->birth_date)->format('Y-m-d') ?? now()->subYears(18)->format('Y-m-d')) }}" max="{{ now()->subYears(18)->format('Y-m-d') }}" required />
+                            <input class="kt-input" name="creation_date" placeholder="JJ/MM/AAAA" type="date" value="{{ old('birth_date', optional(Auth::user()->birth_date)->format('Y-m-d') ?? now()->format('Y-m-d')) }}" max="{{ now()->format('Y-m-d') }}" required />
+                        </div>
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label max-w-56">
+                                Origine de vos fonds <span class="text-destructive">*</span>
+                            </label>
+                            <div class="grow">
+                                @php
+                                    // Définir la configuration en tant que tableau PHP
+                                    $config = [
+                                        'displayTemplate' => '<div class="flex items-center leading-none gap-2">{{flag}}<span class="text-foreground">{{text}}</span></div>',
+                                        'optionTemplate' => '<div class="flex items-center leading-none gap-2">{{flag}} <span class="text-foreground">{{text}}</span></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-3.5 ms-auto hidden text-primary kt-select-option-selected:block"><path d="M20 6 9 17l-5-5"/></svg></div>',
+                                    ];
+                                @endphp
+                                <select
+                                    name="funds_from"
+                                    class="kt-select"
+                                    data-kt-select="true"
+                                    data-kt-select-enable-search="true"
+                                    data-kt-select-search-placeholder="Rechercher..."
+                                    data-kt-select-placeholder="Sélectionner un pays..."
+                                    data-kt-select-config='@json($config)'
+                                >
+                                    @foreach($countries as $country)
+                                        <option
+                                            value="{{ $country['value'] }}"
+                                            {{ isset($investisseur->funds_from_country) && $investisseur->funds_from_country == $country['value'] ? 'selected' : '' }}
+                                            data-kt-select-option='@json(["flag" => $country["flag"]])'
+                                        >
+                                            {{ $country['label'] }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <div class="flex flex-col gap-4">
                             <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
@@ -332,9 +365,9 @@
 
                                             <div class="col-span-2">
                                                 <label class="kt-form-description">
-                                                    Pièce d'identité en cours de validité
+                                                    Pièce d'identité en cours de validité (pdf, jpg, jpeg, png)
                                                 </label>
-                                                <input class="kt-input grow" name="beneficiaires[{{ $index }}][piece_identite][]" placeholder="Pièce d'identité en cours de validité" type="file" multiple />
+                                                <input class="kt-input grow" name="beneficiaires[{{ $index }}][piece_identite][]" placeholder="Pièce d'identité en cours de validité" type="file" accept="image/*,.pdf" multiple />
                                                 <div class="uploaded_files grid md:grid-cols-2 gap-2 mt-2">
                                                     @foreach($dirigeant->documents as $doc)
                                                     <div class="kt-alert" id="alert_1">
@@ -481,32 +514,6 @@
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
-                                Origine de vos fonds <span class="text-destructive">*</span>
-                            </label>
-                            <div class="grow">
-                                <select
-                                    name="funds_from"
-                                    class="kt-select"
-                                    data-kt-select="true"
-                                    data-kt-select-enable-search="true"
-                                    data-kt-select-search-placeholder="Rechercher..."
-                                    data-kt-select-placeholder="Sélectionner un pays..."
-                                    data-kt-select-config='@json($config)'
-                                >
-                                    @foreach($countries as $country)
-                                        <option
-                                            value="{{ $country['value'] }}"
-                                            {{ isset(Auth::user()->funds_from_country) && Auth::user()->funds_from_country == $country['value'] ? 'selected' : '' }}
-                                            data-kt-select-option='@json(["flag" => $country["flag"]])'
-                                        >
-                                            {{ $country['label'] }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                            <label class="kt-form-label max-w-56">
                                 Numéro de téléphone <span class="text-destructive">*</span>
                             </label>
                             <div class="kt-input-group w-full">
@@ -539,7 +546,34 @@
                                 <input class="kt-input rounded-s-none" name="phone_number" placeholder="Numéro de téléphone mobile" type="tel" value="{{ Auth::user()->phone_number ?? null }}" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" required />
                             </div>
                         </div>
+
                         @if ($investisseur->type_of_lender == "Personne physique")
+                        <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                            <label class="kt-form-label max-w-56">
+                                Origine de vos fonds <span class="text-destructive">*</span>
+                            </label>
+                            <div class="grow">
+                                <select
+                                    name="funds_from"
+                                    class="kt-select"
+                                    data-kt-select="true"
+                                    data-kt-select-enable-search="true"
+                                    data-kt-select-search-placeholder="Rechercher..."
+                                    data-kt-select-placeholder="Sélectionner un pays..."
+                                    data-kt-select-config='@json($config)'
+                                >
+                                    @foreach($countries as $country)
+                                        <option
+                                            value="{{ $country['value'] }}"
+                                            {{ isset($investisseur->funds_from_country) && $investisseur->funds_from_country == $country['value'] ? 'selected' : '' }}
+                                            data-kt-select-option='@json(["flag" => $country["flag"]])'
+                                        >
+                                            {{ $country['label'] }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
                                 Profession <span class="text-destructive">*</span>
@@ -573,12 +607,12 @@
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
-                                Pièce d'identité en cours de validité<span class="text-destructive">*</span>
+                                Pièce d'identité en cours de validité (pdf, jpg, jpeg, png)<span class="text-destructive">*</span>
                             </label>
                             <div>
-                                <input class="kt-input grow" name="piece_identite[]" type="file" multiple {{ empty($investisseur->documents) ? 'required' : null }} />
+                                <input class="kt-input grow" name="piece_identite[]" type="file" accept="image/*,.pdf" multiple {{ empty($investisseur->documents) ? 'required' : null }} />
                                 <div class="uploaded_files grid md:grid-cols-2 gap-2 mt-2">
-                                    @foreach($investisseur->documents ?? [] as $doc)
+                                    @foreach(Auth::user()->documents ?? [] as $doc)
                                     <div class="kt-alert" id="alert_1">
                                         <div class="kt-alert-title">
                                             {{$doc->file->alt}}
@@ -672,7 +706,7 @@
                 <div class="kt-card">
                     <div class="kt-card-header" id="external_services_integrations">
                         <h3 class="kt-card-title">
-                            Justificatifs Obligatoires <span class="kt-form-description">(Format de fichiers : pdf, jpg, png)</span>
+                            Justificatifs Obligatoires <span class="kt-form-description">(Format de fichiers : pdf, jpg, jpeg, png)</span>
                         </h3>
                     </div>
                     <form action="{{ route('profil.documents.update') }}" method="post" enctype="multipart/form-data" class="kt-card-content grid gap-5 lg:py-7.5">

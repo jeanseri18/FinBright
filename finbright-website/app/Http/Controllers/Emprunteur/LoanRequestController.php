@@ -366,7 +366,7 @@ class LoanRequestController extends Controller
                     'simulation_result' => session('simulate_result'),
                     'debt_params' => session('debt_result'),
                     'debt_ratio' => session('debt_result.taux_endettement'),
-                    'status' => 'En attente d\'approbation',
+                    'status' => 'En attente de confirmation',
                     'duree_campagne_modifications' => 0,
                 ]);
             }
@@ -410,7 +410,7 @@ class LoanRequestController extends Controller
     public function details(LoanRequest $loan)
     {
         Session::put('menu_actif', 'mes_demandes');
-        // if ($loan->user_id !== Auth::id() || $loan->status !== 'En attente d\'approbation') {
+        // if ($loan->user_id !== Auth::id() || $loan->status !== 'En attente de confirmation') {
         //     abort(403, 'Modification interdite.');
         // }
 
@@ -433,7 +433,7 @@ class LoanRequestController extends Controller
     {
         Session::put('menu_actif', 'mes_demandes');
 
-        if ($loan->emprunteur_id !== Auth::user()->emprunteur->id || $loan->status !== 'En attente d\'approbation') {
+        if ($loan->emprunteur_id !== Auth::user()->emprunteur->id || $loan->status !== 'En attente de confirmation') {
             abort(403, 'Modification interdite.');
         }
 
@@ -442,7 +442,7 @@ class LoanRequestController extends Controller
 
     public function annuler(LoanRequest $loan)
     {
-        if ($loan->emprunteur_id !== Auth::user()->emprunteur->id || $loan->status !== 'En attente d\'approbation') {
+        if ($loan->emprunteur_id !== Auth::user()->emprunteur->id || $loan->status !== 'En attente de confirmation') {
             abort(403, 'Action non autorisée.');
         }
 

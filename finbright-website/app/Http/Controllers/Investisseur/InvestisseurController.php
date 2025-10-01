@@ -39,8 +39,8 @@ class InvestisseurController extends Controller
         $investisseur = Auth::user()->investisseur;
 
         $countries = $parametres->getContries();
-        $userDocuments = Auth::user()->documents->keyBy('type');
-        $documentsGroupByType = Auth::user()->documents->groupBy('type');
+        $userDocuments = $investisseur->documents->keyBy('type');
+        $documentsGroupByType = $investisseur->documents->groupBy('type');
 
         return view('back.investisseur.mon-profil', compact([
             'documentsAttendus',
@@ -120,14 +120,14 @@ class InvestisseurController extends Controller
         $user = Auth::user();
 
         $validated = $request->validate([
-            'avatar' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'civilite' => 'required|in:M.,Mme.,Mx.',
             'firstname' => 'required|string|max:100',
             'lastname' => 'required|string|max:100',
             'birth_date' => ['required', 'date', 'before_or_equal:' . now()->subYears(18)->format('Y-m-d')],
             'birth_place' => 'required|string|max:255',
             'nationality' => 'required|string|max:100',
-            'funds_from' => 'required|string|max:255',
+            'funds_from' => 'nullable|string|max:255',
             'phone_number' => 'required|string|max:20',
             'profession' => 'nullable|string|max:255',
             'ppe' => 'nullable|integer',
@@ -165,7 +165,6 @@ class InvestisseurController extends Controller
             'birth_date'  => $validated['birth_date'] ?? null,
             'birth_place' => $validated['birth_place'] ?? null,
             'nationality' => $validated['nationality'] ?? null,
-            'funds_from_country' => $validated['funds_from'] ?? null,
             'phone_number'=> $validated['phone_number'] ?? null
         ]);
 
@@ -177,6 +176,7 @@ class InvestisseurController extends Controller
                 'ppe'                    => $validated['ppe'] ?? false,
                 'adresse_representant'   => $validated['adresse'] ?? null,
                 'fonction'               => $validated['fonction'] ?? null,
+                'funds_from_country' => $validated['funds_from'] ?? null,
             ]
         );
 
@@ -188,7 +188,7 @@ class InvestisseurController extends Controller
             $files = $request->file($field);
 
             // Vérifier si un document du même type existe déjà
-            $existingDoc = UserDocument::where('investisseur_id', $investisseur->id)
+            $existingDoc = UserDocument::where('representant_id', $user->id)
                 ->where('type', $field)
                 ->with('file')
                 ->first();
@@ -223,7 +223,7 @@ class InvestisseurController extends Controller
                     }
 
                     // Sauvegarder le fichier
-                    $storedFile = $file->store('uploads/justificatifs', 'public');
+                    $storedFile = $file->store('uploads/representants', 'public');
 
                     // Enregistrer dans Files
                     $fileEntity = Files::create([
@@ -235,8 +235,7 @@ class InvestisseurController extends Controller
 
                     // Enregistrer dans UserDocument
                     UserDocument::create([
-                        'user_id' => $user->id,
-                        'investisseur_id' => $investisseur->id,
+                        'representant_id' => $user->id,
                         'file_id' => $fileEntity->id,
                         'type' => $field,
                         'status' => 'À approuver',
@@ -264,6 +263,7 @@ class InvestisseurController extends Controller
                     ->ignore(optional($user->investisseur)->id), 
             ],
             'creation_date' => 'required|date',
+            'funds_from' => 'required|string|max:255',
             'beneficiaires' => 'required|array|min:1',
             'beneficiaires.*.nom' => 'nullable|string',
             'beneficiaires.*.prenoms' => 'nullable|string',
@@ -282,6 +282,7 @@ class InvestisseurController extends Controller
             'forme_juridique' => $validated['forme_juridique'],
             'numero_immatriculation' => $validated['numero_immatriculation'],
             'creation_date' => $validated['creation_date'],
+            'funds_from_country' => $validated['funds_from'] ?? null,
         ]);
         
         // Récupérer les IDs envoyés
@@ -338,7 +339,6 @@ class InvestisseurController extends Controller
                     ]);
 
                     UserDocument::create([
-                        'user_id' => $user->id,
                         'beneficiaire_id' => $beneficiaire->id,
                         'file_id' => $fileEntity->id,
                         'type' => 'piece_identite',

@@ -43,6 +43,14 @@ class ProfilController extends Controller
     public function enregistrerDocuments(Request $request)
     {
         $user = Auth::user();
+        // Déterminer la colonne et l'ID dynamiquement
+        if ($user->emprunteur) {
+            $relationKey = 'emprunteur_id';
+            $relationId  = $user->emprunteur->id;
+        } else {
+            $relationKey = 'investisseur_id';
+            $relationId  = $user->investisseur->id;
+        }
 
         $documents = [
             'piece_identite' => 'Pièce d\'identité',
@@ -62,7 +70,7 @@ class ProfilController extends Controller
                 $explanation = $request->input("{$field}_explain");
 
                 // Vérifier si un document du même type existe déjà
-                $existingDoc = UserDocument::where('user_id', $user->id)
+                $existingDoc = UserDocument::where($relationKey, $relationId)
                     ->where('type', $field)
                     ->with('file')
                     ->first();
@@ -109,11 +117,11 @@ class ProfilController extends Controller
 
                         // Enregistrer dans UserDocument
                         UserDocument::create([
-                            'user_id' => $user->id,
-                            'file_id' => $fileEntity->id,
-                            'type' => $field,
-                            'explanation' => $explanation,
-                            'status' => 'À approuver',
+                            $relationKey   => $relationId,
+                            'file_id'      => $fileEntity->id,
+                            'type'         => $field,
+                            'explanation'  => $explanation,
+                            'status'       => 'À approuver',
                         ]);
                     }
                 }
@@ -129,9 +137,17 @@ class ProfilController extends Controller
     public function exportDocument($id)
     {
         $document = UserDocument::with('file')->findOrFail($id);
+        // Déterminer la colonne et l'ID dynamiquement
+        if ($document->emprunteur_id) {
+            $relationKey = 'emprunteur_id';
+            $relationId  = $document->emprunteur_id;
+        } else {
+            $relationKey = 'investisseur_id';
+            $relationId  = $document->investisseur_id;
+        }
 
         $documents = UserDocument::with('file')
-            ->where('user_id', $document->user_id)
+            ->where($relationKey, $relationId)
             ->where('type', $document->type)
             ->get();
 

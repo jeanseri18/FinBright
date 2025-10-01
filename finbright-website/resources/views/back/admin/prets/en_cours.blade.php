@@ -17,26 +17,20 @@
                     Projets en cours
                 </h1>
                 <div class="flex items-center gap-1 text-sm font-normal">
-                    <a class="text-secondary-foreground hover:text-primary" href="/metronic/tailwind/demo10/">
-                        Home
+                    <a class="text-secondary-foreground hover:text-primary" href="{{ route('admin.dashboard') }}">
+                        Tableau de bord
                     </a>
                     <span class="text-muted-foreground text-sm">
                         /
                     </span>
                     <span class="text-secondary-foreground">
-                        Network
+                        Projets
                     </span>
                     <span class="text-muted-foreground text-sm">
                         /
                     </span>
                     <span class="text-secondary-foreground">
-                        User Table
-                    </span>
-                    <span class="text-muted-foreground text-sm">
-                        /
-                    </span>
-                    <span class="text-mono">
-                        Team Crew
+                        Projets en cours
                     </span>
                 </div>
             </div>
@@ -164,7 +158,7 @@
             <div class="kt-card kt-card-grid min-w-full">
                 <div class="kt-card-header flex-wrap gap-2">
                     <h3 class="kt-card-title text-sm">
-                        Affichage de 10 sur {{count($loanRequests)}} prêts
+                        Affichage de {{ count($loanRequests) >= 10 ? '10 sur '. count($loanRequests) : count($loanRequests)}} projet(s)
                     </h3>
                     <div class="flex flex-wrap gap-2 lg:gap-5">
                         <div class="flex">
@@ -214,10 +208,6 @@
                             <table class="kt-table table-auto kt-table-border" data-kt-datatable-table="true">
                                 <thead>
                                     <tr>
-                                        <th class="w-[60px] text-center">
-                                            <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-check="true"
-                                                type="checkbox" />
-                                        </th>
                                         <th class="min-w-[180px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label">
@@ -227,7 +217,7 @@
                                                 </span>
                                             </span>
                                         </th>
-                                        <th class="min-w-[300px]">
+                                        <th class="min-w-[220px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label">
                                                     Emprunteur
@@ -248,7 +238,25 @@
                                         <th class="max-w-[130px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label whitespace-normal">
+                                                    Financements
+                                                </span>
+                                                <span class="kt-table-col-sort">
+                                                </span>
+                                            </span>
+                                        </th>
+                                        <th class="max-w-[130px]">
+                                            <span class="kt-table-col">
+                                                <span class="kt-table-col-label whitespace-normal">
                                                     Montant demandé
+                                                </span>
+                                                <span class="kt-table-col-sort">
+                                                </span>
+                                            </span>
+                                        </th>
+                                        <th class="max-w-[130px]">
+                                            <span class="kt-table-col">
+                                                <span class="kt-table-col-label whitespace-normal">
+                                                    Montant financé
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>
@@ -270,10 +278,6 @@
                                 <tbody>
                                     @forelse ($loanRequests as $loan)
                                     <tr>
-                                        <td class="text-center">
-                                            <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true"
-                                                type="checkbox" value="1" />
-                                        </td>
                                         <td class="text-foreground font-normal">
                                             {{ $loan->object }}
                                         </td>
@@ -295,14 +299,18 @@
                                         </td>
                                         <td>
                                             <span class="kt-badge 
-                                                {{ $loan->status == 'En attente d\'approbation' ? 'kt-badge-warning' : ($loan->status == 'Validé' ? 'success' : 'destructive') }}
+                                                {{ $loan->status == 'En attente de confirmation' ? 'kt-badge-warning' : ($loan->status == 'Validé' ? 'success' : 'destructive') }}
                                                 kt-badge-outline rounded-[30px]">
                                                 <span class="kt-badge-dot size-1.5"></span>
                                                 {{ $loan->status }}
                                             </span>
                                         </td>
+                                        <td>{{ count($loan->investments) < 10 ? '0'. count($loan->investments) : count($loan->investments) }}</td>
                                         <td>
                                             {{ $loan->simulation_result['total'] . ' €' ?? null }}
+                                        </td>
+                                        <td>
+                                            {{ number_format($loan->total_investissements, 0, ',', ' ') }} €
                                         </td>
                                         <td class="text-foreground font-normal">
                                             {{ $loan->simulation_result['duration'] . ' mois' ?? 'Non disponible' }}
@@ -327,7 +335,7 @@
                                                                     </i>
                                                                 </span>
                                                                 <span class="kt-menu-title">
-                                                                    View
+                                                                    Verrouillage des fonds
                                                                 </span>
                                                             </a>
                                                         </div>
@@ -338,44 +346,7 @@
                                                                     </i>
                                                                 </span>
                                                                 <span class="kt-menu-title">
-                                                                    Export
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-separator">
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-pencil">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Edit
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-copy">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Make a copy
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-separator">
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-trash">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Remove
+                                                                    Libération des fonds 
                                                                 </span>
                                                             </a>
                                                         </div>
