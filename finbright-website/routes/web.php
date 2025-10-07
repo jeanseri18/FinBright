@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ExportController;
+use App\Http\Controllers\Admin\ReglageController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\ProfilController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
@@ -11,6 +14,23 @@ use App\Http\Controllers\Investisseur\InvestisseurController;
 use App\Http\Controllers\Investisseur\InvestmentController;
 use App\Http\Controllers\Investisseur\InvestorKycController;
 use App\Http\Controllers\YouSignWebhookController;
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/test-mail', function () {
+    $toEmail = "hello@moussa-fofana.com"; // 👉 remplace par ton adresse de réception
+    $subject = "Test Mail OVH - Finbright";
+
+    try {
+        Mail::raw("Ceci est un test d'envoi d'email via OVH SMTP 🎉", function ($message) use ($toEmail, $subject) {
+            $message->to($toEmail)
+                    ->subject($subject);
+        });
+
+        return "✅ Email de test envoyé avec succès à $toEmail";
+    } catch (\Exception $e) {
+        return "❌ Erreur lors de l'envoi : " . $e->getMessage();
+    }
+});
 
 // Page d'accueil
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -81,7 +101,7 @@ Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', '2fa', 'ro
     });
 });
 
-Route::prefix('mon-profil')->name('profil.')->middleware(['auth', '2fa', 'role:emprunteur|investisseur'])->group(function () {
+Route::prefix('mon-profil')->name('profil.')->middleware(['auth', '2fa', 'role:emprunteur|investisseur|admin'])->group(function () {
     Route::post('/adresse', [ProfilController::class, 'updateAdresse'])->name('adresse.update');
     Route::post('/notifications', [ProfilController::class, 'notificationsPreference'])->name('notifications.preferences');
     Route::post('/email', [ProfilController::class, 'updateEmail'])->name('email.update');
@@ -135,6 +155,8 @@ Route::prefix('investisseur')->name('investisseur.')->middleware(['auth', '2fa',
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', '2fa', 'role:admin'])->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/export/{entity}/{month?}', [ExportController::class, 'exportCsv'])->name('export.csv');
+
     Route::post('/documents/{document}/update-status', [AdminController::class, 'updateStatus']);
     
     Route::post('/{type}/{id}/update-kyc-status', [AdminController::class, 'updateKycStatus'])->name('updateKycStatus');
@@ -156,7 +178,27 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', '2fa', 'role:admin']
     });
 
     Route::prefix('investissements')->name('investissements.')->group(function () {
-        Route::get('/demandes-d-investissement', [AdminController::class, 'demandesInvestments'])->name('demandes');
+        Route::get('/liste-investissements/{loan?}', [AdminController::class, 'ListeInvestments'])->name('liste');
+    });
+
+    Route::prefix('reglage')->name('reglage.')->group(function () {
+        Route::get('/liste-des-etablissements', [ReglageController::class, 'listeEtablissements'])->name('etablissements');
+        Route::post('/etablissement/save', [ReglageController::class, 'saveEtablissement'])->name('etablissement.save');
+        Route::get('/etablissement-{etablissement}/json', [ReglageController::class, 'jsonEtablissement']);
+        Route::delete('/delete-etablissement/{id}', [ReglageController::class, 'deleteEtablissement'])->name('etablissement.delete');
+
+        Route::get('/les-taux-d-interet', [ReglageController::class, 'listeTaux'])->name('taux');
+        Route::post('/taux/save', [ReglageController::class, 'saveTaux'])->name('taux.save');
+        Route::get('/taux-{taux}/json', [ReglageController::class, 'jsonTaux']);
+        Route::delete('/delete-taux/{id}', [ReglageController::class, 'deleteTaux'])->name('taux.delete');
+    });
+
+    Route::prefix('securite')->name('securite.')->group(function () {
+        Route::get('/liste-des-utilisateurs', [UsersController::class, 'listeUtilisateurs'])->name('utilisateurs');
+        Route::post('/utilisateurs/save', [UsersController::class, 'saveUtilisateurs'])->name('utilisateurs.save');
+        Route::get('/utilisateur-{utilisateur}/json', [UsersController::class, 'jsonUtilisateur']);
+        Route::delete('/delete-utilisateur/{id}', [UsersController::class, 'deleteUtilisateur'])->name('utilisateur.delete');
+
     });
 });
 

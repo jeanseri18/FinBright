@@ -48,7 +48,7 @@
                                     </tr>
                                     <tr>
                                         <td class="text-sm text-secondary-foreground pb-3.5 pe-3">
-                                            Lieu de naissance:
+                                            Pays de naissance:
                                         </td>
                                         <td class="text-sm text-mono pb-3.5">
                                             {{Auth::user()->birth_place ?? null}}

@@ -160,11 +160,7 @@ Contact:
                             <div class="kt-menu flex flex-col w-full gap-1.5 px-3.5" data-kt-menu="true"
                                 data-kt-menu-accordion-expand-all="false" id="sidebar_primary_menu">
 
-                                <div class="kt-menu-item {{ session('menu_actif') === 'demande_prets' 
-                                        ? 'here show' 
-                                        : (session('menu_actif') === 'projets_en_cours' 
-                                            ? 'here show' 
-                                            : (session('menu_actif') === 'demande_invest' ? 'here show' : '' )) }}" 
+                                <div class="kt-menu-item {{ in_array(session('menu_actif'), ['demande_prets', 'projets_en_cours', 'liste_invest']) ? 'here show' : null }}" 
                                     data-kt-menu-item-toggle="accordion"
                                     data-kt-menu-item-trigger="click">
                                     <div
@@ -208,12 +204,12 @@ Contact:
                                                 </span>
                                             </a>
                                         </div>
-                                        <div class="kt-menu-item {{ session('menu_actif') === 'demande_invest' ? 'active' : '' }}">
+                                        <div class="kt-menu-item {{ session('menu_actif') === 'liste_invest' ? 'active' : '' }}">
                                             <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary"
-                                                href="{{ route('admin.investissements.demandes') }}">
+                                                href="{{ route('admin.investissements.liste') }}">
                                                 <span
                                                     class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
-                                                    Demandes d'investissement
+                                                    Investissements
                                                 </span>
                                             </a>
                                         </div>
@@ -248,7 +244,8 @@ Contact:
                                         </span>
                                     </a>
                                 </div>
-                                <div class="kt-menu-item" data-kt-menu-item-toggle="accordion"
+                                <div class="kt-menu-item {{ in_array(session('menu_actif'), ['etablissements', 'taux_interet']) ? 'here show' : null }}" 
+                                    data-kt-menu-item-toggle="accordion"
                                     data-kt-menu-item-trigger="click">
                                     <div
                                         class="kt-menu-link gap-2.5 py-2 px-2.5 rounded-md kt-menu-item-hover:bg-transparent kt-menu-item-here:bg-transparent">
@@ -274,18 +271,18 @@ Contact:
                                         </span>
                                     </div>
                                     <div class="kt-menu-accordion gap-px ps-7">
-                                        <div class="kt-menu-item">
+                                        <div class="kt-menu-item {{ session('menu_actif') === 'etablissements' ? 'active' : '' }}">
                                             <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary"
-                                                href="">
+                                                href="{{ route('admin.reglage.etablissements') }}">
                                                 <span
                                                     class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
                                                     Liste des établissements
                                                 </span>
                                             </a>
                                         </div>
-                                        <div class="kt-menu-item">
+                                        <div class="kt-menu-item {{ session('menu_actif') === 'taux_interet' ? 'active' : '' }}">
                                             <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary"
-                                                href="">
+                                                href="{{ route('admin.reglage.taux') }}">
                                                 <span
                                                     class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
                                                     Modifier les taux d'intérêt
@@ -301,61 +298,6 @@ Contact:
                                                 </span>
                                             </a>
                                         </div> --}}
-                                        <div class="kt-menu-item flex-col-reverse"
-                                            data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
-                                            <div
-                                                class="kt-menu-link py-2 px-2.5 rounded-md border border-transparent !menu-item-here:bg-transparent">
-                                                <span
-                                                    class="kt-menu-title text-sm text-secondary-foreground kt-menu-link-hover:text-mono">
-                                                    <span class="hidden kt-menu-item-show:!flex">
-                                                        Afficher moins
-                                                    </span>
-                                                    <span class="flex kt-menu-item-show:hidden">
-                                                        Afficher 3 de plus
-                                                    </span>
-                                                </span>
-                                                <span
-                                                    class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-muted-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
-                                                    <span class="inline-flex kt-menu-item-show:hidden">
-                                                        <i class="ki-filled ki-down text-xs">
-                                                        </i>
-                                                    </span>
-                                                    <span class="hidden kt-menu-item-show:inline-flex">
-                                                        <i class="ki-filled ki-up text-xs">
-                                                        </i>
-                                                    </span>
-                                                </span>
-                                            </div>
-                                            <div class="kt-menu-accordion gap-px">
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary"
-                                                        href="/metronic/tailwind/demo10/account/appearance">
-                                                        <span
-                                                            class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
-                                                            Appearance
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary"
-                                                        href="/metronic/tailwind/demo10/account/invite-a-friend">
-                                                        <span
-                                                            class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
-                                                            Invite a Friend
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="kt-menu-item">
-                                                    <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary"
-                                                        href="/metronic/tailwind/demo10/account/activity">
-                                                        <span
-                                                            class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
-                                                            Activity
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -368,7 +310,7 @@ Contact:
                             </h3>
                             <div class="kt-menu flex flex-col w-full gap-1.5 px-3.5" data-kt-menu="true"
                                 data-kt-menu-accordion-expand-all="false" id="sidebar_primary_menu">
-                                <div class="kt-menu-item" data-kt-menu-item-toggle="accordion"
+                                <div class="kt-menu-item {{ in_array(session('menu_actif'), ['utilisateurs', 'roles']) ? 'here show' : null }}" data-kt-menu-item-toggle="accordion"
                                     data-kt-menu-item-trigger="click">
                                     <div
                                         class="kt-menu-link gap-2.5 py-2 px-2.5 rounded-md kt-menu-item-hover:bg-transparent kt-menu-item-here:bg-transparent">
@@ -393,16 +335,16 @@ Contact:
                                         </span>
                                     </div>
                                     <div class="kt-menu-accordion gap-px ps-7">
-                                        <div class="kt-menu-item">
+                                        <div class="kt-menu-item {{ session('menu_actif') === 'utilisateurs' ? 'active' : '' }}">
                                             <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary"
-                                                href="">
+                                                href="{{ route('admin.securite.utilisateurs') }}">
                                                 <span
                                                     class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
                                                     Liste des utilisateurs
                                                 </span>
                                             </a>
                                         </div>
-                                        <div class="kt-menu-item">
+                                        <div class="kt-menu-item {{ session('menu_actif') === 'roles' ? 'active' : '' }}">
                                             <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary"
                                                 href="">
                                                 <span
@@ -411,7 +353,7 @@ Contact:
                                                 </span>
                                             </a>
                                         </div>
-                                        <div class="kt-menu-item">
+                                        <div class="kt-menu-item {{ session('menu_actif') === 'permissions' ? 'active' : '' }}">
                                             <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary"
                                                 href="">
                                                 <span

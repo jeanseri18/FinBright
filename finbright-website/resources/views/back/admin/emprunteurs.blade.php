@@ -38,115 +38,48 @@
                 </div>
             </div>
             <div class="flex items-center flex-wrap gap-1.5 lg:gap-2.5">
-                <a class="kt-btn kt-btn-outline" href="/metronic/tailwind/demo10/account/home/get-started">
-                    <i class="ki-filled ki-exit-down">
-                    </i>
+                <!-- Bouton Exporter -->
+                <a id="exportBtn" class="kt-btn kt-btn-outline"
+                href="{{ route('admin.export.csv', ['entity' => 'emprunteurs', 'month' => $months->first()['value'] ?? '']) }}">
+                    <i class="ki-filled ki-exit-down"></i>
                     Exporter
                 </a>
+
+                <!-- Dropdown de sélection du mois -->
                 <div class="kt-menu kt-menu-default" data-kt-menu="true">
-                    <div class="kt-menu-item" data-kt-menu-item-offset="0, 0" data-kt-menu-item-placement="bottom-end"
-                        data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="hover">
+                    <div class="kt-menu-item"
+                        data-kt-menu-item-offset="0, 0"
+                        data-kt-menu-item-placement="bottom-end"
+                        data-kt-menu-item-toggle="dropdown"
+                        data-kt-menu-item-trigger="hover">
+
                         <button class="kt-menu-toggle kt-btn kt-btn-outline flex-nowrap">
                             <span class="flex items-center me-1">
-                                <i class="ki-filled ki-calendar text-base!">
-                                </i>
+                                <i class="ki-filled ki-calendar text-base!"></i>
                             </span>
-                            <span class="hidden md:inline text-nowrap">
-                                September, 2024
+                            <span id="selectedMonthLabel" class="hidden md:inline text-nowrap">
+                                {{ $months->first()['label'] ?? 'Aucun mois' }}
                             </span>
-                            <span class="inline md:hidden text-nowrap">
-                                Sep, 2024
+                            <span id="selectedMonthShort" class="inline md:hidden text-nowrap">
+                                {{ $months->first()['short'] ?? '' }}
                             </span>
                             <span class="flex items-center lg:ms-4">
-                                <i class="ki-filled ki-down text-xs!">
-                                </i>
+                                <i class="ki-filled ki-down text-xs!"></i>
                             </span>
                         </button>
+
                         <div class="kt-menu-dropdown w-48 py-2 kt-scrollable-y max-h-[250px]">
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="#">
-                                    <span class="kt-menu-title">
-                                        January, 2024
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="#">
-                                    <span class="kt-menu-title">
-                                        February, 2024
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item active">
-                                <a class="kt-menu-link" href="#">
-                                    <span class="kt-menu-title">
-                                        March, 2024
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="#">
-                                    <span class="kt-menu-title">
-                                        April, 2024
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="#">
-                                    <span class="kt-menu-title">
-                                        May, 2024
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="#">
-                                    <span class="kt-menu-title">
-                                        June, 2024
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="#">
-                                    <span class="kt-menu-title">
-                                        July, 2024
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="#">
-                                    <span class="kt-menu-title">
-                                        August, 2024
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="#">
-                                    <span class="kt-menu-title">
-                                        September, 2024
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="#">
-                                    <span class="kt-menu-title">
-                                        October, 2024
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="#">
-                                    <span class="kt-menu-title">
-                                        November, 2024
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="kt-menu-item">
-                                <a class="kt-menu-link" href="#">
-                                    <span class="kt-menu-title">
-                                        December, 2024
-                                    </span>
-                                </a>
-                            </div>
+                            @foreach ($months as $month)
+                                <div class="kt-menu-item {{ $loop->first ? 'active' : '' }}">
+                                    <a class="kt-menu-link"
+                                    href="#"
+                                    data-value="{{ $month['value'] }}"
+                                    data-label="{{ $month['label'] }}"
+                                    data-short="{{ $month['short'] }}">
+                                        <span class="kt-menu-title">{{ $month['label'] }}</span>
+                                    </a>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -168,40 +101,27 @@
                             <label class="kt-input">
                                 <i class="ki-filled ki-magnifier">
                                 </i>
-                                <input placeholder="Search users" type="text" value="" />
+                                <input id="search_input" placeholder="Rechercher un emprunteur" type="text" value="" />
                             </label>
                         </div>
-                        <div class="flex flex-wrap gap-2.5">
-                            <select class="kt-select w-36" data-kt-select="true"
-                                data-kt-select-placeholder="Select a status">
-                                <option value="1">
-                                    Active
-                                </option>
-                                <option value="2">
-                                    Disabled
-                                </option>
-                                <option value="2">
-                                    Pending
-                                </option>
+                        <form action="" method="GET" class="flex flex-wrap gap-2.5">
+                            <select name="statut" class="kt-select w-36" data-kt-select="true"
+                                data-kt-select-placeholder="Statut KYC">
+                                <option value="" {{ request('statut') == '' ? 'selected' : '' }}>Tout</option>
+                                <option value="1" {{ request('statut') == 1 ? 'selected' : '' }}>Activé</option>
+                                <option value="2" {{ request('statut') == 2 ? 'selected' : '' }}>Desactivé</option>
                             </select>
-                            <select class="kt-select w-36" data-kt-select="true"
-                                data-kt-select-placeholder="Select a sort">
-                                <option value="1">
-                                    Latest
-                                </option>
-                                <option value="2">
-                                    Older
-                                </option>
-                                <option value="3">
-                                    Oldest
-                                </option>
+                            <select name="ordre" class="kt-select w-36" data-kt-select="true"
+                                data-kt-select-placeholder="Ordre d'affichage">
+                                <option value="1" {{ request('ordre') == 1 ? 'selected' : '' }}>Plus recents</option>
+                                <option value="2" {{ request('ordre') == 2 ? 'selected' : '' }}>Plus anciens</option>
                             </select>
                             <button class="kt-btn kt-btn-outline kt-btn-primary">
                                 <i class="ki-filled ki-setting-4">
                                 </i>
-                                Filters
+                                Filtrer
                             </button>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="kt-card-content">
@@ -231,7 +151,7 @@
                                         <th class="min-w-[165px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label">
-                                                    Lieu de naissance
+                                                    Pays de naissance
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>
@@ -288,7 +208,8 @@
                                                 <img alt="" class="rounded-full size-7 shrink-0"
                                                     src="{{ $emprunteur->user->profilePicture ? Storage::url($emprunteur->user->profilePicture->filename) : asset('assets/media/avatars/blank.png') }}" />
                                                 <a class="text-sm font-medium text-mono hover:text-primary"
-                                                    href="#" onclick="openModal({{ $emprunteur->id }})">
+                                                    href="#" onclick="openModal({{ $emprunteur->id }})"
+                                                    data-filter="borrower">
                                                     {{ $emprunteur->user->first_name .' '. $emprunteur->user->last_name }}
                                                 </a>
                                             </div>
@@ -296,10 +217,10 @@
                                         <td class="font-normal text-foreground">
                                             {{ \Carbon\Carbon::parse($emprunteur->user->birth_date)->format('d-m-Y') ?? null }}
                                         </td>
-                                        <td class="font-normal text-foreground">
+                                        <td class="font-normal text-foreground" data-filter="country">
                                             {{ ucwords(str_replace(['-', '_'], ' ', $emprunteur->user->birth_place)) }}
                                         </td>
-                                        <td>
+                                        <td data-filter="establishment">
                                             {{ $emprunteur->etablissement ? $emprunteur->etablissement->nom : null }}
                                         </td>
                                         <td>
@@ -372,11 +293,11 @@
                         <div
                             class="kt-card-footer justify-center md:justify-between flex-col md:flex-row gap-5 text-secondary-foreground text-sm font-medium">
                             <div class="flex items-center gap-2 order-2 md:order-1">
-                                Show
+                                Affichage de 
                                 <select class="kt-select w-16" data-kt-datatable-size="true" data-kt-select=""
                                     name="perpage">
                                 </select>
-                                per page
+                                par page
                             </div>
                             <div class="flex items-center gap-4 order-1 md:order-2">
                                 <span data-kt-datatable-info="true">
@@ -1000,6 +921,39 @@
                 currentEntityId = null; // Reset
             }
         });
-    })
+    });
+
+    document.getElementById('search_input').addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        const trList = document.querySelectorAll('[data-kt-datatable-table="true"] tbody tr');
+
+        trList.forEach(tr => {
+            const rowText = tr.innerText.toLowerCase();
+            tr.style.display = rowText.includes(query) ? '' : 'none';
+        });
+    });
+
+    const exportBtn = document.getElementById('exportBtn');
+
+    document.querySelectorAll('.kt-menu-link[data-value]').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const value = this.dataset.value;
+            const label = this.dataset.label;
+            const shortLabel = this.dataset.short;
+
+            // Mettre à jour le bouton Exporter (href dynamique)
+            exportBtn.href = `/admin/export/emprunteurs/${value}`;
+
+            // Mettre à jour l’affichage du mois sélectionné
+            document.getElementById('selectedMonthLabel').textContent = label;
+            document.getElementById('selectedMonthShort').textContent = shortLabel;
+
+            // Mettre en surbrillance l’élément actif
+            document.querySelectorAll('.kt-menu-item').forEach(i => i.classList.remove('active'));
+            this.closest('.kt-menu-item').classList.add('active');
+        });
+    });
     </script>
 @endsection

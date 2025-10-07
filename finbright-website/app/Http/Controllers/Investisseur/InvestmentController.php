@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Investisseur;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Services\YouSignService;
 use App\Http\Controllers\Emprunteur\LoanRequestController;
+use App\Models\Emprunteur;
+use App\Models\Investisseur;
 use Illuminate\Http\Request;
 use App\Models\LoanRequest;
 use App\Models\Investment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Services\YouSignService;
+use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf; // Importez la façade complète pour Intelephense
 
 class InvestmentController extends Controller
 {
@@ -130,31 +133,24 @@ class InvestmentController extends Controller
             'loan_request_id' => $loanRequest->id,
             'amount' => $validated['amount'],
             'type_investment' => $validated['type_investissement'],
-            'status' => 'En attente de signature', 
+            // 'status' => 'En attente de signature', 
         ]);
 
         // 2. Préparation des données pour YouSign
-        // **Simulation de l'Emprunteur et du chemin du PDF**
-        // En réalité, $emprunteur doit être récupéré via la relation $loanRequest->user
         $emprunteur = $loanRequest->emprunteur;
-        // dd($emprunteur);
         
-        // Simuler un chemin vers un document PDF unique pour ce prêt (à adapter)
-        $pdfPath = storage_path("app/public/contrats/pret_{$loanRequest->id}_{$investment->id}.pdf");
+        // --- NOUVEAU : Génération du PDF ---
+        $pdfPath = $this->generateContractPDF($loanRequest, $investment, $emprunteur, $investisseur);
         
-        // --- NOTE IMPORTANTE : Générez le PDF ici si ce n'est pas déjà fait ---
-        // Ex: $this->generateContractPDF($loanRequest, $investment, $pdfPath);
-
         if (!file_exists($pdfPath)) {
-             return redirect()->back()->with('error', 'Erreur : Le contrat de prêt n\'a pas été généré.');
+             return redirect()->back()->with('error', 'Erreur : Le contrat de prêt n\'a pas pu être généré.');
         }
 
         // 3. Définir les signataires
         $signerInvestisseur = [
-            'first_name' => $investisseur->prenom,
-            'last_name' => $investisseur->nom,
+            'first_name' => $investisseur->last_name,
+            'last_name' => $investisseur->first_name,
             'email' => $investisseur->email,
-            // Assurez-vous que le champ 'phone_number' existe sur le modèle User/Investisseur
             'phone_number' => $investisseur->phone_number ?? '+33600000000', 
             'page' => 5, 
             'x' => 400, // Position de la signature Investisseur
@@ -162,8 +158,8 @@ class InvestmentController extends Controller
         ];
 
         $signerEmprunteur = [
-            'first_name' => $emprunteur->prenom,
-            'last_name' => $emprunteur->nom,
+            'first_name' => $emprunteur->last_name,
+            'last_name' => $emprunteur->first_name,
             'email' => $emprunteur->email,
             'phone_number' => $emprunteur->phone_number ?? '+33600000000', 
             'page' => 5, 
@@ -175,12 +171,7 @@ class InvestmentController extends Controller
         $response = $yousignService->createAndActivateSignatureRequest($pdfPath, $signerInvestisseur, $signerEmprunteur);
 
         if ($response) {
-            // Mise à jour du statut pour suivre la procédure de signature
-            $investment->update(['status' => 'Signature en cours']);
-            
-            // Envoyer une notification à l'Investisseur (et à l'Emprunteur)
-            // L'email d'invitation à signer est envoyé directement par YouSign.
-            // Nous notifions l'utilisateur pour une alerte interne dans l'application.
+            $investment->update(['status' => 'En attente de signature']);
             $this->notifyUsers($investisseur, $emprunteur, $response);
 
             return redirect()->back()->with('success', 'Votre investissement a été enregistré. La procédure de signature électronique a été lancée et vous recevrez un email de YouSign.');
@@ -189,6 +180,35 @@ class InvestmentController extends Controller
         // En cas d'échec de l'API YouSign, marquer l'investissement comme nécessitant une action
         $investment->update(['status' => 'Échec signature']);
         return redirect()->back()->with('error', 'Erreur critique lors du lancement de la signature électronique. Veuillez contacter un administrateur.');
+    }
+
+    /**
+     * Génère le fichier PDF du contrat de prêt.
+     *
+     * @param LoanRequest $loanRequest
+     * @param Investment $investment
+     * @param User $emprunteur
+     * @param User $investisseur
+     * @return string Le chemin complet du fichier PDF généré.
+     */
+    protected function generateContractPDF(LoanRequest $loanRequest, Investment $investment, Emprunteur $emprunteur, Investisseur $investisseur): string
+    {
+        // Chemin de sauvegarde du fichier
+        $fileName = "pret_{$loanRequest->id}_inv_{$investment->id}.pdf";
+        $pdfPath = storage_path("app/public/contrats/{$fileName}");
+        
+        // Assurez-vous que le répertoire existe
+        if (!\Illuminate\Support\Facades\File::exists(storage_path('app/public/contrats'))) {
+            \Illuminate\Support\Facades\File::makeDirectory(storage_path('app/public/contrats'), 0755, true);
+        }
+
+        // Charger la vue Blade avec les données
+        $pdf = PDF::loadView('back.investisseur.projets.contrat_de_pret', compact('loanRequest', 'investment', 'emprunteur', 'investisseur'));
+
+        // Sauvegarder le PDF sur le disque
+        $pdf->save($pdfPath);
+        
+        return $pdfPath;
     }
 
     /**

@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\InvestorRiskService;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AdminController extends Controller
 {
@@ -29,25 +32,48 @@ class AdminController extends Controller
     {
         Session::put('menu_actif', 'emprunteurs');
 
+        // Récupérer les 3 derniers mois où il y a des emprunteurs créés
+        $months = Emprunteur::select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') as ym"))
+            ->groupBy('ym')
+            ->orderBy('ym', 'desc')
+            ->take(3)
+            ->pluck('ym')
+            ->map(function ($ym) {
+                return [
+                    'value' => $ym,
+                    'label' => Carbon::createFromFormat('Y-m', $ym)->translatedFormat('F Y'),
+                    'short' => Carbon::createFromFormat('Y-m', $ym)->translatedFormat('M Y'),
+                ];
+            });
+
         $query = Emprunteur::with('user')->whereHas('user', function ($q) {
             $q->where('is_profile_completed', true);
         });
 
-        // Exemple de filtres
-        // if ($request->filled('min_amount')) {
-        //     $query->where('simulation_result->amount', '>=', $request->min_amount);
-        // }
-        // if ($request->filled('max_amount')) {
-        //     $query->where('simulation_result->amount', '<=', $request->max_amount);
-        // }
-        // if ($request->filled('risk_level')) {
-        //     $query->whereHas('emprunteur.riskLevel', function($q) use ($request) {
-        //         $q->where('profile', $request->risk_level);
-        //     });
-        // }
+        // Filtrer par statut KYC
+        if ($request->filled('statut')) {
+            if ($request->statut == 1) {
+                // Activé (par ex. kyc_status = validated)
+                $query->whereHas('user', fn($q) => $q->where('kyc_status', 'validated'));
+            } elseif ($request->statut == 2) {
+                // Désactivé (autres statuts)
+                $query->whereHas('user', fn($q) => $q->where('kyc_status', '!=', 'validated'));
+            }
+        }
+        // Ordre d’affichage
+        if ($request->filled('ordre')) {
+            if ($request->ordre == 1) {
+                $query->orderByDesc('created_at'); // Plus récents
+            } elseif ($request->ordre == 2) {
+                $query->orderBy('created_at'); // Plus anciens
+            }
+        } else {
+            // par défaut
+            $query->orderByDesc('created_at');
+        }
 
-        $emprunteurs = $query->latest()->paginate();
-        return view('back.admin.emprunteurs', compact('emprunteurs'));
+        $emprunteurs = $query->paginate(10);
+        return view('back.admin.emprunteurs', compact('emprunteurs', 'months'));
     }
 
     public function jsonEmprunteur(Emprunteur $emprunteur)
@@ -87,23 +113,47 @@ class AdminController extends Controller
     {
         Session::put('menu_actif', 'investisseurs');
 
+        // Récupérer les 3 derniers mois où il y a des emprunteurs créés
+        $months = Investisseur::select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') as ym"))
+            ->groupBy('ym')
+            ->orderBy('ym', 'desc')
+            ->take(3)
+            ->pluck('ym')
+            ->map(function ($ym) {
+                return [
+                    'value' => $ym,
+                    'label' => Carbon::createFromFormat('Y-m', $ym)->translatedFormat('F Y'),
+                    'short' => Carbon::createFromFormat('Y-m', $ym)->translatedFormat('M Y'),
+                ];
+            });
+
         $query = Investisseur::with('user')->whereHas('user', function ($q) {
             $q->where('is_profile_completed', true);
         });
 
-        // Exemple de filtres
-        // if ($request->filled('min_amount')) {
-        //     $query->where('simulation_result->amount', '>=', $request->min_amount);
-        // }
-        // if ($request->filled('max_amount')) {
-        //     $query->where('simulation_result->amount', '<=', $request->max_amount);
-        // }
-        // if ($request->filled('risk_level')) {
-        //     $query->whereHas('emprunteur.riskLevel', function($q) use ($request) {
-        //         $q->where('profile', $request->risk_level);
-        //     });
-        // }
-        $investisseurs = $query->latest()->paginate();
+        // Filtrer par statut KYC
+        if ($request->filled('statut')) {
+            if ($request->statut == 1) {
+                // Activé (par ex. kyc_status = validated)
+                $query->whereHas('user', fn($q) => $q->where('kyc_status', 'validated'));
+            } elseif ($request->statut == 2) {
+                // Désactivé (autres statuts)
+                $query->whereHas('user', fn($q) => $q->where('kyc_status', '!=', 'validated'));
+            }
+        }
+        // Ordre d’affichage
+        if ($request->filled('ordre')) {
+            if ($request->ordre == 1) {
+                $query->orderByDesc('created_at'); // Plus récents
+            } elseif ($request->ordre == 2) {
+                $query->orderBy('created_at'); // Plus anciens
+            }
+        } else {
+            // par défaut
+            $query->orderByDesc('created_at');
+        }
+
+        $investisseurs = $query->paginate(10);
 
         // Ajouter le scoring risque
         foreach ($investisseurs as $investisseur) {
@@ -122,7 +172,7 @@ class AdminController extends Controller
             $investisseur->risk = $this->riskService->evaluate($data);
         }
 
-        return view('back.admin.investisseurs', compact('investisseurs'));
+        return view('back.admin.investisseurs', compact('investisseurs', 'months'));
     }
 
     public function jsonInvestisseurs(Investisseur $investisseur)
@@ -353,23 +403,44 @@ class AdminController extends Controller
     {
         Session::put('menu_actif', 'demande_prets');
 
-        $query = LoanRequest::where('status', '!=', 'En cours de financement')->with('emprunteur');
+        // Récupérer les 3 derniers mois où il y a des prêts créés
+        $months = LoanRequest::select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') as ym"))
+            ->groupBy('ym')
+            ->orderBy('ym', 'desc')
+            ->take(3)
+            ->pluck('ym')
+            ->map(function ($ym) {
+                return [
+                    'value' => $ym,
+                    'label' => Carbon::createFromFormat('Y-m', $ym)->translatedFormat('F Y'),
+                    'short' => Carbon::createFromFormat('Y-m', $ym)->translatedFormat('M Y'),
+                ];
+            });
 
-        // Exemple de filtres
-        // if ($request->filled('min_amount')) {
-        //     $query->where('simulation_result->amount', '>=', $request->min_amount);
-        // }
-        // if ($request->filled('max_amount')) {
-        //     $query->where('simulation_result->amount', '<=', $request->max_amount);
-        // }
-        // if ($request->filled('risk_level')) {
-        //     $query->whereHas('emprunteur.riskLevel', function($q) use ($request) {
-        //         $q->where('profile', $request->risk_level);
-        //     });
-        // }
+        $query = LoanRequest::where('status', '!=', 'En cours de financement')
+            ->with('emprunteur');
 
-        $loanRequests = $query->latest()->paginate();
-        return view('back.admin.prets.demandes', compact('loanRequests'));
+        // Filtrer par statut (colonne, pas relation)
+        if ($request->filled('statut')) {
+            $query->where('status', $request->statut);
+        }
+
+        // Ordre d’affichage
+        if ($request->filled('ordre')) {
+            if ($request->ordre == 1) {
+                $query->orderByDesc('created_at'); // Plus récents
+            } elseif ($request->ordre == 2) {
+                $query->orderBy('created_at'); // Plus anciens
+            }
+        } else {
+            // par défaut
+            $query->orderByDesc('created_at');
+        }
+
+        // inutile de rajouter ->latest() car on gère déjà l’ordre
+        $loanRequests = $query->paginate(10);
+
+        return view('back.admin.projets.demandes', compact('loanRequests', 'months'));
     }
 
     public function updateLoanStatus(Request $request, LoanRequest $loan)
@@ -392,45 +463,99 @@ class AdminController extends Controller
     {
         Session::put('menu_actif', 'projets_en_cours');
 
+        // Récupérer les 3 derniers mois où il y a des prêts créés
+        $months = LoanRequest::select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') as ym"))
+            ->groupBy('ym')
+            ->orderBy('ym', 'desc')
+            ->take(3)
+            ->pluck('ym')
+            ->map(function ($ym) {
+                return [
+                    'value' => $ym,
+                    'label' => Carbon::createFromFormat('Y-m', $ym)->translatedFormat('F Y'),
+                    'short' => Carbon::createFromFormat('Y-m', $ym)->translatedFormat('M Y'),
+                ];
+            });
+
         $query = LoanRequest::where('status', 'En cours de financement')->with('emprunteur');
 
-        // Exemple de filtres
-        // if ($request->filled('min_amount')) {
-        //     $query->where('simulation_result->amount', '>=', $request->min_amount);
-        // }
-        // if ($request->filled('max_amount')) {
-        //     $query->where('simulation_result->amount', '<=', $request->max_amount);
-        // }
-        // if ($request->filled('risk_level')) {
-        //     $query->whereHas('emprunteur.riskLevel', function($q) use ($request) {
-        //         $q->where('profile', $request->risk_level);
-        //     });
-        // }
+        // Filtrer par statut (colonne, pas relation)
+        if ($request->filled('statut')) {
+            $query->where('status', $request->statut);
+        }
+        // Ordre d’affichage
+        if ($request->filled('ordre')) {
+            if ($request->ordre == 1) {
+                $query->orderByDesc('created_at'); // Plus récents
+            } elseif ($request->ordre == 2) {
+                $query->orderBy('created_at'); // Plus anciens
+            }
+        } else {
+            // par défaut
+            $query->orderByDesc('created_at');
+        }
 
-        $loanRequests = $query->latest()->paginate();
-        return view('back.admin.prets.en_cours', compact('loanRequests'));
+        $loanRequests = $query->paginate(10);
+        return view('back.admin.projets.en_cours', compact('loanRequests', 'months'));
     }
 
-    public function demandesInvestments(Request $request)
+    public function ListeInvestments(Request $request, $loan = null)
     {
-        Session::put('menu_actif', 'demande_invest');
+        if (!$loan) Session::put('menu_actif', 'liste_invest');
 
-        $query = Investment::where('status', 'À approuver');
+        // Récupérer les 3 derniers mois où il y a des prêts créés
+        $months = Investment::select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') as ym"))
+            ->groupBy('ym')
+            ->orderBy('ym', 'desc')
+            ->take(3)
+            ->pluck('ym')
+            ->map(function ($ym) {
+                return [
+                    'value' => $ym,
+                    'label' => Carbon::createFromFormat('Y-m', $ym)->translatedFormat('F Y'),
+                    'short' => Carbon::createFromFormat('Y-m', $ym)->translatedFormat('M Y'),
+                ];
+            });
 
-        // Exemple de filtres
-        // if ($request->filled('min_amount')) {
-        //     $query->where('simulation_result->amount', '>=', $request->min_amount);
-        // }
-        // if ($request->filled('max_amount')) {
-        //     $query->where('simulation_result->amount', '<=', $request->max_amount);
-        // }
-        // if ($request->filled('risk_level')) {
-        //     $query->whereHas('emprunteur.riskLevel', function($q) use ($request) {
-        //         $q->where('profile', $request->risk_level);
-        //     });
-        // }
+        $query = Investment::with('investisseur');
+        if ($loan) $query->where('loan_request_id', $loan);
 
-        $investments = $query->latest()->first()->paginate(10);
-        return view('back.admin.investissements.demandes', compact('investments'));
+        // Filtrer par statut (colonne, pas relation)
+        if ($request->filled('statut')) {
+            $query->where('status', $request->statut);
+        }
+        // Ordre d’affichage
+        if ($request->filled('ordre')) {
+            if ($request->ordre == 1) {
+                $query->orderByDesc('created_at'); // Plus récents
+            } elseif ($request->ordre == 2) {
+                $query->orderBy('created_at'); // Plus anciens
+            }
+        } else {
+            // par défaut
+            $query->orderByDesc('created_at');
+        }
+
+        $investments = $query->paginate(10);
+
+        // Ajouter le scoring risque
+        foreach ($investments as $investment) {
+            $investisseur = $investment->investisseur;
+            $data = [
+                'is_legal_entity' => $investisseur->type_of_lender, // "Personne physique" / "Personne morale"
+                'is_ppe' => $investisseur->ppe ?? false,
+                'is_complex_structure' => $investisseur->beneficiaires ? count($investisseur->beneficiaires) : 0,
+                'resides_risk_country' => $investisseur->user->address['pays'] ?? null,
+                'funds_from_risk_country' => $investisseur->funds_from_country ?? null,
+                // 'amount' => $investisseur->user->wallet->balance ?? 0,
+                // 'seuil_interne' => 10000,
+                // 'unjustified_early_repayment' => false,
+                'channel_remote_only' => true,
+            ];
+
+            $investment->investisseur->risk = $this->riskService->evaluate($data);
+        }
+
+        return view('back.admin.projets.investissements', compact('investments', 'months'));
     }
 }

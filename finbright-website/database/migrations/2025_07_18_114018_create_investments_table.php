@@ -20,7 +20,17 @@ return new class extends Migration
             
             $table->unique(['investisseur_id','loan_request_id']); // 1 ligne par projet dans le panier
             $table->enum('type_investment', ['pret_sans_interet', 'pret_avec_interet', 'don'])->default('pret_sans_interet');
-            $table->enum('status', ['En attente de signature', 'Accepté', 'Refusé'])->default('En attente de signature');
+            $table->enum('status', [
+                'En attente de signature', 
+                'Signature en cours', 
+                'Échec signature', 
+                'Partiellement signé', 
+                'Signé et en attente de fonds', 
+                'Actif', 
+                'Remboursé', 
+                'Refusé', 
+                'Expiré', 
+                'Annulé'])->default('En attente de signature');
         });
     }
 

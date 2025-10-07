@@ -72,7 +72,7 @@
                                 </tr>
                                 <tr>
                                     <td class="text-secondary-foreground font-normal">
-                                        Lieu de naissance
+                                        Pays de naissance
                                     </td>
                                     <td class="text-foreground font-normal">
                                         {{ Auth::user()->birth_place ?? 'Non définie' }}
@@ -666,7 +666,7 @@
                                     </div>
                                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                                         <label class="kt-form-label max-w-56">
-                                            Lieu de naissance <span class="text-destructive">*</span>
+                                            Pays de naissance <span class="text-destructive">*</span>
                                         </label>
                                         <div class="grow">
                                             @php

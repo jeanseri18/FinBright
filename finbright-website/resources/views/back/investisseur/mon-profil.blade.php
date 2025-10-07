@@ -329,11 +329,11 @@
                                                         required />
                                                 </label>
                                                 <label>
-                                                    <span class="kt-form-description">Lieu de naissance</span>    
+                                                    <span class="kt-form-description">Pays de naissance</span>    
                                                     <select class="kt-select grow" name="beneficiaires[{{ $index }}][birth_place]" required  
-                                                        data-kt-select-placeholder="Lieu de naissance" 
+                                                        data-kt-select-placeholder="Pays de naissance" 
                                                         data-kt-select-config='{
-                                                            "placeholder": "Lieu de naissance",
+                                                            "placeholder": "Pays de naissance",
                                                             "optionsClass": "kt-scrollable overflow-auto max-h-[250px]"
                                                         }'
                                                         >
@@ -475,7 +475,7 @@
                         </div>
                         <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                             <label class="kt-form-label max-w-56">
-                                Lieu de naissance <span class="text-destructive">*</span>
+                                Pays de naissance <span class="text-destructive">*</span>
                             </label>
                             <div class="grow">
                                 @php

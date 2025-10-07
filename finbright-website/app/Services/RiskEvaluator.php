@@ -27,15 +27,15 @@ class RiskEvaluator
                 || in_array($userDiploma, array_map('strtolower', $char['diplomas']));
 
             // Vérifie les années (si le seeder ne précise que l'année seule)
-            $matchYear = empty($char['years']) 
-                || in_array($userYear, array_map('strtolower', $char['years']));
+            // $matchYear = empty($char['years']) 
+            //     || in_array($userYear, array_map('strtolower', $char['years']));
 
             // Vérifie la spécialisation
             $matchSpecialization = empty($char['specializations']) 
                 || in_array('*', $char['specializations'])
                 || in_array($userSpecialization, array_map('strtolower', $char['specializations']));
 
-            if ($matchDiploma && $matchYear && $matchSpecialization) {
+            if ($matchDiploma && $matchSpecialization) {
                 return $level;
             }
         }
