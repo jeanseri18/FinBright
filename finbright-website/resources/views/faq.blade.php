@@ -462,7 +462,7 @@
                     <p class="text-gray-700 leading-relaxed">
 
                     
-Pour mutualiser une partie du risque, Fin'Bright alimente une "cagnotte de solidarité" en y versant 1 % à 2 % de ses propres commissions pris, exclusivement sur le mini prêt court. Ce fonds n'est pas une garantie en capital. Son objectif est de pouvoir indemniser partiellement les prêteurs en cas de perte définitive sur un prêt (c'est-à-dire après l'échec de toutes les procédures de recouvrement). 
+Pour mutualiser une partie du risque, Fin'Bright alimente une "cagnotte de solidarité" en y versant 1 % à 2 % de ses propres commissions pris. Ce fonds n'est pas une garantie en capital. Son objectif est de pouvoir indemniser partiellement les prêteurs en cas de perte définitive sur un prêt (c'est-à-dire après l'échec de toutes les procédures de recouvrement). 
 L'indemnisation est versée sous conditions et dans la limite des fonds disponibles dans la cagnotte au moment où la perte est constatée. Elle ne peut donc être garantie.               
 </p>
                 </div>
