@@ -27,6 +27,11 @@ return [
         'role' => Spatie\Permission\Models\Role::class,
 
     ],
+    
+    'guards' => [
+        'web',
+        'admin', // ajoute ton guard ici si tu utilises un guard séparé
+    ],
 
     'table_names' => [
 

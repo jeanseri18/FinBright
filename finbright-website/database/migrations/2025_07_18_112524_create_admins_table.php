@@ -13,9 +13,17 @@ return new class extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->json('permissions')->nullable(); // si tu veux du custom en plus de Spatie
+            $table->string('fullname')->nullable();
+            $table->string('email');
+            $table->string('password')->nullable();
+            $table->string('phone_number')->nullable()->unique();
+            $table->string('status')->default("Activation en cours"); // 'Actif', 'Activation en cours', 'inactif'
+            $table->softDeletes();
+            $table->rememberToken()->nullable();
             $table->timestamps();
+
+            // Clés étrangères (ajoutées après les autres champs pour une meilleure lisibilité)
+            $table->foreignId('profile_picture_id')->nullable()->constrained('files')->onDelete('set null');
         });
     }
 

@@ -4,7 +4,7 @@
 
 @section('stylesheet')
     <style type="text/css">
-        #new_etablissement .kt-select-dropdown.open {
+        #new_admin .kt-select-dropdown.open {
             position: absolute !important;
         }
     </style>
@@ -27,7 +27,7 @@
                         /
                     </span>
                     <span class="text-secondary-foreground">
-                        Réglage
+                        Sécurité
                     </span>
                     <span class="text-muted-foreground text-sm">
                         /
@@ -173,43 +173,36 @@
                                         <div class="flex items-center gap-2.5">
                                             <div class="">
                                                 <img class="h-9 rounded-full"
-                                                    src="{{ $admin->user->profilePicture ? Storage::url($admin->user->profilePicture->filename) : asset('assets/media/avatars/blank.png') }}" />
+                                                    src="{{ $admin->profilePicture ? Storage::url($admin->profilePicture->filename) : asset('assets/media/avatars/blank.png') }}" />
                                             </div>
                                             <div class="flex flex-col gap-0.5">
                                                 <a class="leading-none font-medium text-sm text-mono hover:text-primary"
                                                     href="#" onclick="openModal({{ $admin->id }})">
-                                                    {{ $admin->user->first_name . ' ' . $admin->user->last_name }}
+                                                    {{ $admin->fullname }}
                                                 </a>
                                                 <span class="text-xs text-secondary-foreground font-normal">
-                                                    {{ $admin->user->email }}
+                                                    {{ $admin->email }}
                                                 </span>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        {{-- @if (count($admin->roles) != 0) --}}
-                                        {{-- <div class="flex flex-wrap gap-2.5 mb-2">
-                                        @foreach ($admin->roles as $role)
-                                        <span class="kt-badge kt-badge-outline">
-                                            {{ $role->label }}
-                                        </span>
-                                        @endforeach
-                                    </div> --}}
-                                        {{-- @endif --}}
-                                    </td>
-                                    <td>
-                                        <div class="flex items-center gap-1.5">
-                                            <img alt="flag" class="h-4 rounded-full"
-                                                src="/static/metronic/tailwind/dist/assets/media/flags/estonia.svg">
-                                            <span class="leading-none text-foreground font-normal">
-                                                Estonia
+                                        @if (count($admin->roles) != 0)
+                                        <div class="flex flex-wrap gap-2.5 mb-2">
+                                            @foreach ($admin->roles as $role)
+                                            <span class="kt-badge kt-badge-outline">
+                                                {{ $role->name }}
                                             </span>
-                                            </img>
+                                            @endforeach
                                         </div>
+                                        @endif
                                     </td>
                                     <td>
-                                        <span class="kt-badge kt-badge-outline kt-badge-success">
-                                            Active
+                                        {{ $admin->phone_number }}
+                                    </td>
+                                    <td>
+                                        <span class="kt-badge kt-badge-outline kt-badge-{{ $admin->status == "Activation en cours" ? "warning" : ($admin->status == "Actif" ? "success" : "destructive") }}">
+                                            {{ $admin->status }}
                                         </span>
                                     </td>
                                     <td class="text-foreground font-normal">
@@ -269,7 +262,7 @@
     </div>
     <!-- End of Container -->
 
-    <div class="kt-modal kt-modal-center" data-kt-modal="true" id="new_etablissement">
+    <div class="kt-modal kt-modal-center" data-kt-modal="true" id="new_admin">
         <div class="kt-modal-content max-w-xl">
             <div class="kt-modal-header">
                 <h3 class="kt-modal-title">Nouvel utilisateur</h3>
@@ -283,7 +276,7 @@
                 </button>
             </div>
             <div class="kt-modal-body">
-                <form action="{{ route('admin.reglage.etablissement.save') }}" method="POST" class="kt-form">
+                <form action="{{ route('admin.securite.utilisateurs.save') }}" method="POST" class="kt-form" enctype="multipart/form-data">
                     @csrf
                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                         <label class="kt-form-label max-w-56">
@@ -293,58 +286,44 @@
                             <span class="text-sm">
                                 150x150px JPEG, PNG Image
                             </span>
-                            <div class="kt-image-input size-16" data-kt-image-input="true">
-                                <input accept=".png, .jpg, .jpeg" name="avatar" type="file">
-                                <input name="avatar_remove" type="hidden" />
-                                <button class="kt-image-input-remove" data-kt-image-input-remove="true"
-                                    data-kt-tooltip="true" data-kt-tooltip-placement="right"
-                                    data-kt-tooltip-trigger="hover" type="button">
-                                    <i class="ki-filled ki-cross">
-                                    </i>
-                                    <span class="kt-tooltip" data-kt-tooltip-content="true">
-                                        Clicquer ici pour supprimer
-                                    </span>
-                                </button>
-                                <div class="kt-image-input-placeholder border-2 border-green-500 kt-image-input-empty:border-input"
-                                    data-kt-image-input-placeholder="true"
-                                    style="background-image:url(/static/metronic/tailwind/dist/assets/media/avatars/blank.png)">
-                                    <div class="kt-image-input-preview" data-kt-image-input-preview="true"
-                                        style="background-image:url('/media/avatars/300-2.png')">
-                                    </div>
-                                    <div
-                                        class="flex items-center justify-center cursor-pointer h-5 left-0 right-0 bottom-0 bg-black/25 absolute">
-                                        <svg class="fill-border opacity-80" height="12" viewbox="0 0 14 12"
-                                            width="14" xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M11.6665 2.64585H11.2232C11.0873 2.64749 10.9538 2.61053 10.8382 2.53928C10.7225 2.46803 10.6295 2.36541 10.5698 2.24335L10.0448 1.19918C9.91266 0.931853 9.70808 0.707007 9.45438 0.550249C9.20068 0.393491 8.90806 0.311121 8.60984 0.312517H5.38984C5.09162 0.311121 4.799 0.393491 4.5453 0.550249C4.2916 0.707007 4.08701 0.931853 3.95484 1.19918L3.42984 2.24335C3.37021 2.36541 3.27716 2.46803 3.1615 2.53928C3.04584 2.61053 2.91234 2.64749 2.7765 2.64585H2.33317C1.90772 2.64585 1.49969 2.81486 1.19885 3.1157C0.898014 3.41654 0.729004 3.82457 0.729004 4.25002V10.0834C0.729004 10.5088 0.898014 10.9168 1.19885 11.2177C1.49969 11.5185 1.90772 11.6875 2.33317 11.6875H11.6665C12.092 11.6875 12.5 11.5185 12.8008 11.2177C13.1017 10.9168 13.2707 10.5088 13.2707 10.0834V4.25002C13.2707 3.82457 13.1017 3.41654 12.8008 3.1157C12.5 2.81486 12.092 2.64585 11.6665 2.64585ZM6.99984 9.64585C6.39413 9.64585 5.80203 9.46624 5.2984 9.12973C4.79478 8.79321 4.40225 8.31492 4.17046 7.75532C3.93866 7.19572 3.87802 6.57995 3.99618 5.98589C4.11435 5.39182 4.40602 4.84613 4.83432 4.41784C5.26262 3.98954 5.80831 3.69786 6.40237 3.5797C6.99644 3.46153 7.61221 3.52218 8.1718 3.75397C8.7314 3.98576 9.2097 4.37829 9.54621 4.88192C9.88272 5.38554 10.0623 5.97765 10.0623 6.58335C10.0608 7.3951 9.73765 8.17317 9.16365 8.74716C8.58965 9.32116 7.81159 9.64431 7 9.64585Z">
-                                            </path>
-                                            <path
-                                                d="M7 8.77087C8.20812 8.77087 9.1875 7.7915 9.1875 6.58337C9.1875 5.37525 8.20812 4.39587 7 4.39587C5.79188 4.39587 4.8125 5.37525 4.8125 6.58337C4.8125 7.7915 5.79188 8.77087 7 8.77087Z">
-                                            </path>
-                                        </svg>
-                                    </div>
+                            <div class="group relative size-18 rounded-full border border-gray-300 bg-gray-50 overflow-hidden cursor-pointer" id="avatar-container">
+                                <input accept=".png, .jpg, .jpeg" name="avatar" type="file" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" id="avatar-input" />
+                                
+                                <div id="avatar-preview" class="w-full h-full bg-cover bg-center rounded-full" style="background-image: url('{{ Auth::user()->profilePicture ? Storage::url(Auth::user()->profilePicture->filename) : asset('assets/media/avatars/blank.png') }}');"></div>
+                                
+                                <div class="absolute bottom-0 left-0 right-0 h-1/3 flex items-center justify-center bg-gray-300 bg-opacity-70">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.867-1.442A2 2 0 0110.437 3h3.125a2 2 0 011.664.89l.867 1.442A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
                                 </div>
-                                </input>
+                                
+                                <button type="button" id="avatar-remove-btn" class="absolute -top-2 -right-2 size-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer opacity-0 transition-opacity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="id">
                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                         <label class="kt-form-label max-w-56">
-                            Nom & prenoms
+                            Nom & prénoms
                         </label>
-                        <input class="kt-input" type="text" value="Jason Tatum" />
+                        <input class="kt-input" type="text" name="fullname" placeholder="Nom et prénoms" required />
                     </div>
                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                         <label class="kt-form-label max-w-56">
                             Numéro de téléphone
                         </label>
-                        <input class="kt-input" placeholder="Phone number" type="text" value="" />
+                        <input class="kt-input" placeholder="Phone number" type="text" name="phone_number" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" />
                     </div>
                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                         <label class="kt-form-label max-w-56">
                             Email
                         </label>
-                        <input class="kt-input" type="text" value="jason@studio.io" />
+                        <input class="kt-input" type="email" name="email" placeholder="Adresse email" required />
                     </div>
                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                         <label class="kt-form-label max-w-56">
@@ -354,23 +333,26 @@
                             @php
                                 // Définir la configuration en tant que tableau PHP
                                 $config = [
-                                    'displayTemplate' => '<div class="flex items-center gap-2">{{icon}}<span class="text-foreground">{{text}}</span></div>',
                                     'optionTemplate' => '<div class="flex items-center grow gap-2"><div class="flex flex-col gap-0.5"><span class="font-semibold text-foreground">{{text}}</span><span class="text-xs text-muted-foreground">{{desc}}</span></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-3.5 ms-auto hidden text-primary kt-select-option-selected:block"><path d="M20 6 9 17l-5-5"/></svg></div>',
+                                    "displaySeparator" => " | "
                                 ];
                             @endphp
                             <select
+                                name="roles[]"
                                 class="kt-select"
+                                multiple
+                                required
+                                data-kt-select-multiple="true"
                                 data-kt-select="true"
-                                data-kt-select-placeholder="Select an option..."
+                                data-kt-select-placeholder="Sélectionner un rôle..."
                                 data-kt-select-config='@json($config)'
                                 >
                                 @foreach($roles as $role)
                                     <option
                                         value="{{ $role->id }}"
-                                        selected
-                                        data-kt-select-option='{"desc": "Can modify and delete", "icon" => "<i class="ki-filled ki-user"></i>"}'
+                                        data-kt-select-option='{"desc": "{{$role->description}}"}'
                                     >
-                                        {{ $role->label }}
+                                        {{ $role->name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -393,29 +375,92 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
     <script type="text/javascript">
-        const modalEl = document.querySelector('#new_etablissement');
+        const avatarContainer = document.getElementById('avatar-container');
+        const avatarInput = document.getElementById('avatar-input');
+        const avatarPreview = document.getElementById('avatar-preview');
+        const avatarRemoveBtn = document.getElementById('avatar-remove-btn');
+        const defaultAvatarUrl = '{{ asset('assets/media/avatars/blank.png') }}';
+
+        // Fonction pour mettre à jour l'état visuel
+        function updateAvatarState(imageUrl) {
+            if (imageUrl && imageUrl !== defaultAvatarUrl) {
+                avatarPreview.style.backgroundImage = `url('${imageUrl}')`;
+                avatarContainer.classList.add('has-avatar');
+            } else {
+                avatarPreview.style.backgroundImage = `url('${defaultAvatarUrl}')`;
+                avatarContainer.classList.remove('has-avatar');
+            }
+        }
+
+        // Appliquer l'état initial
+        updateAvatarState(avatarPreview.style.backgroundImage.slice(5, -2)); // Extrait l'URL de l'attribut style
+
+        // Gérer le changement de fichier
+        avatarInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    updateAvatarState(event.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Gérer la suppression de l'image
+        avatarRemoveBtn.addEventListener('click', function(event) {
+            event.stopPropagation(); // Empêche le clic de se propager à l'input
+            avatarInput.value = ''; // Réinitialise l'input de fichier
+            updateAvatarState('');
+        });
+
+        const modalEl = document.querySelector('#new_admin');
         const modal = KTModal.getInstance(modalEl) || new KTModal(modalEl);
+        const form = modalEl.querySelector('form');
+        const roleSelect = form.querySelector('select[name="roles[]"]');
+
+        // On injecte les rôles PHP dans une variable JS
+        const availableRoles = @json($roles);
+
+        function populateRoles(selectedRoleIds = []) {
+            roleSelect.innerHTML = '';
+            availableRoles.forEach(role => {
+                const isSelected = selectedRoleIds.includes(role.id) ? 'selected' : ''; 
+                roleSelect.innerHTML += `
+                    <option value="${role.id}" ${isSelected}
+                        data-kt-select-option='{"desc": "${role.description ?? ''}"}'>
+                        ${role.name}
+                    </option>`;
+            });
+            KTSelect.createInstances(roleSelect);
+        }
 
         function openModal(entityId = null) {
-            // const form = modalEl.querySelector('form');
-            // form.reset();
-            // form.querySelector('input[name="id"]').value = '';
-            // const paysSelect = form.querySelector('select[name="pays"]');
-            // const ktSelect = paysSelect._ktSelect || null;
-            // if (ktSelect) ktSelect.setValue('');
+            form.reset();
+            form.querySelector('input[name="id"]').value = '';
 
-            // if (entityId) {
-            //     fetch(`/admin/reglage/etablissement-${entityId}/json`)
-            //         .then(res => res.json())
-            //         .then(data => {
-            //             form.querySelector('input[name="id"]').value = data.id;
-            //             form.querySelector('input[name="nom"]').value = data.nom;
-            //             form.querySelector('input[name="ville"]').value = data.ville;
-            //             paysSelect.value = data.pays;
-            //             if (ktSelect) ktSelect.setValue(data.pays);
-            //         })
-            //         .catch(err => console.error("Erreur lors du chargement :", err));
-            // }
+            if (entityId) {
+                fetch(`/admin/securite/utilisateur-${entityId}/json`)
+                    .then(res => res.json())
+                    .then(data => {
+                        form.querySelector('input[name="id"]').value = data.id;
+                        form.querySelector('input[name="fullname"]').value = data.fullname;
+                        form.querySelector('input[name="phone_number"]').value = data.phone_number;
+                        form.querySelector('input[name="email"]').value = data.email;
+                        // Avatar si présent
+                        if (data.profile_picture_id && data.profile_picture) {
+                            avatarPreview.style.backgroundImage = `url('/storage/${data.profile_picture.filename}')`;
+                        }
+                        // Rôles multiples
+                        const roleIds = Array.isArray(data.roles) ? data.roles.map(r => r.id) : [];
+                        populateRoles(roleIds);
+                    })
+                    .catch(err => console.error("Erreur lors du chargement :", err));
+            } else {
+                populateRoles();
+                avatarPreview.style.backgroundImage = `url({{asset('assets/media/avatars/blank.png')}})`;
+            }
+
             modal.show();
         }
 
@@ -436,7 +481,6 @@
         });
 
         const exportBtn = document.getElementById('exportBtn');
-
         document.querySelectorAll('.kt-menu-link[data-value]').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();

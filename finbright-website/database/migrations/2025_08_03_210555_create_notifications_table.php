@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->morphs('notifiable'); // équivalent à notifiable_id + notifiable_type
             $table->string('type');       // ex: profile_completed, project_validated...
             $table->text('message');      // message lisible
             $table->json('data')->nullable(); // métadonnées (lien, motif rejet, etc.)

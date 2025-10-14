@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
@@ -15,12 +16,14 @@ use App\Http\Controllers\TwoFactorController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    // Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
-    // Route::post('register', [RegisteredUserController::class, 'store']);
-
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
-    Route::get('admin/login', [AuthenticatedSessionController::class, 'adminLogin'])->name('admin.login');
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/login', [AdminController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AdminController::class, 'login'])->name('login.post');
+    Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
 });
 
 Route::prefix('mot-de-passe-oublie')->name('password.')->middleware('guest')->group(function () {

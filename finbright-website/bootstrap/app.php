@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+            'auth.admin' => \App\Http\Middleware\AdminAuthMiddleware::class,
             'role' => RoleMiddleware::class,
             'setrole' => \App\Http\Middleware\SetRoleToPrefixMiddleware::class,
             'permission' => PermissionMiddleware::class,
@@ -24,6 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'profile.completed' => EnsureProfileIsCompleted::class,
             'kyc.validated' => \App\Http\Middleware\EnsureKycIsValidated::class,
             '2fa' => \App\Http\Middleware\EnsureTwoFactorIsVerified::class,
+            'security.log' => \App\Http\Middleware\SecurityLogger::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

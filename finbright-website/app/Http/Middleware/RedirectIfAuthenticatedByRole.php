@@ -15,10 +15,6 @@ class RedirectIfAuthenticatedByRole
             /** @var User $user */
             $user = Auth::user();
 
-            if ($user->hasRole('admin')) {
-                return redirect()->route('admin.dashboard');
-            }
-
             if ($user->hasRole('emprunteur')) {
                 return redirect()->route('emprunteur.dashboard');
             }

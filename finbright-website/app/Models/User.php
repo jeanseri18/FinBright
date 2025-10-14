@@ -100,12 +100,12 @@ class User extends Authenticatable
 
     public function notifications()
     {
-        return $this->hasMany(Notification::class)->latest();
+        return $this->morphMany(\App\Models\Notification::class, 'notifiable');
     }
 
     public function unreadNotifications()
     {
-        return $this->hasMany(Notification::class)->where('is_read', false)->latest();
+        return $this->morphMany(\App\Models\Notification::class, 'notifiable')->where('is_read', false)->latest();
     }
 
     public function notificationPreference()

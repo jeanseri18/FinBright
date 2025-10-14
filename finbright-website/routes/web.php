@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminPasswordResetController;
 use App\Http\Controllers\Admin\ExportController;
 use App\Http\Controllers\Admin\ReglageController;
-use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\SecuriteController;
 use App\Http\Controllers\ProfilController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
@@ -153,52 +154,72 @@ Route::prefix('investisseur')->name('investisseur.')->middleware(['auth', '2fa',
     });
 });
 
-Route::prefix('admin')->name('admin.')->middleware(['auth', '2fa', 'role:admin'])->group(function () {
-    Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
-    Route::get('/export/{entity}/{month?}', [ExportController::class, 'exportCsv'])->name('export.csv');
-
-    Route::post('/documents/{document}/update-status', [AdminController::class, 'updateStatus']);
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/reset-password/{token}', [AdminPasswordResetController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password', [AdminPasswordResetController::class, 'reset'])->name('password.update');
     
-    Route::post('/{type}/{id}/update-kyc-status', [AdminController::class, 'updateKycStatus'])->name('updateKycStatus');
-    
-    Route::prefix('emprunteurs')->name('emprunteurs.')->group(function () {
-        Route::get('/liste-des-emprunteurs', [AdminController::class, 'listeEmprunteurs'])->name('liste');
-        Route::get('/{emprunteur}/json', [AdminController::class, 'jsonEmprunteur'])->name('emprunteur.json');
-    });
+    Route::middleware(['auth:admin', 'security.log'])->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::get('/export/{entity}/{month?}', [ExportController::class, 'exportCsv'])->name('export.csv');
 
-    Route::prefix('investisseurs')->name('investisseurs.')->group(function () {
-        Route::get('/liste-des-investisseurs', [AdminController::class, 'listeInvestisseurs'])->name('liste');
-        Route::get('/{investisseur}/json', [AdminController::class, 'jsonInvestisseurs'])->name('json');
-    });
+        Route::post('/documents/{document}/update-status', [AdminController::class, 'updateStatus']);
+        
+        Route::post('/{type}/{id}/update-kyc-status', [AdminController::class, 'updateKycStatus'])->name('updateKycStatus');
+        
+        Route::prefix('emprunteurs')->name('emprunteurs.')->group(function () {
+            Route::get('/liste-des-emprunteurs', [AdminController::class, 'listeEmprunteurs'])->name('liste');
+            Route::get('/{emprunteur}/json', [AdminController::class, 'jsonEmprunteur'])->name('emprunteur.json');
+        });
 
-    Route::prefix('prets')->name('prets.')->group(function () {
-        Route::get('/demandes-de-prets', [AdminController::class, 'demandesPrets'])->name('demandes');
-        Route::post('{loan}/status', [AdminController::class, 'updateLoanStatus'])->name('update_status');
-        Route::get('/projets-en-cours', [AdminController::class, 'projetsEnCours'])->name('enCours');
-    });
+        Route::prefix('investisseurs')->name('investisseurs.')->group(function () {
+            Route::get('/liste-des-investisseurs', [AdminController::class, 'listeInvestisseurs'])->name('liste');
+            Route::get('/{investisseur}/json', [AdminController::class, 'jsonInvestisseurs'])->name('json');
+        });
 
-    Route::prefix('investissements')->name('investissements.')->group(function () {
-        Route::get('/liste-investissements/{loan?}', [AdminController::class, 'ListeInvestments'])->name('liste');
-    });
+        Route::prefix('prets')->name('prets.')->group(function () {
+            Route::get('/demandes-de-prets', [AdminController::class, 'demandesPrets'])->name('demandes');
+            Route::post('{loan}/status', [AdminController::class, 'updateLoanStatus'])->name('update_status');
+            Route::get('/projets-en-cours', [AdminController::class, 'projetsEnCours'])->name('enCours');
+        });
 
-    Route::prefix('reglage')->name('reglage.')->group(function () {
-        Route::get('/liste-des-etablissements', [ReglageController::class, 'listeEtablissements'])->name('etablissements');
-        Route::post('/etablissement/save', [ReglageController::class, 'saveEtablissement'])->name('etablissement.save');
-        Route::get('/etablissement-{etablissement}/json', [ReglageController::class, 'jsonEtablissement']);
-        Route::delete('/delete-etablissement/{id}', [ReglageController::class, 'deleteEtablissement'])->name('etablissement.delete');
+        Route::prefix('investissements')->name('investissements.')->group(function () {
+            Route::get('/liste-investissements/{loan?}', [AdminController::class, 'ListeInvestments'])->name('liste');
+        });
 
-        Route::get('/les-taux-d-interet', [ReglageController::class, 'listeTaux'])->name('taux');
-        Route::post('/taux/save', [ReglageController::class, 'saveTaux'])->name('taux.save');
-        Route::get('/taux-{taux}/json', [ReglageController::class, 'jsonTaux']);
-        Route::delete('/delete-taux/{id}', [ReglageController::class, 'deleteTaux'])->name('taux.delete');
-    });
+        Route::prefix('reglage')->name('reglage.')->group(function () {
+            Route::get('/liste-des-etablissements', [ReglageController::class, 'listeEtablissements'])->name('etablissements');
+            Route::post('/etablissement/save', [ReglageController::class, 'saveEtablissement'])->name('etablissement.save');
+            Route::get('/etablissement-{etablissement}/json', [ReglageController::class, 'jsonEtablissement']);
+            Route::delete('/delete-etablissement/{id}', [ReglageController::class, 'deleteEtablissement'])->name('etablissement.delete');
 
-    Route::prefix('securite')->name('securite.')->group(function () {
-        Route::get('/liste-des-utilisateurs', [UsersController::class, 'listeUtilisateurs'])->name('utilisateurs');
-        Route::post('/utilisateurs/save', [UsersController::class, 'saveUtilisateurs'])->name('utilisateurs.save');
-        Route::get('/utilisateur-{utilisateur}/json', [UsersController::class, 'jsonUtilisateur']);
-        Route::delete('/delete-utilisateur/{id}', [UsersController::class, 'deleteUtilisateur'])->name('utilisateur.delete');
+            Route::get('/les-taux-d-interet', [ReglageController::class, 'listeTaux'])->name('taux');
+            Route::post('/taux/save', [ReglageController::class, 'saveTaux'])->name('taux.save');
+            Route::get('/taux-{taux}/json', [ReglageController::class, 'jsonTaux']);
+            Route::delete('/delete-taux/{id}', [ReglageController::class, 'deleteTaux'])->name('taux.delete');
+        });
 
+        Route::prefix('securite')->name('securite.')->middleware(['role:Super Admin', 'permission:Gérer les utilisateurs'])->group(function () {
+            Route::get('/liste-des-utilisateurs', [SecuriteController::class, 'listeUtilisateurs'])->name('utilisateurs');
+            Route::post('/utilisateurs/save', [SecuriteController::class, 'saveUtilisateurs'])->name('utilisateurs.save');
+            Route::get('/utilisateur-{user}/json', [SecuriteController::class, 'jsonUtilisateur']);
+            Route::delete('/delete-utilisateur/{id}', [SecuriteController::class, 'deleteUtilisateur'])->name('utilisateur.delete');
+
+            Route::get('/roles', [SecuriteController::class, 'listeRoles'])->name('roles');
+            Route::post('/roles/save', [SecuriteController::class, 'saveRole'])->name('roles.save');
+            Route::get('/role-{role}/json', [SecuriteController::class, 'jsonRole']);
+            Route::delete('/delete-role/{id}', [SecuriteController::class, 'deleteRole'])->name('role.delete');
+
+            Route::get('/permissions', [SecuriteController::class, 'listePermissions'])->name('permissions');
+            Route::post('/permission/save', [SecuriteController::class, 'savePermission'])->name('permission.save');
+            Route::get('/permission-{permission}/json', [SecuriteController::class, 'jsonPermission']);
+            Route::delete('/delete-permission/{id}', [SecuriteController::class, 'deletePermission'])->name('permission.delete');
+            
+            Route::get('/security-log', [SecuriteController::class, 'securityLog'])->name('logs');
+            Route::delete('/delete-log/{id}', [SecuriteController::class, 'deleteLog'])->name('log.delete');
+            
+            Route::get('/corbeille', [SecuriteController::class, 'listeTrash'])->name('trash');
+            Route::delete('/delete-trash/{id}', [SecuriteController::class, 'deleteTrash'])->name('trash.delete');
+        });
     });
 });
 

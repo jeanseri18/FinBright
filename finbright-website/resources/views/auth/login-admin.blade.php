@@ -76,7 +76,8 @@ Contact:
         <div class="grid lg:grid-cols-2 grow">
             <div class="flex justify-center items-center p-8 lg:p-10 order-2 lg:order-1">
                 <div class="kt-card max-w-[370px] w-full">
-                    <form action="{{ route('login') }}" method="POST" class="kt-card-content flex flex-col gap-5 p-10" id="sign_in_form">
+                    <form action="{{ route('admin.login.post') }}" method="POST" class="kt-card-content flex flex-col gap-5 p-10" id="sign_in_form">
+                        @csrf
                         <div class="text-center mb-2.5">
                             <h3 class="text-lg font-medium text-mono leading-none mb-2.5">
                                 Connexion
@@ -87,6 +88,16 @@ Contact:
                                 </span>
                             </div>
                         </div>
+
+                        @if($errors->any())
+                            <div class="kt-alert kt-alert-light kt-alert-destructive" id="alert_4">
+                                <div class="kt-alert-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                                </div>
+                                <div class="kt-alert-title">{{ $errors->first() }}</div>
+                            </div>
+                        @endif
+
                         <!-- Email Address -->
                         <div class="flex flex-col gap-1">
                             <label for="email" class="kt-form-label font-normal text-mono">Adresse Email</label>

@@ -241,7 +241,7 @@
                                         <td>
                                             <a class="text-sm font-medium text-mono hover:text-primary"
                                                 href="#">
-                                                {{ Auth::user()->first_name .' '. Auth::user()->last_name }}
+                                                Inconnu
                                             </a>
                                         </td>
                                         <td>
@@ -469,10 +469,10 @@
                         <div class="flex flex-wrap md:flex-nowrap items-center gap-6 md:gap-10">
                             <div class="flex flex-col items-start gap-3">
                                 <h2 class="text-xl font-medium text-mono">
-                                    Questions ?
+                                    Des questions ?
                                 </h2>
                                 <p class="text-sm text-foreground leading-5.5 mb-2.5">
-                                    Visit our Help Center for detailed assistance on billing, payments, and subscriptions.
+                                    Consultez notre centre d'aide pour obtenir une assistance détaillée sur la facturation, les paiements et les abonnements.
                                 </p>
                             </div>
                             <img alt="image" class="dark:hidden max-h-[150px]"
@@ -483,7 +483,7 @@
                     </div>
                     <div class="kt-card-footer justify-center">
                         <a class="kt-link kt-link-underlined kt-link-dashed" href="">
-                            Go to Help Center
+                            Aller au centre d'aide
                         </a>
                     </div>
                 </div>
@@ -492,11 +492,10 @@
                         <div class="flex flex-wrap md:flex-nowrap items-center gap-6 md:gap-10">
                             <div class="flex flex-col items-start gap-3">
                                 <h2 class="text-xl font-medium text-mono">
-                                    Contact Support
+                                    Contacter l'assistance
                                 </h2>
                                 <p class="text-sm text-foreground leading-5.5 mb-2.5">
-                                    Need assistance? Contact our support team for prompt, personalized help your queries
-                                    &amp; concerns.
+                                    Besoin d'aide ? Contactez notre équipe d'assistance pour une aide rapide et personnalisée à vos questions &amp; préoccupations.
                                 </p>
                             </div>
                             <img alt="image" class="dark:hidden max-h-[150px]"
@@ -507,8 +506,8 @@
                     </div>
                     <div class="kt-card-footer justify-center">
                         <a class="kt-link kt-link-underlined kt-link-dashed"
-                            href="https://devs.keenthemes.com/unresolved">
-                            Contact Support
+                            href="">
+                            Contacter l'assistance
                         </a>
                     </div>
                 </div>

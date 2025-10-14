@@ -3,17 +3,23 @@
 namespace App\Services;
 
 use App\Models\Notification;
-use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
 class NotificationService
 {
     /**
-     * Crée une notification
+     * Crée une notification pour un utilisateur ou un admin
      */
-    public function notify(User $user, string $type, string $message, array $data = [])
+    public function notify(Model $user, string $type, string $message, array $data = [])
     {
-        // Vérifier si une notification identique existe déjà
-        $query = Notification::where('user_id', $user->id)
+        // Vérifie que le modèle passé est bien un User ou Admin
+        if (!in_array(get_class($user), [\App\Models\User::class, \App\Models\Admin::class])) {
+            throw new \InvalidArgumentException('L\'utilisateur doit être une instance de App\Models\User ou App\Models\Admin');
+        }
+
+        // Vérifier si une notification similaire existe déjà
+        $query = Notification::where('notifiable_id', $user->id)
+            ->where('notifiable_type', get_class($user))
             ->where('type', $type)
             ->where('is_read', false);
 
@@ -28,17 +34,18 @@ class NotificationService
             return $exists;
         }
 
-        // Sinon on crée une nouvelle notification
+        // Créer une nouvelle notification
         return Notification::create([
-            'user_id'         => $user->id,
+            'notifiable_id'   => $user->id,
+            'notifiable_type' => get_class($user),
             'type'            => $type,
-            'message' => $message, // peut contenir du HTML
-            'data'    => $data,    // ex: ['buttons' => '<button>Accepter</button>']
+            'message'         => $message,
+            'data'            => $data,
         ]);
     }
 
     /**
-     * Marquer une notification comme lue
+     * Marque une notification comme lue
      */
     public function markAsRead(Notification $notification)
     {
@@ -46,9 +53,9 @@ class NotificationService
     }
 
     /**
-     * Récupérer toutes les notifications d’un utilisateur
+     * Récupère les notifications d’un utilisateur ou admin
      */
-    public function getUserNotifications($user, $unreadOnly = false)
+    public function getUserNotifications(Model $user, $unreadOnly = false)
     {
         $query = Notification::where('notifiable_id', $user->id)
             ->where('notifiable_type', get_class($user))

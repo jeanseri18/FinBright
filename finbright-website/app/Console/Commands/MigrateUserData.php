@@ -48,11 +48,11 @@ class MigrateUserData extends Command
                 ]);
             }
 
-            if ($user->hasRole('admin')) {
-                $user->admin()->create([
-                    'permissions' => $user->permissions,
-                ]);
-            }
+            // if ($user->hasRole('admin')) {
+            //     $user->admin()->create([
+            //         'permissions' => $user->permissions,
+            //     ]);
+            // }
         }
 
         $this->info('Migration des données terminée avec succès.');

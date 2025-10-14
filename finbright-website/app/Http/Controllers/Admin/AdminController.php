@@ -22,6 +22,31 @@ class AdminController extends Controller
         private InvestorRiskService $riskService,
     ) {}
 
+    public function showLoginForm()
+    {
+        return view('auth.login-admin');
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
+
+        if (Auth::guard('admin')->attempt($credentials, $request->remember)) {
+            return redirect()->route('admin.dashboard');
+        }
+
+        return back()->withErrors(['email' => 'Identifiants incorrects']);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('admin')->logout();
+        return redirect()->route('admin.login');
+    }
+
     public function dashboard()
     {
         Session::put('menu_actif', 'dashboard');

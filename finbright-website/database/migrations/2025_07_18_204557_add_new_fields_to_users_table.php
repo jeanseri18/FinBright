@@ -37,7 +37,6 @@ return new class extends Migration
             $table->foreignId('profile_picture_id')->nullable()->constrained('files')->onDelete('set null'); // Assurez-vous que la table 'files' existera
             $table->foreignId('investisseur_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('emprunteur_id')->nullable()->constrained()->onDelete('cascade');
-            $table->foreignId('admin_id')->nullable()->constrained()->onDelete('cascade');
         });
     }
 
@@ -78,9 +77,6 @@ return new class extends Migration
 
             $table->dropForeign(['emprunteur_id']);
             $table->dropColumn('emprunteur_id');
-
-            $table->dropForeign(['admin_id']);
-            $table->dropColumn('admin_id');
         });
     }
 };

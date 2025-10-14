@@ -310,7 +310,7 @@ Contact:
                             </h3>
                             <div class="kt-menu flex flex-col w-full gap-1.5 px-3.5" data-kt-menu="true"
                                 data-kt-menu-accordion-expand-all="false" id="sidebar_primary_menu">
-                                <div class="kt-menu-item {{ in_array(session('menu_actif'), ['utilisateurs', 'roles']) ? 'here show' : null }}" data-kt-menu-item-toggle="accordion"
+                                <div class="kt-menu-item {{ in_array(session('menu_actif'), ['utilisateurs', 'roles', 'permissions']) ? 'here show' : null }}" data-kt-menu-item-toggle="accordion"
                                     data-kt-menu-item-trigger="click">
                                     <div
                                         class="kt-menu-link gap-2.5 py-2 px-2.5 rounded-md kt-menu-item-hover:bg-transparent kt-menu-item-here:bg-transparent">
@@ -346,7 +346,7 @@ Contact:
                                         </div>
                                         <div class="kt-menu-item {{ session('menu_actif') === 'roles' ? 'active' : '' }}">
                                             <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary"
-                                                href="">
+                                                href="{{ route('admin.securite.roles') }}">
                                                 <span
                                                     class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
                                                     Rôles
@@ -355,7 +355,7 @@ Contact:
                                         </div>
                                         <div class="kt-menu-item {{ session('menu_actif') === 'permissions' ? 'active' : '' }}">
                                             <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary"
-                                                href="">
+                                                href="{{ route('admin.securite.permissions') }}">
                                                 <span
                                                     class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
                                                     Permissions
@@ -364,29 +364,29 @@ Contact:
                                         </div>
                                     </div>
                                 </div>
-                                <div class="kt-menu-item">
+                                <div class="kt-menu-item {{ session('menu_actif') === 'logs' ? 'active' : '' }}">
                                     <a class="kt-menu-link gap-2.5 py-2 px-2.5 rounded-md kt-menu-item-active:bg-accent/60 kt-menu-link-hover:bg-accent/60 !menu-item-here:bg-transparent"
-                                        href="">
+                                        href="{{ route('admin.securite.logs') }}">
                                         <span
                                             class="kt-menu-icon items-start text-lg text-secondary-foreground kt-menu-item-active:text-mono kt-menu-item-here:text-mono">
                                             <i class="ki-filled ki-graph-3"></i>
                                         </span>
                                         <span
                                             class="kt-menu-title text-sm text-foreground font-medium kt-menu-item-here:text-mono kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
-                                            ChangeLogs
+                                            Security Log
                                         </span>
                                     </a>
                                 </div>
-                                <div class="kt-menu-item">
+                                <div class="kt-menu-item {{ session('menu_actif') === 'trash' ? 'active' : '' }}">
                                     <a class="kt-menu-link gap-2.5 py-2 px-2.5 rounded-md kt-menu-item-active:bg-accent/60 kt-menu-link-hover:bg-accent/60 !menu-item-here:bg-transparent"
-                                        href="">
+                                        href="{{ route('admin.securite.trash') }}">
                                         <span
                                             class="kt-menu-icon items-start text-lg text-secondary-foreground kt-menu-item-active:text-mono kt-menu-item-here:text-mono">
                                             <i class="ki-filled ki-trash"></i>
                                         </span>
                                         <span
                                             class="kt-menu-title text-sm text-foreground font-medium kt-menu-item-here:text-mono kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
-                                            Corbeil
+                                            Corbeille
                                         </span>
                                     </a>
                                 </div>
@@ -399,26 +399,29 @@ Contact:
                 <!-- Footer -->
                 <div class="flex flex-center justify-between shrink-0 ps-4 pe-3.5 mb-3.5" id="sidebar_footer">
                     <!-- User -->
+                    @php
+                        $admin = Auth::guard('admin')->user();
+                    @endphp
                     <div data-kt-dropdown="true" data-kt-dropdown-offset="10px, 10px"
                         data-kt-dropdown-offset-rtl="-20px, 10px" data-kt-dropdown-placement="bottom-start"
                         data-kt-dropdown-placement-rtl="bottom-end" data-kt-dropdown-trigger="click">
                         <div class="cursor-pointer shrink-0" data-kt-dropdown-toggle="true">
                             <img alt=""
                                 class="size-9 rounded-full border-2 border-mono/25 shrink-0 cursor-pointer"
-                                src="{{ asset('assets/media/avatars/gray/5.png') }}" />
+                                src="{{ $admin->profilePicture ? Storage::url($admin->profilePicture->filename) : asset('assets/media/avatars/blank.png') }}" />
                         </div>
                         <div class="kt-dropdown-menu w-[250px]" data-kt-dropdown-menu="true">
                             <div class="flex items-center justify-between px-2.5 py-1.5 gap-1.5">
                                 <div class="flex items-center gap-2">
                                     <img alt="" class="size-9 shrink-0 rounded-full border-2 border-green-500"
-                                        src="{{ asset('assets/media/avatars/300-2.png') }}" />
+                                        src="{{ $admin->profilePicture ? Storage::url($admin->profilePicture->filename) : asset('assets/media/avatars/blank.png') }}" />
                                     <div class="flex flex-col gap-1.5">
                                         <span class="text-sm text-foreground font-semibold leading-none">
-                                            {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
+                                            {{ $admin->fullname }}
                                         </span>
                                         <a class="text-xs text-secondary-foreground hover:text-primary font-medium leading-none"
                                             href="">
-                                            {{ Auth::user()->email }}
+                                            {{ $admin->email }}
                                         </a>
                                     </div>
                                 </div>
@@ -433,107 +436,9 @@ Contact:
                                 </li>
                                 <li>
                                     <a class="kt-dropdown-menu-link" href="">
-                                        <i class="ki-filled ki-badge">
-                                        </i>
-                                        Public Profile
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="kt-dropdown-menu-link" href="">
                                         <i class="ki-filled ki-profile-circle">
                                         </i>
-                                        My Profile
-                                    </a>
-                                </li>
-                                <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start"
-                                    data-kt-dropdown-trigger="hover">
-                                    <button class="kt-dropdown-menu-toggle" data-kt-dropdown-toggle="true">
-                                        <i class="ki-filled ki-setting-2">
-                                        </i>
-                                        My Account
-                                        <span class="kt-dropdown-menu-indicator">
-                                            <i class="ki-filled ki-right text-xs">
-                                            </i>
-                                        </span>
-                                    </button>
-                                    <div class="kt-dropdown-menu w-[220px]" data-kt-dropdown-menu="true">
-                                        <ul class="kt-dropdown-menu-sub">
-                                            <li>
-                                                <a class="kt-dropdown-menu-link" href="">
-                                                    <i class="ki-filled ki-coffee">
-                                                    </i>
-                                                    Get Started
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="kt-dropdown-menu-link" href="">
-                                                    <i class="ki-filled ki-some-files">
-                                                    </i>
-                                                    My Profile
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="kt-dropdown-menu-link" href="#">
-                                                    <span class="flex items-center gap-2">
-                                                        <i class="ki-filled ki-icon">
-                                                        </i>
-                                                        Billing
-                                                    </span>
-                                                    <span class="ms-auto inline-flex items-center"
-                                                        data-kt-tooltip="true" data-kt-tooltip-placement="top">
-                                                        <i
-                                                            class="ki-filled ki-information-2 text-base text-muted-foreground">
-                                                        </i>
-                                                        <span class="kt-tooltip" data-kt-tooltip-content="true">
-                                                            Payment and subscription info
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="kt-dropdown-menu-link" href="">
-                                                    <i class="ki-filled ki-medal-star">
-                                                    </i>
-                                                    Security
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="kt-dropdown-menu-link" href="">
-                                                    <i class="ki-filled ki-setting">
-                                                    </i>
-                                                    Members &amp; Roles
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="kt-dropdown-menu-link" href="">
-                                                    <i class="ki-filled ki-switch">
-                                                    </i>
-                                                    Integrations
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <div class="kt-dropdown-menu-separator">
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <a class="kt-dropdown-menu-link" href="">
-                                                    <span class="flex items-center gap-2">
-                                                        <i class="ki-filled ki-shield-tick">
-                                                        </i>
-                                                        Notifications
-                                                    </span>
-                                                    <input checked="" class="ms-auto kt-switch" name="check"
-                                                        type="checkbox" value="1" />
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a class="kt-dropdown-menu-link" href="">
-                                        <i class="ki-filled ki-message-programming">
-                                        </i>
-                                        Dev Forum
+                                        Mon profil
                                     </a>
                                 </li>
                                 <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start"
@@ -606,8 +511,8 @@ Contact:
                     </div>
                     <!-- End of User -->
                     @php
-                        $notifications = Auth::user()->notifications()->latest()->take(10)->get();
-                        $unreadNotifications = Auth::user()->unreadNotifications()->take(10)->get();
+                        $notifications = app(\App\Services\NotificationService::class)->getUserNotifications($admin);
+                        $unreadNotifications = app(\App\Services\NotificationService::class)->getUserNotifications($admin, true);
                     @endphp
                     <div class="flex items-center gap-1.5">
                         <!-- Notifications -->
@@ -744,7 +649,7 @@ Contact:
                         <!--End of Notifications Drawer-->
                         <!-- End of Notifications -->
                         <a class="kt-btn kt-btn-ghost kt-btn-icon size-8 hover:bg-background hover:[&amp;_i]:text-primary"
-                            href="{{ route('logout') }}">
+                            href="{{ route('admin.logout') }}">
                             <i class="ki-filled ki-exit-right">
                             </i>
                         </a>

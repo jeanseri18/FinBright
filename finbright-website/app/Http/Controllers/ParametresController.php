@@ -6,6 +6,31 @@ use Illuminate\Http\Request;
 
 class ParametresController extends Controller
 {
+    public function getIcons()
+    {
+        // Une liste de pays, qui pourrait être récupérée d'une base de données ou d'un fichier de configuration
+        return [
+            ['value' => 'ki-setting', 'img' => '<i class=\"ki-filled ki-setting text-xl text-muted-foreground\"></i>'],
+            ['value' => 'ki-eye', 'img' => '<i class=\"ki-filled ki-eye text-xl text-muted-foreground\"></i>'],
+            ['value' => 'ki-face-id', 'img' => '<i class=\"ki-filled ki-face-id text-xl text-muted-foreground\"></i>'],
+            ['value' => 'ki-delivery-24', 'img' => '<i class=\"ki-filled ki-delivery-24 text-xl text-muted-foreground\"></i>'],
+            ['value' => 'ki-chart-line-up-2', 'img' => '<i class=\"ki-filled ki-chart-line-up-2 text-xl text-muted-foreground\"></i>'],
+            ['value' => 'ki-design-1', 'img' => '<i class=\"ki-filled ki-design-1 text-xl text-muted-foreground\"></i>'],
+            ['value' => 'ki-people', 'img' => '<i class=\"ki-filled ki-people text-xl text-muted-foreground\"></i>'],
+
+            ['value' => 'ki-category', 'img' => '<i class=\"ki-filled ki-category text-lg text-muted-foreground\"></i>'],
+            ['value' => 'ki-credit-cart', 'img' => '<i class=\"ki-filled ki-credit-cart text-lg text-muted-foreground\"></i>'],
+            ['value' => 'ki-mouse-square', 'img' => '<i class=\"ki-filled ki-mouse-square text-lg text-muted-foreground\"></i>'],
+            ['value' => 'ki-toggle-off-circle', 'img' => '<i class=\"ki-filled ki-toggle-off-circle text-lg text-muted-foreground\"></i>'],
+            ['value' => 'ki-map', 'img' => '<i class=\"ki-filled ki-map text-lg text-muted-foreground\"></i>'],
+            ['value' => 'ki-exit-up', 'img' => '<i class=\"ki-filled ki-exit-up text-lg text-muted-foreground\"></i>'],
+            ['value' => 'ki-security-user', 'img' => '<i class=\"ki-filled ki-security-user text-lg text-muted-foreground\"></i>'],
+            ['value' => 'ki-shield-tick', 'img' => '<i class=\"ki-filled ki-shield-tick text-lg text-muted-foreground\"></i>'],
+            ['value' => 'ki-key-square', 'img' => '<i class=\"ki-filled ki-key-square text-lg text-muted-foreground\"></i>'],
+            ['value' => 'ki-shop', 'img' => '<i class=\"ki-filled ki-shop text-lg text-muted-foreground\"></i>'],
+        ];
+    }
+
     public function getContries()
     {
         // Une liste de pays, qui pourrait être récupérée d'une base de données ou d'un fichier de configuration
