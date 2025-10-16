@@ -156,7 +156,7 @@
                                     {{$item->score_range ?? null}}
                                 </td>
                                 <td class="text-end">
-                                    {{$item->yield ?? null}}
+                                    {{$item->yield ?? null}}%
                                 </td>
                                 <td class="text-sm text-foreground text-end">
                                     {{ \Carbon\Carbon::parse($item->createdAt)->format('d-m-Y') ?? null }}

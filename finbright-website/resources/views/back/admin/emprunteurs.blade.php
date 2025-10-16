@@ -169,7 +169,7 @@
                                         <th class="min-w-[225px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label">
-                                                    Adresses
+                                                    Adresse
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>
@@ -198,10 +198,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php $emprunteursKycStatus = []; @endphp
                                     @forelse ($emprunteurs as $emprunteur)
-                                        @php $emprunteursKycStatus[$emprunteur->id] = $emprunteur->user->kyc_status; @endphp
-
                                     <tr>
                                         <td>
                                             <div class="flex items-center gap-2.5">
@@ -559,9 +556,9 @@
                                                 'optionTemplate' => '<div class="flex items-center gap-2">{{icon}} <span class="text-foreground">{{text}}</span></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-3.5 ms-auto hidden text-primary kt-select-option-selected:block"><path d="M20 6 9 17l-5-5"/></svg></div>',
                                             ];
                                             $statuses = [
-                                                ['value' => 'pending', 'label' => 'À approuver', 'icon' => '<i class="ki-filled ki-arrow-circle-left"></i>'],
-                                                ['value' => 'validated', 'label' => 'Validé', 'icon' => '<i class="ki-filled ki-check-squared"></i>'],
-                                                ['value' => 'rejected', 'label' => "Rejeté", 'icon' => '<i class="ki-filled ki-cross-square"></i>'],
+                                                ['value' => 'pending', 'label' => 'À approuver', 'icon' => '<i class=\"ki-filled ki-arrow-circle-left\"></i>'],
+                                                ['value' => 'validated', 'label' => 'Validé', 'icon' => '<i class=\"ki-filled ki-check-squared\"></i>'],
+                                                ['value' => 'rejected', 'label' => "Rejeté", 'icon' => '<i class=\"ki-filled ki-cross-square\"></i>'],
                                             ];
                                         @endphp
                                         <select
@@ -712,7 +709,10 @@
     const modal = KTModal.getInstance(modalEl) || new KTModal(modalEl);
     const modalEl2 = document.querySelector('#modal_motif');
     const modal2 = KTModal.getInstance(modalEl2) || new KTModal(modalEl2);
+    const kycStatusSelect = modalEl.querySelector('select[name="kyc_status"]');
     let currentEntityId = null; // On mémorise l'ID de l'emprunteur ouvert
+
+    const statuses = @json($statuses);
 
     const openModal = (entityId) => {
         currentEntityId = entityId; // On garde l'ID
@@ -722,6 +722,7 @@
             .then(res => res.json())
             .then(data => {
                 document.querySelector('#alert_msg').innerHTML = '';
+                kycStatusSelect.innerHTML = '';
 
                 const userNameEl = modalEl.querySelector('#user_name');
                 const kycIconEl = userNameEl.nextElementSibling; // Le <svg> juste après l'a
@@ -747,7 +748,6 @@
                 let form = modalEl.querySelector('form');
                 form.action = `/admin/emprunteurs/${currentEntityId}/update-kyc-status`;
                 
-
                 let documents = '';
                 data.user_docs.forEach(doc => {
                     const fileUrl = `/storage/${doc['file_name']}`;
@@ -808,10 +808,21 @@
                     `;
                 });
 
+                statuses.forEach(status => {
+                    const isSelected = data.kyc_status == status.value ? 'selected' : ''; 
+                    kycStatusSelect.innerHTML += `
+                        <option value="${status.value}" ${isSelected}
+                            data-kt-select-option='{"icon": "${status.icon ?? ''}"}'>
+                            ${status.label}
+                        </option>
+                    `;
+                });
+
                 modalEl.querySelector('#user_docs').innerHTML = documents;
                 modal.show();
-                // On mémorise le statut KYC
-                modalEl.dataset.kycStatus = data.kyc_status;
+                // On réinitialise les KtSelect
+                const selectEl = modalEl.querySelector('[data-kt-select="true"]');
+                KTSelect.createInstances(selectEl);
             })
             .catch(err => console.error("Erreur lors du chargement :", err));
     }

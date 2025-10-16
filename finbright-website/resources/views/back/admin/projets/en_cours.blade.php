@@ -132,7 +132,7 @@
                                         <th class="min-w-[180px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label">
-                                                    Projet
+                                                    Projets
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>
@@ -141,7 +141,7 @@
                                         <th class="min-w-[220px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label">
-                                                    Emprunteur
+                                                    Emprunteurs
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>

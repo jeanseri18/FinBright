@@ -5,14 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Emprunteur;
 use App\Models\Investisseur;
+use App\Models\Investment;
 use App\Models\LoanRequest;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ExportController extends Controller
 {
+    public function __construct(
+        private AdminController $adminController,
+    ) {}
+
     public function exportCsv($entity, $month = null)
     {
-        $validEntities = ['emprunteurs', 'investisseurs', 'loan_requests', 'loans'];
+        $validEntities = ['investments_insight', 'emprunteurs', 'investisseurs', 'loan_requests', 'loans', 'taux_interets'];
         if (!in_array($entity, $validEntities)) {
             abort(404);
         }
@@ -24,6 +29,17 @@ class ExportController extends Controller
 
         // Sélection des données selon entité
         switch ($entity) {
+            case 'investments_insight':
+                $statsInvests = $this->adminController->statistiquesInvestissements();
+                $headers = ['Périodes', 'Investissements', 'Montant', 'Pourcentage', 'Indice'];
+                $data = [
+                    ['Mensuel', $statsInvests['nbreInvests']['nbreMensuel'], $statsInvests['totalInvests']['totalMensuel']. " €", $statsInvests['pctMensuel']. "%", $statsInvests['indicateur']['value']],
+                    ['Semestriel', $statsInvests['nbreInvests']['nbreSemestriel'], $statsInvests['totalInvests']['totalSemestriel']. " €", $statsInvests['pctSemestriel']. "%", ''],
+                    ['Annuel', $statsInvests['nbreInvests']['nbreAnnuel'], $statsInvests['totalInvests']['totalAnnuel']. " €", $statsInvests['pctAnnuel']. "%", ''],
+                    ['', '', '', 'TOTAL INVESTI', $statsInvests['totalInvesti']. " €"]
+                ];
+                break;
+
             case 'emprunteurs':
                 $query = Emprunteur::with('user','etablissement');
                 if ($month) $query->whereRaw("DATE_FORMAT(created_at, '%Y-%m') = ?", [$month]);

@@ -99,12 +99,12 @@ Contact:
                 <!-- Sidebar Header -->
                 <div class="flex flex-col gap-2.5" id="sidebar_header">
                     <div class="flex items-center gap-2.5 px-3.5 h-[70px]">
-                        <a href="/metronic/tailwind/demo10/index.html">
+                        <div class="">
                             <img class="size-[34px]" src="{{ asset('assets/media/app/mini-logo-circle.png') }}" />
-                        </a>
-                        <div class="kt-menu kt-menu-default grow" data-kt-menu="true">
-                            <div class="kt-menu-item grow" data-kt-menu-item-offset="0, 15px">
-                                <div class="kt-menu-label cursor-pointer text-mono font-medium grow justify-between">
+                        </div>
+                        <div class="kt-menu kt-menu-default grow">
+                            <div class="kt-menu-item grow">
+                                <div class="text-mono font-medium grow justify-between">
                                     <span class="text-lg font-medium text-inverse grow">
                                         Fin'Bright Admin
                                     </span>
@@ -115,10 +115,9 @@ Contact:
                     <div class="flex items-center gap-2.5 px-3.5">
                         <!-- Input -->
                         <a class="kt-btn kt-btn-secondary text-white [&amp;_i]:text-white justify-center min-w-[198px]"
-                            href="">
-                            <i class="ki-filled ki-plus">
-                            </i>
-                            Add New
+                            href="{{route('home')}}">
+                            <i class="ki-filled ki-home"></i>
+                            Accueil
                         </a>
                         <!-- End of Input -->
                         <button class="kt-btn kt-btn-icon kt-btn-secondary [&amp;_i]:text-white"

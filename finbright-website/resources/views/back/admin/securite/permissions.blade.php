@@ -123,13 +123,13 @@
                         <thead>
                             <tr>
                                 <th class="text-start w-[300px]">
-                                    Permission
+                                    Permissions
                                 </th>
                                 <th class="text-end w-[100px]">
                                     Utilisateurs
                                 </th>
                                 <th class="text-end w-[110px]">
-                                    Date
+                                    Date de création
                                 </th>
                                 <th class="w-[30px]">
                                 </th>

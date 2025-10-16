@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Notification extends Model
 {
     protected $fillable = [
+        'notifiable_id',
+        'notifiable_type',
         'user_id',
         'type',
         'message',
@@ -18,6 +20,11 @@ class Notification extends Model
         'data' => 'array',
         'is_read' => 'boolean',
     ];
+
+    public function notifiable()
+    {
+        return $this->morphTo();
+    }
 
     public function user()
     {

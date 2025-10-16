@@ -46,6 +46,19 @@ npm install
 npm run dev
 ```
 
+### Astuces
+Si les images ne se chargent pas correctement, utiliser un lien symbolique “relatif”
+
+```bash
+rm public/storage
+ln -s ../storage/app/public public/storage
+```
+Puis vérifie :
+```bash
+ls -l public | grep storage
+# doit afficher: storage -> ../storage/app/public
+```
+
 ### 5. Configurer l’environnement
 
 Créer un fichier .env :

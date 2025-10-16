@@ -25,7 +25,7 @@ class PasswordResetLinkController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        if (!$request->get('email')) return redirect()->route('password.request');
+        if (!$request->get('email')) return redirect()->route('forgot-password.request');
 
         $request->validate([
             'email' => ['required', 'email'],
@@ -37,7 +37,7 @@ class PasswordResetLinkController extends Controller
 
         if ($status == Password::RESET_LINK_SENT) {
             return redirect()
-                ->route('password.check-email')
+                ->route('forgot-password.check-email')
                 ->with('email', $request->email);
         }
 

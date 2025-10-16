@@ -50,7 +50,94 @@ class AdminController extends Controller
     public function dashboard()
     {
         Session::put('menu_actif', 'dashboard');
-        return view('back.admin.dashboard');
+        $loanInProgress = LoanRequest::where('status', 'En cours de financement')->with(['investments' => function($q) {
+            $q->orderBy('created_at', 'desc');
+        }])->latest()->take(5)->get();
+
+        foreach ($loanInProgress as $loan) {
+            $investissements = $loan->investments;
+
+            if ($investissements->count() >= 2) {
+                $last = $investissements[0]->created_at;
+                $previous = $investissements[1]->created_at;
+
+                $loan->days_diff = $last->diffInDays($previous);
+            } else {
+                $loan->days_diff = null; // pas assez d'investissements
+            }
+
+            $loan->invest_percent = 0;
+            if (!empty($loan->simulation_result['total']) && $loan->simulation_result['total'] > 0) {
+                $loan->invest_percent = ($loan->total_investissements / $loan->simulation_result['total']) * 100;
+            }
+        }
+        $statsInvests = $this->statistiquesInvestissements();
+
+        $loanRequests = LoanRequest::where('status', '!=', 'En cours de financement')
+            ->with('emprunteur')->latest()->take(5)->get();
+        
+        $now = Carbon::now();
+        $newEmprunteurs = Emprunteur::whereYear('created_at', $now->year)
+            ->whereMonth('created_at', $now->month)
+            ->with('user')->whereHas('user', function ($q) {
+                $q->where('is_profile_completed', true);
+            })
+            ->latest()->get();
+        return view('back.admin.dashboard', compact('loanInProgress', 'statsInvests', 'loanRequests', 'newEmprunteurs'));
+    }
+
+    public function statistiquesInvestissements()
+    {
+        // Récupération de tous les investissements
+        $investments = Investment::with('investisseur')->get();
+
+        // Bornes temporelles
+        $now = Carbon::now();
+        $startOfYear = $now->copy()->startOfYear();
+        $startOfSemester = $now->month <= 6 ? $now->copy()->startOfYear() : $now->copy()->month(7)->startOfMonth();
+        $startOfMonth = $now->copy()->startOfMonth();
+
+        // Montant total
+        $totalInvesti = $investments->sum('amount');
+
+        // Nombre d’investissements
+        $nbreAnnuel = $investments->where('created_at', '>=', $startOfYear)->count();
+        $nbreSemestriel = $investments->where('created_at', '>=', $startOfSemester)->count();
+        $nbreMensuel = $investments->where('created_at', '>=', $startOfMonth)->count();
+
+        // Montants par période
+        $totalAnnuel = $investments->where('created_at', '>=', $startOfYear)->sum('amount');
+        $totalSemestriel = $investments->where('created_at', '>=', $startOfSemester)->sum('amount');
+        $totalMensuel = $investments->where('created_at', '>=', $startOfMonth)->sum('amount');
+
+        // Pourcentages
+        $pctAnnuel = $totalInvesti > 0 ? round(($totalAnnuel / $totalInvesti) * 100) : 0;
+        $pctSemestriel = $totalInvesti > 0 ? round(($totalSemestriel / $totalInvesti) * 100) : 0;
+        $pctMensuel = $totalInvesti > 0 ? round(($totalMensuel / $totalInvesti) * 100) : 0;
+
+        // Calcul de l'indicateur de hausse ou de baisse
+        // Ici on compare le total du mois actuel avec le total du mois précédent
+        $startOfPreviousMonth = $startOfMonth->copy()->subMonth();
+        $totalPreviousMonth = $investments->whereBetween('created_at', [$startOfPreviousMonth, $startOfMonth->subSecond()])->sum('amount');
+
+        $variation = $totalPreviousMonth > 0
+            ? round((($totalInvesti - $totalPreviousMonth) / $totalPreviousMonth) * 100, 1)
+            : 0;
+
+        // Définir si c'est une hausse ou une baisse
+        $indicateur = $variation >= 0 
+            ? ['type' => 'success', 'value' => '+' . $variation . '%'] 
+            : ['type' => 'danger', 'value' => $variation . '%'];
+
+        return [
+            'totalInvesti' => $totalInvesti,
+            'pctAnnuel' => $pctAnnuel,
+            'pctSemestriel' => $pctSemestriel,
+            'pctMensuel' => $pctMensuel, 
+            'totalInvests' => ['totalAnnuel' => $totalAnnuel, 'totalSemestriel' => $totalSemestriel, 'totalMensuel' => $totalMensuel],
+            'nbreInvests' => ['nbreAnnuel' => $nbreAnnuel, 'nbreSemestriel' => $nbreSemestriel, 'nbreMensuel' => $nbreMensuel],
+            'indicateur' => $indicateur
+        ];
     }
 
     public function listeEmprunteurs(Request $request)
@@ -236,6 +323,8 @@ class AdminController extends Controller
             'birth_date' => $user->birth_date ?? null,
             'birth_place' => $user->birth_place ?? null,
             'nationality' => $user->nationality ?? null,
+            'funds_from_country' => $investisseur->funds_from_country ?? null,
+            'email' => $user->email ?? null,
             'phone_number' => $user->phone_number ?? null,
             'adresse' => trim(
                 ($user->address['adresse'] ?? '') .' '.
@@ -276,7 +365,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function updateStatus(Request $request, UserDocument $document)
+    public function updateDocsStatus(Request $request, UserDocument $document)
     {
         $request->validate([
             'status' => 'required|in:À approuver,Validé,Refusé',

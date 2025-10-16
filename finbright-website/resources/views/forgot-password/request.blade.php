@@ -3,7 +3,7 @@
         <!-- Session Status -->
         <x-auth-session-status id="alert_2" :status="session('status')" />
 
-        <form class="kt-card-content flex flex-col gap-5 p-10" id="reset_password_enter_email_form" method="POST" action="{{ route('password.email') }}">
+        <form class="kt-card-content flex flex-col gap-5 p-10" id="reset_password_enter_email_form" method="POST" action="{{ route('forgot-password.email') }}">
             <div class="text-center">
                 <h3 class="text-lg font-medium text-mono">
                 {{ __('Vous avez oublié votre mot de passe ?') }}

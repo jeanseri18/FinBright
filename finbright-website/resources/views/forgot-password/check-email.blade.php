@@ -25,7 +25,7 @@
                 <span class="text-secondary-foreground">
                     Vous n'avez pas reçu d'e-mail ?
                 </span>
-                <form id="resendForm" method="POST" action="{{ route('password.email') }}" class="">
+                <form id="resendForm" method="POST" action="{{ route('forgot-password.email') }}" class="">
                     @csrf
                     <input type="hidden" name="email" value="{{ session('email') }}">
                     <button type="submit" class="font-medium kt-link">

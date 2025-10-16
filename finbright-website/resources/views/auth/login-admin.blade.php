@@ -109,8 +109,8 @@ Contact:
                         <div class="flex flex-col gap-1">
                             <div class="flex items-center justify-between gap-1">
                                 <label for="password" class="kt-form-label font-normal text-mono">Mot de passe</label>
-                                @if (Route::has('password.request'))
-                                    <a class="text-sm kt-link shrink-0" href="{{ route('password.request') }}">
+                                @if (Route::has('forgot-password.request'))
+                                    <a class="text-sm kt-link shrink-0" href="{{ route('forgot-password.request') }}">
                                         {{ __('Mot de passe oublié ?') }}
                                     </a>
                                 @endif

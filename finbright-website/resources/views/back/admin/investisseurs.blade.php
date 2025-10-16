@@ -189,10 +189,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php $investisseursKycStatus = []; @endphp
                                     @forelse ($investisseurs as $investisseur)
-                                        @php $investisseursKycStatus[$investisseur->id] = $investisseur->user->kyc_status; @endphp
-
                                     <tr>
                                         <td>
                                             <div class="flex items-center gap-2.5">
@@ -555,9 +552,9 @@
                                                 'optionTemplate' => '<div class="flex items-center gap-2">{{icon}} <span class="text-foreground">{{text}}</span></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-3.5 ms-auto hidden text-primary kt-select-option-selected:block"><path d="M20 6 9 17l-5-5"/></svg></div>',
                                             ];
                                             $statuses = [
-                                                ['value' => 'pending', 'label' => 'À approuver', 'icon' => '<i class="ki-filled ki-arrow-circle-left"></i>'],
-                                                ['value' => 'validated', 'label' => 'Validé', 'icon' => '<i class="ki-filled ki-check-squared"></i>'],
-                                                ['value' => 'rejected', 'label' => "Rejeté", 'icon' => '<i class="ki-filled ki-cross-square"></i>'],
+                                                ['value' => 'pending', 'label' => 'À approuver', 'icon' => '<i class=\"ki-filled ki-arrow-circle-left\"></i>'],
+                                                ['value' => 'validated', 'label' => 'Validé', 'icon' => '<i class=\"ki-filled ki-check-squared\"></i>'],
+                                                ['value' => 'rejected', 'label' => "Rejeté", 'icon' => '<i class=\"ki-filled ki-cross-square\"></i>'],
                                             ];
                                         @endphp
                                         <select
@@ -602,7 +599,7 @@
                                     </button>
                                 </div>
                                 <div class="text-sm">
-                                    <div id="invest_legal_pers" class="grid md:grid-cols-2 mb-4 gap-x-4"></div>
+                                    <div id="invest_legal_pers" class="kt-menu kt-menu-default px-0.5 flex-col"></div>
                                     <div id="invest_members" class="hidden kt-card-table" data-kt-datatable="true" data-kt-datatable-page-size="5" data-kt-datatable-state-save="true"></div>
                                     <div id="invest_docs" class="hidden flex gap-5 kt-scrollable-x" style="position: unset"></div>
                                 </div>
@@ -715,7 +712,10 @@
     const modal = KTModal.getInstance(modalEl) || new KTModal(modalEl);
     const modalEl2 = document.querySelector('#modal_motif');
     const modal2 = KTModal.getInstance(modalEl2) || new KTModal(modalEl2);
+    const kycStatusSelect = modalEl.querySelector('select[name="kyc_status"]');
     let currentEntityId = null; // On mémorise l'ID de l'emprunteur ouvert
+
+    const statuses = @json($statuses);
 
     const openModal = (entityId) => {
         currentEntityId = entityId; // On garde l'ID
@@ -725,6 +725,7 @@
             .then(res => res.json())
             .then(data => {
                 document.querySelector('#alert_msg').innerHTML = '';
+                kycStatusSelect.innerHTML = '';
                 
                 const userNameEl = modalEl.querySelector('#invest_name');
                 const kycIconEl = userNameEl.nextElementSibling; // Le <svg> juste après l'a
@@ -809,21 +810,56 @@
                     ? `Créé le ${new Intl.DateTimeFormat('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date(data.creation_date))}, situé à ${data.adresse} ${risk}`
                     : `Né le ${new Intl.DateTimeFormat('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date(data.birth_date))}, habite à ${data.adresse} ${risk}`;
                 modalEl.querySelector('#invest_legal_pers').innerHTML = data.type_of_lender == "Personne morale"  
-                    ? `<span class="text-base leading-5 font-medium text-mono">Nom & prénoms</span>
-                        <span class="md:text-end">${data.user_name}</span>
-                        <span class="text-base leading-5 font-medium text-mono">Date de naissance</span>
-                        <span class="md:text-end">${new Intl.DateTimeFormat('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date(data.birth_date))}</span>
-                        <span class="text-base leading-5 font-medium text-mono">Pays de naissance</span>
-                        <span class="md:text-end">${data.birth_place}</span>
-                        <span class="text-base leading-5 font-medium text-mono">Nationalité</span>
-                        <span class="md:text-end">${data.nationality}</span>
-                        <span class="text-base leading-5 font-medium text-mono">Numéro de téléphone</span>
-                        <span class="md:text-end">${data.phone_number}</span>
-                        <span class="text-base leading-5 font-medium text-mono">Adresse</span>
-                        <span class="md:text-end">${data.adresse_representant}</span>
-                        <span class="text-base leading-5 font-medium text-mono">Fonction au sein de l'entité</span>
-                        <span class="md:text-end">${data.fonction}</span>
-                        <span class="col-span-2 mb-2 text-base leading-5 font-medium text-mono">Pièce d'identité en cours de validité</span>
+                    ? `
+                        <div class="kt-menu-item">
+                            <a class="kt-menu-link" href="#">
+                                <span class="kt-menu-icon"><i class="ki-filled ki-badge"></i></span>
+                                <span class="kt-menu-title">Nom & prénoms</span>
+                                <span class="tel">${data.user_name}</span>
+                            </a>
+                        </div>
+                        <div class="kt-menu-item">
+                            <a class="kt-menu-link" href="#">
+                                <span class="kt-menu-icon"><i class="ki-filled ki-calendar-8"></i></span>
+                                <span class="kt-menu-title">Date de naissance</span>
+                                <span class="tel">${new Intl.DateTimeFormat('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date(data.birth_date))}</span>
+                            </a>
+                        </div>
+                        <div class="kt-menu-item">
+                            <a class="kt-menu-link" href="#">
+                                <span class="kt-menu-icon"><i class="ki-filled ki-geolocation-home"></i></span>
+                                <span class="kt-menu-title">Pays de naissance</span>
+                                <span class="tel">${data.birth_place}</span>
+                            </a>
+                        </div>
+                        <div class="kt-menu-item">
+                            <a class="kt-menu-link" href="#">
+                                <span class="kt-menu-icon"><i class="ki-filled ki-address-book"></i></span>
+                                <span class="kt-menu-title">Nationalité</span>
+                                <span class="tel">${data.nationality}</span>
+                            </a>
+                        </div>
+                        <div class="kt-menu-item">
+                            <a class="kt-menu-link" href="#">
+                                <span class="kt-menu-icon"><i class="ki-filled ki-phone"></i></span>
+                                <span class="kt-menu-title">Numéro de téléphone</span>
+                                <span class="tel">${data.phone_number}</span>
+                            </a>
+                        </div>
+                        <div class="kt-menu-item">
+                            <a class="kt-menu-link" href="#">
+                                <span class="kt-menu-icon"><i class="ki-filled ki-map"></i></span>
+                                <span class="kt-menu-title">Adresse</span>
+                                <span class="tel">${data.adresse_representant}</span>
+                            </a>
+                        </div>
+                        <div class="kt-menu-item">
+                            <a class="kt-menu-link" href="#">
+                                <span class="kt-menu-icon"><i class="ki-filled ki-briefcase"></i></span>
+                                <span class="kt-menu-title">Fonction au sein de l'entité</span>
+                                <span class="tel">${data.fonction}</span>
+                            </a>
+                        </div>
                         ${userDocs}
                     `
                     : null;
@@ -911,14 +947,25 @@
                     `;
                 });
 
+                statuses.forEach(status => {
+                    const isSelected = data.kyc_status == status.value ? 'selected' : ''; 
+                    kycStatusSelect.innerHTML += `
+                        <option value="${status.value}" ${isSelected}
+                            data-kt-select-option='{"icon": "${status.icon ?? ''}"}'>
+                            ${status.label}
+                        </option>
+                    `;
+                });
+
                 data.type_of_lender == "Personne physique"
                     ? (modalEl.querySelector('[data-kt-tabs="true"]').classList.add('hidden'), modalEl.querySelector('#invest_docs').classList.remove('hidden'))
                     : (modalEl.querySelector('[data-kt-tabs="true"]').classList.remove('hidden'), modalEl.querySelector('#invest_docs').classList.add('hidden'));
 
                 modalEl.querySelector('#invest_docs').innerHTML = documents;
                 modal.show();
-                // On mémorise le statut KYC
-                modalEl.dataset.kycStatus = data.kyc_status;
+                // On réinitialise les KtSelect
+                const selectEl = modalEl.querySelector('[data-kt-select="true"]');
+                KTSelect.createInstances(selectEl);
             })
             .catch(err => console.error("Erreur lors du chargement :", err));
     }

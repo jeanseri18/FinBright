@@ -41,7 +41,6 @@
                     <i class="ki-filled ki-exit-down"></i>
                     Exporter
                 </a>
-
                 <!-- Dropdown de sélection du mois -->
                 <div class="kt-menu kt-menu-default" data-kt-menu="true">
                     <div class="kt-menu-item"
@@ -131,7 +130,7 @@
                                         <th class="min-w-[180px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label">
-                                                    Projet
+                                                    Projets
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>
@@ -173,6 +172,9 @@
                                                 </span>
                                             </span>
                                         </th>
+                                        <th class="w-[100px] whitespace-normal">
+                                            Date de création
+                                        </th>
                                         <th class="w-[60px]">
                                         </th>
                                     </tr>
@@ -213,6 +215,9 @@
                                         <td class="text-foreground font-normal">
                                             {{ $loan->simulation_result['duration'] . ' mois' ?? 'Non disponible' }}
                                         </td>
+                                        <td class="text-sm text-foreground text-end">
+                                            {{ \Carbon\Carbon::parse($loan->createdAt)->format('d-m-Y') ?? null }}
+                                        </td>
                                         <td class="text-center">
                                             <div class="kt-menu flex-inline" data-kt-menu="true">
                                                 <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
@@ -226,6 +231,7 @@
                                                     </button>
                                                     <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]"
                                                         data-kt-menu-dismiss="true">
+                                                        @if ($loan->status != "En attente de confirmation")
                                                         <div class="kt-menu-item">
                                                             <a class="kt-menu-link" href="#" data-loan-id="{{ $loan->id }}" data-status="En attente de confirmation">
                                                                 <span class="kt-menu-icon">
@@ -236,6 +242,7 @@
                                                                 </span>
                                                             </a>
                                                         </div>
+                                                        @endif
                                                         <div class="kt-menu-item">
                                                             <a class="kt-menu-link" href="#" data-loan-id="{{ $loan->id }}" data-status="En cours de financement">
                                                                 <span class="kt-menu-icon">
@@ -246,6 +253,7 @@
                                                                 </span>
                                                             </a>
                                                         </div>
+                                                        @if ($loan->status != "Rejetée")
                                                         <div class="kt-menu-item">
                                                             <a class="kt-menu-link" href="#" data-loan-id="{{ $loan->id }}" data-status="Rejetée">
                                                                 <span class="kt-menu-icon">
@@ -256,6 +264,7 @@
                                                                 </span>
                                                             </a>
                                                         </div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -270,11 +279,11 @@
                         <div
                             class="kt-card-footer justify-center md:justify-between flex-col md:flex-row gap-5 text-secondary-foreground text-sm font-medium">
                             <div class="flex items-center gap-2 order-2 md:order-1">
-                                Show
+                                Affichage de 
                                 <select class="kt-select w-16" data-kt-datatable-size="true" data-kt-select=""
                                     name="perpage">
                                 </select>
-                                per page
+                                par page
                             </div>
                             <div class="flex items-center gap-4 order-1 md:order-2">
                                 <span data-kt-datatable-info="true">

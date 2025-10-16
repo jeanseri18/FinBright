@@ -43,7 +43,7 @@
                     <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'text-finbright-purple font-semibold border-b-2 border-finbright-purple' : 'text-gray-700 hover:text-finbright-purple' }} transition-colors pb-1">Contact</a>
                 </div>
 
-                <!-- CTA Buttons -->
+                <!-- Boutons CTA -->
                 <div class="hidden md:flex items-center space-x-4 relative">
                     <a href="{{ route('emprunteur.dashboard') }}"
                         class="bg-finbright-cyan text-white px-4 py-2 rounded-lg hover:bg-finbright-light-cyan transition-colors">
@@ -51,8 +51,8 @@
                     </a>
 
                     <!-- Dropdown -->
-                    <div x-data="{ open: false }" class="relative">
-                        <button @click="open = !open"
+                    <div class="relative">
+                        <button id="inscrireBtn"
                             class="bg-finbright-purple text-white px-4 py-2 rounded-lg hover:bg-finbright-dark-purple transition-colors flex items-center">
                             S'inscrire
                             <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,8 +61,8 @@
                             </svg>
                         </button>
 
-                        <div x-show="open" @click.away="open = false"
-                            class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-10">
+                        <div id="inscrireMenu"
+                            class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-10">
                             <a href="{{ route('register.emprunteur') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                 En tant qu'emprunteur
@@ -177,6 +177,24 @@
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenu.classList.toggle('hidden');
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('inscrireBtn');
+            const menu = document.getElementById('inscrireMenu');
+
+            // Toggle l'affichage au clic
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Empêche la propagation du clic
+                menu.classList.toggle('hidden');
+            });
+
+            // Ferme le menu si on clique ailleurs
+            document.addEventListener('click', () => {
+                if (!menu.classList.contains('hidden')) {
+                    menu.classList.add('hidden');
+                }
+            });
         });
     </script>
     

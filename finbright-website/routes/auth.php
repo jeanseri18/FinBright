@@ -26,7 +26,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
 });
 
-Route::prefix('mot-de-passe-oublie')->name('password.')->middleware('guest')->group(function () {
+Route::prefix('mot-de-passe-oublie')->name('forgot-password.')->middleware('guest')->group(function () {
     Route::get('/', [PasswordResetLinkController::class, 'create'])->name('request');
     Route::post('/', [PasswordResetLinkController::class, 'store'])->name('email');
     Route::view('/verification', 'forgot-password.check-email')->name('check-email');

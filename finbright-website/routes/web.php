@@ -115,7 +115,7 @@ Route::prefix('mon-profil')->name('profil.')->middleware(['auth', '2fa', 'role:e
         Route::post('/', [ProfilController::class, 'enregistrerDocuments'])->name('update');
         Route::get('{id}/export', [ProfilController::class, 'exportDocument'])->name('export');
         Route::get('{id}/edit', [ProfilController::class, 'editDocument'])->name('edit');
-        Route::get('{id}/delete', [ProfilController::class, 'deleteDocument'])->name('delete');
+        Route::get('{id}/delete', [ProfilController::class, 'deleteDocument'])->name('confirmDelete');
         Route::delete('{id}/delete', [ProfilController::class, 'deleteDocument'])->name('delete');
     });
 });
@@ -162,7 +162,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/export/{entity}/{month?}', [ExportController::class, 'exportCsv'])->name('export.csv');
 
-        Route::post('/documents/{document}/update-status', [AdminController::class, 'updateStatus']);
+        Route::post('/documents/{document}/update-status', [AdminController::class, 'updateDocsStatus']);
         
         Route::post('/{type}/{id}/update-kyc-status', [AdminController::class, 'updateKycStatus'])->name('updateKycStatus');
         
