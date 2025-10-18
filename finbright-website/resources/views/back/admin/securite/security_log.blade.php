@@ -87,10 +87,32 @@
                     <h3 class="kt-card-title">
                         Security Log
                     </h3>
-                    <label class="kt-label">
-                        Suppression automatique
-                        <input class="kt-switch kt-switch-sm" name="check" type="checkbox" value="1" />
-                    </label>
+                    <div class="flex flex-wrap gap-2 lg:gap-5">
+                        <form action="" method="GET" class="flex flex-wrap gap-2.5">
+                            <select name="ordre" class="kt-select w-36" data-kt-select="true"
+                                data-kt-select-placeholder="Ordre d'affichage">
+                                <option value="1" {{ request('ordre') == 1 ? 'selected' : '' }}>Plus recents</option>
+                                <option value="2" {{ request('ordre') == 2 ? 'selected' : '' }}>Plus anciens</option>
+                            </select>
+                            <button class="kt-btn kt-btn-outline kt-btn-primary">
+                                <i class="ki-filled ki-setting-4">
+                                </i>
+                                Filtrer
+                            </button>
+                        </form>
+                        <div class="flex">
+                            <label class="kt-input">
+                                <i class="ki-filled ki-magnifier">
+                                </i>
+                                <input id="search_input" placeholder="Rechercher une permission" type="text"
+                                    value="" />
+                            </label>
+                        </div>
+                        <label class="kt-label">
+                            Suppression automatique
+                            <input class="kt-switch kt-switch-sm" name="check" type="checkbox" value="1" />
+                        </label>
+                    </div>
                 </div>
                 <div class="kt-card-content">
                     <div class="grid" data-kt-datatable="true" data-kt-datatable-page-size="10">
@@ -107,7 +129,7 @@
                                         <th class="min-w-[200px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label">
-                                                    Timestamp
+                                                    Période
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>
@@ -116,7 +138,7 @@
                                         <th class="min-w-[200px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label">
-                                                    Event Type
+                                                    Événement
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>
@@ -125,7 +147,7 @@
                                         <th class="min-w-[200px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label">
-                                                    Action Taken
+                                                    Action
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>
@@ -134,7 +156,7 @@
                                         <th class="min-w-[130px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label">
-                                                    Source IP
+                                                    Adresse IP
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>
@@ -143,7 +165,7 @@
                                         <th class="min-w-[130px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label">
-                                                    User
+                                                    Utilisateur
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>
@@ -152,7 +174,7 @@
                                         <th class="min-w-[110px]">
                                             <span class="kt-table-col">
                                                 <span class="kt-table-col-label">
-                                                    Severity
+                                                    Gravité
                                                 </span>
                                                 <span class="kt-table-col-sort">
                                                 </span>
@@ -170,7 +192,7 @@
                                                 type="checkbox" value="1" />
                                         </td> --}}
                                         <td>
-                                            {{ $log->created_at->toIso8601String() }}
+                                            {{ $log->created_at->format('d M Y, à H:i') }}
                                         </td>
                                         <td>
                                             <div class="flex items-center gap-1.5">
@@ -297,6 +319,16 @@
                 document.getElementById(`delete-form-${id}`).submit();
             }
         }
+
+        document.getElementById('search_input').addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            const trList = document.querySelectorAll('[data-kt-datatable-table="true"] tbody tr');
+
+            trList.forEach(tr => {
+                const rowText = tr.innerText.toLowerCase();
+                tr.style.display = rowText.includes(query) ? '' : 'none';
+            });
+        });
 
         const exportBtn = document.getElementById('exportBtn');
         document.querySelectorAll('.kt-menu-link[data-value]').forEach(link => {

@@ -119,6 +119,10 @@
                                 Filtrer
                             </button>
                         </form>
+                        <label class="kt-label">
+                            Suppression automatique
+                            <input class="kt-switch kt-switch-sm" name="check" type="checkbox" value="1" />
+                        </label>
                     </div>
                 </div>
                 <div class="kt-card-content">

@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('guard_name'); // For MyISAM use string('guard_name', 25);
             $table->string('icon')->nullable();
             $table->string('description')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->unique(['name', 'guard_name']);
@@ -44,6 +45,7 @@ return new class extends Migration
             $table->string('icon')->nullable();
             $table->string('description')->nullable();
             $table->boolean('default_role')->default(false);
+            $table->softDeletes();
             $table->timestamps();
             if ($teams || config('permission.testing')) {
                 $table->unique([$columnNames['team_foreign_key'], 'name', 'guard_name']);

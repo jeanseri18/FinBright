@@ -127,28 +127,29 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @forelse($trashItems as $item)
                                             <tr>
                                                 <td>
                                                     <div class="flex flex-col gap-1">
                                                         <span class="leading-none font-medium text-sm text-mono">
-                                                            Il y a 7 minutes
+                                                            {{ $item->deleted_at->diffForHumans() }}
                                                         </span>
                                                         <span class="text-sm text-secondary-foreground font-normal">
-                                                            24 Jan, 2024, 9:24:53
+                                                            {{ $item->deleted_at->format('d M Y, H:i:s') }}
                                                         </span>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="flex flex-col gap-1">
                                                         <span class="leading-none font-medium text-sm text-mono">
-                                                            Routine Quick Backup
+                                                            {{ $item->name ?? $item->fullname }}
                                                         </span>
                                                         <span
                                                             class="flex items-center gap-2 text-xs text-secondary-foreground font-normal">
                                                             <span class="flex items-center gap-1">
                                                                 <i class="ki-filled ki-files text-sm text-muted-foreground">
                                                                 </i>
-                                                                Etablissement
+                                                                {{ class_basename($item) }}
                                                             </span>
                                                             <span class="border-r border-r-input h-4">
                                                             </span>
@@ -156,68 +157,27 @@
                                                                 <i
                                                                     class="ki-filled ki-user text-sm text-muted-foreground">
                                                                 </i>
-                                                                Admin test
+                                                                {{ $item->deletedBy->fullname ?? 'Admin inconnu' }}
                                                             </span>
                                                         </span>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a class="kt-btn kt-btn-sm" href="#">
+                                                    <a class="kt-btn kt-btn-sm" href="{{ route('admin.trash.forceDelete', [class_basename($item), $item->id]) }}">
                                                         Supprimer
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a class="kt-btn kt-btn-outline" href="#">
+                                                    <a class="kt-btn kt-btn-outline" href="{{ route('admin.trash.restore', [class_basename($item), $item->id]) }}">
                                                         Restaurer
                                                     </a>
                                                 </td>
                                             </tr>
+                                            @empty
                                             <tr>
-                                                <td>
-                                                    <div class="flex flex-col gap-1">
-                                                        <span class="leading-none font-medium text-sm text-mono">
-                                                            Aujourd'hui
-                                                        </span>
-                                                        <span class="text-sm text-secondary-foreground font-normal">
-                                                            24 Jan, 2024, 14:09:26
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="flex flex-col gap-1">
-                                                        <span class="leading-none font-medium text-sm text-mono">
-                                                            Early Morning Sync
-                                                        </span>
-                                                        <span
-                                                            class="flex items-center gap-2 text-xs text-secondary-foreground font-normal">
-                                                            <span class="flex items-center gap-1">
-                                                                <i
-                                                                    class="ki-filled ki-files text-sm text-muted-foreground">
-                                                                </i>
-                                                                Files
-                                                            </span>
-                                                            <span class="border-r border-r-input h-4">
-                                                            </span>
-                                                            <span class="flex items-center gap-1">
-                                                                <i
-                                                                    class="ki-filled ki-user text-sm text-muted-foreground">
-                                                                </i>
-                                                                Admin test
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <a class="kt-btn kt-btn-sm" href="#">
-                                                        Supprimer
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a class="kt-btn kt-btn-outline" href="#">
-                                                        Restaurer
-                                                    </a>
-                                                </td>
+                                                <td colspan="4" class="text-center text-sm text-muted">Aucun élément dans la corbeille</td>
                                             </tr>
+                                            @endforelse
                                         </tbody>
                                     </table>
                                 </div>
@@ -405,12 +365,17 @@
             </div>
             <div class="col-span-1">
                 <div class="flex flex-col gap-5 lg:gap-7.5">
-                    <div class="kt-card">
+                    <div class="kt-card relative">
                         <div class="kt-card-header mb-1">
                             <h3 class="kt-card-title">
                                 Paramètre de suppression
                             </h3>
                         </div>
+
+                        @php
+                            $auto = \App\Models\Setting::get('trash.auto_delete', true);
+                            $freq = \App\Models\Setting::get('trash.frequency', 'weekly');
+                        @endphp
                         <div class="kt-card-group flex items-center justify-between py-4 gap-2.5">
                             <div class="flex flex-col justify-center gap-1.5">
                                 <span class="leading-none font-medium text-sm text-mono">
@@ -420,7 +385,7 @@
                                     Protection programmée des données
                                 </span>
                             </div>
-                            <input checked="" class="kt-switch kt-switch-sm" name="check" type="checkbox"
+                            <input {{ $auto ? 'checked' : '' }} class="kt-switch kt-switch-sm" name="auto_delete" type="checkbox"
                                 value="1" />
                         </div>
                         <div class="kt-card-group flex items-center justify-between py-4 gap-2.5">
@@ -432,19 +397,11 @@
                                     Sélectionner votre préférence
                                 </span>
                             </div>
-                            <select class="kt-select max-w-32" data-kt-select="true">
-                                <option value="daily">
-                                    Par jour
-                                </option>
-                                <option selected="" value="weekly">
-                                    Par semaine
-                                </option>
-                                <option value="monthly">
-                                    Par mois
-                                </option>
-                                <option value="yearly">
-                                    Par an
-                                </option>
+                            <select name="frequency" class="kt-select max-w-32" data-kt-select="true">
+                                <option value="daily" {{ $freq == 'daily' ? 'selected' : '' }}>Par jour</option>
+                                <option value="weekly" {{ $freq == 'weekly' ? 'selected' : '' }}>Par semaine</option>
+                                <option value="monthly" {{ $freq == 'monthly' ? 'selected' : '' }}>Par mois</option>
+                                <option value="yearly" {{ $freq == 'yearly' ? 'selected' : '' }}>Par an</option>
                             </select>
                         </div>
                         <div class="kt-card-group flex items-center justify-between py-4 gap-2.5">
@@ -453,13 +410,14 @@
                                     Suppression manuelle
                                 </span>
                                 <span class="text-sm text-secondary-foreground">
-                                    Suppression en cas de besoin
+                                    Purge en cas de besoin
                                 </span>
                             </div>
-                            <a class="kt-btn kt-btn-outline" href="#">
+                            <a class="kt-btn kt-btn-outline" href="{{ route('admin.securite.trash.purge') }}">
                                 Démarrer
                             </a>
                         </div>
+                        <div class="loader absolute size-full flex hidden justify-center items-center kt-modal-backdrop"><i class="ki-filled ki-loading text-white text-2xl"></i></div>
                     </div>
                     <div class="kt-card">
                         <div class="kt-card-content py-10 flex flex-col gap-5 lg:gap-7.5">
@@ -471,14 +429,14 @@
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="M16 2.4641C19.7128 0.320509 24.2872 0.320508 28 2.4641L37.6506 8.0359C41.3634 10.1795 43.6506 14.141 43.6506
-       18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
-       39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
+                                                18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
+                                                39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
                                                 fill="">
                                             </path>
                                             <path
                                                 d="M16.25 2.89711C19.8081 0.842838 24.1919 0.842837 27.75 2.89711L37.4006 8.46891C40.9587 10.5232 43.1506 14.3196 43.1506
-       18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
-       39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
+                                                18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
+                                                39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
                                                 stroke="">
                                             </path>
                                         </svg>
@@ -509,14 +467,14 @@
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="M16 2.4641C19.7128 0.320509 24.2872 0.320508 28 2.4641L37.6506 8.0359C41.3634 10.1795 43.6506 14.141 43.6506
-       18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
-       39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
+                                                18.4282V29.5718C43.6506 33.859 41.3634 37.8205 37.6506 39.9641L28 45.5359C24.2872 47.6795 19.7128 47.6795 16 45.5359L6.34937
+                                                39.9641C2.63655 37.8205 0.349365 33.859 0.349365 29.5718V18.4282C0.349365 14.141 2.63655 10.1795 6.34937 8.0359L16 2.4641Z"
                                                 fill="">
                                             </path>
                                             <path
                                                 d="M16.25 2.89711C19.8081 0.842838 24.1919 0.842837 27.75 2.89711L37.4006 8.46891C40.9587 10.5232 43.1506 14.3196 43.1506
-       18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
-       39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
+                                                18.4282V29.5718C43.1506 33.6804 40.9587 37.4768 37.4006 39.5311L27.75 45.1029C24.1919 47.1572 19.8081 47.1572 16.25 45.1029L6.59937
+                                                39.5311C3.04125 37.4768 0.849365 33.6803 0.849365 29.5718V18.4282C0.849365 14.3196 3.04125 10.5232 6.59937 8.46891L16.25 2.89711Z"
                                                 stroke="">
                                             </path>
                                         </svg>
@@ -554,6 +512,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
     <script type="text/javascript">
+        document.querySelectorAll('[name="auto_delete"], [name="frequency"]').forEach(item => {
+            item.addEventListener('change', () => {
+                alert('derf');
+                document.querySelector('.loader').classList.remove('hidden');
+            })
+        });
+
         function confirmDelete(id) {
             if (confirm("Êtes-vous sûr de vouloir supprimer ce log ? Cette action est irréversible.")) {
                 document.getElementById(`delete-form-${id}`).submit();

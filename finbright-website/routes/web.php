@@ -219,6 +219,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
             
             Route::get('/corbeille', [SecuriteController::class, 'listeTrash'])->name('trash');
             Route::delete('/delete-trash/{id}', [SecuriteController::class, 'deleteTrash'])->name('trash.delete');
+            Route::delete('/purge', [SecuriteController::class, 'purge'])->name('trash.purge');
+            Route::post('settings/trash', [SecuriteController::class, 'saveTrash'])->name('trash.save');
         });
     });
 });

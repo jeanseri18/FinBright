@@ -40,7 +40,7 @@
             <div class="flex items-center flex-wrap gap-1.5 lg:gap-2.5">
                 <!-- Bouton Exporter -->
                 <a id="exportBtn" class="kt-btn kt-btn-outline"
-                    href="{{ route('admin.export.csv', ['entity' => 'users', 'month' => $months->first()['value'] ?? '']) }}">
+                    href="{{ route('admin.export.csv', ['entity' => 'admins', 'month' => $months->first()['value'] ?? '']) }}">
                     <i class="ki-filled ki-exit-down"></i>
                     Exporter
                 </a>
@@ -126,7 +126,7 @@
                                 <th class="min-w-[300px]">
                                     <span class="kt-table-col">
                                         <span class="kt-table-col-label">
-                                            Utilisateur
+                                            Utilisateurs
                                         </span>
                                         <span class="kt-table-col-sort">
                                         </span>
@@ -309,7 +309,7 @@
                     <input type="hidden" name="id">
                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                         <label class="kt-form-label max-w-56">
-                            Nom & prénoms
+                            Nom & prénoms<span class="text-destructive">*</span>
                         </label>
                         <input class="kt-input" type="text" name="fullname" placeholder="Nom et prénoms" required />
                     </div>
@@ -321,13 +321,13 @@
                     </div>
                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                         <label class="kt-form-label max-w-56">
-                            Email
+                            Email<span class="text-destructive">*</span>
                         </label>
                         <input class="kt-input" type="email" name="email" placeholder="Adresse email" required />
                     </div>
                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                         <label class="kt-form-label max-w-56">
-                            Rôle(s)
+                            Rôle(s)<span class="text-destructive">*</span>
                         </label>
                         <div class="grow">
                             @php
@@ -490,7 +490,7 @@
                 const shortLabel = this.dataset.short;
 
                 // Mettre à jour le bouton Exporter (href dynamique)
-                exportBtn.href = `/admin/export/etablissements/${value}`;
+                exportBtn.href = `/admin/export/admins/${value}`;
 
                 // Mettre à jour l’affichage du mois sélectionné
                 document.getElementById('selectedMonthLabel').textContent = label;

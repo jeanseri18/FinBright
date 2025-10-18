@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('phone_number')->nullable()->unique();
             $table->string('status')->default("Activation en cours"); // 'Actif', 'Activation en cours', 'inactif'
-            $table->softDeletes();
             $table->rememberToken()->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             // Clés étrangères (ajoutées après les autres champs pour une meilleure lisibilité)

@@ -125,7 +125,7 @@
                                 {{ $role->name }}
                             </a>
                             <span class="text-sm text-secondary-foreground">
-                                Rôle par default
+                                {{ $role->default_role ? "Rôle système" : null }}
                             </span>
                         </div>
                     </div>
@@ -248,7 +248,7 @@
                     <input type="hidden" name="id">
                     <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                         <label class="kt-form-label max-w-56">
-                            Nom
+                            Nom<span class="text-destructive">*</span>
                         </label>
                         <div class="flex flex-1 justify-between gap-1.5">
                             @php

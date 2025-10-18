@@ -18,6 +18,7 @@ return new class extends Migration
             // Par exemple, si 'amount' est supposé être dans la migration de création, mettez-le ici.
             // Si 'amount' et les autres champs sont ajoutés par la migration que vous avez montrée,
             // alors cette migration de création peut être plus simple.
+            $table->softDeletes();
             $table->timestamps();
         });
     }

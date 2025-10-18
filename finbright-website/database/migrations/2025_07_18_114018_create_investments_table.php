@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('investisseur_id')->constrained()->cascadeOnDelete();
             $table->foreignId('loan_request_id')->constrained()->cascadeOnDelete();
             $table->decimal('amount', 12, 2);
+            $table->softDeletes();
             $table->timestamps();
             
             $table->unique(['investisseur_id','loan_request_id']); // 1 ligne par projet dans le panier

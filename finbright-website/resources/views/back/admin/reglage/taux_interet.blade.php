@@ -123,7 +123,7 @@
                         <thead>
                             <tr>
                                 <th class="text-start w-[150px]">
-                                    Profil
+                                    Profils
                                 </th>
                                 <th class="text-end w-[100px]">
                                     Caractéristiques
@@ -246,14 +246,20 @@
                         </div>
                     </div>
                     <div class="kt-form-item mb-2">
-                        <label class="kt-form-label">Score</label>
-                        <div class="kt-form-control flex flex-wrap md:flex-nowrap gap-2.5">
-                            <input class="kt-input" name="score_mini" placeholder="Score minimum" type="text" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" required />
-                            <input class="kt-input" name="score_maxi" placeholder="Score maximum" type="text" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" required />
+                        <label class="kt-form-label">Score<span class="text-destructive">*</span></label>
+                        <div class="kt-form-control flex flex-wrap md:flex-nowrap justify-between gap-2.5 w-full">
+                            <div class="kt-input-group flex-1" for="score_mini">
+                                <input class="kt-input" id="score_mini" name="score_mini" placeholder="Score minimum" type="text" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" required />
+                                <span class="kt-input-addon">Min</span>
+                            </div>
+                            <div class="kt-input-group flex-1" for="score_maxi">
+                                <input class="kt-input" id="score_maxi" name="score_maxi" placeholder="Score maximum" type="text" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57" required />
+                                <span class="kt-input-addon">Max</span>
+                            </div>
                         </div>
                     </div>
                     <div class="kt-form-item">
-                        <label class="kt-form-label">Rendement</label>
+                        <label class="kt-form-label">Rendement<span class="text-destructive">*</span></label>
                         <div class="kt-input-group" for="yield">
                             <input class="kt-input" type="text" id="yield" name="yield" required min="0" max="100" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
                             <span class="kt-input-addon">%</span>

@@ -2,22 +2,28 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Files;
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Admin;
+use App\Models\Files;
+use App\Models\Setting;
+use App\Models\RiskLevel;
+use App\Models\Investment;
+use App\Models\LoanRequest;
 use App\Models\SecurityLog;
-use App\Mail\AdminPasswordSetupMail;
+use Illuminate\Http\Request;
+use App\Models\Etablissement;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\ParametresController;
+use App\Mail\AdminPasswordSetupMail;
+use Illuminate\Support\Facades\Mail;
 use App\Services\InvestorRiskService;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Mail;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\ParametresController;
 
 class SecuriteController extends Controller
 {
@@ -189,7 +195,7 @@ class SecuriteController extends Controller
         // Validation
         $validated = $request->validate([
             'id' => 'nullable|exists:roles,id',
-            'icon' => 'required|string|max:255',
+            'icon' => 'nullable|string|max:255',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'default_role' => 'nullable|boolean',
@@ -299,7 +305,7 @@ class SecuriteController extends Controller
         // Validation
         $validated = $request->validate([
             'id' => 'nullable|exists:permissions,id',
-            'icon' => 'required|string|max:255',
+            'icon' => 'nullable|string|max:255',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
@@ -357,7 +363,7 @@ class SecuriteController extends Controller
         
         $logs = SecurityLog::with('admin')
             ->latest()
-            ->paginate(20);
+            ->get();
 
         return view('back.admin.securite.security_log', compact('logs', 'months'));
     }
@@ -371,7 +377,7 @@ class SecuriteController extends Controller
             ->with('success', "Le log a été supprimé avec succès.");
     }
 
-    public function listeTrash(Request $request)
+    public function listeTrash()
     {
         Session::put('menu_actif', 'trash');
         // Récupérer les 3 derniers mois où il y a des utilisateurs créés
@@ -388,19 +394,71 @@ class SecuriteController extends Controller
                 ];
             });
         
-        // $logs = SecurityLog::with('admin')
-        //     ->latest()
-        //     ->paginate(20);
+        $deletedAdmins = Admin::onlyTrashed()->get();
+        $deletedEtablissements = Etablissement::onlyTrashed()->with('deletedBy')->get();
+        $deletedInvestments = Investment::onlyTrashed()->with('deletedBy')->get();
+        $deletedLoans = LoanRequest::onlyTrashed()->with('deletedBy')->get();
+        $deletedRisks = RiskLevel::onlyTrashed()->with('deletedBy')->get();
+        $deletedRoles = Role::onlyTrashed()->with('deletedBy')->get();
+        $deletedPermissions = Permission::onlyTrashed()->with('deletedBy')->get();
+        $deletedUsers = User::onlyTrashed()->with('deletedBy')->get();
 
-        return view('back.admin.securite.corbeille', compact('months'));
+        // On combine tout dans une collection unique
+        $trashItems = $deletedAdmins
+            ->merge($deletedEtablissements)
+            ->merge($deletedInvestments)
+            ->merge($deletedLoans)
+            ->merge($deletedRisks)
+            ->merge($deletedRoles)
+            ->merge($deletedPermissions)
+            ->merge($deletedUsers)
+            ->sortByDesc('deleted_at');
+        
+        return view('back.admin.securite.corbeille', compact('trashItems', 'months'));
+    }
+    
+    public function saveTrash(Request $request)
+    {
+        $data = $request->validate([
+            'auto_delete' => 'nullable|boolean',
+            'frequency' => 'required|string|in:daily,weekly,monthly,yearly',
+        ]);
+
+        Setting::set('trash.auto_delete', (bool) ($data['auto_delete'] ?? false));
+        Setting::set('trash.frequency', $data['frequency']);
+
+        return back()->with('success', 'Paramètres de la corbeille mis à jour.');
     }
 
-    public function deleteTrash($id)
+    public function restore($model, $id)
     {
-        $log = SecurityLog::findOrFail($id);
-        $log->delete();
+        $modelClass = "App\\Models\\" . ucfirst($model);
+        $record = $modelClass::onlyTrashed()->findOrFail($id);
+        $record->restore();
 
-        return redirect()->route('admin.securite.logs')
-            ->with('success', "Le log a été supprimé avec succès.");
+        return back()->with('success', 'Élément restauré avec succès.');
+    }
+
+    public function destroy($model, $id)
+    {
+        $modelClass = "App\\Models\\" . ucfirst($model);
+        $record = $modelClass::onlyTrashed()->findOrFail($id);
+        $record->forceDelete();
+
+        return back()->with('success', 'Élément supprimé définitivement.');
+    }
+    
+    public function purge()
+    {
+        Admin::onlyTrashed()->forceDelete();
+        Etablissement::onlyTrashed()->forceDelete();
+        Investment::onlyTrashed()->forceDelete();
+        LoanRequest::onlyTrashed()->forceDelete();
+        RiskLevel::onlyTrashed()->forceDelete();
+        Role::onlyTrashed()->forceDelete();
+        Permission::onlyTrashed()->forceDelete();
+        User::onlyTrashed()->forceDelete();
+
+        return back()->with('success', 'Tous les éléments supprimés définitivement.');
     }
 }

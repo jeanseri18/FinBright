@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('funds_from_country')->nullable()->after('nationality');
             $table->json('address')->nullable()->after('funds_from_country');
             $table->string('phone_number')->nullable()->unique()->after('address'); // Rend le numéro de téléphone unique
-            $table->softDeletes();
             $table->rememberToken()->after('password')->nullable();
             $table->timestamp('password_changed_at')->nullable();
             $table->boolean('is_profile_completed')->default(false);

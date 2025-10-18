@@ -16,6 +16,7 @@ return new class extends Migration
             $table->json('characteristics'); // Ex: années, diplômes, spécialisations
             $table->string('score_range'); // Exemple: 85-100
             $table->decimal('yield', 5, 2); // Exemple: 5.00
+            $table->softDeletes();
             $table->timestamps();
         });
     }

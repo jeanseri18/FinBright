@@ -52,10 +52,10 @@ class SecurityLogger
     private function determineSeverity(Request $request): string
     {
         return match (true) {
-            str_contains($request->path(), 'delete') => 'High',
-            str_contains($request->path(), 'update') => 'Medium',
-            str_contains($request->path(), 'create') => 'Low',
-            default => 'Low',
+            str_contains($request->path(), 'delete') => 'Élévé',
+            str_contains($request->path(), 'update') => 'Moyen',
+            str_contains($request->path(), 'create') => 'Faible',
+            default => 'Faible',
         };
     }
 }

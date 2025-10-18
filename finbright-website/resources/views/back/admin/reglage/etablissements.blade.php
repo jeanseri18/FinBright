@@ -123,7 +123,10 @@
                         <thead>
                             <tr>
                                 <th class="text-start w-[150px]">
-                                    Établissement
+                                    Établissements
+                                </th>
+                                <th class="text-end w-[100px]">
+                                    Étudiants
                                 </th>
                                 <th class="text-end w-[100px]">
                                     Ville
@@ -145,6 +148,9 @@
                                     <a class="text-sm font-medium text-mono hover:text-primary" href="#" onclick="openModal({{$etablissement->id}})">
                                         {{$etablissement->nom ?? null}}
                                     </a>
+                                </td>
+                                <td class="text-sm text-foreground text-end">
+                                    {{count($etablissement->emprunteurs) < 10 ? "0" : null}}{{count($etablissement->emprunteurs)}}
                                 </td>
                                 <td class="text-sm text-foreground text-end">
                                     {{$etablissement->ville ?? null}}
@@ -223,20 +229,20 @@
                 <form action="{{ route('admin.reglage.etablissement.save') }}" method="POST" class="kt-form">
                     @csrf
                     <div class="kt-form-item">
-                        <label class="kt-form-label">Nom de l'établissement</label>
+                        <label class="kt-form-label">Nom de l'établissement<span class="text-destructive">*</span></label>
                         <div class="kt-form-control">
                             <input name="id" type="hidden" />
                             <input class="kt-input" name="nom" placeholder="Entrer un nom" type="text" required />
                         </div>
                     </div>
                     <div class="kt-form-item">
-                        <label class="kt-form-label">Ville</label>
+                        <label class="kt-form-label">Ville<span class="text-destructive">*</span></label>
                         <div class="kt-form-control">
                             <input class="kt-input" name="ville" placeholder="Entrer la ville" type="text" required />
                         </div>
                     </div>
                     <div class="kt-form-item">
-                        <label class="kt-form-label">Pays</label>
+                        <label class="kt-form-label">Pays<span class="text-destructive">*</span></label>
                         <div class="grow">
                             @php
                                 $countries = [

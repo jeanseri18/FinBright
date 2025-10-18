@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('nom');
             $table->string('ville')->nullable();
             $table->string('pays')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -51,6 +51,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $dates = ['deleted_at'];
+
     // protected static $requiredFields = [
     //     'civility', 'last_name', 'first_name', 'email', 'password', 'birth_date',
     //     'birth_place', 'nationality', 'address', 'phone_number', 'profile_picture_id',
