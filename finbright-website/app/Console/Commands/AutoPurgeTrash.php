@@ -32,9 +32,14 @@ class AutoPurgeTrash extends Command
 
         // Liste des modèles à purger — ajoute/retire selon besoin
         $models = [
-            \App\Models\Etablissement::class,
             \App\Models\Admin::class,
+            \App\Models\Etablissement::class,
+            \App\Models\Investment::class,
             \App\Models\LoanRequest::class,
+            \App\Models\RiskLevel::class,
+            \Spatie\Permission\Models\Role::class,
+            \Spatie\Permission\Models\Permission::class,
+            \App\Models\User::class,
             // etc...
         ];
 

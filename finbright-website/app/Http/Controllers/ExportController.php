@@ -1,28 +1,77 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\RiskLevel;
 use App\Models\Emprunteur;
 use App\Models\Investment;
 use App\Models\LoanRequest;
+use App\Models\SecurityLog;
 use App\Models\Investisseur;
 use App\Models\Etablissement;
-use App\Models\SecurityLog;
-use App\Http\Controllers\Controller;
-use App\Models\Admin;
-use Spatie\Permission\Models\Role;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\SecuriteController;
+use App\Http\Controllers\Emprunteur\LoanRequestController;
+use App\Http\Controllers\Investisseur\InvestmentController;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ExportController extends Controller
 {
     public function __construct(
         private AdminController $adminController,
+        private SecuriteController $securiteController,
+        private LoanRequestController $loanRequestController,
     ) {}
 
-    public function exportCsv($entity, $month = null)
+    public function exportCsv($entity, $model = null)
+    {
+        $validEntities = [
+            'amortissement', 
+        ];
+        if (!in_array($entity, $validEntities)) {
+            abort(404);
+        }
+
+        switch ($entity) {
+            case 'amortissement':
+                $tableauAmortissement = [];
+                if ($model && $model = LoanRequest::with('emprunteur')->findOrFail($model)) {
+                    $tableauAmortissement = $this->loanRequestController->genererTableauAmortissement(
+                        $model->simulation_result['amount'],
+                        $model->simulation_result['duration'],
+                        $model->simulation_result['interets'],
+                        $model->simulation_result['assurances'],
+                        $model->simulation_result['deferred_months']
+                    );
+                }
+                $headers = ['N°', 'Date', 'Mensualité avec assurance', 'Mensualité hors assurance', 'Intérêts', 'Assurances', 'Capital remboursé', 'Capital restant dû', 'Cumul des intérêts', 'Statut'];
+                $data = $tableauAmortissement;
+                break;
+        }
+
+        // Création du CSV
+        $response = new StreamedResponse(function () use ($headers, $data) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, $headers);
+            foreach ($data as $row) {
+                fputcsv($handle, $row);
+            }
+            fclose($handle);
+        });
+
+        $filename = $entity . '_' . ($month ?? now()->format('Y-m')) . '.csv';
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.$filename.'"');
+
+        return $response;
+    }
+
+    public function exportCsvWithMonth($entity, $month = null)
     {
         $validEntities = [
             'investments_insight', 
@@ -35,7 +84,8 @@ class ExportController extends Controller
             'admins', 
             'roles', 
             'permissions',
-            'logs'
+            'logs',
+            'trash'
         ];
         if (!in_array($entity, $validEntities)) {
             abort(404);
@@ -225,6 +275,37 @@ class ExportController extends Controller
                     $l->source_ip,
                     $l->admin?->fullname ?? 'System',
                     $l->severity,
+                ]);
+                break;
+            case 'trash':
+                // 1. Récupérer la collection complète d'abord
+                $rowsCollection = $this->securiteController->trashCollection(); // Instancier le contrôleur
+
+                if ($month) {
+                    // 2. Filtrer la collection en utilisant la méthode Collection::filter()
+                    $rowsCollection = $rowsCollection->filter(function ($item) use ($month) {
+                        // On vérifie si l'item a la propriété 'deleted_at' (ce qui devrait être le cas)
+                        // et si le format Y-m de la date correspond au mois recherché.
+                        return $item->deleted_at && $item->deleted_at->format('Y-m') === $month;
+                    });
+                }
+
+                $rows = $rowsCollection; // $rows est maintenant la collection filtrée (ou non)
+
+                $headers = ['Période de suppression', 'Élément', 'Table', 'Supprimé par', 'Date']; // Ajuster les headers pour la corbeille
+                
+                $data = $rows->map(fn($l) => [
+                    // L'item $l est ici un modèle soft deleted (Admin, Etablissement, etc.)
+                    $l->deleted_at->format('d M Y, à H:i'),
+                    $l->name 
+                        ?? $l->nom 
+                        ?? $l->fullname 
+                        ?? $l->object 
+                        ?? ($l->profile && $l->profile == "A" ? $l->profile. " (Risque Faible)" : ($l->profile == "B" ? $l->profile. " (Risque Moyen)" : $l->profile. " (Risque Fort)")) 
+                        ?? ($l->last_name ." ". $l->first_name),
+                    class_basename($l), // Nom du modèle (ex: 'Admin', 'Etablissement')
+                    $l->deletedBy->fullname ?? 'Système',
+                    $l->deleted_at,
                 ]);
                 break;
         }

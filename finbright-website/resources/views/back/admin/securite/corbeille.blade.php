@@ -90,10 +90,6 @@
                             <h3 class="kt-card-title">
                                 Corbeille
                             </h3>
-                            {{-- <label class="kt-label">
-                                Suppression automatique
-                                <input class="kt-switch kt-switch-sm" name="check" type="checkbox" value="1" />
-                            </label> --}}
                         </div>
                         <div class="kt-card-content">
                             <div class="grid" data-kt-datatable="true" data-kt-datatable-page-size="10">
@@ -142,7 +138,13 @@
                                                 <td>
                                                     <div class="flex flex-col gap-1">
                                                         <span class="leading-none font-medium text-sm text-mono">
-                                                            {{ $item->name ?? $item->fullname }}
+                                                            {{ $item->name ?? 
+                                                                $item->nom ?? 
+                                                                $item->fullname ?? 
+                                                                $item->object ?? 
+                                                                ($item->profile && $item->profile == "A" ? $item->profile. " (Risque Faible)" : ($item->profile == "B" ? $item->profile. " (Risque Moyen)" : $item->profile. " (Risque Fort)")) ?? 
+                                                                ($item->last_name ." ". $item->first_name) 
+                                                            }}
                                                         </span>
                                                         <span
                                                             class="flex items-center gap-2 text-xs text-secondary-foreground font-normal">
@@ -163,14 +165,20 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a class="kt-btn kt-btn-sm" href="{{ route('admin.trash.forceDelete', [class_basename($item), $item->id]) }}">
-                                                        Supprimer
-                                                    </a>
+                                                    <form action="{{ route('admin.securite.trash.destroy', [class_basename($item), $item->id]) }}" method="POST" id="destroy-form-{{ $item->id }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <a class="kt-btn kt-btn-sm" href="#" data-action="supprimer" onclick="confirmAction(this)">
+                                                            Supprimer
+                                                        </a>
+                                                    </form>
                                                 </td>
                                                 <td>
-                                                    <a class="kt-btn kt-btn-outline" href="{{ route('admin.trash.restore', [class_basename($item), $item->id]) }}">
-                                                        Restaurer
-                                                    </a>
+                                                    <form action="{{ route('admin.securite.trash.restore', [class_basename($item), $item->id]) }}" method="POST" id="restore-form-{{ $item->id }}">
+                                                        @csrf
+                                                        <a class="kt-btn kt-btn-outline" href="#" data-action="restaurer" onclick="confirmAction(this)">
+                                                            Restaurer
+                                                        </a>
                                                 </td>
                                             </tr>
                                             @empty
@@ -512,16 +520,41 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
     <script type="text/javascript">
-        document.querySelectorAll('[name="auto_delete"], [name="frequency"]').forEach(item => {
-            item.addEventListener('change', () => {
-                alert('derf');
-                document.querySelector('.loader').classList.remove('hidden');
-            })
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('[name="auto_delete"], [name="frequency"]').forEach(item => {
+                item.addEventListener('change', () => {
+                    document.querySelector('.loader').classList.remove('hidden');
+                    var auto_delete = document.querySelector('[name="auto_delete"]').checked;
+                    var frequency = document.querySelector('[name="frequency"]').value;
+                    
+                    fetch(`{{ route('admin.securite.trash.settings') }}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            'auto_delete': auto_delete,
+                            'frequency': frequency
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data.message);
+                        document.querySelector('.loader').classList.add('hidden');
+                    })
+                    .catch(err => console.error("Erreur lors du chargement :", err));
+                });
+            });
         });
 
-        function confirmDelete(id) {
-            if (confirm("Êtes-vous sûr de vouloir supprimer ce log ? Cette action est irréversible.")) {
-                document.getElementById(`delete-form-${id}`).submit();
+        function confirmAction(element) {
+            const action = element.getAttribute('data-action');
+            const message = action === "supprimer" 
+                ? "Êtes-vous sûr de vouloir supprimer cet élément ? Cette action est irréversible."
+                : "Êtes-vous sûr de vouloir restaurer cet élément ?";
+            if (confirm(message)) {
+                element.closest('form').submit();
             }
         }
 

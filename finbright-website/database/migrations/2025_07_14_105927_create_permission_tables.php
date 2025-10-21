@@ -31,6 +31,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->unique(['name', 'guard_name']);
+            $table->foreignId('deleted_by')->nullable()->constrained('admins')->nullOnDelete();
         });
 
         Schema::create($tableNames['roles'], static function (Blueprint $table) use ($teams, $columnNames) {
@@ -47,6 +48,7 @@ return new class extends Migration
             $table->boolean('default_role')->default(false);
             $table->softDeletes();
             $table->timestamps();
+            $table->foreignId('deleted_by')->nullable()->constrained('admins')->nullOnDelete();
             if ($teams || config('permission.testing')) {
                 $table->unique([$columnNames['team_foreign_key'], 'name', 'guard_name']);
             } else {

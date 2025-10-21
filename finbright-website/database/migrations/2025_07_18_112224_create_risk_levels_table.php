@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('yield', 5, 2); // Exemple: 5.00
             $table->softDeletes();
             $table->timestamps();
+            $table->foreignId('deleted_by')->nullable()->constrained('admins')->nullOnDelete();
         });
     }
 

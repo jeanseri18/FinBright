@@ -119,9 +119,12 @@
                                 Filtrer
                             </button>
                         </form>
+                        @php
+                            $auto = \App\Models\Setting::get('loanRequests.auto_validate', true);
+                        @endphp
                         <label class="kt-label">
-                            Suppression automatique
-                            <input class="kt-switch kt-switch-sm" name="check" type="checkbox" value="1" />
+                            Validation automatique
+                            <input {{ $auto ? 'checked' : '' }} class="kt-switch kt-switch-sm" name="auto_validate" type="checkbox" value="1" />
                         </label>
                     </div>
                 </div>
@@ -505,134 +508,192 @@
         </div>
     </div>
     <!-- End of Container -->
+    
+    <div class="kt-modal kt-modal-center" data-kt-modal="true" id="modal_auto_validate">
+        <div class="kt-modal-content max-w-[500px] w-full">
+            <div class="kt-modal-header justify-end border-0 pt-5">
+                <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-outline" data-kt-modal-dismiss="true">
+                    <i class="ki-filled ki-cross"></i>
+                </button>
+            </div>
+            <div class="kt-modal-body flex flex-col items-center pt-0 pb-10">
+                <div class="mb-9">
+                    <img alt="image" class="dark:hidden max-h-[150px]" src="{{asset('assets/media/illustrations/30.svg')}}"/>
+                    <img alt="image" class="light:hidden max-h-[150px]" src="{{asset('assets/media/illustrations/30-dark.svg')}}"/>
+                </div>
+                <h3 class="text-lg font-medium text-mono text-center mb-3">
+                    Validation automatique
+                </h3>
+                <div class="text-sm text-center text-secondary-foreground mb-7">
+                    Les démandes de prêt sont désormais en mode validation automatique
+                    <br/>
+                    Les démandes encore en cours de validation seront toutes validées au bout d'une semaine (7 jours) rénouvelables.
+                </div>
+                <a class="kt-btn kt-btn-primary flex justify-center" href="#" data-kt-modal-dismiss="true">
+                    D'accord.
+                </a>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('javascripts')
     <script type="text/javascript">
-    document.addEventListener('click', function(e) {
-        const link = e.target.closest('.kt-menu-link[data-status]');
-        if (!link) return;
 
-        e.preventDefault();
+        document.addEventListener('DOMContentLoaded', () => {
+            const modalEl = KTDom.getElement('#modal_auto_validate');
+            const modal = KTModal.getInstance(modalEl);
 
-        const status = link.dataset.status;
-        const loan = link.dataset.loanId;
-        const tdStatus = link.closest('tr').querySelector('.loan-status');
-
-        fetch(`/admin/prets/${loan}/status`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({ status })
-        })
-        .then(async res => {
-            const text = await res.text(); 
-            try {
-                return JSON.parse(text);
-            } catch (e) {
-                console.error("Réponse du serveur (non JSON) :", text);
-                throw e;
-            }
-        })
-        .then(data => {
-            if(data.success){
-                showSuccessAlert(data.status);
-                let badgeClass = '';
-                switch(data.status) {
-                    case 'En attente de confirmation': badgeClass = 'kt-badge-warning'; break;
-                    case 'En cours de financement': badgeClass = 'kt-badge-success'; break;
-                    case 'Rejetée': badgeClass = 'kt-badge-destructive'; break;
-                }
-                tdStatus.innerHTML = `
-                    <span class="kt-badge ${badgeClass} kt-badge-outline rounded-[30px]">
-                        <span class="kt-badge-dot size-1.5"></span>
-                        ${data.status}
-                    </span>
-                `;
-            }
-        });
-    });
-    
-    function showSuccessAlert(status) {
-        // Créer le conteneur d'alerte
-        const alert = document.createElement('div');
-        alert.className = 'kt-alert kt-alert-light kt-alert-success absolute inset-x-0 top-10 z-50 max-w-lg m-auto shadow-md';
-        alert.id = 'alert_temp'; // ID temporaire pour pouvoir le retirer
-        alert.innerHTML = `
-            <div class="kt-alert-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
-                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info" 
-                    aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M12 16v-4"></path>
-                    <path d="M12 8h.01"></path>
-                </svg>
-            </div>
-            <div class="kt-alert-title">Statut mis à jour : ${status}</div>
-            <div class="kt-alert-toolbar">
-                <div class="kt-alert-actions">
-                    <button class="kt-link kt-link-xs kt-link-underlined text-mono">Fermer</button>
-                    <button class="kt-alert-close" data-kt-dismiss="#alert_temp">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
-                            stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" 
-                            aria-hidden="true">
-                            <path d="M18 6 6 18"></path>
-                            <path d="m6 6 12 12"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        `;
-
-        // Ajouter l’alerte dans un conteneur dédié ou au début du body
-        document.body.prepend(alert);
-
-        // Fermer au clic sur le bouton "Fermer"
-        alert.querySelector('button.kt-link').addEventListener('click', () => {
-            alert.remove();
+            document.querySelector('[name="auto_validate"]').addEventListener('change', (e) => {
+                e.target.disabled = true;
+                var auto_validate = e.target.checked;
+                
+                fetch(`{{ route('admin.prets.settings') }}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        'auto_validate': auto_validate,
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data.message);
+                    if (data.data.auto_validate) modal?.show();
+                })
+                .catch(err => console.error("Erreur lors du chargement :", err))
+                .finally(() => {
+                    e.target.disabled = false;
+                });
+            });
         });
 
-        // Fermer automatiquement après 5 secondes
-        setTimeout(() => {
-            alert.remove();
-        }, 5000);
-    };
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('.kt-menu-link[data-status]');
+            if (!link) return;
 
-    document.getElementById('search_input').addEventListener('input', function() {
-        const query = this.value.toLowerCase().trim();
-        const trList = document.querySelectorAll('[data-kt-datatable-table="true"] tbody tr');
-
-        trList.forEach(tr => {
-            const rowText = tr.innerText.toLowerCase();
-            tr.style.display = rowText.includes(query) ? '' : 'none';
-        });
-    });
-
-    const exportBtn = document.getElementById('exportBtn');
-
-    document.querySelectorAll('.kt-menu-link[data-value]').forEach(link => {
-        link.addEventListener('click', function (e) {
             e.preventDefault();
 
-            const value = this.dataset.value;
-            const label = this.dataset.label;
-            const shortLabel = this.dataset.short;
+            const status = link.dataset.status;
+            const loan = link.dataset.loanId;
+            const tdStatus = link.closest('tr').querySelector('.loan-status');
 
-            // Mettre à jour le bouton Exporter (href dynamique)
-            exportBtn.href = `/admin/export/loan_requests/${value}`;
-
-            // Mettre à jour l’affichage du mois sélectionné
-            document.getElementById('selectedMonthLabel').textContent = label;
-            document.getElementById('selectedMonthShort').textContent = shortLabel;
-
-            // Mettre en surbrillance l’élément actif
-            document.querySelectorAll('.kt-menu-item').forEach(i => i.classList.remove('active'));
-            this.closest('.kt-menu-item').classList.add('active');
+            fetch(`/admin/prets/${loan}/status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ status })
+            })
+            .then(async res => {
+                const text = await res.text(); 
+                try {
+                    return JSON.parse(text);
+                } catch (e) {
+                    console.error("Réponse du serveur (non JSON) :", text);
+                    throw e;
+                }
+            })
+            .then(data => {
+                if(data.success){
+                    showSuccessAlert(data.status);
+                    let badgeClass = '';
+                    switch(data.status) {
+                        case 'En attente de confirmation': badgeClass = 'kt-badge-warning'; break;
+                        case 'En cours de financement': badgeClass = 'kt-badge-success'; break;
+                        case 'Rejetée': badgeClass = 'kt-badge-destructive'; break;
+                    }
+                    tdStatus.innerHTML = `
+                        <span class="kt-badge ${badgeClass} kt-badge-outline rounded-[30px]">
+                            <span class="kt-badge-dot size-1.5"></span>
+                            ${data.status}
+                        </span>
+                    `;
+                }
+            });
         });
-    });
+        
+        function showSuccessAlert(status) {
+            // Créer le conteneur d'alerte
+            const alert = document.createElement('div');
+            alert.className = 'kt-alert kt-alert-light kt-alert-success absolute inset-x-0 top-10 z-50 max-w-lg m-auto shadow-md';
+            alert.id = 'alert_temp'; // ID temporaire pour pouvoir le retirer
+            alert.innerHTML = `
+                <div class="kt-alert-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
+                        stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info" 
+                        aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 16v-4"></path>
+                        <path d="M12 8h.01"></path>
+                    </svg>
+                </div>
+                <div class="kt-alert-title">Statut mis à jour : ${status}</div>
+                <div class="kt-alert-toolbar">
+                    <div class="kt-alert-actions">
+                        <button class="kt-link kt-link-xs kt-link-underlined text-mono">Fermer</button>
+                        <button class="kt-alert-close" data-kt-dismiss="#alert_temp">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
+                                stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" 
+                                aria-hidden="true">
+                                <path d="M18 6 6 18"></path>
+                                <path d="m6 6 12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Ajouter l’alerte dans un conteneur dédié ou au début du body
+            document.body.prepend(alert);
+
+            // Fermer au clic sur le bouton "Fermer"
+            alert.querySelector('button.kt-link').addEventListener('click', () => {
+                alert.remove();
+            });
+
+            // Fermer automatiquement après 5 secondes
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        };
+
+        document.getElementById('search_input').addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            const trList = document.querySelectorAll('[data-kt-datatable-table="true"] tbody tr');
+
+            trList.forEach(tr => {
+                const rowText = tr.innerText.toLowerCase();
+                tr.style.display = rowText.includes(query) ? '' : 'none';
+            });
+        });
+
+        const exportBtn = document.getElementById('exportBtn');
+
+        document.querySelectorAll('.kt-menu-link[data-value]').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const value = this.dataset.value;
+                const label = this.dataset.label;
+                const shortLabel = this.dataset.short;
+
+                // Mettre à jour le bouton Exporter (href dynamique)
+                exportBtn.href = `/admin/export/loan_requests/${value}`;
+
+                // Mettre à jour l’affichage du mois sélectionné
+                document.getElementById('selectedMonthLabel').textContent = label;
+                document.getElementById('selectedMonthShort').textContent = shortLabel;
+
+                // Mettre en surbrillance l’élément actif
+                document.querySelectorAll('.kt-menu-item').forEach(i => i.classList.remove('active'));
+                this.closest('.kt-menu-item').classList.add('active');
+            });
+        });
     </script>
 @endsection

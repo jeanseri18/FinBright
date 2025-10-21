@@ -423,30 +423,31 @@ Contact:
 
                     <div class="flex justify-end gap-4 pt-4">
                         @php
+                            $loanOver = false; $kycValidated = false;
                             if ($emprunteur && $emprunteur->loanRequests && $loan = $emprunteur->loanRequests->last()) {
-                                $disabled = $loan->status != "Terminé";
+                                $loanOver = $loan->status == "Terminé";
+                                $kycValidated = Auth::user()->kyc_status == "validated";
                             }
-                            else $disabled = false;
                         @endphp
                         <button type="button" class="kt-btn kt-btn-secondary" data-kt-modal-toggle="#modal_simulate_result">
                             Retour
                         </button>
                         <button id="check_debt" class="kt-btn" type="button">Vérifier</button>
-                        <button id="submit_demand" class="kt-btn hidden" 
-                            type="submit" 
-                            @if($disabled) 
-                                disabled 
-                                data-kt-tooltip="true" data-kt-tooltip-placement="top-end"
-                            @endif
-                        >
-                            Soumettre une demande
-                            @if($disabled)
-                            <i class="ki-filled ki-information-2 text-muted-foreground text-sm ms-2"></i>
-                            <span data-kt-tooltip-content="true" class="kt-tooltip">
-                                <span class="flex items-center gap-1.5"><i class="ki-filled ki-information-2 text-muted-foreground text-sm"></i>Vous avez déjà une demande en cours</span>
-                            </span>
-                            @endif
-                        </button>
+                        @if($loanOver && $kycValidated)
+                            <button id="submit_demand" class="kt-btn hidden" type="submit" >Soumettre une demande</button>
+                        @else 
+                            <button id="submit_demand" class="kt-btn hidden opacity-40 cursor-default" type="button" 
+                                data-kt-tooltip="#external_tooltip" data-kt-tooltip-trigger="click" data-kt-tooltip-placement="top-end">
+                                Soumettre une demande
+                                <i class="ki-filled ki-information-2 text-white text-sm ms-2"></i>
+                            </button>
+                            <div id="external_tooltip" class="kt-tooltip !absolute">
+                                <div class="flex flex-col">
+                                    @if(!$loanOver)<span class="flex items-center gap-1.5"><i class="ki-filled ki-information-2 text-muted-foreground text-sm"></i>Vous avez déjà une demande en cours</span>@endif
+                                    @if(!$kycValidated)<span class="flex items-center gap-1.5"><i class="ki-filled ki-information-2 text-muted-foreground text-sm"></i>Votre compte n'est pas encore validé, veuillez patienter.</span>@endif
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </form>
             </div>

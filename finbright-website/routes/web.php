@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminPasswordResetController;
-use App\Http\Controllers\Admin\ExportController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\Admin\ReglageController;
 use App\Http\Controllers\Admin\SecuriteController;
 use App\Http\Controllers\ProfilController;
@@ -86,6 +86,7 @@ Route::prefix('emprunteur')->name('emprunteur.')->middleware(['auth', '2fa', 'ro
     Route::post('/mon-profil/general', [EmprunteurController::class, 'updateProfil'])->name('profil-general.update');
     Route::post('/mon-profil/cursus', [EmprunteurController::class, 'updateCursus'])->name('profil-cursus.update');
     Route::get('/filieres/{diplome}', [EmprunteurController::class, 'filieresParDiplome']);
+    Route::get('/export/{entity}/{loan?}', [ExportController::class, 'exportCsv'])->name('export.csv');
     
     Route::middleware(['profile.completed'])->group(function () {
         Route::get('/', [EmprunteurController::class, 'index'])->name('dashboard');
@@ -160,7 +161,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     
     Route::middleware(['auth:admin', 'security.log'])->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-        Route::get('/export/{entity}/{month?}', [ExportController::class, 'exportCsv'])->name('export.csv');
+        Route::get('/export/{entity}/{month?}', [ExportController::class, 'exportCsvWithMonth'])->name('export.csv');
 
         Route::post('/documents/{document}/update-status', [AdminController::class, 'updateDocsStatus']);
         
@@ -178,6 +179,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::prefix('prets')->name('prets.')->group(function () {
             Route::get('/demandes-de-prets', [AdminController::class, 'demandesPrets'])->name('demandes');
+            Route::post('/settings', [AdminController::class, 'settings'])->name('settings');
             Route::post('{loan}/status', [AdminController::class, 'updateLoanStatus'])->name('update_status');
             Route::get('/projets-en-cours', [AdminController::class, 'projetsEnCours'])->name('enCours');
         });
@@ -215,12 +217,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::delete('/delete-permission/{id}', [SecuriteController::class, 'deletePermission'])->name('permission.delete');
             
             Route::get('/security-log', [SecuriteController::class, 'securityLog'])->name('logs');
+            Route::post('/settings-logs', [SecuriteController::class, 'settingsLogs'])->name('logs.settings');
             Route::delete('/delete-log/{id}', [SecuriteController::class, 'deleteLog'])->name('log.delete');
             
-            Route::get('/corbeille', [SecuriteController::class, 'listeTrash'])->name('trash');
-            Route::delete('/delete-trash/{id}', [SecuriteController::class, 'deleteTrash'])->name('trash.delete');
-            Route::delete('/purge', [SecuriteController::class, 'purge'])->name('trash.purge');
-            Route::post('settings/trash', [SecuriteController::class, 'saveTrash'])->name('trash.save');
+            Route::prefix('corbeille')->name('trash')->middleware(['role:Super Admin', 'permission:Gérer les utilisateurs'])->group(function () {
+                Route::get('/', [SecuriteController::class, 'listeTrash']);
+                Route::post('/settings', [SecuriteController::class, 'settingsTrash'])->name('.settings');
+                Route::delete('/purge', [SecuriteController::class, 'purge'])->name('.purge');
+                Route::post('/{model}/{id}/restore', [SecuriteController::class,'restore'])->name('.restore');
+                Route::delete('/{model}/{id}/destroy', [SecuriteController::class,'destroy'])->name('.destroy');
+            });
         });
     });
 });

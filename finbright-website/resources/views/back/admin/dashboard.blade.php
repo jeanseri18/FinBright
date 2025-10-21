@@ -31,7 +31,7 @@
             <div class="flex items-center flex-wrap gap-1.5 lg:gap-2.5">
                 <!-- Bouton Exporter -->
                 <a id="exportBtn" class="kt-btn kt-btn-outline"
-                href="{{ route('admin.export.csv', ['entity' => 'investments_insight']) }}">
+                    href="{{ route('admin.export.csv', ['entity' => 'investments_insight']) }}">
                     <i class="ki-filled ki-exit-down"></i>
                     Exporter les insights
                 </a>

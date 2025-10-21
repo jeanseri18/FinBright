@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('event_type'); // Ex: Unauthorized Access, Data Updated...
             $table->string('action_taken'); // Description courte
             $table->string('source_ip')->nullable();
-            $table->enum('severity', ['Low', 'Medium', 'High', 'Critical'])->default('Low');
+            $table->enum('severity', ['Faible', 'Moyen', 'Élévé', 'Critique'])->default('Faible');
             $table->string('method')->nullable(); // POST, PUT, DELETE...
             $table->json('context')->nullable(); // Données additionnelles (ex: payload, resource_id, etc.)
             $table->timestamps();

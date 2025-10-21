@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use App\Models\Setting;
 use App\Models\Emprunteur;
-use App\Models\Investisseur;
 use App\Models\Investment;
 use App\Models\LoanRequest;
+use App\Models\Investisseur;
 use App\Models\UserDocument;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Services\InvestorRiskService;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AdminController extends Controller
@@ -555,6 +556,17 @@ class AdminController extends Controller
         $loanRequests = $query->paginate(10);
 
         return view('back.admin.projets.demandes', compact('loanRequests', 'months'));
+    }
+
+    public function settings(Request $request)
+    {
+        $data = $request->validate([
+            'auto_validate' => 'nullable|boolean',
+        ]);
+
+        Setting::set('loanRequests.auto_validate', (bool) ($data['auto_validate'] ?? false));
+
+        return response()->json(['success' => true, 'message' => 'Paramètres sauvegardés.', 'data' => $data]);
     }
 
     public function updateLoanStatus(Request $request, LoanRequest $loan)

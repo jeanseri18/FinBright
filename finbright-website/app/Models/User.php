@@ -53,6 +53,21 @@ class User extends Authenticatable
 
     protected $dates = ['deleted_at'];
 
+    public static function booted()
+    {
+        static::deleting(function ($model) {
+            if (auth()->guard('admin')->check()) {
+                $model->deleted_by = auth()->guard('admin')->id();
+                $model->saveQuietly();
+            }
+        });
+    }
+
+    public function deletedBy()
+    {
+        return $this->belongsTo(Admin::class);
+    }
+
     // protected static $requiredFields = [
     //     'civility', 'last_name', 'first_name', 'email', 'password', 'birth_date',
     //     'birth_place', 'nationality', 'address', 'phone_number', 'profile_picture_id',

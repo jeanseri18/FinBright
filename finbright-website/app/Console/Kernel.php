@@ -11,6 +11,12 @@ class Kernel extends ConsoleKernel
     {
         // Exécute la commande chaque heure — la commande elle-même lit la fréquence définie
         $schedule->command('trash:purge')->hourly();
+
+        // purge system logs -> quotidienne
+        $schedule->command('system:purge-logs')->dailyAt('03:00');
+
+        // auto-validation loans -> toutes les heures
+        $schedule->command('loans:auto-validate')->hourly();
     }
 
     protected function commands()

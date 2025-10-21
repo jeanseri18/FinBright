@@ -24,6 +24,7 @@ return new class extends Migration
 
             // Clés étrangères (ajoutées après les autres champs pour une meilleure lisibilité)
             $table->foreignId('profile_picture_id')->nullable()->constrained('files')->onDelete('set null');
+            $table->foreignId('deleted_by')->nullable()->constrained('admins')->nullOnDelete();
         });
     }
 

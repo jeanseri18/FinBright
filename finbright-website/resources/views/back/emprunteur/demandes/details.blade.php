@@ -100,7 +100,7 @@
                         </div>
                     </div>
                 </div>
-                @if($loan->status !== 'En attente de confirmation')
+                @if($loan->status == 'Financée')
                 <div class="col-span-2 lg:col-span-1 flex">
                     <div class="kt-card grow">
                         <div class="kt-card-header">
@@ -590,11 +590,10 @@
                             <h3 class="kt-card-title">
                                 Tableau d'amortissement
                             </h3>
-                            <button class="kt-btn kt-btn-outline">
-                                <i class="ki-filled ki-exit-down">
-                                </i>
+                            <a href="{{ route('emprunteur.export.csv', ['entity' => 'amortissement', 'month' => null, 'loan' => $loan]) }}" class="kt-btn kt-btn-outline">
+                                <i class="ki-filled ki-exit-down"></i>
                                 Télécharger en PDF
-                            </button>
+                            </a>
                         </div>
                         <div class="kt-card-table">
                             <div class="grid" data-kt-datatable="true" data-kt-datatable-page-size="10">
@@ -864,4 +863,28 @@
 @endsection
 
 @section('javascripts')
+    <script type="text/javascript">
+        const exportBtn = document.getElementById('exportBtn');
+
+        document.querySelectorAll('.kt-menu-link[data-value]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const value = this.dataset.value;
+                const label = this.dataset.label;
+                const shortLabel = this.dataset.short;
+
+                // Mettre à jour le bouton Exporter (href dynamique)
+                exportBtn.href = `/admin/export/amortissement/${value}`;
+
+                // Mettre à jour l’affichage du mois sélectionné
+                document.getElementById('selectedMonthLabel').textContent = label;
+                document.getElementById('selectedMonthShort').textContent = shortLabel;
+
+                // Mettre en surbrillance l’élément actif
+                document.querySelectorAll('.kt-menu-item').forEach(i => i.classList.remove('active'));
+                this.closest('.kt-menu-item').classList.add('active');
+            });
+        });
+    </script>
 @endsection

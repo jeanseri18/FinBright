@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->softDeletes();
             $table->timestamps();
+            $table->foreignId('deleted_by')->nullable()->constrained('admins')->nullOnDelete();
         });
     }
 

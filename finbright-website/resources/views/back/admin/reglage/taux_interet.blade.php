@@ -146,7 +146,7 @@
                             <tr>
                                 <td class="text-start">
                                     <a class="text-sm font-medium text-mono hover:text-primary" href="#" onclick="openModal({{$item->id}})">
-                                        {{ $item->profile ?? null}} ({{ $item->profile == "A" ? "Risque Faible" : ($item->profile == "B" ? "Risque Moyen" : "Risque fort") }})
+                                        {{ $item->profile ?? null}} ({{ $item->profile == "A" ? "Risque Faible" : ($item->profile == "B" ? "Risque Moyen" : "Risque Fort") }})
                                     </a>
                                 </td>
                                 <td class="text-sm text-foreground text-end">
@@ -261,7 +261,7 @@
                     <div class="kt-form-item">
                         <label class="kt-form-label">Rendement<span class="text-destructive">*</span></label>
                         <div class="kt-input-group" for="yield">
-                            <input class="kt-input" type="text" id="yield" name="yield" required min="0" max="100" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
+                            <input class="kt-input" type="number" id="yield" name="yield" required min="0" max="100" onkeypress="return event.charCode>=48 &amp;&amp; event.charCode<=57">
                             <span class="kt-input-addon">%</span>
                         </div>
                     </div>

@@ -108,9 +108,12 @@
                                     value="" />
                             </label>
                         </div>
+                        @php
+                            $auto = \App\Models\Setting::get('logs.auto_delete', true);
+                        @endphp
                         <label class="kt-label">
                             Suppression automatique
-                            <input class="kt-switch kt-switch-sm" name="check" type="checkbox" value="1" />
+                            <input {{ $auto ? 'checked' : '' }} class="kt-switch kt-switch-sm" name="auto_delete" type="checkbox" value="1" />
                         </label>
                     </div>
                 </div>
@@ -197,9 +200,9 @@
                                         <td>
                                             <div class="flex items-center gap-1.5">
                                                 <i class="ki-filled ki-information-4 text-lg 
-                                                    {{ $log->severity === 'Critical' ? 'text-destructive' : 
-                                                    ($log->severity === 'High' ? 'text-red-500' :
-                                                    ($log->severity === 'Medium' ? 'text-yellow-500' : 'text-green-500')) }}">
+                                                    {{ $log->severity === 'Critique' ? 'text-yellow-500' : 
+                                                    ($log->severity === 'Élévé' ? 'text-destructive' :
+                                                    ($log->severity === 'Moyen' ? 'text-yellow-500' : 'text-green-500')) }}">
                                                 </i>
                                                 <span class="font-semibold text-secondary-foreground">
                                                     {{ $log->event_type }}
@@ -307,6 +310,33 @@
         </div>
     </div>
     <!-- End of Container -->
+    
+    <div class="kt-modal kt-modal-center" data-kt-modal="true" id="modal_auto_delete">
+        <div class="kt-modal-content max-w-[500px] w-full">
+            <div class="kt-modal-header justify-end border-0 pt-5">
+                <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-outline" data-kt-modal-dismiss="true">
+                    <i class="ki-filled ki-cross"></i>
+                </button>
+            </div>
+            <div class="kt-modal-body flex flex-col items-center pt-0 pb-10">
+                <div class="mb-9">
+                    <img alt="image" class="dark:hidden max-h-[150px]" src="{{asset('assets/media/illustrations/30.svg')}}"/>
+                    <img alt="image" class="light:hidden max-h-[150px]" src="{{asset('assets/media/illustrations/30-dark.svg')}}"/>
+                </div>
+                <h3 class="text-lg font-medium text-mono text-center mb-3">
+                    Suppression automatique
+                </h3>
+                <div class="text-sm text-center text-secondary-foreground mb-7">
+                    Les logs sont désormais en mode suppression automatique
+                    <br/>
+                    Ils seront tous supprimés au bout d'une semaine (7 jours) rénouvelables.
+                </div>
+                <a class="kt-btn kt-btn-primary flex justify-center" href="#" data-kt-modal-dismiss="true">
+                    D'accord.
+                </a>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('javascripts')
@@ -314,6 +344,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
     <script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const modalEl = KTDom.getElement('#modal_auto_delete');
+            const modal = KTModal.getInstance(modalEl);
+
+            document.querySelector('[name="auto_delete"]').addEventListener('change', (e) => {
+                e.target.disabled = true;
+                var auto_delete = e.target.checked;
+                
+                fetch(`{{ route('admin.securite.logs.settings') }}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        'auto_delete': auto_delete,
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data.message);
+                    if (data.data.auto_delete) modal?.show();
+                })
+                .catch(err => console.error("Erreur lors du chargement :", err))
+                .finally(() => {
+                    e.target.disabled = false;
+                });
+            });
+        });
+
         function confirmDelete(id) {
             if (confirm("Êtes-vous sûr de vouloir supprimer ce log ? Cette action est irréversible.")) {
                 document.getElementById(`delete-form-${id}`).submit();

@@ -23,6 +23,21 @@ class RiskLevel extends Model
 
     protected $dates = ['deleted_at'];
 
+    public static function booted()
+    {
+        static::deleting(function ($model) {
+            if (auth()->guard('admin')->check()) {
+                $model->deleted_by = auth()->guard('admin')->id();
+                $model->saveQuietly();
+            }
+        });
+    }
+
+    public function deletedBy()
+    {
+        return $this->belongsTo(Admin::class);
+    }
+
     public function emprunteurs()
     {
         return $this->hasMany(User::class);

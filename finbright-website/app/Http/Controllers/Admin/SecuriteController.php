@@ -28,7 +28,7 @@ use App\Http\Controllers\ParametresController;
 class SecuriteController extends Controller
 {
     public function __construct(
-        private InvestorRiskService $riskService,
+        
     ) {}
 
     public function listeUtilisateurs(Request $request)
@@ -368,6 +368,17 @@ class SecuriteController extends Controller
         return view('back.admin.securite.security_log', compact('logs', 'months'));
     }
 
+    public function settingsLogs(Request $request)
+    {
+        $data = $request->validate([
+            'auto_delete' => 'nullable|boolean',
+        ]);
+
+        Setting::set('logs.auto_delete', (bool) ($data['auto_delete'] ?? false));
+
+        return response()->json(['success' => true, 'message' => 'Paramètres sauvegardés.', 'data' => $data]);
+    }
+
     public function deleteLog($id)
     {
         $log = SecurityLog::findOrFail($id);
@@ -394,30 +405,37 @@ class SecuriteController extends Controller
                 ];
             });
         
-        $deletedAdmins = Admin::onlyTrashed()->get();
-        $deletedEtablissements = Etablissement::onlyTrashed()->with('deletedBy')->get();
-        $deletedInvestments = Investment::onlyTrashed()->with('deletedBy')->get();
-        $deletedLoans = LoanRequest::onlyTrashed()->with('deletedBy')->get();
-        $deletedRisks = RiskLevel::onlyTrashed()->with('deletedBy')->get();
-        $deletedRoles = Role::onlyTrashed()->with('deletedBy')->get();
-        $deletedPermissions = Permission::onlyTrashed()->with('deletedBy')->get();
-        $deletedUsers = User::onlyTrashed()->with('deletedBy')->get();
-
-        // On combine tout dans une collection unique
-        $trashItems = $deletedAdmins
-            ->merge($deletedEtablissements)
-            ->merge($deletedInvestments)
-            ->merge($deletedLoans)
-            ->merge($deletedRisks)
-            ->merge($deletedRoles)
-            ->merge($deletedPermissions)
-            ->merge($deletedUsers)
-            ->sortByDesc('deleted_at');
+        $trashItems = $this->trashCollection();
         
         return view('back.admin.securite.corbeille', compact('trashItems', 'months'));
     }
+
+    public function trashCollection()
+    {
+        $models = [
+            Admin::class, Etablissement::class, Investment::class, LoanRequest::class, 
+            RiskLevel::class, Role::class, Permission::class, User::class
+        ];
+
+        $allDeletedItems = collect();
+        
+        foreach ($models as $modelClass) {
+            // Pour les modèles qui n'ont pas de relation 'deletedBy', on ne l'inclut pas
+            $query = $modelClass::onlyTrashed();
+            
+            // Vérification si la relation deletedBy existe sur le modèle
+            if (method_exists($modelClass, 'deletedBy')) {
+                $query->with('deletedBy');
+            }
+            
+            $allDeletedItems = $allDeletedItems->concat($query->get());
+        }
+
+        // On combine tout dans une collection unique et on trie
+        return $allDeletedItems->sortByDesc('deleted_at');
+    }
     
-    public function saveTrash(Request $request)
+    public function settingsTrash(Request $request)
     {
         $data = $request->validate([
             'auto_delete' => 'nullable|boolean',
@@ -427,7 +445,7 @@ class SecuriteController extends Controller
         Setting::set('trash.auto_delete', (bool) ($data['auto_delete'] ?? false));
         Setting::set('trash.frequency', $data['frequency']);
 
-        return back()->with('success', 'Paramètres de la corbeille mis à jour.');
+        return response()->json(['success' => true, 'message' => 'Paramètres sauvegardés.', 'data' => $data]);
     }
 
     public function restore($model, $id)

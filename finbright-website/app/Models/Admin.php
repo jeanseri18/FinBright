@@ -15,6 +15,21 @@ class Admin extends Authenticatable
 
     protected $dates = ['deleted_at'];
 
+    public static function booted()
+    {
+        static::deleting(function ($model) {
+            if (auth()->guard('admin')->check()) {
+                $model->deleted_by = auth()->guard('admin')->id();
+                $model->saveQuietly();
+            }
+        });
+    }
+
+    public function deletedBy()
+    {
+        return $this->belongsTo(Admin::class);
+    }
+
     protected $fillable = [
         'fullname', 'email', 'phone_number', 'status', 'password',
     ];

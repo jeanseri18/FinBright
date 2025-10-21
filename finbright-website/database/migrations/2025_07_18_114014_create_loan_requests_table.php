@@ -20,6 +20,7 @@ return new class extends Migration
             // alors cette migration de création peut être plus simple.
             $table->softDeletes();
             $table->timestamps();
+            $table->foreignId('deleted_by')->nullable()->constrained('admins')->nullOnDelete();
         });
     }
 

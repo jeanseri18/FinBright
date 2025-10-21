@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('amount', 12, 2);
             $table->softDeletes();
             $table->timestamps();
+            $table->foreignId('deleted_by')->nullable()->constrained('admins')->nullOnDelete();
             
             $table->unique(['investisseur_id','loan_request_id']); // 1 ligne par projet dans le panier
             $table->enum('type_investment', ['pret_sans_interet', 'pret_avec_interet', 'don'])->default('pret_sans_interet');

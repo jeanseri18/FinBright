@@ -117,10 +117,10 @@
                                             Établissement
                                         </a>
                                         <span class="text-sm font-medium text-mono">
-                                            {{Auth::user()->etablissement->nom ?? null}}
+                                            {{Auth::user()->emprunteur->etablissement->nom ?? null}}
                                         </span>
                                         <span class="text-xs text-secondary-foreground leading-none">
-                                            {{Auth::user()->etablissement ? Auth::user()->etablissement->ville : null}} - {{Auth::user()->etablissement ? Auth::user()->etablissement->pays : null}}
+                                            {{Auth::user()->emprunteur->etablissement ? Auth::user()->emprunteur->etablissement->ville : null}} - {{Auth::user()->emprunteur->etablissement ? Auth::user()->emprunteur->etablissement->pays : null}}
                                         </span>
                                     </div>
                                 </div>
@@ -133,7 +133,7 @@
                                             Filière
                                         </a>
                                         <span class="text-sm font-medium text-mono">
-                                            {{Auth::user()->specialization ?? null}}
+                                            {{Auth::user()->emprunteur->specialization ?? null}}
                                         </span>
                                     </div>
                                 </div>
@@ -146,17 +146,11 @@
                                             Diplôme
                                         </a>
                                         <span class="text-sm font-medium text-mono">
-                                            {{Auth::user()->diploma ?? null}}
+                                            {{Auth::user()->emprunteur->diploma ?? null}}
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="kt-card-footer justify-center">
-                            <a class="kt-link kt-link-underlined kt-link-dashed"
-                                href="">
-                                Open to Work
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -270,168 +264,6 @@
                                 </div>
                             @endif
                         </div>
-                        {{-- <div class="kt-card-table kt-scrollable-x-auto">
-                            <table class="kt-table table-fixed">
-                                <thead>
-                                    <tr>
-                                        <th class="text-start w-52">
-                                            Objet du projet
-                                        </th>
-                                        <th class="w-56 text-end">
-                                            Collecte
-                                        </th>
-                                        <th class="w-36 text-end">
-                                            Investisseurs
-                                        </th>
-                                        <th class="w-36 text-end">
-                                            Date d'échéance
-                                        </th>
-                                        <th class="w-16">
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($loanRequests as $loan)
-                                    <tr>
-                                        <td class="text-start">
-                                            <a class="text-sm font-medium text-mono hover:text-primary" href="#">
-                                                {{ $loan->object ?? 'NaN' }}
-                                            </a>
-                                        </td>
-                                        <td class="text-end">
-                                            @if ($loan->status === 'Collect en cours')
-                                            <div class="kt-progress kt-progress-primary h-[4px]">
-                                                <div class="kt-progress-indicator" style="width: 60%">
-                                                </div>
-                                            </div>
-                                            @else
-                                                @if ($loan->status == "En attente") <span class="kt-badge kt-badge-sm kt-badge-primary kt-badge-outline shrink-0">
-                                                @elseif ($loan->status == "Collecte en attente") <span class="kt-badge kt-badge-sm kt-badge-success kt-badge-outline shrink-0">
-                                                @elseif ($loan->status == "Annulée") <span class="kt-badge kt-badge-sm kt-badge-destructive kt-badge-outline shrink-0">@endif
-                                                    {{ ucfirst($loan->status) }}
-                                                </span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($loan->contributeurs)
-                                            <div class="flex justify-end rtl:justify-start shrink-0">
-                                                <div class="flex -space-x-2">
-                                                    <div class="flex">
-                                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
-                                                    </div>
-                                                    <div class="flex">
-                                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
-                                                    </div>
-                                                    <div class="flex">
-                                                        <img class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-6"
-                                                            src="{{asset('assets/media/avatars/blank.png')}}" />
-                                                    </div>
-                                                    <div class="flex">
-                                                        <span
-                                                            class="relative inline-flex items-center justify-center shrink-0 rounded-full ring-1 font-semibold leading-none text-2xs size-6 text-white ring-background bg-green-500">
-                                                            +3
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @endif
-                                        </td>
-                                        <td class="text-sm font-medium text-secondary-foreground text-end">
-                                            24 Aug, 2024
-                                        </td>
-                                        <td class="text-start">
-                                            <div class="kt-menu" data-kt-menu="true">
-                                                <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                                    data-kt-menu-item-placement="bottom-end"
-                                                    data-kt-menu-item-placement-rtl="bottom-start"
-                                                    data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
-                                                    <button
-                                                        class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                                        <i class="ki-filled ki-dots-vertical text-lg">
-                                                        </i>
-                                                    </button>
-                                                    <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]"
-                                                        data-kt-menu-dismiss="true">
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-search-list">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    View
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-file-up">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Export
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-separator">
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-pencil">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Edit
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-copy">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Make a copy
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="kt-menu-separator">
-                                                        </div>
-                                                        <div class="kt-menu-item">
-                                                            <a class="kt-menu-link" href="#">
-                                                                <span class="kt-menu-icon">
-                                                                    <i class="ki-filled ki-trash">
-                                                                    </i>
-                                                                </span>
-                                                                <span class="kt-menu-title">
-                                                                    Remove
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="5">Aucune demande de prêt pour le moment.</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="kt-card-footer justify-center">
-                            <a class="kt-link kt-link-underlined kt-link-dashed"
-                                href="">
-                                Tous les Projets
-                            </a>
-                        </div> --}}
                     </div>
                     <!-- End of Projects Table -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-7.5">
@@ -440,125 +272,6 @@
                                 <h3 class="kt-card-title">
                                     Contributeurs
                                 </h3>
-                                <div class="kt-menu" data-kt-menu="true">
-                                    <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                        data-kt-menu-item-placement="bottom-end"
-                                        data-kt-menu-item-placement-rtl="bottom-start" data-kt-menu-item-toggle="dropdown"
-                                        data-kt-menu-item-trigger="click">
-                                        <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                            <i class="ki-filled ki-dots-vertical text-lg">
-                                            </i>
-                                        </button>
-                                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
-                                            data-kt-menu-dismiss="true">
-                                            <div class="kt-menu-item">
-                                                <a class="kt-menu-link" href="">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-cloud-change">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Activity
-                                                    </span>
-                                                </a>
-                                            </div>
-                                            <div class="kt-menu-item">
-                                                <a class="kt-menu-link" data-kt-modal-toggle="#share_profile_modal"
-                                                    href="#">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-share">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Share
-                                                    </span>
-                                                </a>
-                                            </div>
-                                            <div class="kt-menu-item" data-kt-menu-item-offset="-15px, 0"
-                                                data-kt-menu-item-placement="right-start"
-                                                data-kt-menu-item-toggle="dropdown"
-                                                data-kt-menu-item-trigger="click|lg:hover">
-                                                <div class="kt-menu-link">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-notification-status">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Notifications
-                                                    </span>
-                                                    <span class="kt-menu-arrow">
-                                                        <i class="ki-filled ki-right text-xs rtl:transform rtl:rotate-180">
-                                                        </i>
-                                                    </span>
-                                                </div>
-                                                <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]">
-                                                    <div class="kt-menu-item">
-                                                        <a class="kt-menu-link"
-                                                            href="">
-                                                            <span class="kt-menu-icon">
-                                                                <i class="ki-filled ki-sms">
-                                                                </i>
-                                                            </span>
-                                                            <span class="kt-menu-title">
-                                                                Email
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="kt-menu-item">
-                                                        <a class="kt-menu-link"
-                                                            href="">
-                                                            <span class="kt-menu-icon">
-                                                                <i class="ki-filled ki-message-notify">
-                                                                </i>
-                                                            </span>
-                                                            <span class="kt-menu-title">
-                                                                SMS
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="kt-menu-item">
-                                                        <a class="kt-menu-link"
-                                                            href="">
-                                                            <span class="kt-menu-icon">
-                                                                <i class="ki-filled ki-notification-status">
-                                                                </i>
-                                                            </span>
-                                                            <span class="kt-menu-title">
-                                                                Push
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="kt-menu-item">
-                                                <a class="kt-menu-link" data-kt-modal-toggle="#report_user_modal"
-                                                    href="#">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-dislike">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Report
-                                                    </span>
-                                                </a>
-                                            </div>
-                                            <div class="kt-menu-separator">
-                                            </div>
-                                            <div class="kt-menu-item">
-                                                <a class="kt-menu-link"
-                                                    href="">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-setting-3">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Settings
-                                                    </span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <div class="kt-card-content">
                                 <div class="flex flex-col gap-2 lg:gap-5">
@@ -644,67 +357,6 @@
                                 <h3 class="kt-card-title">
                                     Statistiques
                                 </h3>
-                                <div class="kt-menu" data-kt-menu="true">
-                                    <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                        data-kt-menu-item-placement="bottom-end"
-                                        data-kt-menu-item-placement-rtl="bottom-start" data-kt-menu-item-toggle="dropdown"
-                                        data-kt-menu-item-trigger="click">
-                                        <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                            <i class="ki-filled ki-dots-vertical text-lg">
-                                            </i>
-                                        </button>
-                                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
-                                            data-kt-menu-dismiss="true">
-                                            <div class="kt-menu-item">
-                                                <a class="kt-menu-link"
-                                                    href="">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-setting-3">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Settings
-                                                    </span>
-                                                </a>
-                                            </div>
-                                            <div class="kt-menu-item">
-                                                <a class="kt-menu-link"
-                                                    href="">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-some-files">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Import
-                                                    </span>
-                                                </a>
-                                            </div>
-                                            <div class="kt-menu-item">
-                                                <a class="kt-menu-link" href="">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-cloud-change">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Activity
-                                                    </span>
-                                                </a>
-                                            </div>
-                                            <div class="kt-menu-item">
-                                                <a class="kt-menu-link" data-kt-modal-toggle="#report_user_modal"
-                                                    href="#">
-                                                    <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-dislike">
-                                                        </i>
-                                                    </span>
-                                                    <span class="kt-menu-title">
-                                                        Report
-                                                    </span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <div class="kt-card-content flex justify-center items-center px-3 py-1">
                                 <div id="contributions_chart">
@@ -752,4 +404,26 @@
 
 @section('javascripts')
     <script src="{{ asset('assets/js/widgets/general.js') }}"></script>
+    <script type="text/javascript">
+        const montantTotal = @php echo json_encode($loan->simulation_result['amount']); @endphp;
+        const total = parseFloat(montantTotal) || 0;
+        
+        const investments = @json($loan->investments);
+        let totalPourcentageArrondi = 0;
+        
+        const contributeurs = Array.isArray(investments) 
+            ? investments.map(item => {
+                let nom = item.investisseur.user.first_name || '';
+                return nom.toUpperCase().replace(/[^A-Z]/g, '').substring(0, 5);
+            }) : [];
+        const amounts = investments.map(item => parseFloat(item.amount) || 0);
+        const pourcentages = amounts.map(amount => {
+            const p = Math.round((amount / total) * 100);
+            totalPourcentageArrondi += p;
+            return p;
+        });
+        contributeurs.push("RESTE");
+        pourcentages.push(100 - totalPourcentageArrondi);
+
+    </script>
 @endsection

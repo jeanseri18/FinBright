@@ -20,11 +20,11 @@
                     @endif
                 </div>
                 <div class="flex flex-wrap justify-center gap-1 lg:gap-4.5 text-sm">
-                    @if (Auth::user()->etablissement)
+                    @if (Auth::user()->emprunteur->etablissement)
                     <div class="flex gap-1.25 items-center">
                         <i class="ki-filled ki-abstract-41 text-muted-foreground text-sm"></i>
                         <span class="text-secondary-foreground font-medium">
-                            {{ Auth::user()->etablissement->nom ?? 'null' }}
+                            {{ Auth::user()->emprunteur->etablissement->nom ?? 'null' }}
                         </span>
                     </div>
                     @endif
